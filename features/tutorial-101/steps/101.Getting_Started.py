@@ -1,80 +1,56 @@
 # created by Amani Boughanmi on 20.05.2021
 
-from behave import *
-import requests
-import json
-import shlex
-import subprocess
-#from json_schema.json_differ import diff_jsons
-global actual_response
-
-expected_response = (["""
-  {
-  "orion": {
-    "version": "3.0.0",
-    "uptime": "0 d, 0 h, 17 m, 19 s",
-    "git_hash": "d6f8f4c6c766a9093527027f0a4b3f906e7f04c4",
-    "compile_time": "Mon Apr 12 14:48:44 UTC 2021",
-    "compiled_by": "root",
-    "compiled_in": "f307ca0746f5",
-    "release_date": "Mon Apr 12 14:48:44 UTC 2021",
-    "machine": "x86_64",
-    "doc": "https://fiware-orion.rtfd.io/en/3.0.0/"
-    "libversions": {
-     "boost": "1_66",
-     "libcurl": "libcurl/7.61.1 OpenSSL/1.1.1g zlib/1.2.11 nghttp2/1.33.0",
-     "libmicrohttpd": "0.9.70",
-     "openssl": "1.1",
-     "rapidjson": "1.1.0",
-     "mongoc": "1.17.4",
-     "bson": "1.17.4"
-    }
-  }
- }
-"""])
-
-class AttrDict(dict):
-    def __init__(self, *args, **kwargs):
-        super(AttrDict, self).__init__(*args, **kwargs)
-        self.__dict__ = self
-
+from behave import given, when, then, step
+from requests import get, exceptions
+from hamcrest import assert_that, is_, has_key
 
 
 @given(u'I set the tutorial')
 def step_impl(context):
-	assert True
+    # Nothing to do so far, at the moment
+    pass
 
-# START GET/version Scenario
-@given(u'I Send GET HTTP request')
-def step_impl(context):
-    global actual_response
-    cUrl= r""" curl -X GET http://localhost:1026/version """
-    # split the cUrl into an array
-    sp_cUrl = shlex.split(cUrl)
-    process = subprocess.Popen(sp_cUrl, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-   # acquire the response and the err if exists
-    resp, err = process.communicate() 
-    # transform json response to python dict
-    actual_response = json.loads(str(resp.decode("UTF-8"))) 
-    print (actual_response)
 
-@then(u'the json response is valid')
-def step_impl(context):
-    assert True
+@when(u'I send GET HTTP request to "{url}"')
+def send_orion_get_version(context, url):
+    try:
+        response = get(url)
+    except exceptions.RequestException as e:  # This is the correct syntax
+        raise SystemExit(e)
 
-# END GET/version Scenario
+    context.response = response.json()
+    context.statusCode = str(response.status_code)
 
-    #raise NotImplementedError(u'Then the json response is valid')
 
-    
+@step(u'I receive a HTTP "{status_code}" response code')
+def http_code_is_returned(context, status_code):
+    assert_that(context.statusCode, is_(status_code),
+                "Response to CB notification has not got the expected HTTP response code: Message: {}"
+                .format(context.response))
 
-    """if (actual_response['orion']['version'] == expected_response['orion']['version']):
-        assert True
-    if (actual_response[0][0] == expected_response[0][0]): 
-        assert True"""
-     
-    
-    
-    
 
-	
+@then(u'I receive a dictionary with the key "{key}" and the following data')
+def receive_orion_version_response1(context, key):
+    assert_that(context.response, has_key(key),
+                "Response to CB notification has not got the 'orion' key: Message: {}"
+                .format(context.response))
+
+    value = context.response[key]
+    for element in context.table.rows:
+        expected_message = dict(element.as_dict())
+        print(expected_message)
+        for key_version in expected_message.keys():
+            assert_that(value, has_key(key_version))
+            assert_that(value[key_version], is_(expected_message[key_version]),
+                        "The value of key {} received is: {}, it is not the expected one: {}"
+                        .format(key, value[key_version], expected_message[key_version]))
+
+
+@then(u'also the following data')
+def check_dict_content_request_version2(context):
+    raise NotImplementedError(u'STEP: also the following data')
+
+
+@then(u'there is no other information on it')
+def check_dict_content_request_version2(context):
+    raise NotImplementedError(u'STEP: there is no other information on it')
