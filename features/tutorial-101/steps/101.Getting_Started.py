@@ -138,8 +138,8 @@ def receive_post_response1(context):
         for key in valid_response.keys():
             assert_that(context.response, has_key(key))
             assert_that(context.response[key], is_(valid_response[key]),
-                        "The value of key {} received is: {}, it is not the expected one: {}"
-                        .format(key, context.response[key], valid_response[key]))
+                        "The value of key {} received is not the expected one"
+                        .format(key))
 
 @then (u'also the following keys')
 def check_dict_post_request(context):
@@ -147,6 +147,8 @@ def check_dict_post_request(context):
         assert_that(context.response, has_key(key),
                     "The key {} received is not the expected one:"
                     .format(key))
+
+# POST request4
 
 
 	

@@ -61,6 +61,12 @@ Scenario: GET request5
     And  I receive the entities dictionary 
 
 
+Scenario: GET request6
+    When I send GET HTTP request to "http://localhost:1026/v2/entities"
+    Then I receive a HTTP "200" code response
+    And  I receive the entities dictionary 
+
+
 
 
 
