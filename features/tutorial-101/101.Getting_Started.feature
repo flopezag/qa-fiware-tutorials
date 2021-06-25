@@ -31,7 +31,7 @@ Scenario: POST request2
          | Fiware-correlator | Date |
 
 Scenario: POST request3 
-    When I set the following request body to "Tests/features/tutorial-101/steps/request02.json"
+    When I set the following request body to "request02.json"
     And  I send POST HTTP request to "http://localhost:1026/v2/entities"
     Then I receive a HTTP "201" code response
     And  I receive this dictionary

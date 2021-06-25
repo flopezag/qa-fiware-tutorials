@@ -25,7 +25,7 @@ def send_orion_get_version(context, url):
 
 
 @step(u'I receive a HTTP "{status_code}" response code')
-def http_code_is_returned(context, status_code):
+def http_code_is_returned1(context, status_code):
     assert_that(context.statusCode, is_(status_code),
                 "Response to CB notification has not got the expected HTTP response code: Message: {}"
                 .format(context.response))
@@ -47,7 +47,7 @@ def receive_orion_version_response1(context, key):
                         .format(key, value[key_version], expected_message[key_version]))
 
 @then(u'also the following data')
-def check_dict_content_request_version2(context):
+def check_dict_content_request_version1(context):
     raise NotImplementedError(u'STEP: also the following data')
 
 
@@ -58,8 +58,8 @@ def check_dict_content_request_version2(context):
 # POST request2
 
 @When(u'I set the following request body {body}')
-def set_req_body(context, body):
-    path = r'/home/ubuntu/'
+def set_req_body2(context, body):
+    path = r''
     for body in os.listdir(path):
         with open( body, 'r') as json_file:
             data = json_file.read()
@@ -67,7 +67,7 @@ def set_req_body(context, body):
             json_data = json.loads(data)
         
 @step(u'I send POST HTTP request to "{url}"')
-def send_orion_post_entity1(context, url):
+def send_orion_post_entity2(context, url):
     headers = {'Content-Type' : 'application/json'}
     try:
         response = post(url, data = json_data, headers = headers)
@@ -78,13 +78,13 @@ def send_orion_post_entity1(context, url):
     context.statusCode = str(response.status_code)
 
 @then (u'I receive a HTTP {status_code} code response')
-def http_post_code_returned(context, status_code):
+def http_post_code_returned2(context, status_code):
     assert_that(context.statusCode, is_(status_code),
                 "Response to CB notification has not got the expected HTTP response code: Message: {}"
                 .format(context.response))
 
 @then (u'I receive this dictionary')
-def receive_post_response1(context):
+def receive_post_response2(context):
 
     for element in context.table.rows:
         valid_response = dict(element.as_dict())
@@ -96,16 +96,17 @@ def receive_post_response1(context):
                         .format(key, context.response[key], valid_response[key]))
 
 @then (u'also the following keys')
-def check_dict_post_request(context):
+def check_dict_post_request2(context):
     for key in valid_response.keys():
         assert_that(context.response, has_key(key),
                     "The key {} received is not the expected one:"
                     .format(key))
 
 # POST request3
+
 @When(u'I set the following request body {body}')
-def set_req_body(context, body):
-    path = r'/home/ubuntu/'
+def set_req_body3(context, body):
+    path = r''
     for body in os.listdir(path):
         with open( body, 'r') as json_file:
             data = json_file.read()
@@ -113,7 +114,7 @@ def set_req_body(context, body):
             json_data = json.loads(data)
         
 @step(u'I send POST HTTP request to "{url}"')
-def send_orion_post_entity1(context, url):
+def send_orion_post_entity3(context, url):
     headers = {'Content-Type' : 'application/json'}
     try:
         response = post(url, data = json_data, headers = headers)
@@ -124,13 +125,13 @@ def send_orion_post_entity1(context, url):
     context.statusCode = str(response.status_code)
 
 @then (u'I receive a HTTP {status_code} code response')
-def http_post_code_returned(context, status_code):
+def http_post_code_returned3(context, status_code):
     assert_that(context.statusCode, is_(status_code),
                 "Response to CB notification has not got the expected HTTP response code: Message: {}"
                 .format(context.response))
 
 @then (u'I receive this dictionary')
-def receive_post_response1(context):
+def receive_post_response3(context):
 
     for element in context.table.rows:
         valid_response = dict(element.as_dict())
@@ -142,13 +143,12 @@ def receive_post_response1(context):
                         .format(key))
 
 @then (u'also the following keys')
-def check_dict_post_request(context):
+def check_dict_post_request3(context):
     for key in valid_response.keys():
         assert_that(context.response, has_key(key),
                     "The key {} received is not the expected one:"
                     .format(key))
 
 # POST request4
-
 
 	
