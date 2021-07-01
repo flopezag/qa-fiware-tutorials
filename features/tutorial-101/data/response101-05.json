@@ -1,0 +1,32 @@
+[
+    {
+        "id": "urn:ngsi-ld:Store:001",
+        "type": "Store",
+        "address": {
+            "streetAddress": "Bornholmer Straße 65",
+            "addressRegion": "Berlin",
+            "addressLocality": "Prenzlauer Berg",
+            "postalCode": "10439"
+        },
+        "location": {
+            "type": "Point",
+            "coordinates": [13.3986, 52.5547]
+        },
+        "name": "Bose Brucke Einkauf"
+    },
+    {
+        "id": "urn:ngsi-ld:Store:002",
+        "type": "Store",
+        "address": {
+            "streetAddress": "Friedrichstraße 44",
+            "addressRegion": "Berlin",
+            "addressLocality": "Kreuzberg",
+            "postalCode": "10969"
+        },
+        "location": {
+            "type": "Point",
+            "coordinates": [13.3903, 52.5075]
+        },
+        "name": "Checkpoint Markt"
+    }
+]
