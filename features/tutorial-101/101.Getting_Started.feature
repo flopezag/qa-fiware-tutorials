@@ -8,6 +8,7 @@ Feature: test tutorial 101.Getting Started
 Background: 
     Given I set the tutorial
 
+@runner.continue_after_failed_step
 Scenario: GET version request
     When  I send GET HTTP request to "http://localhost:1026/version"
     Then  I receive a HTTP "200" response code

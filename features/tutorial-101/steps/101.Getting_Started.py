@@ -43,7 +43,7 @@ def receive_orion_version_response1(context, key):
             assert_that(value, has_key(key_version))
             assert_that(value[key_version], is_(expected_message[key_version]),
                         "The value of key {} received is: {}, it is not the expected one: {}"
-                        .format(key, value[key_version], expected_message[key_version]))
+                        .format(key_version, value[key_version], expected_message[key_version]))
 
 
 @then(u'also the following data')
