@@ -15,12 +15,14 @@ Feature: test tutorial 101.Getting Started
   Scenario Outline: Creating Context Data
     When I send POST HTTP request to "http://localhost:1026/v2/entities"
     And  With the body request described in file "<file>"
-    Then I receive a HTTP "201" code response
+    Then I receive a HTTP response with the following data
+      | Status-Code | Location   | Connection | fiware-correlator |
+      | 201         | <location> | Keep-Alive | Any               |
 
     Examples:
-        | file |
-        | request101-02.json |
-        | request101-03.json |
+        | file               | location                                      |
+        | request101-02.json | /v2/entities/urn:ngsi-ld:Store:001?type=Store |
+        | request101-03.json | /v2/entities/urn:ngsi-ld:Store:002?type=Store |
 
   Scenario: POST request3
     When I set the following request body to "request101-03.json"

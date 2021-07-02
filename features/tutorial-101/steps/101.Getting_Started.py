@@ -54,28 +54,39 @@ def set_req_body2(context, url):
 def send_orion_post_entity2(context, file):
     file = join(context.data_home, file)
     with open(file) as f:
-        payload = load(f)
+        payload = f.read()
 
     try:
         response = post(context.url, data=payload, headers=context.header)
     except exceptions.RequestException as e:  
         raise SystemExit(e)
 
-    context.response = response.json()
+    context.responseHeaders = response.headers
     context.statusCode = str(response.status_code)
 
+    """
+    HTTP/1.1 201 Created
+    Connection: Keep-Alive
+    Content-Length: 0
+    Location: /v2/entities/urn:ngsi-ld:Store:001?type=Store
+    Fiware-Correlator: 9553b5e8-db46-11eb-9465-0242ac120103
+    Date: Fri, 02 Jul 2021 15:02:56 GMT
+    """
 
-@then(u'I receive this dictionary')
+@then(u'I receive a HTTP response with the following data')
 def receive_post_response2(context):
 
     for element in context.table.rows:
         valid_response = dict(element.as_dict())
         print(valid_response)
-        for key in valid_response.keys():
-            assert_that(context.response, has_key(key))
-            assert_that(context.response[key], is_(valid_response[key]),
-                        "The value of key {} received is: {}, it is not the expected one: {}"
-                        .format(key, context.response[key], valid_response[key]))
+        valid_response['Status-Code']
+        valid_response['Location']
+        assert_that(context.responseHeaders['Connection'], is_(valid_response['Connection']))
+        assert_that(context.responseHeaders['Location'], is_(valid_response['Location']))
+        assert_that(context.statusCode, is_(valid_response['Status-Code']))
+
+        aux = 'fiware-correlator' in valid_response
+        assert_that(aux, is_(True))
 
 
 @then(u'also the following keys')
