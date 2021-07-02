@@ -13,16 +13,16 @@ __logger__ = getLogger(__name__)
 
 
 def before_all(context):
-    __logger__.info("=========== INITIALIZE PROCESS =========== ")
-    stdout.write(f'=========== INITIALIZE PROCESS =========== \n')
+    __logger__.info("=========== INITIALIZE PROCESS ===========\n")
+    stdout.write(f'=========== INITIALIZE PROCESS ===========\n')
 
 
 def before_feature(context, feature):
-    __logger__.info("=========== START FEATURE =========== ")
+    __logger__.info("=========== START FEATURE ===========")
     __logger__.info("Feature name: %s", feature.name)
 
-    stdout.write("=========== START FEATURE =========== \n")
-    stdout.write(f'Feature name: {feature.name}\n')
+    stdout.write("=========== START FEATURE ===========\n")
+    stdout.write(f'Feature name: {feature.name}\n\n')
 
     parameters = [s for s in feature.description if 'docker-compose' in s or 'environment' in s]
     parameters = dict(s.split(':', 1) for s in parameters)
@@ -51,12 +51,12 @@ def before_scenario(context, scenario):
 
 def after_scenario(context, scenario):
     __logger__.info("********** END SCENARIO **********")
-    stdout.write(f'********** END SCENARIO **********')
+    stdout.write(f'********** END SCENARIO **********\n\n')
 
 
 def after_feature(context, feature):
-    __logger__.info("=========== END FEATURE =========== ")
-    stdout.write(f'=========== END FEATURE =========== \n')
+    __logger__.info("=========== END FEATURE ===========")
+    stdout.write(f'=========== END FEATURE ===========\n')
 
     docker.compose.down()
 
