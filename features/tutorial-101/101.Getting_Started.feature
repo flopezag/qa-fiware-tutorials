@@ -8,27 +8,19 @@ Feature: test tutorial 101.Getting Started
   Background:
     Given I set the tutorial
 
-  @runner.continue_after_failed_step
-  Scenario: GET version request
+  Scenario: Checking the service health
     When  I send GET HTTP request to "http://localhost:1026/version"
-    Then  I receive a HTTP "200" response code
-    And   I receive a dictionary with the key "orion" and the following data
-      | version     | uptime | git_hash                                 | compile_time                |
-      | 1.12.0-next | AAA    | e2ff1a8d9515ade24cf8d4b90d27af7a616c7725 | Wed Apr 4 19:08:02 UTC 2018 |
-    And   also the following data
-      | compiled_by | compiled_in  | release_date                | doc                                             |
-      | root        | 2f4a69bdc191 | Wed Apr 4 19:08:02 UTC 2018 | https://fiware-orion.readthedocs.org/en/master/ |
-    And   there is no other information on it
+    Then  I receive a HTTP "200" response code with the body "response101-01.json"
 
-  Scenario: POST request2
-    When I set the following request body to "request101-02.json"
-    And  I send POST HTTP request to "http://localhost:1026/v2/entities"
+  Scenario Outline: Creating Context Data
+    When I send POST HTTP request to "http://localhost:1026/v2/entities"
+    And  With the body request described in file "<file>"
     Then I receive a HTTP "201" code response
-    And  I receive this dictionary
-      | Connection | Content-Length | Location                                      |
-      | Keep-Alive | 0              | /v2/entities/urn:ngsi-ld:Store:001?type=Store |
-    And also the following keys
-      | Fiware-correlator | Date |
+
+    Examples:
+        | file |
+        | request101-02.json |
+        | request101-03.json |
 
   Scenario: POST request3
     When I set the following request body to "request101-03.json"
