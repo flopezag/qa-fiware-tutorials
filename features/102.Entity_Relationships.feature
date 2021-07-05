@@ -5,6 +5,7 @@ Feature: test tutorial 102.Entry Relationships
   docker-compose: https://raw.githubusercontent.com/FIWARE/tutorials.Entity-Relationships/ce7531bc77b8576efddadaeec7ec84c9b5608d62/docker-compose.yml
   environment: https://raw.githubusercontent.com/FIWARE/tutorials.Entity-Relationships/ce7531bc77b8576efddadaeec7ec84c9b5608d62/.env
   init-script: https://raw.githubusercontent.com/FIWARE/tutorials.Entity-Relationships/ce7531bc77b8576efddadaeec7ec84c9b5608d62/services
+  aux: [https://raw.githubusercontent.com/FIWARE/tutorials.Entity-Relationships/ce7531bc77b8576efddadaeec7ec84c9b5608d62/import-data]
 
   Background:
     Given I set the tutorial
