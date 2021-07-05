@@ -12,13 +12,15 @@ from sys import stdout
 
 @given(u'I set the tutorial')
 def step_impl(context):
-    context.data_home = join(join(join(CODE_HOME, "features"), "tutorial-101"), "data")
+    context.data_home = join(join(join(CODE_HOME, "tests"), "tutorial-101"), "data")
 
 
 @when(u'I send GET HTTP request to "{url}"')
 def send_orion_get_version(context, url):
     try:
         response = get(url)
+        # override encoding by real educated guess as provided by chardet
+        response.encoding = response.apparent_encoding
     except exceptions.RequestException as e:  # This is the correct syntax
         raise SystemExit(e)
 
@@ -43,7 +45,6 @@ def http_code_is_returned(context, status_code, response):
                 f'Response from CB has not got the expected HTTP response body:\n  {diff}')
 
 
-# POST request2
 @when(u'I send POST HTTP request to "{url}"')
 def set_req_body2(context, url):
     context.url = url
@@ -64,14 +65,6 @@ def send_orion_post_entity2(context, file):
     context.responseHeaders = response.headers
     context.statusCode = str(response.status_code)
 
-    """
-    HTTP/1.1 201 Created
-    Connection: Keep-Alive
-    Content-Length: 0
-    Location: /v2/entities/urn:ngsi-ld:Store:001?type=Store
-    Fiware-Correlator: 9553b5e8-db46-11eb-9465-0242ac120103
-    Date: Fri, 02 Jul 2021 15:02:56 GMT
-    """
 
 @then(u'I receive a HTTP response with the following data')
 def receive_post_response2(context):
@@ -89,17 +82,17 @@ def receive_post_response2(context):
         assert_that(aux, is_(True))
 
 
-@then(u'also the following keys')
-def check_dict_post_request2(context):
-    for key in valid_response.keys():
-        assert_that(context.response, has_key(key),
-                    "The key {} received is not the expected one:"
-                    .format(key))
+@step("I receive the entities dictionary")
+def step_impl(context):
+    """
+    :type context: behave.runner.Context
+    """
+    raise NotImplementedError(u'STEP: And  I receive the entities dictionary')
 
 
-# POST request3
-@then(u'I receive a HTTP {status_code} code response')
-def http_post_code_returned3(context, status_code):
-    assert_that(context.statusCode, is_(status_code),
-                "Response to CB notification has not got the expected HTTP response code: Message: {}"
-                .format(context.response))
+@then('I receive a HTTP "200" code response')
+def step_impl(context):
+    """
+    :type context: behave.runner.Context
+    """
+    raise NotImplementedError(u'STEP: Then I receive a HTTP "200" code response')
