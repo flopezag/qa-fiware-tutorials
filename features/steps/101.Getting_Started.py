@@ -12,13 +12,13 @@ from sys import stdout
 
 @given(u'I set the tutorial')
 def step_impl(context):
-    context.data_home = join(join(join(CODE_HOME, "tests"), "tutorial-101"), "data")
+    context.data_home = join(join(join(CODE_HOME, "features"), "data"), "101.Getting_started")
 
 
 @when(u'I send GET HTTP request to "{url}"')
 def send_orion_get_version(context, url):
     try:
-        response = get(url)
+        response = get(url, verify=False)
         # override encoding by real educated guess as provided by chardet
         response.encoding = response.apparent_encoding
     except exceptions.RequestException as e:  # This is the correct syntax
