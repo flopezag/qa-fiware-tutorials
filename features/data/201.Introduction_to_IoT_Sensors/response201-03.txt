@@ -1,0 +1,1 @@
+urn:ngsi-ld:Lamp:001@off| off OK
