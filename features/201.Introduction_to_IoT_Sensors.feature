@@ -1,4 +1,4 @@
-Feature: test tutorial 201.Introductio to IoT Sensors
+Feature: test tutorial 201.Introduction to IoT Sensors
 
   This is the feature file of the FIWARE Step by Step tutorial for IoT Sensors - What's Ultralight 2.0
   url: https://fiware-tutorials.readthedocs.io/en/latest/iot-sensors.html
@@ -7,7 +7,6 @@ Feature: test tutorial 201.Introductio to IoT Sensors
   git-directory: /tmp/tutorials.IoT-Sensors
   shell-commands: ./services create; ./services start
   clean-shell-commands: ./services stop
-  NOTES: request201-08.txt will faill. Should be corrected in tutorial.
 
 
   Background:
