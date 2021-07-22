@@ -1,0 +1,29 @@
+{
+  "devices": [
+    {
+      "device_id": "bell002",
+      "entity_name": "urn:ngsi-ld:Bell:002",
+      "entity_type": "Bell",
+      "protocol": "PDI-IoTA-UltraLight",
+      "transport": "HTTP",
+      "endpoint": "http://context-provider:3001/iot/bell002",
+      "attributes": [
+          {
+          "name":"ring",
+          "type":"Text",
+          "expression": "${@ring}",
+          "reverse": [
+            {
+              "object_id":"ring",
+              "type": "Text",
+              "expression": "${@ring}"
+            }
+          ]
+        }
+      ],
+       "static_attributes": [
+         {"name":"refStore", "type": "Relationship","value": "urn:ngsi-ld:Store:002"}
+        ]
+    }
+  ]
+}
