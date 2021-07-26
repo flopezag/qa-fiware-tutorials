@@ -8,6 +8,8 @@ Feature: test tutorial 202.Introduction to IoT Agent Ultralight
     clean-shell-commands: ./services stop
     NOTE_1: Scenarios 16 and 17 -- the response is not the same in tutorial as IoT agent response
     NOTE_2: Scenarios 15 -- Conflict with previous 02 scenario. Posting the same thing.
+    NOTE_3: Scenarios 20 -- Conflicts with previous 07 scenario. Posting the same thing.
+    NOTE_4: Scenario 21 -- As scenario 20 conflicts with 07 and the item has been used, things have changed and some attributes are wrong
 
     Background:
         Given I set the tutorial 202
@@ -109,4 +111,27 @@ Feature: test tutorial 202.Introduction to IoT Agent Ultralight
 
     Scenario: 19 - Delete a Service Group
         When  I send IoT "DELETE" HTTP request with data to "http://localhost:4041/iot/services/?resource=/iot/d&apikey=4jggokgpepnvsb2uv4s40d59ov" With headers fiware-service "openiot" and fiware-servicepath "/" and data is "request202-empty.json"
+        Then  I receive an HTTP response with the code "204" and empty dict
+
+    Scenario: 20 - Creating a Provisioned Device
+        When  I send POST HTTP request to "http://localhost:4041/iot/devices"
+        And  With body request and headers described in file "request202-20.json" and headers fiware-service "openiot" and fiware-servicepath "/"
+        Then  I receive an HTTP response with the code "201" and empty dict
+
+    Scenario: 21 - Read the provisioned device details
+        When  I send IoT "GET" HTTP request with data to "http://localhost:4041/iot/devices/bell002" With headers fiware-service "openiot" and fiware-servicepath "/" and data is "request202-12.json"
+        Then  I receive a HTTP "200" response code with the body "response202-21.json" and exclusions "21.excludes"
+
+    Scenario: 22 - List all provisioned devices
+        When  I send IoT "GET" HTTP request with data to "http://localhost:4041/iot/devices" With headers fiware-service "openiot" and fiware-servicepath "/" and data is "request202-empty.json"
+        Then  I receive a HTTP "200" response code with the body "response202-22.json" and exclusions "22.excludes"
+
+    Scenario: 23 - Update a Provisioned Device
+        When  I send POST HTTP request to "http://localhost:4041/iot/devices/bell002"
+        And  using "PUT" HTTP method
+        And  With body request and headers described in file "request202-23.json" and headers fiware-service "openiot" and fiware-servicepath "/"
+        Then  I receive an HTTP response with the code "204" and empty dict
+
+    Scenario: 24 - Delete a Provisioned Device
+        When  I send IoT "DELETE" HTTP request with data to "http://localhost:4041/iot/devices/bell002" With headers fiware-service "openiot" and fiware-servicepath "/" and data is "request202-empty.json"
         Then  I receive an HTTP response with the code "204" and empty dict

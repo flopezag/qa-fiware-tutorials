@@ -119,3 +119,6 @@ xunit.xml
 features/*/plain.output
 
 main.py
+
+# Testing examples
+examples/
