@@ -49,6 +49,7 @@ def set_context_headers(context, file, fw_service, fw_servicepath):
         raise SystemExit(e)
 
     context.statusCode = str(response.status_code)
+    context.responseHeaders = response.headers
     if context.statusCode != "204":
         context.response = response.json()
     else:
@@ -58,7 +59,7 @@ def set_context_headers(context, file, fw_service, fw_servicepath):
 @then(u'I receive an HTTP response with the code "{http_code}" and empty dict')
 def receive_created_from_IotAgent(context, http_code):
     assert (context.statusCode == http_code)
-    if http_code != "204":
+    if http_code != "204" and int(context.responseHeaders['Content-Length'])>0:
         assert (context.response == {})
 
 
@@ -106,6 +107,7 @@ def get_with_context_headers(context, method, url, fw_service, fw_servicepath, f
         raise SystemExit(e)
 
     context.statusCode = str(response.status_code)
+    context.responseHeaders = response.headers
     if context.statusCode != "204":
         context.response = response.json()
     else:
