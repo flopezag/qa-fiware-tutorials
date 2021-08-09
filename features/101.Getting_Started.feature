@@ -29,7 +29,7 @@ Feature: test tutorial 101.Getting Started
 
   Scenario: Obtain entity data by Id
     When I send GET HTTP request to "http://localhost:1026/v2/entities/urn:ngsi-ld:Store:001?options=keyValues"
-    Then  I receive a HTTP "200" response code with the body "response101-04.json"
+    Then I receive a HTTP "200" response code with the body "response101-04.json"
 
 
   Scenario: Obtain entity data by Type

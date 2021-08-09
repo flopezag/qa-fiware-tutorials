@@ -1,0 +1,50 @@
+[
+    {
+        "id": "urn:ngsi-ld:Product:001",
+        "type": "Product"
+    },
+    {
+        "id": "urn:ngsi-ld:Product:002",
+        "type": "Product"
+    },
+    {
+        "id": "urn:ngsi-ld:Product:003",
+        "type": "Product"
+    },
+    {
+        "id": "urn:ngsi-ld:Product:004",
+        "type": "Product"
+    },
+    {
+        "id": "urn:ngsi-ld:Product:005",
+        "type": "Product"
+    },
+    {
+        "id": "urn:ngsi-ld:Product:006",
+        "type": "Product"
+    },
+    {
+        "id": "urn:ngsi-ld:Product:007",
+        "type": "Product"
+    },
+    {
+        "id": "urn:ngsi-ld:Product:008",
+        "type": "Product"
+    },
+    {
+        "id": "urn:ngsi-ld:Product:009",
+        "type": "Product"
+    },
+    {
+        "id": "urn:ngsi-ld:Product:010",
+        "type": "Product"
+    },
+    {
+        "id": "urn:ngsi-ld:Product:011",
+        "type": "Product"
+    },
+    {
+        "id": "urn:ngsi-ld:Product:012",
+        "type": "Product"
+    }
+]
