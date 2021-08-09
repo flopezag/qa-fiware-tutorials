@@ -43,14 +43,14 @@ The description of the content is the following:
 - `environment.py`, contain all the pre and post operations to be executed for each feature.
   It means, the download of the configuration files of the tutorial and the execution of the
   docker-compose.
-- `*.feature`, the description file of the BDD to be developed using the Gherkin language. There 
+- `*.feature`, the description file of the BDD to be developed using the Gherkin language. There
   will be one file for each of the corresponding Step by Step tutorials, both NGSIv2 and NGSI-LD.
 - `data`, this folder will contains all the data required to the execution of the corresponding
   requests and the associate responses obtained from it. To facilitate the comprehensive of all
   the data, it is classified in subfolders for each of the Step by Step tutorials.
 - `steps`, this folder contains the implementation of the steps. Keep in mind that it is possible
   that some of the steps are defined in previous steps implementation files.
-  
+
 Therefore, if you want to increase the tutorial with a new feature (new analysis of a Step by Step
 tutorial), you only need to specify the corresponding *.feature, *_steps.py, and the corresponding
 json data for the different requests and responses. Just create a new branch from develop with the
@@ -83,13 +83,13 @@ Feature: test tutorial 101.Getting Started
 
 ### Steps
 
-The recommended installation method is using a virtualenv. Actually, the installation 
-process is only about the python dependencies, because the python code do not need 
+The recommended installation method is using a virtualenv. Actually, the installation
+process is only about the python dependencies, because the python code do not need
 installation.
 
 1. Clone this repository.
-2. Create the virtualenv: `virtualenv -ppython3.9 venv`
-3. Activate the python environment: `source ./venv/bin/activate`
+2. Create the virtualenv: `virtualenv -ppython3.9 venv`          (depa --> python3 -m virtualenv .venv)
+3. Activate the python environment: `source ./venv/bin/activate` (depa --> source .venv/bin/activate)
 5. Install the requirements: `pip install -r requirements.txt
 
 [Top](#top)
@@ -107,7 +107,7 @@ It will execute all the features defined in the folder `features`. If you want t
 one of the features, you only need to specify which one to execute, for example:
 
 ```bash
-behave features/102.Entity_Relationships.feature 
+behave features/102.Entity_Relationships.feature
 ```
 
 Will execute the steps corresponding to the Tutorial 102 feature.
@@ -118,4 +118,3 @@ Will execute the steps corresponding to the Tutorial 102 feature.
 ## License
 
 This script is licensed under Apache License 2.0.
-
