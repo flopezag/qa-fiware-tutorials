@@ -80,8 +80,21 @@ celerybeat-schedule
 # SageMath parsed files
 *.sage.py
 
-# dotenv
+# dotenv, Docker Configuration Environment File of the tutorials
 .env
+
+# Docker-Compose file of the tutorials
+docker-compose.yml
+
+# Shell script to pre-configure the services before starting the tutorials
+services
+
+# Plain output with the results of the tests
+plain.output
+features/plain.output
+
+# Import data for the init
+import-data
 
 # virtualenv
 .venv
