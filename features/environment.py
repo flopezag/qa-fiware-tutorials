@@ -14,7 +14,7 @@ from shutil import rmtree
 
 __logger__ = getLogger(__name__)
 
-INTERESTING_FEATURES_STRINGS = ['docker-compose', 'environment', 'git-clone', 'shell-commands', 'git-directory']
+INTERESTING_FEATURES_STRINGS = ['docker-compose', 'environment', 'git-clone', 'shell-commands', 'git-directory', 'clean-shell-commands']
 
 
 def is_interesting_feature_string(feature_description: str):
@@ -106,14 +106,17 @@ def after_feature(context, feature):
     stdout.write(f'\n=========== END FEATURE ===========\n')
 
     if 'clean-shell-commands' in context.parameters:
+        stdout.write(f'\nStop&Clean services...\n\n')
         exec_commands(context.parameters, 'clean-shell-commands')
 
     if 'docker-compose' in context.parameters:
+        stdout.write(f'\nDeleting docker-compose and config files...\n')
         docker.compose.down()
         files = ['docker-compose.yml', '.env']
         [remove(f) for f in files if exists(f)]
 
     if 'git-directory' in context.parameters:
+        stdout.write(f'\nDeleting temporal folder...\n')
         rmtree(context.parameters['git-directory'])
 
 
