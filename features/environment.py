@@ -19,7 +19,7 @@ INTERESTING_FEATURES_STRINGS = ['docker-compose', 'environment', 'git-clone', 's
 
 def is_interesting_feature_string(feature_description: str):
     for f in INTERESTING_FEATURES_STRINGS:
-        if f in feature_description:
+        if feature_description.h(f + ":"):
             return True
     return False
 
@@ -58,6 +58,7 @@ def before_feature(context, feature):
     stdout.write(f'Feature name: {feature.name}\n\n')
 
     p = [s for s in feature.description if is_interesting_feature_string(s)]
+
     parameters = {}
     # parameters = dict(s.split(':', 1) for s in parameters)
     context.parameters = parameters
