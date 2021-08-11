@@ -32,7 +32,7 @@ def git(*args):
         __logger__.error("Exception on process, rc=", e.returncode, "output=", e.output)
 
 
-def exec_commands(parameters:dict, which_commands:str):
+def exec_commands(parameters: dict, which_commands: str):
     commands = parameters[which_commands].split(';')
     commands_dir = parameters['git-directory'] if 'git-directory' in parameters else '.'
 

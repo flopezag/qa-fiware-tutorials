@@ -32,8 +32,8 @@ representation of it.
 |   |-- environment.py
 |   |-- *.feature
 |   |-- data
-|       |-- 101.Getting_started
-|       |-- 102.Entity_Relationships
+|   |   |-- 101.Getting_started
+|   |   |-- 102.Entity_Relationships
 |   `-- steps
 |       `-- *_steps.py
 `-- [behave.ini]
