@@ -1,0 +1,13 @@
+{
+    "_id": "5b07b2c3d7eec57836ecfed4",
+    "subservice": "/",
+    "service": "openiot",
+    "apikey": "4jggokgpepnvsb2uv4s40d59ov",
+    "resource": "/iot/d",
+    "attributes": [],
+    "lazy": [],
+    "commands": [],
+    "entity_type": "Thing",
+    "internal_attributes": [],
+    "static_attributes": []
+}
