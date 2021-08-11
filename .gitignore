@@ -130,3 +130,10 @@ xunit.xml
 
 # Plain test results
 features/*/plain.output
+
+main.py
+
+# Testing examples
+examples/
+
+**/tags
