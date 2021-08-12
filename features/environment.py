@@ -14,12 +14,13 @@ from shutil import rmtree
 
 __logger__ = getLogger(__name__)
 
-INTERESTING_FEATURES_STRINGS = ['docker-compose', 'environment', 'git-clone', 'shell-commands', 'git-directory']
+INTERESTING_FEATURES_STRINGS = ['docker-compose', 'environment', 'git-clone', 'shell-commands', 'git-directory',
+                                'clean-shell-commands']
 
 
 def is_interesting_feature_string(feature_description: str):
     for f in INTERESTING_FEATURES_STRINGS:
-        if feature_description.h(f + ":"):
+        if feature_description.startswith(f + ":"):
             return True
     return False
 
