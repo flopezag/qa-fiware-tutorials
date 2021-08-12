@@ -22,6 +22,10 @@ Feature: test tutorial 102.Entity_Relationships
     When  I send GET HTTP request to "http://localhost:1026/version"
     Then  I receive a HTTP "200" response code with the body "response101-01.json"
 
+
+#
+#  Requests 1 and 2
+#
   Scenario Outline: Create several entities at the same time
     When I send POST HTTP batch request to "http://localhost:1026/v2/op/update"
     And  With the body batch request described in file "<file>"
@@ -35,12 +39,18 @@ Feature: test tutorial 102.Entity_Relationships
       | request102-02.json |
 
 
+#
+#  Request 3
+#
  Scenario: Obtain entity data by Id
    When I send GET HTTP request to "http://localhost:1026/v2/entities/urn:ngsi-ld:Shelf:unit001/?type=Shelf&options=keyValues"
    Then I receive a HTTP "200" response code with the body "response102-03.json"
 
 
-   Scenario Outline: Create several entities at the same time
+#
+#  Request 4
+#
+   Scenario Outline: Creating several one-to-many Relationships at the same time
      When I send POST HTTP batch request to "http://localhost:1026/v2/op/update"
      And  With the body batch request described in file "<file>"
      Then I receive a HTTP batch response with the following data
@@ -51,24 +61,42 @@ Feature: test tutorial 102.Entity_Relationships
          | file               |
          | request102-04.json |
 
+#
+#  Request 5
+#
  Scenario: Obtain entity data by Id
    When I send GET HTTP request to "http://localhost:1026/v2/entities/urn:ngsi-ld:Shelf:unit001/?type=Shelf&options=keyValues"
    Then I receive a HTTP "200" response code with the body "response102-05.json"
 
- Scenario: Obtain entity data by Id
+
+#
+#  Request 6
+#
+ Scenario: Reading from Child Entity to Parent Entity
    When I send GET HTTP request to "http://localhost:1026/v2/entities/urn:ngsi-ld:Shelf:unit001/?type=Shelf&options=values&attrs=refStore"
    Then I receive a HTTP "200" response code with the body "response102-06.json"
 
- Scenario: Obtain entity data by Id
+
+#
+#  Request 7
+#
+ Scenario: Reading from Parent Entity to Child Entity
    When I send GET HTTP request to "http://localhost:1026/v2/entities/?q=refStore==urn:ngsi-ld:Store:001&options=count&attrs=type&type=Shelf"
    Then I receive a HTTP "200" response code with the body "response102-07.json"
 
- Scenario: Obtain entity data by Id
+
+#
+#  Request 8
+#
+ Scenario: Reading from Parent Entity to Child Entity values of a specific attribute
    When I send GET HTTP request to "http://localhost:1026/v2/entities/?q=refStore==urn:ngsi-ld:Store:001&type=Shelf&options=values&attrs=name"
    Then I receive a HTTP "200" response code with the body "response102-08.json"
 
 
- Scenario Outline: Creating Context Data
+#
+#  Request 9
+#
+Scenario Outline: Creating many-to-many Relationships
    When I send POST HTTP request to "http://localhost:1026/v2/entities"
    And  With the body request described in file "<file>"
    Then I receive a HTTP response with the following data
@@ -80,14 +108,21 @@ Feature: test tutorial 102.Entity_Relationships
      | request102-09.json | /v2/entities/urn:ngsi-ld:InventoryItem:001?type=InventoryItem |
 
 
- Scenario: Obtain entity data by Id
+#
+#  Requests 10 and 11
+#
+Scenario: Reading from a bridge table
    When I send GET HTTP request to "http://localhost:1026/v2/entities/?q=refStore==urn:ngsi-ld:Store:001&options=values&attrs=refProduct&type=InventoryItem"
    Then I receive a HTTP "200" response code with the body "response102-10.json"
 
- Scenario: Obtain entity data by Id
+Scenario: Reading from a bridge table
    When I send GET HTTP request to "http://localhost:1026/v2/entities/?q=refProduct==urn:ngsi-ld:Product:001&options=values&attrs=refStore&type=InventoryItem"
    Then I receive a HTTP "200" response code with the body "response102-11.json"
 
- Scenario: Obtain entity data by Id
+
+#
+#  Request 12
+#
+Scenario: Data Integrity
    When I send GET HTTP request to "http://localhost:1026/v2/entities/?q=refStore==urn:ngsi-ld:Store:001&options=count&attrs=type"
    Then I receive a HTTP "200" response code with the body "response102-12.json"

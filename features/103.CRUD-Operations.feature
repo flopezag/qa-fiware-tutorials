@@ -22,7 +22,8 @@ Feature: test tutorial 103.CRUD-Operations
     Then  I receive a HTTP "200" response code with the body "response101-01.json"
 
 #
-# Creating the context as resulting from Tutorials 101 and 102 this way this feature can executed standalone.
+# Creating the context as resulting from Tutorials 101 and 102 this way this feature can be executed
+# in a standalone manner.
 #
 
   Scenario Outline: Creating Context Data
@@ -89,7 +90,8 @@ Feature: test tutorial 103.CRUD-Operations
 
 #
 #  Request 3
-#   Note: In the tutorial is missing the error code 404 if the entity to which you want to add the attribute does not exist.
+#   Note: In the tutorial is missing the error code 404 which is returned
+#         if the entity to which you want to add the attribute does not exist.
 #
   Scenario Outline: Adding an Attribute to an existing entity by Id
     When I send POST HTTP request to add an attribute to "http://localhost:1026/v2/entities/urn:ngsi-ld:Product:001/attrs"
