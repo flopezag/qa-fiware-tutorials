@@ -16,5 +16,6 @@ def run_script_file(context, script_file):
 
 
 @then('I expect exit code to be "{exit_code}"')
-def dont_expect_anything_to_happen(context, exit_code):
+def expect_process_exit_code(context, exit_code):
     assert context.exit_code == int(exit_code)
+
