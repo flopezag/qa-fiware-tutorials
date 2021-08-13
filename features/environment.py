@@ -14,7 +14,8 @@ from shutil import rmtree
 
 __logger__ = getLogger(__name__)
 
-INTERESTING_FEATURES_STRINGS = ['docker-compose', 'environment', 'git-clone', 'shell-commands', 'git-directory', 'clean-shell-commands']
+INTERESTING_FEATURES_STRINGS = ['docker-compose', 'environment', 'git-clone', 'shell-commands', 'git-directory',
+                                'clean-shell-commands']
 
 
 def is_interesting_feature_string(feature_description: str):
