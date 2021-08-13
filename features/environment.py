@@ -14,7 +14,12 @@ from shutil import rmtree
 
 __logger__ = getLogger(__name__)
 
-INTERESTING_FEATURES_STRINGS = ['docker-compose', 'environment', 'git-clone', 'shell-commands', 'git-directory', 'clean-shell-commands']
+INTERESTING_FEATURES_STRINGS = ['docker-compose',
+                                'environment',
+                                'git-clone',
+                                'shell-commands',
+                                'git-directory',
+                                'clean-shell-commands']
 
 
 def is_interesting_feature_string(feature_description: str):
@@ -52,7 +57,7 @@ def before_all(context):
 
 def before_feature(context, feature):
     __logger__.info("=========== START FEATURE ===========")
-    __logger__.info("Feature name: %s", feature.name)
+    __logger__.info(f'Feature name: {feature.name}')
 
     stdout.write("=========== START FEATURE ===========\n")
     stdout.write(f'Feature name: {feature.name}\n\n')
@@ -62,7 +67,7 @@ def before_feature(context, feature):
     parameters = {}
     # parameters = dict(s.split(':', 1) for s in parameters)
     context.parameters = parameters
-    for k,v in (s.split(':', 1) for s in p):
+    for k, v in (s.split(':', 1) for s in p):
         parameters[k.strip()] = v.strip()
 
     if 'docker-compose' in parameters:
@@ -77,6 +82,13 @@ def before_feature(context, feature):
         docker.compose.up(detach=True)
 
     if 'git-clone' in parameters:
+        # We need to check if the corresponding temporal folder exists from a previous execution
+        # not finished properly, and in that case remove it
+        if exists(parameters['git-directory']):
+            # Remove folder
+            stdout.write(f'\nDeleting temporal folder...\n')
+            rmtree(context.parameters['git-directory'])
+
         git("clone", parameters['git-clone'], parameters['git-directory'])
 
     if 'shell-commands' in parameters:
