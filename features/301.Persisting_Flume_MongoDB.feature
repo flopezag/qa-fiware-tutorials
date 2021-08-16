@@ -47,30 +47,30 @@ Feature: test tutorial 301.Persisting Context Data using Apache Flume (MongoDB)
     Given  We connect to the MongoDB with the host "localhost" and the port "27017"
     When   We request the available MongoDB databases
     Then   We obtain the following databases
-      | Databases                                                                 |
-      | ['admin', 'iotagentul', 'local', 'orion', 'orion-openiot', 'sth_openiot'] |
+      | Databases                                                   |
+      | admin, iotagentul, local, orion, orion-openiot, sth_openiot |
 
   Scenario: 05 - Read historical context from the MongoDB server - show collections
     Given  We connect to the MongoDB with the host "localhost" and the port "27017"
     When   We request the available MongoDB collections from the database "sth_openiot"
-    Then   We obtains "32" total collections from MongoDB
+    Then   We obtain "32" total collections from MongoDB
 
   Scenario: 06 - Read historical context from the MongoDB server - query some data from Door001 sensor
     Given  We connect to the MongoDB with the host "localhost" and the port "27017"
-    When   We request "5" elements from the collection "sth_/_Door:001_Door"
+    When   We request "5" elements from the database "sth_openiot" and the collection "sth_/_Door:001_Door"
     Then   I receive a list with "5" elements
-    And    with the following keys
-      | Keys                                                |
-      | ["_id", "recvTime", "attrName", "attrType", "attrValue"] |
+    And    With the following keys
+      | Keys                                         |
+      | _id, recvTime, attrName, attrType, attrValue |
 
-  Scenario Outline: 07 - Read historical context from the MongoDB server - query some data from Motion001 sensor
+  Scenario: 07 - Read historical context from the MongoDB server - query some data from Motion001 sensor
     Given  We connect to the MongoDB with the host "localhost" and the port "27017"
-    When   We request "5" elements from the collection "sth_/_Motion:001_Motion" with the filter <filter>
-    Then   I receive a list with "5" elements
-    And    with the following keys
-      | Keys                 |
-      | ["recvTime", "attrValue"] |
+    When   We request information from the database "sth_openiot" and the collection "sth_/_Motion:001_Motion"
+    And    With the following filter query and and filter fields, limited to "5" elements
+      | Query                 | Fields                                   |
+      | {"attrName": "count"} | {"_id": 0, "attrType": 0, "attrName": 0} |
 
-    Examples:
-        | filter                                                           |
-        | {"attrName": "count"}, {"_id": 0, "attrType": 0, "attrName": 0}  |
+    Then   I receive a list with "5" elements
+    And    With the following keys
+      | Keys                |
+      | recvTime, attrValue |
