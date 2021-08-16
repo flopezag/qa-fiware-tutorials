@@ -7,6 +7,7 @@ from logging import getLogger
 from hamcrest import assert_that, is_, has_key
 from json import dumps
 from pymongo import MongoClient
+from time import sleep
 
 __logger__ = getLogger(__name__)
 
@@ -102,6 +103,9 @@ def step_impl(context, host, port):
 
 @when("We request the available MongoDB databases")
 def step_impl(context):
+    # We need to wait some seconds because the sth_openiot is not generated automatically
+    sleep(5)  # Delays for 5 seconds.
+
     context.obtained_dbs = context.client.list_database_names()
 
 
@@ -111,55 +115,58 @@ def step_impl(context):
         valid_response = dict(element.as_dict())
 
         expected_dbs = valid_response['Databases']
+        expected_dbs = expected_dbs.replace(" ", "").split(",")
 
-        result = list(set(context.obtained_dbs) - set(expected_dbs)) + \
-                 list(set(expected_dbs) - set(context.obtained_dbs))
+        result = list(set(context.obtained_dbs) - set(expected_dbs)) + list(set(expected_dbs) - set(context.obtained_dbs))
 
         assert_that(len(result), is_(0),
-                    "There are some databases not presented in the tuturial: {}"
+                    "There are some databases not presented in the tutorial: {}"
                     .format(result))
 
 
 @when('We request the available MongoDB collections from the database "{database}"')
 def step_impl(context, database):
-    context.mydb = context.client['sth_openiot']
+    context.mydb = context.client[database]
 
 
-@then('We obtains "{total}" total collections from MongoDB')
+@then('We obtain "{total}" total collections from MongoDB')
 def step_impl(context, total):
     # list the collections should be 4 sensors per store (4 stores) mal 2 for the aggregation: 32
     my_collections = context.mydb.list_collection_names()
     number_collections = len(my_collections)
 
-    assert_that(number_collections, is_(total),
+    assert_that(number_collections, is_(int(total)),
                 "There total number of collections found is different: {}"
                 .format(number_collections))
 
 
-@when('We request "{elements}" elements from the collection "{collection}"')
-def step_impl(context, elements, collection):
-    my_collection = context.mydb[collection]
-
-    context.myresults = list(my_collection.find().limit(elements))
+@when('We request "{elements}" elements from the database "{database}" and the collection "{collection}"')
+def step_impl(context, elements, database, collection):
+    my_db = context.client[database]
+    context.my_collection = my_db[collection]
+    context.my_results = list(context.my_collection.find().limit(int(elements)))
 
 
 @then('I receive a list with "{elements}" elements')
 def step_impl(context, elements):
     # should have data and the data
-    number_elements = len(context.myresults)
+    # context.my_results = list(context.my_collection.find().limit(int(elements)))
+    number_elements = len(context.my_results)
 
-    assert_that(number_elements, is_(elements),
+    assert_that(number_elements, is_(int(elements)),
                 "There total number of elements found is different: {}"
                 .format(number_elements))
 
 
-@step("with the following keys")
+@step("With the following keys")
 def step_impl(context):
     for element in context.table.rows:
         valid_response = dict(element.as_dict())
 
         expected_keys = valid_response['Keys']
-        obtained_keys = list(context.myresults[0].keys())
+        expected_keys = expected_keys.replace(" ", "").split(",")
+
+        obtained_keys = list(context.my_results[0].keys())
 
         aux = list(set(obtained_keys) - set(expected_keys)) + list(set(expected_keys) - set(obtained_keys))
 
@@ -168,7 +175,18 @@ def step_impl(context):
                     .format(aux))
 
 
-@when('We request "{elements}" elements from the collection "{collection}" with the filter {filter}')
-def step_impl(context, elements, collection, filter):
-    my_collection = context.mydb[collection]
-    context.myresults = list(my_collection.find(filter).limit(elements))
+@step('With the following filter query and and filter fields, limited to "{elements}" elements')
+def step_impl(context, elements):
+    for element in context.table.rows:
+        valid_response = dict(element.as_dict())
+
+        find_query = eval(valid_response['Query'])
+        find_fields = eval(valid_response['Fields'])
+
+        context.my_results = list(context.my_collection.find(find_query, find_fields).limit(int(elements)))
+
+
+@when('We request information from the database "{database}" and the collection "{collection}"')
+def step_impl(context, database, collection):
+    my_db = context.client[database]
+    context.my_collection = my_db[collection]
