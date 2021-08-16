@@ -11,7 +11,9 @@ Feature: test tutorial 301.Persisting Context Data using Apache Flume (MongoDB)
   Background:
     Given I set the tutorial 301
 
-
+  ##
+  # This Scenario will fail because version data is different
+  ##
   Scenario: 01 - Checking the Cygnus service health
     When  I send GET HTTP request to "http://localhost:5080/v1/version"
     Then  I receive a HTTP "200" response code with the body "response301-01.json"
@@ -38,11 +40,19 @@ Feature: test tutorial 301.Persisting Context Data using Apache Flume (MongoDB)
     When   I send a subscription to the Url "http://localhost:1026/v2/subscriptions" and payload "request301-02.json"
     Then   I receive a HTTP "201" response
 
+  ##
+  # This Scenario will fail because the url of cygnus is different and there are two dictionary items
+  # not presented in the tutorial 'onlyChangedAttrs' and 'attrsFormat'
+  ##
   Scenario: 03 - Get all subscription
     Given  The fiware-service header is "openiot" and the fiware-servicepath header is "/"
     When   I send GET HTTP request to "http://localhost:1026/v2/subscriptions" with fiware-service and fiware-servicepath
     Then   I receive a HTTP "200" response code with the body "response303-03.json" and exclusions "03.excludes"
 
+  ##
+  # This Scenario will fail because there are four databases not shown in the tutorial:
+  # ['config', 'session', 'sessions', 'test']
+  ##
   Scenario: 04 - Show available databases on the MongoDB server
     Given  We connect to the MongoDB with the host "localhost" and the port "27017"
     When   We request the available MongoDB databases
@@ -69,8 +79,6 @@ Feature: test tutorial 301.Persisting Context Data using Apache Flume (MongoDB)
     And    With the following filter query and and filter fields, limited to "5" elements
       | Query                 | Fields                                   |
       | {"attrName": "count"} | {"_id": 0, "attrType": 0, "attrName": 0} |
-
-    Then   I receive a list with "5" elements
-    And    With the following keys
+    Then   I receive a non-empty list with at least one element with the following keys
       | Keys                |
       | recvTime, attrValue |
