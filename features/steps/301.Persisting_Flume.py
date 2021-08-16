@@ -1,11 +1,9 @@
 from behave import given, when, then, step
 from config.settings import CODE_HOME
 from os.path import join
-from sys import stdout
 from requests import get, post, patch, exceptions
 from logging import getLogger
-from hamcrest import assert_that, is_, has_key
-from json import dumps
+from hamcrest import assert_that, is_, is_not
 from pymongo import MongoClient
 from time import sleep
 
@@ -104,7 +102,7 @@ def step_impl(context, host, port):
 @when("We request the available MongoDB databases")
 def step_impl(context):
     # We need to wait some seconds because the sth_openiot is not generated automatically
-    sleep(5)  # Delays for 5 seconds.
+    sleep(8)  # Delays for 8 seconds.
 
     context.obtained_dbs = context.client.list_database_names()
 
@@ -149,8 +147,6 @@ def step_impl(context, elements, database, collection):
 
 @then('I receive a list with "{elements}" elements')
 def step_impl(context, elements):
-    # should have data and the data
-    # context.my_results = list(context.my_collection.find().limit(int(elements)))
     number_elements = len(context.my_results)
 
     assert_that(number_elements, is_(int(elements)),
@@ -190,3 +186,23 @@ def step_impl(context, elements):
 def step_impl(context, database, collection):
     my_db = context.client[database]
     context.my_collection = my_db[collection]
+
+
+@then("I receive a non-empty list with at least one element with the following keys")
+def step_impl(context):
+    assert_that(len(context.my_results), is_not(0),
+                "The expected list should have at least one data")
+
+    for element in context.table.rows:
+        valid_response = dict(element.as_dict())
+
+        expected_keys = valid_response['Keys']
+        expected_keys = expected_keys.replace(" ", "").split(",")
+
+        obtained_keys = list(context.my_results[0].keys())
+
+        aux = list(set(obtained_keys) - set(expected_keys)) + list(set(expected_keys) - set(obtained_keys))
+
+        assert_that(aux, is_([]),
+                    "The expected keys and obtained keys are not the same, difference: {}"
+                    .format(aux))
