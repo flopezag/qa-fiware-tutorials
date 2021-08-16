@@ -15,7 +15,7 @@ def step_impl(context):
     context.data_home = join(join(join(CODE_HOME, "features"), "data"), "301.Persisting_Flume")
 
 
-@given(u'The fiware-service header is "{fiware_service}" and the fiware-servicepath header is "{fiware_servicepath}"')
+@given(u'the fiware-service header is "{fiware_service}" and the fiware-servicepath header is "{fiware_servicepath}"')
 def fiware_service_headers(context, fiware_service, fiware_servicepath):
     context.headers = {"fiware-service": fiware_service, "fiware-servicepath": fiware_servicepath}
 
@@ -93,13 +93,13 @@ def step_impl(context, url, file):
     context.response = response.reason
 
 
-@given('We connect to the MongoDB with the host "{host}" and the port "{port}"')
+@given('I connect to the MongoDB with the host "{host}" and the port "{port}"')
 def step_impl(context, host, port):
     connection_string = 'mongodb://' + host + ':' + port
     context.client = MongoClient(connection_string)
 
 
-@when("We request the available MongoDB databases")
+@when("I request the available MongoDB databases")
 def step_impl(context):
     # We need to wait some seconds because the sth_openiot is not generated automatically
     sleep(8)  # Delays for 8 seconds.
@@ -107,7 +107,7 @@ def step_impl(context):
     context.obtained_dbs = context.client.list_database_names()
 
 
-@then("We obtain the following databases")
+@then("I obtain the following databases")
 def step_impl(context):
     for element in context.table.rows:
         valid_response = dict(element.as_dict())
@@ -122,12 +122,12 @@ def step_impl(context):
                     .format(result))
 
 
-@when('We request the available MongoDB collections from the database "{database}"')
+@when('I request the available MongoDB collections from the database "{database}"')
 def step_impl(context, database):
     context.mydb = context.client[database]
 
 
-@then('We obtain "{total}" total collections from MongoDB')
+@then('I obtain "{total}" total collections from MongoDB')
 def step_impl(context, total):
     # list the collections should be 4 sensors per store (4 stores) mal 2 for the aggregation: 32
     my_collections = context.mydb.list_collection_names()
@@ -138,7 +138,7 @@ def step_impl(context, total):
                 .format(number_collections))
 
 
-@when('We request "{elements}" elements from the database "{database}" and the collection "{collection}"')
+@when('I request "{elements}" elements from the database "{database}" and the collection "{collection}"')
 def step_impl(context, elements, database, collection):
     my_db = context.client[database]
     context.my_collection = my_db[collection]
@@ -154,7 +154,7 @@ def step_impl(context, elements):
                 .format(number_elements))
 
 
-@step("With the following keys")
+@step("with the following keys")
 def step_impl(context):
     for element in context.table.rows:
         valid_response = dict(element.as_dict())
@@ -171,7 +171,7 @@ def step_impl(context):
                     .format(aux))
 
 
-@step('With the following filter query and and filter fields, limited to "{elements}" elements')
+@step('with the following filter query and and filter fields, limited to "{elements}" elements')
 def step_impl(context, elements):
     for element in context.table.rows:
         valid_response = dict(element.as_dict())
@@ -182,7 +182,7 @@ def step_impl(context, elements):
         context.my_results = list(context.my_collection.find(find_query, find_fields).limit(int(elements)))
 
 
-@when('We request information from the database "{database}" and the collection "{collection}"')
+@when('I request information from the database "{database}" and the collection "{collection}"')
 def step_impl(context, database, collection):
     my_db = context.client[database]
     context.my_collection = my_db[collection]
