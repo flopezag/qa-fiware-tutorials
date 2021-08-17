@@ -1,5 +1,5 @@
 {
-  "description": "Notify Cygnus Mongo-DB of all context changes",
+  "description": "Notify Cygnus Postgres of all context changes",
   "subject": {
     "entities": [
       {

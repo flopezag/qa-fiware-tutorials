@@ -1,0 +1,30 @@
+[
+  {
+    "id": "611b98e5f8cabf00145dbdf9",
+    "description": "Notify Cygnus Postgres of all context changes",
+    "status": "active",
+    "subject": {
+      "entities": [
+        {
+          "idPattern": ".*"
+        }
+      ],
+      "condition": {
+        "attrs": []
+      }
+    },
+    "notification": {
+      "timesSent": 1,
+      "lastNotification": "2021-08-17T11:09:26.000Z",
+      "attrs": [],
+      "onlyChangedAttrs": false,
+      "attrsFormat": "normalized",
+      "http": {
+        "url": "http://cygnus:5055/notify"
+      },
+      "lastSuccess": "2021-08-17T11:09:26.000Z",
+      "lastSuccessCode": 200
+    },
+    "throttling": 5
+  }
+]
