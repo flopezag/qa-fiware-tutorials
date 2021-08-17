@@ -128,15 +128,25 @@ def step_impl(context, database):
     context.mydb = context.client[database]
 
 
-@then('I obtain "{total}" total collections from MongoDB')
-def step_impl(context, total):
-    # list the collections should be 4 sensors per store (4 stores) mal 2 for the aggregation: 32
-    my_collections = context.mydb.list_collection_names()
-    number_collections = len(my_collections)
+@then('I obtain "{number_tables}" total {query} from {db}')
+def step_impl(context, number_tables, query, db):
+    if db is 'PostgreSQL':
+        number_tables_obtained = len(context.my_results)
 
-    assert_that(number_collections, is_(int(total)),
-                "There total number of collections found is different: {}"
-                .format(number_collections))
+        assert_that(number_tables_obtained, is_(int(number_tables)),
+                    "There total number of collections found is different: {}"
+                    .format(number_tables_obtained))
+
+        context.cursor.close()
+        context.connection.close()
+    elif db is 'Mongo-DB':
+        # list the collections should be 4 sensors per store (4 stores) mal 2 for the aggregation: 32
+        my_collections = context.mydb.list_collection_names()
+        number_collections = len(my_collections)
+
+        assert_that(number_collections, is_(int(number_tables)),
+                    "There total number of collections found is different: {}"
+                    .format(number_collections))
 
 
 @when('I request "{elements}" elements from the database "{database}" and the collection "{collection}"')
@@ -277,8 +287,8 @@ def step_impl(context):
                     "There are some schemas not presented in the tutorial: {}"
                     .format(result))
 
-        context.cursor.close()
-        context.connection.close()
+    context.cursor.close()
+    context.connection.close()
 
 
 @then("I obtain the following databases from PostgreSQL")
@@ -295,8 +305,8 @@ def step_impl(context):
                     "There are some databases not presented in the tutorial: {}"
                     .format(result))
 
-        context.cursor.close()
-        context.connection.close()
+    context.cursor.close()
+    context.connection.close()
 
 
 @when('I request the available table_schema and table_name from PostgreSQL when table_schema is "openiot"')
@@ -315,7 +325,6 @@ def step_impl(context):
     query = """select * from openiot.motion_001_motion limit 10"""
     context.cursor.execute(query)
     context.my_results = context.cursor.fetchall()
-    context.obtained_schemas = [i[0] for i in context.my_results]
 
 
 @when('I request recvtime, attrvalue from the table "openiot.motion_001_motion" limited to "10" registers')
@@ -323,4 +332,21 @@ def step_impl(context):
     query = """select recvtime, attrvalue from openiot.motion_001_motion where attrname ='count'  limit 10;"""
     context.cursor.execute(query)
     context.my_results = context.cursor.fetchall()
-    context.obtained_schemas = [i[0] for i in context.my_results]
+
+
+@then('I receive a non-empty list with "{length}" columns')
+def step_impl(context, length):
+    aux = len(context.my_results)
+
+    assert_that(aux, is_not(0),
+                "There table should contain at least one row: {}"
+                .format(context.my_results))
+
+    aux = len(context.my_results[0])
+
+    assert_that(aux, is_(int(length)),
+                "There structure of the database is not the expected: {}"
+                .format(context.my_results))
+
+    context.cursor.close()
+    context.connection.close()

@@ -49,7 +49,7 @@ Feature: test tutorial 301.Persisting Context Data using Apache Flume (MongoDB)
   Scenario: 03 - Get all subscription
     Given  the fiware-service header is "openiot" and the fiware-servicepath header is "/"
     When   I send GET HTTP request to "http://localhost:1026/v2/subscriptions" with fiware-service and fiware-servicepath
-    Then   I receive a HTTP "200" response code with the body "response303-03.json" and exclusions "03.excludes"
+    Then   I receive a HTTP "200" response code with the body "response303-03.json" and exclusions "response303-03.excludes"
 
   ##
   # This Scenario will fail because there are four databases not shown in the tutorial:
