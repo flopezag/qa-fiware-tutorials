@@ -1,6 +1,6 @@
 Feature: test tutorial 301.Persisting Context Data using Apache Flume (MongoDB)
 
-  This is the feature file of the FIWARE Step by Step tutorial for Persisting Context Data using Apache Flume (MongoDB, MySQL, PostgreSQL)
+  This is the feature file of the FIWARE Step by Step tutorial for Persisting Context Data using Apache Flume (MongoDB)
   url: https://fiware-tutorials.readthedocs.io/en/latest/historic-context-flume.html
   git-clone: https://github.com/FIWARE/tutorials.Historic-Context-Flume.git
   git-directory: /tmp/tutorials.Historic-Context-Flume

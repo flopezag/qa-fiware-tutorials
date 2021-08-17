@@ -1,3 +1,4 @@
+import psycopg2
 from behave import given, when, then, step
 from config.settings import CODE_HOME
 from os.path import join
@@ -206,3 +207,120 @@ def step_impl(context):
         assert_that(aux, is_([]),
                     "The expected keys and obtained keys are not the same, difference: {}"
                     .format(aux))
+
+
+@given('I connect to the PostgreSQL with the following data')
+def step_impl(context):
+    for element in context.table.rows:
+        valid_response = dict(element.as_dict())
+
+        user = valid_response['User']
+        password = valid_response['Password']
+        host = valid_response['Host']
+        port = valid_response['Port']
+
+        if 'Database' in valid_response:
+            database = valid_response['Database']
+            context.connection = psycopg2.connect(user=user,
+                                                  password=password,
+                                                  host=host,
+                                                  port=port,
+                                                  database=database)
+        else:
+            context.connection = psycopg2.connect(user=user,
+                                                  password=password,
+                                                  host=host,
+                                                  port=port)
+
+        # Create a cursor to perform database operations
+        context.cursor = context.connection.cursor()
+
+        # We need to wait some seconds because the openiot is not generated automatically
+        sleep(8)  # Delays for 8 seconds.
+
+
+@when("I request the available PostgreSQL databases")
+def step_impl(context):
+    query_dbs = "SELECT datname FROM pg_database"
+    context.cursor.execute(query_dbs)
+    context.my_results = context.cursor.fetchall()
+    context.obtained_dbs = [i[0] for i in context.my_results]
+
+
+@when("I request the available PostgreSQL schemas")
+def step_impl(context):
+    query_schemas = """select s.nspname as table_schema
+    from pg_catalog.pg_namespace s
+    join pg_catalog.pg_user u on u.usesysid = s.nspowner
+    where nspname not in ('information_schema', 'pg_catalog')
+          and nspname not like 'pg_toast%'
+          and nspname not like 'pg_temp_%'
+    order by table_schema"""
+    context.cursor.execute(query_schemas)
+    context.my_results = context.cursor.fetchall()
+    context.obtained_schemas = [i[0] for i in context.my_results]
+
+
+@then("I obtain the following schemas from PostgreSQL")
+def step_impl(context):
+    for element in context.table.rows:
+        valid_response = dict(element.as_dict())
+
+        expected_schemas = valid_response['Schemas']
+        expected_schemas = expected_schemas.replace(" ", "").split(",")
+
+        obtained_schemas = context.obtained_schemas
+
+        result = list(set(obtained_schemas) - set(expected_schemas)) + list(set(expected_schemas) - set(obtained_schemas))
+
+        assert_that(len(result), is_(0),
+                    "There are some schemas not presented in the tutorial: {}"
+                    .format(result))
+
+        context.cursor.close()
+        context.connection.close()
+
+
+@then("I obtain the following databases from PostgreSQL")
+def step_impl(context):
+    for element in context.table.rows:
+        valid_response = dict(element.as_dict())
+
+        expected_dbs = valid_response['Databases']
+        expected_dbs = expected_dbs.replace(" ", "").split(",")
+
+        result = list(set(context.obtained_dbs) - set(expected_dbs)) + list(set(expected_dbs) - set(context.obtained_dbs))
+
+        assert_that(len(result), is_(0),
+                    "There are some databases not presented in the tutorial: {}"
+                    .format(result))
+
+        context.cursor.close()
+        context.connection.close()
+
+
+@when('I request the available table_schema and table_name from PostgreSQL when table_schema is "openiot"')
+def step_impl(context):
+    query_schemas = """select table_schema,table_name
+                       from information_schema.tables
+                       where table_schema ='openiot'
+                       order by table_schema,table_name"""
+    context.cursor.execute(query_schemas)
+    context.my_results = context.cursor.fetchall()
+    context.obtained_schemas = [i[0] for i in context.my_results]
+
+
+@when('I request "10" elements from the table "openiot.motion_001_motion"')
+def step_impl(context):
+    query = """select * from openiot.motion_001_motion limit 10"""
+    context.cursor.execute(query)
+    context.my_results = context.cursor.fetchall()
+    context.obtained_schemas = [i[0] for i in context.my_results]
+
+
+@when('I request recvtime, attrvalue from the table "openiot.motion_001_motion" limited to "10" registers')
+def step_impl(context):
+    query = """select recvtime, attrvalue from openiot.motion_001_motion where attrname ='count'  limit 10;"""
+    context.cursor.execute(query)
+    context.my_results = context.cursor.fetchall()
+    context.obtained_schemas = [i[0] for i in context.my_results]
