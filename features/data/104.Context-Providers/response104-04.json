@@ -1,0 +1,26 @@
+{
+  "coord": {
+    "lon": 13.39,
+    "lat": 52.52
+  },
+  "weather": [
+    {
+      "id": 800,
+      "main": "Clear",
+      "description": "clear sky",
+      "icon": "01d"
+    }
+  ],
+  "base": "stations",
+  "main": {
+    "temp": 299.64,
+    "pressure": 1019,
+    "humidity": 36,
+    "temp_min": 299.15,
+    "temp_max": 300.15
+  },
+
+  "id": 2950159,
+  "name": "Berlin",
+  "cod": 200
+}

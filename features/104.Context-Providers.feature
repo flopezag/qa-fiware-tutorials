@@ -13,17 +13,23 @@ Feature: test tutorial 104.Context Data and Context Providers
     shell-commands: ./services create; ./services start
     clean-shell-commands: ./services stop
 
-  #  NOTE_1: ...
 
     Background:
         Given I set the tutorial 104
 
+
+#
+#   Request 0
+#       Note: The expected body in the Tutorial, besides expecting different values,
+#             misses two attributes ("machine" and "libversions", the latter being a structured attribute).
+#
     Scenario: [0] Checking the Orion service health
         When  I send GET HTTP request to "http://localhost:1026/version"
         Then  I receive a HTTP "200" response code with the body equal to "response101-01.json"
 
 #
 #   Request 1
+#       Note: The expected body in the Tutorial expects an attriute ("structuredValue") which is not returned.
 #
     Scenario: [1] Checking the health of the Static Data Context Provider endpoint
         When  I send GET HTTP request to "http://localhost:3000/health/static"
@@ -42,6 +48,11 @@ Feature: test tutorial 104.Context Data and Context Providers
 
 #
 #   Request 4
+#       Note: The expected body in the Tutorial, besides expecting different (static) values,
+#             misses several attributes.
+#       Note: This test, when checking the body, will always fail as by definition the answer provides actual values.
+#             It can only be checked the statusCode and could be checked if the values for the attributes "temp" and "humidity"
+#             have been provided.
 #
     Scenario: [4] Weather API Context Provider (Health Check)
         When  I send GET HTTP request to "http://localhost:3000/health/weather"
@@ -59,8 +70,10 @@ Feature: test tutorial 104.Context Data and Context Providers
 
 #
 #   Request 6
-#       Note: This test, when checking the body, will always fail as by definition the answer is random.
-#             It can only be checked the statusCode
+#       Note: This test, when checking the body, will always fail as by definition the answer is either random, or
+#             coming from the actual current weather conditions.
+#             It can only be checked the statusCode and it could be checked if the values for the attributes "temp" and "humidity"
+#             have been provided.
 #
     Scenario: [6] Retrieving a Single Attribute Value
         When 104 sends a POST HTTP request to "http://localhost:3000/random/weatherConditions/op/query"
@@ -70,13 +83,10 @@ Feature: test tutorial 104.Context Data and Context Providers
 
 #
 #   Request 7
-#       Note: This test, when checking the body, will always fail as by definition the answer is either random, or
-#             coming from the actual current weather conditions.
-#             It can only be checked the statusCode
 #       Note: there are two mistakes in the tutorial:
-#             1) in the request file the attribute "temperature" is missing
-#             2) (this is github) in the provider attribute, if you want to register the openweathermap API the statement is:
-#                http://context-provider:3000/weather/weatherConditions
+#             1) in the tutorial request the attribute "temperature" is missing
+#             2) (this is github not in readthedocs!!) in the "provider" attribute, if you want to register the openweathermap API
+#                the correct statement url is: http://context-provider:3000/weather/weatherConditions
 #
     Scenario Outline: [7] Registering a new Context Provider
         When I send POST HTTP request to "http://localhost:1026/v2/registrations"
@@ -100,21 +110,27 @@ Feature: test tutorial 104.Context Data and Context Providers
 
 #
 #   Request 9
+#       Note: The Tutorial expected value is a percentage (this is in readthedocs while in github is a number!!)
+#             while the answer is a number.
+#       Note: This test, when checking the body, will always fail as by definition the answer is either random, or
+#             coming from the actual current weather conditions.
+#             It can only be checked the statusCode and if the value returned is a number.
 #
     Scenario: [9] requesting the value of a specific attribute of a specific entity
-        When  I send GET HTTP request to "http://localhost:1026/v2/entities/urn:ngsi-ld:Store:001/attrs/relativeHumidity/value"
-        Then  I receive a HTTP "200" response code with the body equal to "response104-09.json"
+        When  104 sends a GET HTTP request to "http://localhost:1026/v2/entities/urn:ngsi-ld:Store:001/attrs/relativeHumidity/value"
+        Then  104 receives a HTTP "200" response code with the body of type "int"
 
 
 #
 #   Request 10
-#       Note: This test cannot be performed
+#       Note: This test cannot be performed as the registration parameter changes every time.
+#             A possible solution is to perform Request 11 before Request 10.
 #
 
 
 #
 #   Request 11
-#       Note: The response in the tutorial misses the attribute: 'legacyForwarding'
+#       Note: The response in the tutorial misses the attribute: 'legacyForwarding' in attribute "provider".
 #
     Scenario: [11] List all registered Context Providers
         When  I send GET HTTP request to "http://localhost:1026/v2/registrations"

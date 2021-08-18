@@ -1,0 +1,20 @@
+{
+  "description": "Random Weather Conditions",
+  "dataProvided": {
+    "entities": [
+      {
+        "id": "urn:ngsi-ld:Store:001",
+        "type": "Store"
+      }
+    ],
+    "attrs": [
+      "temperature",
+      "relativeHumidity"
+    ]
+  },
+  "provider": {
+    "http": {
+      "url": "http://context-provider:3000/weather/weatherConditions"
+    }
+  }
+}

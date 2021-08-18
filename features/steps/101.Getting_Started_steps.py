@@ -5,7 +5,7 @@ from behave import given, when, then, step
 from requests import get, post, exceptions
 from hamcrest import assert_that, is_, has_key
 from os.path import join
-from json import load
+from json import load, loads
 from deepdiff import DeepDiff
 from config.settings import CODE_HOME
 from sys import stdout
@@ -29,21 +29,38 @@ def send_orion_get_version(context, url):
     context.statusCode = str(response.status_code)
 
 
-@step(u'I receive a HTTP "{status_code}" response code with the body "{response}"')
+@step(u'I receive a HTTP "{status_code}" response code with the body equal to "{response}"')
 def http_code_is_returned(context, status_code, response):
     assert_that(context.statusCode, is_(status_code),
                 "Response to CB notification has not got the expected HTTP response code: Message: {}"
                 .format(context.response))
 
-    file = join(context.data_home, response)
-    with open(file) as f:
-        data = load(f)
+    full_file_name = join(context.data_home, response)
+    file = open(full_file_name, 'r')
+    expectedResponseDict = load(file)
+    file.close()
 
-    diff = DeepDiff(data, context.response)
-    stdout.write(f'{diff}\n\n')
+    stdout.write(f'expectedResponseDict =\n {expectedResponseDict}\n\n')
+    stdout.write(f'context.response =\n {context.response}\n\n')
 
-    assert_that(diff.to_dict(), is_(dict()),
-                f'Response from CB has not got the expected HTTP response body:\n  {diff}')
+
+#    for i in responseDict:
+#        stdout.write(f'i = {i}\n')
+#        for ii in data[i]:
+#            stdout.write(f'ii = {ii}\n')
+
+#    for iii in context.response:
+#        stdout.write(f'iii = {iii}\n')
+#
+#    diff = DeepDiff(data, context.response)
+#    stdout.write(f'{diff}\n\n')
+#
+#    assert_that(diff.to_dict(), is_(dict()),
+#                f'Response from CB has not got the expected HTTP response body:\n  {diff}')
+    assert_that(context.response, is_(expectedResponseDict),
+                f'Response from CB has not got the expected response body!\n')
+
+
 
 
 @when(u'I send POST HTTP request to "{url}"')
@@ -60,7 +77,7 @@ def send_orion_post_entity2(context, file):
 
     try:
         response = post(context.url, data=payload, headers=context.header)
-    except exceptions.RequestException as e:  
+    except exceptions.RequestException as e:
         raise SystemExit(e)
 
     context.responseHeaders = response.headers
@@ -81,9 +98,11 @@ def receive_post_response2(context):
         print(valid_response)
         valid_response['Status-Code']
         valid_response['Location']
-        assert_that(context.responseHeaders['Connection'], is_(valid_response['Connection']))
-        assert_that(context.responseHeaders['Location'], is_(valid_response['Location']))
+
         assert_that(context.statusCode, is_(valid_response['Status-Code']))
+        assert_that(context.responseHeaders['Connection'], is_(valid_response['Connection']))
+        if valid_response['Location'] != "Any":
+            assert_that(context.responseHeaders['Location'], is_(valid_response['Location']))
 
         aux = 'fiware-correlator' in valid_response
         assert_that(aux, is_(True))

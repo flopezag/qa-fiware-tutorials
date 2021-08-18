@@ -12,9 +12,14 @@ import subprocess
 import os
 from shutil import rmtree
 
+from tempfile import mkstemp
+from shutil import move
+from os import remove
+
+
 __logger__ = getLogger(__name__)
 
-INTERESTING_FEATURES_STRINGS = ['docker-compose', 'environment', 'git-clone', 'shell-commands', 'git-directory', 'clean-shell-commands']
+INTERESTING_FEATURES_STRINGS = ['docker-compose', 'docker-compose-changes', 'environment', 'git-clone', 'shell-commands', 'git-directory', 'clean-shell-commands']
 
 
 def is_interesting_feature_string(feature_description: str):
@@ -43,6 +48,17 @@ def exec_commands(parameters: dict, which_commands: str):
         os.system(command.strip())
 
     os.chdir(current_dir)
+
+def replace(source, pattern, string):
+    fh, target_file_path = mkstemp()
+    with open(target_file_path, 'w') as target_file:
+        with open(source, 'r') as source_file:
+            for line in source_file:
+                target_file.write(line.replace(pattern, string))
+
+    remove(source)
+    move(target_file_path, source)
+
 
 
 def before_all(context):
@@ -78,6 +94,18 @@ def before_feature(context, feature):
 
     if 'git-clone' in parameters:
         git("clone", parameters['git-clone'], parameters['git-directory'])
+
+    if 'docker-compose-changes' in parameters:
+        stdout.write("********** START docker-compose-changes **********\n")
+
+        changes = parameters['docker-compose-changes'].split(';')
+        l = len(changes)
+        for x in range(1, l, 2):
+            stdout.write(f'old-line = <{changes[x]}>\n')
+            stdout.write(f'new-line = <{changes[x+1]}>\n\n')
+            replace(source=parameters['git-directory']+"/"+"docker-compose.yml", pattern=changes[x], string=changes[x+1])
+
+        stdout.write("********** END docker-compose-changes **********\n\n")
 
     if 'shell-commands' in parameters:
         exec_commands(parameters, 'shell-commands')
