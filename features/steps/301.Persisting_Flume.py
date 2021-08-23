@@ -119,7 +119,8 @@ def step_impl(context):
         expected_dbs = valid_response['Databases']
         expected_dbs = expected_dbs.replace(" ", "").split(",")
 
-        result = list(set(context.obtained_dbs) - set(expected_dbs)) + list(set(expected_dbs) - set(context.obtained_dbs))
+        result = list(set(context.obtained_dbs) - set(expected_dbs)) \
+            + list(set(expected_dbs) - set(context.obtained_dbs))
 
         assert_that(len(result), is_(0),
                     "There are some databases not presented in the tutorial: {}"
@@ -263,18 +264,45 @@ def step_impl(context):
 @when("I request the available MySQL databases")
 def step_impl(context):
     try:
-        engine = create_engine('mysql+pymysql://root:123@localhost:3306', pool_recycle=3600)
-        c = engine.connect()
+        connection_string = 'mysql+pymysql://' + context.user + ':' + context.password \
+                            + '@' + context.host + ':' + context.port
 
-        engine.execute('SET GLOBAL net_read_timeout=600')
-        engine.execute('SET GLOBAL connect_timeout=60')
+        context.connection = create_engine(connection_string, pool_recycle=3600)
+        context.connection = context.connection.connect()
+
+        context.connection.execute('SET GLOBAL net_read_timeout=600')
+        context.connection.execute('SET GLOBAL connect_timeout=60')
+        context.connection.execute('SET GLOBAL wait_timeout=100')
 
         sleep(8)  # Delays for 8 seconds.
 
-        context.cursor = engine.execute('SHOW DATABASES;')
+        context.cursor = context.connection.execute('SHOW DATABASES;')
 
         available_databases = context.cursor.fetchall()
         context.obtained_dbs = [i[0] for i in available_databases]
+    except Exception as e:
+        stdout.write(f'error: {e}\n\n')
+
+
+@when("I request the available MySQL schemas")
+def step_impl(context):
+    try:
+        connection_string = 'mysql+pymysql://' + context.user + ':' + context.password \
+                            + '@' + context.host + ':' + context.port
+
+        context.connection = create_engine(connection_string, pool_recycle=3600)
+        context.connection = context.connection.connect()
+
+        context.connection.execute('SET GLOBAL net_read_timeout=600')
+        context.connection.execute('SET GLOBAL connect_timeout=60')
+        context.connection.execute('SET GLOBAL wait_timeout=100')
+
+        sleep(8)  # Delays for 8 seconds.
+
+        context.cursor = context.connection.execute('SHOW SCHEMAS;')
+
+        obtained_schemas = context.cursor.fetchall()
+        context.obtained_schemas = [i[0] for i in obtained_schemas]
     except Exception as e:
         stdout.write(f'error: {e}\n\n')
 
@@ -303,14 +331,15 @@ def step_impl(context, db):
 
         obtained_schemas = context.obtained_schemas
 
-        result = list(set(obtained_schemas) - set(expected_schemas)) + list(set(expected_schemas) - set(obtained_schemas))
-
-        assert_that(len(result), is_(0),
-                    "There are some schemas not presented in the tutorial: {}"
-                    .format(result))
+        result = list(set(obtained_schemas) - set(expected_schemas)) \
+            + list(set(expected_schemas) - set(obtained_schemas))
 
     context.cursor.close()
     context.connection.close()
+
+    assert_that(len(result), is_(0),
+                "There are some schemas not presented in the tutorial: {}"
+                .format(result))
 
 
 @then("I obtain the following databases from {db}")
@@ -324,12 +353,12 @@ def step_impl(context, db):
         result = list(set(context.obtained_dbs) - set(expected_dbs)) \
             + list(set(expected_dbs) - set(context.obtained_dbs))
 
-        assert_that(len(result), is_(0),
-                    "There are some databases not presented in the tutorial: {}"
-                    .format(result))
-
     context.cursor.close()
     context.connection.close()
+
+    assert_that(len(result), is_(0),
+                "There are some databases not presented in the tutorial: {}"
+                .format(result))
 
 
 @when('I request the available table_schema and table_name from PostgreSQL when table_schema is "openiot"')
@@ -380,40 +409,10 @@ def step_impl(context):
     for element in context.table.rows:
         valid_response = dict(element.as_dict())
 
-        user = valid_response['User']
-        password = valid_response['Password']
-        host = valid_response['Host']
-        port = valid_response['Port']
-
-        #if 'Database' in valid_response:
-        #    database = valid_response['Database']
-        #    string_connection = 'mysql+pymysql://' + user + ':' + password + '@' + host + ':' + port + '/' + database
-        #else:
-        #    string_connection = 'mysql+pymysql://' + user + ':' + password + '@' + host + ':' + port
-
-        #context.engine = db.create_engine(string_connection, pool_recycle=3600)
-        #context.cursor = context.engine.connect()
-
-
-
-        #    context.connection = mysql.connector.connect(user=user,
-        #                                  password=password,
-        #                                  host=host,
-        #                                  port=port,
-        #                                  database=database)
-        #else:
-        #    context.connection = mysql.connector.connect(user=user,
-        #                                  password=password,
-        #                                  host=host,
-        #                                  port=port)
-
-        # Create a cursor to perform database operations
-        #context.cursor = context.connection.cursor()
-
-        # context.cursor.execute('SET GLOBAL connect_timeout=6000')
-
-        # We need to wait some seconds because the openiot is not generated automatically
-        #sleep(8)  # Delays for 8 seconds.
+        context.user = valid_response['User']
+        context.password = valid_response['Password']
+        context.host = valid_response['Host']
+        context.port = valid_response['Port']
 
 
 @when("I request the information about the running database")
