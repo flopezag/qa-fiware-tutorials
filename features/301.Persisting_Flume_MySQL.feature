@@ -1,10 +1,10 @@
-Feature: test tutorial 301.Persisting Context Data using Apache Flume (PostgreSQL)
+Feature: test tutorial 301.Persisting Context Data using Apache Flume (MySQL)
 
-  This is the feature file of the FIWARE Step by Step tutorial for Persisting Context Data using Apache Flume (PostgreSQL)
+  This is the feature file of the FIWARE Step by Step tutorial for Persisting Context Data using Apache Flume (MySQL)
   url: https://fiware-tutorials.readthedocs.io/en/latest/historic-context-flume.html
   git-clone: https://github.com/FIWARE/tutorials.Historic-Context-Flume.git
   git-directory: /tmp/tutorials.Historic-Context-Flume
-  shell-commands: ./services create; ./services postgres
+  shell-commands: ./services create; ./services mysql
   clean-shell-commands: ./services stop
 
 
@@ -38,7 +38,7 @@ Feature: test tutorial 301.Persisting Context Data using Apache Flume (PostgreSQ
 
   Scenario: 02 - Subscribing to context changes
     Given  the fiware-service header is "openiot" and the fiware-servicepath header is "/"
-    When   I send a subscription to the Url "http://localhost:1026/v2/subscriptions" and payload "request301-02-psql.json"
+    When   I send a subscription to the Url "http://localhost:1026/v2/subscriptions" and payload "request301-02-mysql.json"
     Then   I receive a HTTP "201" response
 
   ##
@@ -48,43 +48,43 @@ Feature: test tutorial 301.Persisting Context Data using Apache Flume (PostgreSQ
   Scenario: 03 - Get all subscription
     Given  the fiware-service header is "openiot" and the fiware-servicepath header is "/"
     When   I send GET HTTP request to "http://localhost:1026/v2/subscriptions" with fiware-service and fiware-servicepath
-    Then   I receive a HTTP "200" response code with the body "response303-03-psql.json" and exclusions "response303-03.excludes"
+    Then   I receive a HTTP "200" response code with the body "response303-03-mysql.json" and exclusions "response303-03.excludes"
 
-  Scenario: 04 - Show available databases on the PostgreSQL server
-    Given  I connect to the PostgreSQL with the following data
+  Scenario: 04 - Show available databases on the MySQL server
+    Given  I connect to the MySQL with the following data
+      | User     | Password | Host      | Port | Database |
+      | root     | 123      | localhost | 3306 | openiot  |
+    When   I request the available MySQL databases
+    Then   I obtain the following databases from MySQL
+      | Databases                                                   |
+      | information_schema, mysql, openiot, performance_schema, sys |
+
+  Scenario: 05 - Show available schemas on the MySQL server
+    Given  I connect to the MySQL with the following data
       | User     | Password | Host      | Port |
-      | postgres | password | localhost | 5432 |
-    When   I request the available PostgreSQL databases
-    Then   I obtain the following databases from PostgreSQL
-      | Databases                      |
-      | postgres, template1, template0 |
-
-  Scenario: 05 - Show available schemas on the PostgreSQL server
-    Given  I connect to the PostgreSQL with the following data
-      | User     | Password | Host      | Port | Database |
-      | postgres | password | localhost | 5432 | postgres |
-    When   I request the available PostgreSQL schemas
-    Then   I obtain the following schemas from PostgreSQL
+      | root     | 123      | localhost | 3306 |
+    When   I request the available MySQL schemas
+    Then   I obtain the following schemas from MySQL
       | Schemas         |
-      | openiot, public |
+      | information_schema, mysql, openiot, performance_schema, sys |
 
-  Scenario: 06 - Read historical context from the PostgreSQL server - show table schema and table name
-    Given  I connect to the PostgreSQL with the following data
+  Scenario: 06 - Read historical context from the MySQL server - show tables of openiot database
+    Given  I connect to the MySQL with the following data
       | User     | Password | Host      | Port | Database |
-      | postgres | password | localhost | 5432 | postgres |
-    When   I request the available table_schema and table_name from PostgreSQL when table_schema is "openiot"
-    Then   I obtain "16" total tables from PostgreSQL
+      | root     | 123      | localhost | 3306 | openiot  |
+    When   I request the information about the running database
+    Then   I obtain "16" total tables from MySQL
 
-  Scenario: 07 - Read historical context from the PostgreSQL server - query some data from Motion001 sensor
-    Given  I connect to the PostgreSQL with the following data
+  Scenario: 07 - Read historical context from the MySQL server - query some data from Motion001 sensor
+    Given  I connect to the MySQL with the following data
       | User     | Password | Host      | Port | Database |
-      | postgres | password | localhost | 5432 | postgres |
-    When   I request "10" elements from the table "openiot.motion_001_motion"
+      | root     | 123      | localhost | 3306 | openiot  |
+    When   I request "10" elements from the table "openiot.Motion_001_Motion"
     Then   I receive a non-empty list with "9" columns
 
-  Scenario: 08 - Read historical context from the PostgreSQL server - query accumulation Motion001 sensor
-    Given  I connect to the PostgreSQL with the following data
+  Scenario: 08 - Read historical context from the MySQL server - query accumulation Motion001 sensor
+    Given  I connect to the MySQL with the following data
       | User     | Password | Host      | Port | Database |
-      | postgres | password | localhost | 5432 | postgres |
-    When   I request recvtime, attrvalue from the table "openiot.motion_001_motion" limited to "10" registers
+      | root     | 123      | localhost | 3306 | openiot  |
+    When   I request recvtime, attrvalue from the table "openiot.Motion_001_Motion" limited to "10" registers
     Then   I receive a non-empty list with "2" columns

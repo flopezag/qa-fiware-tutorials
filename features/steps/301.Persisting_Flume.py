@@ -7,6 +7,9 @@ from logging import getLogger
 from hamcrest import assert_that, is_, is_not
 from pymongo import MongoClient
 from time import sleep
+import mysql.connector
+from sqlalchemy import create_engine, exc
+from sys import stdout
 
 __logger__ = getLogger(__name__)
 
@@ -130,7 +133,7 @@ def step_impl(context, database):
 
 @then('I obtain "{number_tables}" total {query} from {db}')
 def step_impl(context, number_tables, query, db):
-    if db is 'PostgreSQL':
+    if db == 'PostgreSQL':
         number_tables_obtained = len(context.my_results)
 
         assert_that(number_tables_obtained, is_(int(number_tables)),
@@ -139,7 +142,7 @@ def step_impl(context, number_tables, query, db):
 
         context.cursor.close()
         context.connection.close()
-    elif db is 'Mongo-DB':
+    elif db == 'Mongo-DB':
         # list the collections should be 4 sensors per store (4 stores) mal 2 for the aggregation: 32
         my_collections = context.mydb.list_collection_names()
         number_collections = len(my_collections)
@@ -257,6 +260,25 @@ def step_impl(context):
     context.obtained_dbs = [i[0] for i in context.my_results]
 
 
+@when("I request the available MySQL databases")
+def step_impl(context):
+    try:
+        engine = create_engine('mysql+pymysql://root:123@localhost:3306', pool_recycle=3600)
+        c = engine.connect()
+
+        engine.execute('SET GLOBAL net_read_timeout=600')
+        engine.execute('SET GLOBAL connect_timeout=60')
+
+        sleep(8)  # Delays for 8 seconds.
+
+        context.cursor = engine.execute('SHOW DATABASES;')
+
+        available_databases = context.cursor.fetchall()
+        context.obtained_dbs = [i[0] for i in available_databases]
+    except Exception as e:
+        stdout.write(f'error: {e}\n\n')
+
+
 @when("I request the available PostgreSQL schemas")
 def step_impl(context):
     query_schemas = """select s.nspname as table_schema
@@ -271,8 +293,8 @@ def step_impl(context):
     context.obtained_schemas = [i[0] for i in context.my_results]
 
 
-@then("I obtain the following schemas from PostgreSQL")
-def step_impl(context):
+@then("I obtain the following schemas from {db}")
+def step_impl(context, db):
     for element in context.table.rows:
         valid_response = dict(element.as_dict())
 
@@ -291,15 +313,16 @@ def step_impl(context):
     context.connection.close()
 
 
-@then("I obtain the following databases from PostgreSQL")
-def step_impl(context):
+@then("I obtain the following databases from {db}")
+def step_impl(context, db):
     for element in context.table.rows:
         valid_response = dict(element.as_dict())
 
         expected_dbs = valid_response['Databases']
         expected_dbs = expected_dbs.replace(" ", "").split(",")
 
-        result = list(set(context.obtained_dbs) - set(expected_dbs)) + list(set(expected_dbs) - set(context.obtained_dbs))
+        result = list(set(context.obtained_dbs) - set(expected_dbs)) \
+            + list(set(expected_dbs) - set(context.obtained_dbs))
 
         assert_that(len(result), is_(0),
                     "There are some databases not presented in the tutorial: {}"
@@ -350,3 +373,51 @@ def step_impl(context, length):
 
     context.cursor.close()
     context.connection.close()
+
+
+@given("I connect to the MySQL with the following data")
+def step_impl(context):
+    for element in context.table.rows:
+        valid_response = dict(element.as_dict())
+
+        user = valid_response['User']
+        password = valid_response['Password']
+        host = valid_response['Host']
+        port = valid_response['Port']
+
+        #if 'Database' in valid_response:
+        #    database = valid_response['Database']
+        #    string_connection = 'mysql+pymysql://' + user + ':' + password + '@' + host + ':' + port + '/' + database
+        #else:
+        #    string_connection = 'mysql+pymysql://' + user + ':' + password + '@' + host + ':' + port
+
+        #context.engine = db.create_engine(string_connection, pool_recycle=3600)
+        #context.cursor = context.engine.connect()
+
+
+
+        #    context.connection = mysql.connector.connect(user=user,
+        #                                  password=password,
+        #                                  host=host,
+        #                                  port=port,
+        #                                  database=database)
+        #else:
+        #    context.connection = mysql.connector.connect(user=user,
+        #                                  password=password,
+        #                                  host=host,
+        #                                  port=port)
+
+        # Create a cursor to perform database operations
+        #context.cursor = context.connection.cursor()
+
+        # context.cursor.execute('SET GLOBAL connect_timeout=6000')
+
+        # We need to wait some seconds because the openiot is not generated automatically
+        #sleep(8)  # Delays for 8 seconds.
+
+
+@when("I request the information about the running database")
+def step_impl(context):
+    query = """show tables from openiot"""
+    context.cursor.execute(query)
+    context.my_results = context.cursor.fetchall()
