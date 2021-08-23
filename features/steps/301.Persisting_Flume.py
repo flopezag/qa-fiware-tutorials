@@ -264,17 +264,14 @@ def step_impl(context):
 @when("I request the available MySQL databases")
 def step_impl(context):
     try:
-        connection_string = 'mysql+pymysql://' + context.user + ':' + context.password \
-                            + '@' + context.host + ':' + context.port
-
-        context.connection = create_engine(connection_string, pool_recycle=3600)
+        context.connection = create_engine(context.connection_string, pool_recycle=3600, pool_pre_ping=True)
         context.connection = context.connection.connect()
 
         context.connection.execute('SET GLOBAL net_read_timeout=600')
-        context.connection.execute('SET GLOBAL connect_timeout=60')
-        context.connection.execute('SET GLOBAL wait_timeout=100')
+        context.connection.execute('SET GLOBAL connect_timeout=600')
+        context.connection.execute('SET GLOBAL wait_timeout=600')
 
-        sleep(8)  # Delays for 8 seconds.
+        sleep(12)  # Delays for 8 seconds.
 
         context.cursor = context.connection.execute('SHOW DATABASES;')
 
@@ -282,20 +279,18 @@ def step_impl(context):
         context.obtained_dbs = [i[0] for i in available_databases]
     except Exception as e:
         stdout.write(f'error: {e}\n\n')
+        context.obtained_dbs = []
 
 
 @when("I request the available MySQL schemas")
 def step_impl(context):
     try:
-        connection_string = 'mysql+pymysql://' + context.user + ':' + context.password \
-                            + '@' + context.host + ':' + context.port
-
-        context.connection = create_engine(connection_string, pool_recycle=3600)
+        context.connection = create_engine(context.connection_string, pool_recycle=3600, pool_pre_ping=True)
         context.connection = context.connection.connect()
 
         context.connection.execute('SET GLOBAL net_read_timeout=600')
-        context.connection.execute('SET GLOBAL connect_timeout=60')
-        context.connection.execute('SET GLOBAL wait_timeout=100')
+        context.connection.execute('SET GLOBAL connect_timeout=600')
+        context.connection.execute('SET GLOBAL wait_timeout=600')
 
         sleep(8)  # Delays for 8 seconds.
 
@@ -305,6 +300,7 @@ def step_impl(context):
         context.obtained_schemas = [i[0] for i in obtained_schemas]
     except Exception as e:
         stdout.write(f'error: {e}\n\n')
+        context.obtained_schemas = []
 
 
 @when("I request the available PostgreSQL schemas")
@@ -374,16 +370,43 @@ def step_impl(context):
 
 @when('I request "10" elements from the table "openiot.motion_001_motion"')
 def step_impl(context):
-    query = """select * from openiot.motion_001_motion limit 10"""
-    context.cursor.execute(query)
-    context.my_results = context.cursor.fetchall()
+    try:
+        context.connection = create_engine(context.connection_string, pool_recycle=3600, pool_pre_ping=True)
+        context.connection = context.connection.connect()
+
+        context.connection.execute('SET GLOBAL net_read_timeout=600')
+        context.connection.execute('SET GLOBAL connect_timeout=600')
+        context.connection.execute('SET GLOBAL wait_timeout=600')
+
+        sleep(8)  # Delays for 8 seconds.
+
+        query = 'SELECT * FROM openiot.Motion_001_Motion limit 10;'
+        context.cursor = context.connection.execute(query)
+
+        context.my_results = context.cursor.fetchall()
+    except Exception as e:
+        stdout.write(f'error: {e}\n\n')
+        context.my_results = []
 
 
 @when('I request recvtime, attrvalue from the table "openiot.motion_001_motion" limited to "10" registers')
 def step_impl(context):
-    query = """select recvtime, attrvalue from openiot.motion_001_motion where attrname ='count'  limit 10;"""
-    context.cursor.execute(query)
-    context.my_results = context.cursor.fetchall()
+    try:
+        context.connection = create_engine(context.connection_string, pool_recycle=3600, pool_pre_ping=True)
+        context.connection = context.connection.connect()
+
+        context.connection.execute('SET GLOBAL net_read_timeout=600')
+        context.connection.execute('SET GLOBAL connect_timeout=600')
+        context.connection.execute('SET GLOBAL wait_timeout=600')
+
+        sleep(8)  # Delays for 8 seconds.
+
+        query = "SELECT recvtime, attrvalue FROM openiot.Motion_001_Motion WHERE attrname ='count' LIMIT 10;"
+        context.cursor = context.connection.execute(query)
+        context.my_results = context.cursor.fetchall()
+    except Exception as e:
+        stdout.write(f'error: {e}\n\n')
+        context.my_results = []
 
 
 @then('I receive a non-empty list with "{length}" columns')
@@ -408,15 +431,25 @@ def step_impl(context, length):
 def step_impl(context):
     for element in context.table.rows:
         valid_response = dict(element.as_dict())
-
-        context.user = valid_response['User']
-        context.password = valid_response['Password']
-        context.host = valid_response['Host']
-        context.port = valid_response['Port']
+        context.connection_string = 'mysql+pymysql://' + valid_response['User'] + ':' + valid_response['Password'] \
+                                    + '@' + valid_response['Host'] + ':' + valid_response['Port']
 
 
 @when("I request the information about the running database")
 def step_impl(context):
-    query = """show tables from openiot"""
-    context.cursor.execute(query)
-    context.my_results = context.cursor.fetchall()
+    try:
+        context.connection = create_engine(context.connection_string, pool_recycle=3600, pool_pre_ping=True)
+        context.connection = context.connection.connect()
+
+        context.connection.execute('SET GLOBAL net_read_timeout=600')
+        context.connection.execute('SET GLOBAL connect_timeout=600')
+        context.connection.execute('SET GLOBAL wait_timeout=600')
+
+        sleep(8)  # Delays for 8 seconds.
+
+        context.cursor = context.connection.execute('SHOW tables FROM openiot;')
+
+        context.my_results = context.cursor.fetchall()
+    except Exception as e:
+        stdout.write(f'error: {e}\n\n')
+        context.my_results = []
