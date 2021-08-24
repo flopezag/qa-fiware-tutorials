@@ -42,5 +42,5 @@ def step_impl(context, url):
         raise SystemExit(e)
 
     context.responseHeaders = response.headers
+    context.response = response
     context.statusCode = str(response.status_code)
-

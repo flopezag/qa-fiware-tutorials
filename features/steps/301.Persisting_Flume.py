@@ -10,6 +10,7 @@ from time import sleep
 import mysql.connector
 from sqlalchemy import create_engine, exc
 from sys import stdout
+from features.funtions import http
 
 __logger__ = getLogger(__name__)
 
@@ -26,10 +27,17 @@ def fiware_service_headers(context, fiware_service, fiware_servicepath):
 
 @step(u'I send GET HTTP request to "{url}" with fiware-service and fiware-servicepath')
 def send_query_with_service(context, url):
+    #try:
+    #    response = get(url, headers=context.headers, verify=False)
+    #    # override encoding by real educated guess as provided by chardet
+    #    response.encoding = response.apparent_encoding
+    #except exceptions.RequestException as e:  # This is the correct syntax
+    #    raise SystemExit(e)
+
+    sleep(8)
+
     try:
-        response = get(url, headers=context.headers, verify=False)
-        # override encoding by real educated guess as provided by chardet
-        response.encoding = response.apparent_encoding
+        response = http.get(url, headers=context.headers, verify=False)
     except exceptions.RequestException as e:  # This is the correct syntax
         raise SystemExit(e)
 
