@@ -1,0 +1,6 @@
+{
+    "cols": ["table_name"],
+    "rows": [["etlamp"], ["etmotion"], ["md_ets_metadata"]],
+    "rowcount": 3,
+    "duration": 42.3912
+}
