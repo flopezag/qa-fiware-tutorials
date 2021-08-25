@@ -4,9 +4,9 @@ from os.path import join
 from requests import get, post, exceptions
 from logging import getLogger
 from json import loads, dumps
-from features.funtions import read_data_from_file
+from features.funtions import read_data_from_file, replace_dates_query, http, check_cratedb_health_status
 from time import sleep
-from sys import stdout
+from datetime import datetime, timedelta, timezone
 
 __logger__ = getLogger(__name__)
 
@@ -37,29 +37,7 @@ def step_impl_post(context, url, content_type):
     __logger__.info(f'Sending POST HTTP request to {url}')
     header = {'Content-Type': 'application/json'}
 
-    # I need to wait until the Health Status of CrateDB is Green in order to start querying it
-    # Sometimes, it is needed some time before Tables and Indexes are ok in CrateDB
-    stmt = '{"stmt": "select health from sys.health order by severity desc limit 1;"}'
-    response = ''
-    while response != 'GREEN':
-        try:
-            response = get(url, data=stmt, headers=header)
-            status = response.json()['rows'][0]
-
-            stdout.write(f'\nCrateDB Health Status: {status}')
-
-            response = status[0]
-        except exceptions.ConnectionError:
-            # Could be possible that even CrateDB server is not still alive
-            # Therefore we need to wait a little and try it again...
-            sleep(2)
-            continue
-        except IndexError:
-            # The transition from RED status to GREEN status crosses through
-            # an empty status in the response of 'rows', then we wait 1 second
-            # and try again
-            sleep(2)
-            continue
+    check_cratedb_health_status(url=url, headers=header)
 
     try:
         response = post(url, data=dumps(context.payload), headers=header)
@@ -69,3 +47,34 @@ def step_impl_post(context, url, content_type):
     context.responseHeaders = response.headers
     context.response = response.json()
     context.statusCode = str(response.status_code)
+
+
+@step("the date and time are around today")
+def step_impl(context):
+    context.payload['stmt'] = replace_dates_query(context.payload['stmt'])
+
+
+@step("using fiware-service and fiware-servicepath header keys")
+def step_impl(context):
+    sleep(8)
+
+    try:
+        response = http.get(context.url, headers=context.headers, verify=False)
+    except exceptions.RequestException as e:  # This is the correct syntax
+        raise SystemExit(e)
+
+    context.response = response.json()
+    context.statusCode = str(response.status_code)
+
+
+@when(
+    'I send GET HTTP request to "{url}" with from and to date {days} days from now')
+def step_impl(context, url, days):
+    # fromDate=2018-06-27T09:00:00&toDate=2018-06-30T23:59:59
+    current_date_time = datetime.now(timezone.utc)
+
+    # We need to select one day after and one day before today
+    from_date = (current_date_time - timedelta(days=int(days))).strftime("%Y-%m-%dT%H:%M:%S")
+    to_date = (current_date_time + timedelta(days=int(days))).strftime("%Y-%m-%dT%H:%M:%S")
+
+    context.url = url + '&fromDate=' + from_date + '&toDate=' + to_date
