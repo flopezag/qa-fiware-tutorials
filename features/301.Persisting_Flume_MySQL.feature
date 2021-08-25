@@ -17,7 +17,7 @@ Feature: test tutorial 301.Persisting Context Data using Apache Flume (MySQL)
   @fail
   Scenario: 01 - Checking the Cygnus service health
     When  I send GET HTTP request to "http://localhost:5080/v1/version"
-    Then  I receive a HTTP "200" response code with the body "response301-01.json"
+    Then  I receive a HTTP "200" response code from Cygnus with the body "response301-01.json"
 
   Scenario: Getting API key for lamp and door
     Given  the fiware-service header is "openiot" and the fiware-servicepath header is "/"
@@ -48,7 +48,7 @@ Feature: test tutorial 301.Persisting Context Data using Apache Flume (MySQL)
   Scenario: 03 - Get all subscription
     Given  the fiware-service header is "openiot" and the fiware-servicepath header is "/"
     When   I send GET HTTP request to "http://localhost:1026/v2/subscriptions" with fiware-service and fiware-servicepath
-    Then   I receive a HTTP "200" response code with the body "response303-03-mysql.json" and exclusions "response303-03.excludes"
+    Then   I receive a HTTP "200" response code from Broker with the body "response303-03-mysql.json" and exclusions "response303-03.excludes"
 
   Scenario: 04 - Show available databases on the MySQL server
     Given  I connect to the MySQL with the following data

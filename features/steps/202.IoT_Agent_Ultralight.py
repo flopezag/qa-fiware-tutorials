@@ -114,12 +114,12 @@ def get_with_context_headers(context, method, url, fw_service, fw_servicepath, f
         context.response = ""
 
 
-@then(u'I receive a HTTP "{code}" response code with the body "{file}" and exclusions "{excl_file}"')
-def receive_post_iot_dummy_response_with_data(context, code, file, excl_file):
+@then(u'I receive a HTTP "{code}" response code from {server} with the body "{file}" and exclusions "{excl_file}"')
+def receive_post_iot_dummy_response_with_data(context, code, server, file, excl_file):
     body = json.loads(read_data_from_file(context, file))
 
     diff = dict_diff_with_exclusions(context, body, context.response, excl_file)
     stdout.write(f'{diff}\n\n')
     assert_that(diff.to_dict(), is_(dict()),
-                f'Response from CB has not got the expected HTTP response body:\n  {diff}')
+                f'Response from {server} has not got the expected HTTP response body:\n  {diff}')
     assert (context.statusCode == code)
