@@ -2,13 +2,12 @@ import psycopg2
 from behave import given, when, then, step
 from config.settings import CODE_HOME
 from os.path import join
-from requests import get, post, patch, exceptions
+from requests import post, patch, exceptions
 from logging import getLogger
 from hamcrest import assert_that, is_, is_not
 from pymongo import MongoClient
 from time import sleep
-import mysql.connector
-from sqlalchemy import create_engine, exc
+from sqlalchemy import create_engine
 from sys import stdout
 from features.funtions import http
 

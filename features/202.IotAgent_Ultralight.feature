@@ -16,7 +16,7 @@ Feature: test tutorial 202.Introduction to IoT Agent Ultralight
 
     Scenario: 01 - Checking the IoT Agent service health
         When  I send GET HTTP request to "http://localhost:4041/iot/about"
-        Then  I receive a HTTP "200" response code with the body "response202-01.json" and exclusions "01.excludes"
+        Then  I receive a HTTP "200" response code from IoTAgent with the body "response202-01.json" and exclusions "01.excludes"
 
     Scenario: 02 - Provisioning a Service Group
         When  I send POST HTTP request to "http://localhost:4041/iot/services"
@@ -35,7 +35,7 @@ Feature: test tutorial 202.Introduction to IoT Agent Ultralight
 
     Scenario: 05 - A measurement has been recorded, by retrieving the entity data from the context broker
         When  I send IoT "GET" HTTP request with data to "http://localhost:1026/v2/entities/urn:ngsi-ld:Motion:001" With headers fiware-service "openiot" and fiware-servicepath "/" and data is "request202-05.json"
-        Then  I receive a HTTP "200" response code with the body "response202-05.json" and exclusions "05.excludes"
+        Then  I receive a HTTP "200" response code from Broker with the body "response202-05.json" and exclusions "05.excludes"
 
     Scenario: 06 - Provisioning an actuator via command
         When  I send POST HTTP request to "http://localhost:4041/iot/devices"
@@ -55,7 +55,7 @@ Feature: test tutorial 202.Introduction to IoT Agent Ultralight
 
     Scenario: 09 - The result of the command to ring the bell can be read by querying the entity within the Orion Context Broker.
         When  I send IoT "GET" HTTP request with data to "http://localhost:1026/v2/entities/urn:ngsi-ld:Bell:001" With headers fiware-service "openiot" and fiware-servicepath "/" and data is "request202-09.json"
-        Then  I receive a HTTP "200" response code with the body "response202-09.json" and exclusions "09.excludes"
+        Then  I receive a HTTP "200" response code from Broker with the body "response202-09.json" and exclusions "09.excludes"
 
     Scenario: 10 - Provisioning a Smart Door
         When  I send POST HTTP request to "http://localhost:4041/iot/devices"
@@ -69,7 +69,7 @@ Feature: test tutorial 202.Introduction to IoT Agent Ultralight
 
     Scenario: 12 - The result of the command to ring the bell can be read by querying the entity within the Orion Context Broker.
         When  I send IoT "GET" HTTP request with data to "http://localhost:4041/iot/devices" With headers fiware-service "openiot" and fiware-servicepath "/" and data is "request202-12.json"
-        Then  I receive a HTTP "200" response code with the body "response202-12.json" and exclusions "12.excludes"
+        Then  I receive a HTTP "200" response code from IoTAgent with the body "response202-12.json" and exclusions "12.excludes"
 
     Scenario: 13 - Ringing the Bell
         When  I send POST HTTP request to "http://localhost:1026/v2/entities/urn:ngsi-ld:Bell:001/attrs"
@@ -97,11 +97,11 @@ Feature: test tutorial 202.Introduction to IoT Agent Ultralight
 
     Scenario: 16 - Read the service group details
         When  I send IoT "GET" HTTP request with data to "http://localhost:4041/iot/services" With headers fiware-service "openiot" and fiware-servicepath "/" and data is "request202-16.json"
-        Then  I receive a HTTP "200" response code with the body "response202-16.json" and exclusions "16.excludes"
+        Then  I receive a HTTP "200" response code from IoTAgent with the body "response202-16.json" and exclusions "16.excludes"
 
     Scenario: 17 - List all service groups
         When  I send IoT "GET" HTTP request with data to "http://localhost:4041/iot/services" With headers fiware-service "openiot" and fiware-servicepath "/" and data is "request202-17.json"
-        Then  I receive a HTTP "200" response code with the body "response202-17.json" and exclusions "17.excludes"
+        Then  I receive a HTTP "200" response code from IoTAgent with the body "response202-17.json" and exclusions "17.excludes"
 
     Scenario: 18 - Update a Service Group
         When  I send POST HTTP request to "http://localhost:4041/iot/services?resource=/iot/d&apikey=4jggokgpepnvsb2uv4s40d59ov"
@@ -120,11 +120,11 @@ Feature: test tutorial 202.Introduction to IoT Agent Ultralight
 
     Scenario: 21 - Read the provisioned device details
         When  I send IoT "GET" HTTP request with data to "http://localhost:4041/iot/devices/bell002" With headers fiware-service "openiot" and fiware-servicepath "/" and data is "request202-12.json"
-        Then  I receive a HTTP "200" response code with the body "response202-21.json" and exclusions "21.excludes"
+        Then  I receive a HTTP "200" response code from IoTAgent with the body "response202-21.json" and exclusions "21.excludes"
 
     Scenario: 22 - List all provisioned devices
         When  I send IoT "GET" HTTP request with data to "http://localhost:4041/iot/devices" With headers fiware-service "openiot" and fiware-servicepath "/" and data is "request202-empty.json"
-        Then  I receive a HTTP "200" response code with the body "response202-22.json" and exclusions "22.excludes"
+        Then  I receive a HTTP "200" response code from IoTAgent with the body "response202-22.json" and exclusions "22.excludes"
 
     Scenario: 23 - Update a Provisioned Device
         When  I send POST HTTP request to "http://localhost:4041/iot/devices/bell002"
