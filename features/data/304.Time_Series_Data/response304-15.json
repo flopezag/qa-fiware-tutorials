@@ -1,0 +1,10 @@
+{
+    "cols": ["count", "entity_id", "entity_type", "fiware_servicepath", "time_index"],
+    "rows": [
+        [0, "Motion:001", "Motion", "/", 1530262791452],
+        [1, "Motion:001", "Motion", "/", 1530262792469],
+        [0, "Motion:001", "Motion", "/", 1530262793472]
+    ],
+    "rowcount": 3,
+    "duration": 54.215
+}

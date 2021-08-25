@@ -11,9 +11,6 @@ Feature: test tutorial 304.Time-Series Data with QuantumLeap
   Background:
     Given I set the tutorial 304
 
-  ##
-  # This Scenario will fail because version data is different
-  ##
   @ongoing
   Scenario Outline: Generating context data
     Given  the fiware-service header is "openiot" and the fiware-servicepath header is "/"
@@ -77,13 +74,6 @@ Feature: test tutorial 304.Time-Series Data with QuantumLeap
     When   I send GET HTTP request to "http://localhost:8668/v2/entities/Lamp:001/attrs/luminosity?aggrMethod=min&aggrPeriod=minute&lastN=3" with fiware-service and fiware-servicepath
     Then   I receive a HTTP "200" response code from QuantumLeap with the body "response304-08.json"
 
-  # Fail we need to do something different dates
-  @fail
-  Scenario: 09 - List the maximum value over a time period
-    Given  the fiware-service header is "openiot", the fiware-servicepath header is "/", and the accept is "application/json"
-    When   I send GET HTTP request to "http://localhost:8668/v2/entities/Lamp:001/attrs/luminosity?aggrMethod=max&fromDate=2018-06-27T09:00:00&toDate=2018-06-30T23:59:59" with fiware-service and fiware-servicepath
-    Then   I receive a HTTP "200" response code from QuantumLeap with the body "response304-09.json"
-
   Scenario: 10 - List the latest N sampled values of devices near a point
     Given  the fiware-service header is "openiot", the fiware-servicepath header is "/", and the accept is "application/json"
     When   I send GET HTTP request to "http://localhost:8668/v2/types/Lamp/attrs/luminosity?lastN=4&georel=near;maxDistance:5000&geometry=point&coords=52.5547,13.3986" with fiware-service and fiware-servicepath
@@ -94,13 +84,34 @@ Feature: test tutorial 304.Time-Series Data with QuantumLeap
     When   I send GET HTTP request to "http://localhost:8668/v2/types/Lamp/attrs/luminosity?lastN=4&georel=coveredBy&geometry=polygon&coords=52.5537,13.3996;52.5557,13.3996;52.5557,13.3976;52.5537,13.3976;52.5537,13.3996" with fiware-service and fiware-servicepath
     Then   I receive a HTTP "200" response code from QuantumLeap with the body "response304-11.json"
 
-  @ongoing
   Scenario Outline: 12 - Checking data persistence in CrateDB
     Given  the payload request described in "<file-request>"
     When   I send a POST HTTP request to "http://localhost:4200/_sql" with content type "application/json"
     Then   I receive a HTTP "200" response code from CrateDB with the body "<file-response>" and exclusions "<file-exclusion>"
 
     Examples:
-     | file-request       | file-response       | file-exclusion          |
-     | request304-12.json | response304-12.json | response304-12.excludes |
-     | request304-13.json | response304-13.json | response304-13.excludes |
+     | file-request       | file-response       | file-exclusion               |
+     | request304-12.json | response304-12.json | response304-cratedb.excludes |
+     | request304-13.json | response304-13.json | response304-cratedb.excludes |
+     | request304-14.json | response304-14.json | response304-cratedb.excludes |
+     | request304-15.json | response304-15.json | response304-cratedb.excludes |
+     | request304-16.json | response304-16.json | response304-cratedb.excludes |
+     | request304-17.json | response304-17.json | response304-17.excludes      |
+     | request304-18.json | response304-18.json | response304-17.excludes      |
+
+  # Temporal queries need to be adapted to the execution date and time
+  @ongoing
+  Scenario: 19 - Checking data persistence in CrateDB (temporal queries)
+    Given  the payload request described in "request304-19.json"
+    And    the date and time are around today
+    When   I send a POST HTTP request to "http://localhost:4200/_sql" with content type "application/json"
+    Then   I receive a HTTP "200" response code from CrateDB with the body "response304-19.json" and exclusions "response304-cratedb.excludes"
+
+  # Fail we need to do something different dates
+  @ongoing
+  Scenario: 09 - List the maximum value over a time period (QuantumLeap)
+    Given  the fiware-service header is "openiot", the fiware-servicepath header is "/", and the accept is "application/json"
+    When   I send GET HTTP request to "http://localhost:8668/v2/entities/Lamp:001/attrs/luminosity?aggrMethod=max" with from and to date 2 days from now
+    And    using fiware-service and fiware-servicepath header keys
+    Then   I receive a HTTP "200" response code from QuantumLeap with the body "response304-09.json"
+

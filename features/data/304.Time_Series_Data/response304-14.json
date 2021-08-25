@@ -1,0 +1,10 @@
+{
+    "cols": ["entity_id", "entity_type", "fiware_servicepath", "luminosity", "time_index"],
+    "rows": [
+        ["Lamp:001", "Lamp", "/", 1750, 1530262765000],
+        ["Lamp:001", "Lamp", "/", 1507, 1530262770000],
+        ["Lamp:001", "Lamp", "/", 1390, 1530262775000]
+    ],
+    "rowcount": 3,
+    "duration": 21.8338
+}
