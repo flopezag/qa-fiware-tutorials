@@ -99,7 +99,7 @@ def check_cratedb_health_status(url, headers):
             response = http.get(url, data=stmt, headers=headers)
             status = response.json()['rows'][0]
 
-            stdout.write(f'\nCrateDB Health Status: {status}')
+            stdout.write(f'\nCrateDB Health Status: {status}\n')
 
             response = status[0]
         except exceptions.ConnectionError:
