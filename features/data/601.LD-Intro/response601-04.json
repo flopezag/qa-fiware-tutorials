@@ -1,0 +1,68 @@
+[
+    {
+        "@context": "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context.jsonld",
+        "id": "urn:ngsi-ld:Building:store001",
+        "type": "https://uri.fiware.org/ns/data-models#Building",
+        "https://schema.org/address": {
+            "type": "Property",
+            "value": {
+                "streetAddress": "Bornholmer Straße 65",
+                "addressRegion": "Berlin",
+                "addressLocality": "Prenzlauer Berg",
+                "postalCode": "10439"
+            },
+            "verified": {
+                "type": "Property",
+                "value": true
+            }
+        },
+        "https://smart-data-models.github.io/data-models/terms.jsonld#/definitions/category": {
+          "type": "Property",
+          "value": "commercial"
+        },
+        "name": {
+            "type": "Property",
+            "value": "Bösebrücke Einkauf"
+        },
+        "location": {
+            "type": "GeoProperty",
+            "value": {
+                "type": "Point",
+                "coordinates": [13.3986, 52.5547]
+            }
+        }
+    },
+    {
+        "@context": "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context.jsonld",
+        "id": "urn:ngsi-ld:Building:store002",
+        "type": "https://uri.fiware.org/ns/data-models#Building",
+        "https://schema.org/address": {
+            "type": "Property",
+            "value": {
+                "streetAddress": "Friedrichstraße 44",
+                "addressRegion": "Berlin",
+                "addressLocality": "Kreuzberg",
+                "postalCode": "10969"
+            },
+            "verified": {
+                "type": "Property",
+                "value": true
+            }
+        },
+        "https://smart-data-models.github.io/data-models/terms.jsonld#/definitions/category": {
+          "type": "Property",
+          "value": "commercial"
+        },
+        "name": {
+            "type": "Property",
+            "value": "Checkpoint Markt"
+        },
+        "location": {
+            "type": "GeoProperty",
+            "value": {
+                "type": "Point",
+                "coordinates": [13.3903, 52.5075]
+            }
+        }
+    }
+]
