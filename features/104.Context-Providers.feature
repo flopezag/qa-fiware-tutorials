@@ -29,7 +29,7 @@ Feature: test tutorial 104.Context Data and Context Providers
 
 #
 #   Request 1
-#       Note: The expected body in the Tutorial expects an attriute ("structuredValue") which is not returned.
+#       Note: The expected body in the Tutorial expects an attribute ("structuredValue") which is not returned.
 #
     Scenario: [1] Checking the health of the Static Data Context Provider endpoint
         When  I send GET HTTP request to "http://localhost:3000/health/static"
