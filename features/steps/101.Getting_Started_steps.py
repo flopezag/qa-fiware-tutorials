@@ -29,11 +29,11 @@ def send_orion_get_version(context, url):
     context.statusCode = str(response.status_code)
 
 
-@step(u'I receive a HTTP "{status_code}" response code with the body "{response}"')
-def http_code_is_returned(context, status_code, response):
+@step(u'I receive a HTTP "{status_code}" response code from {server} with the body "{response}"')
+def http_code_is_returned(context, status_code, server, response):
     assert_that(context.statusCode, is_(status_code),
-                "Response to CB notification has not got the expected HTTP response code: Message: {}"
-                .format(context.response))
+                "Response to {} notification has not got the expected HTTP response code: Message: {}"
+                .format(server, context.response))
 
     file = join(context.data_home, response)
     with open(file) as f:
