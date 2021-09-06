@@ -112,6 +112,13 @@ behave features/102.Entity_Relationships.feature
 
 Will execute the steps corresponding to the Tutorial 102 feature.
 
+In case that you want to execute only the failing scenarios you can execute the following
+command:
+
+```bash
+behave --tags=fail features/102.Entity_Relationships.feature 
+```
+
 [Top](#top)
 
 

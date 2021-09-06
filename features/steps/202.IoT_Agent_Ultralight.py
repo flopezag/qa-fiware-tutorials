@@ -118,7 +118,6 @@ def get_with_context_headers(context, method, url, fw_service, fw_servicepath, f
 def receive_post_iot_dummy_response_with_data(context, code, file, excl_file):
     body = json.loads(read_data_from_file(context, file))
 
-
     diff = dict_diff_with_exclusions(context, body, context.response, excl_file)
     stdout.write(f'{diff}\n\n')
     assert_that(diff.to_dict(), is_(dict()),
