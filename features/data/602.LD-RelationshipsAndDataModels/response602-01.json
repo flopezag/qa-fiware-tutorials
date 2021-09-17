@@ -1,0 +1,34 @@
+[
+    {
+        "@context": "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.3.jsonld",
+        "id": "urn:ngsi-ld:Building:store001",
+        "type": "https://uri.fiware.org/ns/datamodels#Building",
+        "https://schema.org/address": {
+            "streetAddress": "Bornholmer Straße 65",
+            "addressRegion": "Berlin",
+            "addressLocality": "Prenzlauer Berg",
+            "postalCode": "10439"
+        },
+        "name": "Bösebrücke Einkauf",
+        "https://uri.fiware.org/ns/datamodels#category": ["commercial"],
+        "location": {
+            "type": "Point", "coordinates": [13.3986, 52.5547]
+        }
+    },
+    {
+        "@context": "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.3.jsonld",
+        "id": "urn:ngsi-ld:Building:store002",
+        "type": "https://uri.fiware.org/ns/datamodels#Building",
+        "name": "Checkpoint Markt",
+        "https://schema.org/address": {
+            "streetAddress": "Friedrichstraße 44",
+            "addressRegion": "Berlin",
+            "addressLocality": "Kreuzberg",
+            "postalCode": "10969"
+        },
+        "https://uri.fiware.org/ns/datamodels#category": ["commercial"],
+        "location": {
+            "type": "Point", "coordinates": [13.3903, 52.5075]
+        }
+    }
+]

@@ -1,0 +1,5 @@
+{
+    "id": "urn:ngsi-ld:Building:store001",
+    "type": "Building",
+    "furniture": ["urn:ngsi-ld:Shelf:001", "urn:ngsi-ld:Shelf:002"]
+}

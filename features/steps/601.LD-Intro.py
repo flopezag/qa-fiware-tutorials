@@ -26,38 +26,45 @@ def step_impl_tutorial_601(context):
 def set_req_url(context, url):
     context.url = url
 
-@step(u'With header "{hdr_att}": "{hdr_value}"')
-def set_req_header(context, hdr_att, hdr_value):
-    if hdr_att != "NA":
-        context.header = {
-            hdr_att: hdr_value,
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'Accept': 'application/ld+json'
-            }
-    else:
-        context.header = {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-        }
+@step(u'With headers "{raw_headers}"')
+def set_req_header(context, raw_headers):
+    stdout.write("********** START building headers **********\n")
+
+    headers = raw_headers.split('$')
+    hdr_payload = {}
+    l = len(headers)
+    n = 1
+    for x in range(0, l, 2):
+        stdout.write(f'header_name_{n} = <{headers[x]}>\n')
+        stdout.write(f'header_value_{n} = <{headers[x+1]}>\n\n')
+        if headers[x] != "NA":
+            hdr_payload.update({headers[x]: headers[x+1]})
+            n = n+1
+    hdr_payload.update({'Content-Type': 'application/x-www-form-urlencoded'})
+    context.headers = hdr_payload
+
+    stdout.write(f'hdr_payload = {hdr_payload}\n')
+    stdout.write("********** END building headers **********\n\n")
 
 @step(u'With parameters "{raw_parameters}"')
 def send_orionld_get(context, raw_parameters):
     stdout.write("********** START building parameters **********\n")
 
     parameters = raw_parameters.split('$')
-    payload = {}
+    par_payload = {}
     l = len(parameters)
     n = 1
     for x in range(0, l, 2):
         stdout.write(f'parameter_name_{n} = <{parameters[x]}>\n')
         stdout.write(f'parameter_value_{n} = <{parameters[x+1]}>\n\n')
-        payload.update({parameters[x]: parameters[x+1]})
+        par_payload.update({parameters[x]: parameters[x+1]})
         n = n+1
 
-    stdout.write(f'payload = {payload}\n')
+    stdout.write(f'par_payload = {par_payload}\n')
     stdout.write("********** END building parameters **********\n\n")
 
     try:
-        response = get(context.url, params=payload, headers=context.header)
+        response = get(context.url, params=par_payload, headers=context.headers)
     except exceptions.RequestException as e:
         raise SystemExit(e)
 
@@ -88,8 +95,16 @@ def http_code_is_returned(context, status_code, response):
 @when(u'I send POST HTTP request to orion-ld at "{url}"')
 def set_req_body(context, url):
     context.url = url
-    context.header = {'Content-Type': 'application/ld+json'}
 
+@step(u'With the post header "{hdr_att}": "{hdr_value}"')
+def set_req_header(context, hdr_att, hdr_value):
+    if hdr_att != "NA":
+        context.header = {
+            'Content-Type': 'application/ld+json',
+            hdr_att: hdr_value
+            }
+    else:
+        context.header = {'Content-Type': 'application/ld+json'}
 
 @step(u'With the body request described in an orion-ld file "{file}"')
 def send_orion_ld_post(context, file):
