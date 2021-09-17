@@ -28,6 +28,7 @@ Feature: test tutorial 601 Introduction to Linked Data
 #
     Scenario Outline: [2, 3] Creating an Entity
       When I send POST HTTP request to orion-ld at "http://localhost:1026/ngsi-ld/v1/entities"
+      And  With the post header "NA": "NA"
       And  With the body request described in an orion-ld file "<file>"
       Then I receive a HTTP response with the following orion-ld data
         | Status-Code | Location   | Connection | fiware-correlator |
@@ -90,7 +91,7 @@ Feature: test tutorial 601 Introduction to Linked Data
 #
     Scenario: [6] OBTAIN ENTITY DATA BY TYPE
       When  I send GET HTTP request to orionld at "http://localhost:1026/ngsi-ld/v1/entities"
-      And   With header "Link": "<https://smartdatamodels.org/context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json""
+      And   With headers "Link$<https://smartdatamodels.org/context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json""
       And   With parameters "type$Building$options$keyValues"
       Then  I receive from orionld "200" response code with the body equal to "response601-06.json"
 
@@ -104,7 +105,7 @@ Feature: test tutorial 601 Introduction to Linked Data
 #
     Scenario: [7] FILTER CONTEXT DATA BY COMPARING THE VALUES OF AN ATTRIBUTE
       When  I send GET HTTP request to orionld at "http://localhost:1026/ngsi-ld/v1/entities"
-      And   With header "Link": "<https://smartdatamodels.org/context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json""
+      And   With headers "Link$<https://smartdatamodels.org/context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json""
       And   With parameters "type$Building$q$name=="Checkpoint Markt"$options$keyValues"
       Then  I receive from orionld "200" response code with the body equal to "response601-07.json"
 
@@ -118,7 +119,7 @@ Feature: test tutorial 601 Introduction to Linked Data
 #
     Scenario: [8] FILTER CONTEXT DATA BY COMPARING THE VALUES OF AN ATTRIBUTE IN AN ARRAY
       When  I send GET HTTP request to orionld at "http://localhost:1026/ngsi-ld/v1/entities"
-      And   With header "Link": "<https://smartdatamodels.org/context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json""
+      And   With headers "Link$<https://smartdatamodels.org/context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json""
       And   With parameters "type$Building$q$category=="commercial","office"$options$keyValues"
       Then  I receive from orionld "200" response code with the body equal to "response601-08.json"
 
@@ -132,7 +133,7 @@ Feature: test tutorial 601 Introduction to Linked Data
 #
     Scenario: [9] FILTER CONTEXT DATA BY COMPARING THE VALUES OF A SUB-ATTRIBUTE
       When  I send GET HTTP request to orionld at "http://localhost:1026/ngsi-ld/v1/entities"
-      And   With header "Link": "<https://smartdatamodels.org/context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json""
+      And   With headers "Link$<https://smartdatamodels.org/context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json""
       And   With parameters "type$Building$q$address[addressLocality]=="Kreuzberg"$options$keyValues"
       Then  I receive from orionld "200" response code with the body equal to "response601-09.json"
 
@@ -146,7 +147,7 @@ Feature: test tutorial 601 Introduction to Linked Data
 #
     Scenario: [10] FILTER CONTEXT DATA BY QUERYING METADATA
       When  I send GET HTTP request to orionld at "http://localhost:1026/ngsi-ld/v1/entities"
-      And   With header "Link": "<https://smartdatamodels.org/context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json""
+      And   With headers "Link$<https://smartdatamodels.org/context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json""
       And   With parameters "type$Building$q$address.verified==true$options$keyValues"
       Then  I receive from orionld "200" response code with the body equal to "response601-10.json"
 
@@ -160,6 +161,6 @@ Feature: test tutorial 601 Introduction to Linked Data
 #
     Scenario: [11] FILTER CONTEXT DATA BY COMPARING THE VALUES OF A GEO:JSON ATTRIBUTE
       When  I send GET HTTP request to orionld at "http://localhost:1026/ngsi-ld/v1/entities"
-      And   With header "Link": "<https://smartdatamodels.org/context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json""
+      And   With headers "Link$<https://smartdatamodels.org/context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json""
       And   With parameters "type$Building$geometry$Point$coordinates$[13.3777,52.5162]$georel$near;maxDistance==2000$options$keyValues"
       Then  I receive from orionld "200" response code with the body equal to "response601-11.json"
