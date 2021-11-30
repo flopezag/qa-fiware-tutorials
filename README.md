@@ -44,14 +44,14 @@ The description of the content is the following:
   It means, the download of the configuration files of the tutorial and the execution of the
   docker-compose.
 - `*.feature`, the description file of the BDD to be developed using the Gherkin language. There 
-  will be one file for each of the corresponding Step by Step tutorials, both NGSIv2 and NGSI-LD.
-- `data`, this folder will contains all the data required to the execution of the corresponding
+  will be one file for each of the corresponding Step-by-Step tutorials, both NGSIv2 and NGSI-LD.
+- `data`, this folder will contain all the data required to the execution of the corresponding
   requests and the associate responses obtained from it. To facilitate the comprehensive of all
-  the data, it is classified in subfolders for each of the Step by Step tutorials.
+  the data, it is classified in subfolders for each of the Step-by-Step tutorials.
 - `steps`, this folder contains the implementation of the steps. Keep in mind that it is possible
-  that some of the steps are defined in previous steps implementation files.
+  that some steps are defined in previous steps implementation files.
   
-Therefore, if you want to increase the tutorial with a new feature (new analysis of a Step by Step
+Therefore, if you want to increase the tutorial with a new feature (new analysis of a Step-by-Step
 tutorial), you only need to specify the corresponding *.feature, *_steps.py, and the corresponding
 json data for the different requests and responses. Just create a new branch from develop with the
 name of the new tutorial, e.g.
@@ -120,6 +120,17 @@ behave --tags=fail features/102.Entity_Relationships.feature
 ```
 
 [Top](#top)
+
+## Web Server representation
+
+Allure Framework is a flexible lightweight multi-language test report tool that
+not only shows a very concise representation of what have been tested in a neat
+web report form, but allows everyone participating in the development process
+to extract maximum of useful information from everyday execution of tests.
+
+➜ behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features             
+
+➜ allure serve ./tmp
 
 
 ## License

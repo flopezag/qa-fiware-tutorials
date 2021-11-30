@@ -54,7 +54,7 @@ Feature: test tutorial 304.Time-Series Data with QuantumLeap
   ##
   # This scenario fails basically because the tutorial say that the response of QuantumLeap should be:
   # {
-  #  "data: {
+  #  "data": {
   #      ...
   #  }
   # }
@@ -70,7 +70,7 @@ Feature: test tutorial 304.Time-Series Data with QuantumLeap
   ##
   # This scenario fails basically because the tutorial say that the response of QuantumLeap should be:
   # {
-  #  "data: {
+  #  "data": {
   #      ...
   #  }
   # }
@@ -86,7 +86,7 @@ Feature: test tutorial 304.Time-Series Data with QuantumLeap
   ##
   # This scenario fails basically because the tutorial say that the response of QuantumLeap should be:
   # {
-  #  "data: {
+  #  "data": {
   #      ...
   #  }
   # }
@@ -106,7 +106,7 @@ Feature: test tutorial 304.Time-Series Data with QuantumLeap
   ##
   # This scenario fails basically because the tutorial say that the response of QuantumLeap should be:
   # {
-  #  "data: {
+  #  "data": {
   #      ...
   #  }
   # }
@@ -122,7 +122,7 @@ Feature: test tutorial 304.Time-Series Data with QuantumLeap
   ##
   # This scenario fails basically because the tutorial say that the response of QuantumLeap should be:
   # {
-  #  "data: {
+  #  "data": {
   #      ...
   #  }
   # }
@@ -138,7 +138,7 @@ Feature: test tutorial 304.Time-Series Data with QuantumLeap
   ##
   # This scenario fails basically because the tutorial say that the response of QuantumLeap should be:
   # {
-  #  "data: {
+  #  "data": {
   #      ...
   #  }
   # }
@@ -154,7 +154,7 @@ Feature: test tutorial 304.Time-Series Data with QuantumLeap
   ##
   # This scenario fails basically because the tutorial say that the response of QuantumLeap should be:
   # {
-  #  "data: {
+  #  "data": {
   #      ...
   #  }
   # }
@@ -203,7 +203,7 @@ Feature: test tutorial 304.Time-Series Data with QuantumLeap
   ##
   # This scenario fails basically because the tutorial say that the response of QuantumLeap should be:
   # {
-  #  "data: {
+  #  "data": {
   #      ...
   #  }
   # }

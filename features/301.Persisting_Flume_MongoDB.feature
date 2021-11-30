@@ -46,7 +46,7 @@ Feature: test tutorial 301.Persisting Context Data using Apache Flume (MongoDB)
   # not presented in the tutorial 'onlyChangedAttrs' and 'attrsFormat'
   ##
   @fail
-  Scenario: 03 - Get all subscription
+  Scenario: 03 - Get all subscriptions
     Given  the fiware-service header is "openiot" and the fiware-servicepath header is "/"
     When   I send GET HTTP request to "http://localhost:1026/v2/subscriptions" with fiware-service and fiware-servicepath
     Then   I receive a HTTP "200" response code from Broker with the body "response303-03.json" and exclusions "response303-03.excludes"

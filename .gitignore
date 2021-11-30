@@ -137,3 +137,9 @@ main.py
 examples/
 
 **/tags
+
+# JAVA virtual environment
+features/.java-version
+
+# Temporal output folder
+tmp
