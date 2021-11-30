@@ -1,3 +1,5 @@
+import subprocess
+
 from deepdiff import DeepDiff
 from os.path import join
 from requests.adapters import HTTPAdapter
@@ -7,6 +9,7 @@ from datetime import datetime, timezone, timedelta
 from re import search
 from time import sleep
 from sys import stdout
+from os import environ, getcwd
 
 DEFAULT_TIMEOUT = 5  # seconds
 DEFAULT_RETRIES = 3
@@ -43,7 +46,7 @@ retry_strategy = Retry(
     total=DEFAULT_RETRIES,
     status_forcelist=[429, 500, 502, 503, 504],
     backoff_factor=1,
-    method_whitelist=["HEAD", "GET", "OPTIONS"]
+    allowed_methods=["HEAD", "GET", "OPTIONS"]
 )
 
 http = Session()
@@ -113,3 +116,29 @@ def check_cratedb_health_status(url, headers):
             # wait 1 second and try again
             sleep(1)
             continue
+
+
+def check_java_version():
+    java_home = environ['JAVA_HOME']
+    stdout.write(java_home + '\n')
+
+    jre_version = 0
+
+    command = "java -version"
+
+    my_env = environ.copy()
+    temp = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, env=my_env)
+
+    if temp.returncode == 0 or temp.returncode is None:  # is 0 or None if success
+        (output, stderr) = temp.communicate()
+
+        version = str(stderr).split('\\n')[0].split(" ")[2].replace("\"", "")
+        jre_version = int(version.split(".")[1])
+
+        # JRE MUST be 8, version is in the format 1.x.y_z, where x is the version of the JRE
+        if jre_version != 8:
+            stdout.write(f'Java Runtime Environment MUST be 8, found {jre_version}')
+    else:
+        stdout.write(f'java command has failed: {temp.returncode}')
+
+    return jre_version
