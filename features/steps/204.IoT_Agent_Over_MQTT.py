@@ -1,10 +1,11 @@
-from behave import given, when, then, step
+from behave import given, when, then
 from config.settings import CODE_HOME
 from os.path import join
 import subprocess
 
+
 @given(u'I set the tutorial 204')
-def step_impl_tutorial_203(context):
+def step_impl_tutorial_204(context):
     context.data_home = join(join(join(CODE_HOME, "features"), "data"), "204.IoT_Agent_Mqtt")
 
 
@@ -18,4 +19,3 @@ def run_script_file(context, script_file):
 @then('I expect exit code to be "{exit_code}"')
 def expect_process_exit_code(context, exit_code):
     assert context.exit_code == int(exit_code)
-

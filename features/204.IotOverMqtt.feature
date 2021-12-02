@@ -1,6 +1,6 @@
 Feature: Test tutorial 204.IoT Agent over MQTT
     This is feature file of the FIWARE step by step tutorial for IoT Agent Ultrlight
-    url: https://fiware-tutorials.readthedocs.io/en/latest/iot-over-mqtt.html
+    url: https://fiware-tutorials.readthedocs.io/en/latest/custom-iot-agent.html
     git-clone: https://github.com/FIWARE/tutorials.IoT-over-MQTT.git
     git-directory: /tmp/tutorials.IoT-over-MQTT
     shell-commands: ./services create; ./services start
@@ -11,7 +11,7 @@ Feature: Test tutorial 204.IoT Agent over MQTT
 
     Scenario: 01 - Checking the IoT Agent service health
         When  I send GET HTTP request to "http://localhost:4041/iot/about"
-        Then  I receive a HTTP "200" response code with the body "response204-01.json" and exclusions "01.excludes"
+        Then  I receive a HTTP "200" response code from IoTAgent with the body "response204-01.json" and exclusions "01.excludes"
 
     Scenario: 02 - Provisioning a Service Group
         When  I send POST HTTP request to "http://localhost:4041/iot/services"
