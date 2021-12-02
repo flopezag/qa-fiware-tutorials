@@ -119,9 +119,7 @@ def check_cratedb_health_status(url, headers):
 
 
 def check_java_version():
-    java_home = environ['JAVA_HOME']
-    stdout.write(java_home + '\n')
-
+    # JRE MUST be 8, version is in the format 1.x.y_z, where x is the version of the JRE
     jre_version = 0
 
     command = "java -version"
@@ -134,11 +132,5 @@ def check_java_version():
 
         version = str(stderr).split('\\n')[0].split(" ")[2].replace("\"", "")
         jre_version = int(version.split(".")[1])
-
-        # JRE MUST be 8, version is in the format 1.x.y_z, where x is the version of the JRE
-        if jre_version != 8:
-            stdout.write(f'Java Runtime Environment MUST be 8, found {jre_version}')
-    else:
-        stdout.write(f'java command has failed: {temp.returncode}')
 
     return jre_version

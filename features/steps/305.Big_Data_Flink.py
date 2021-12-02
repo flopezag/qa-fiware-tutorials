@@ -2,18 +2,14 @@ from sys import stdout
 
 from behave import given, when, step, then
 from config.settings import CODE_HOME
-from os.path import join, isdir, isfile, exists
-from os import chdir, getcwd, system
-from requests import get, post, exceptions, ConnectionError, HTTPError
+from os.path import join, isdir, exists
+from os import chdir, getcwd, environ, listdir
+from requests import get, ConnectionError, HTTPError
 from logging import getLogger
-from json import loads, dumps
-from features.funtions import read_data_from_file, replace_dates_query, http, check_cratedb_health_status, \
-    check_java_version
-from time import sleep
-from datetime import datetime, timedelta, timezone
+from features.funtions import check_java_version
 import subprocess
-from os import environ
-from hamcrest import assert_that, is_, is_not
+from hamcrest import assert_that, is_
+from re import match
 
 __logger__ = getLogger(__name__)
 
@@ -40,9 +36,9 @@ def step_impl(context, orion_flink_connector):
 
         # We need to check that the JAVA_HOME points to a 1.8 version
         version = check_java_version()
-        assert_that(version, is_(8),
-                    "Java Runtime Environment must be 8 in the tutorial: {}"
-                    .format(version))
+
+        if version != 8:
+            raise AssertionError("Java Runtime Environment must be 8 in the tutorial: {}".format(version))
 
         url = "https://github.com/ging/fiware-cosmos-orion-flink-connector/releases/download/FIWARE_7.9.1/"\
               + orion_flink_connector
@@ -50,54 +46,72 @@ def step_impl(context, orion_flink_connector):
         try:
             r = get(url, allow_redirects=True)
             open('orion.flink.connector-1.2.4.jar', 'wb').write(r.content)
-        except ConnectionError as e:
-            assert(True, 'There were some network problems (e.g. refused connection or internet issues).')
-        except HTTPError as e:
-            assert(True, 'Invalid HTTP response.')
+        except ConnectionError:
+            raise AssertionError('There were some network problems (e.g. refused connection or internet issues).')
+        except HTTPError:
+            raise AssertionError(True, 'Invalid HTTP response.')
 
         # Check that the file is downloaded
+        file_exists = False
         file_exists = exists(orion_flink_connector)
-        assert(file_exists is True, 'The Orion-Flink-Connector file was not downloaded')
+        if file_exists is False:
+            raise AssertionError(file_exists, 'The Orion-Flink-Connector file was not downloaded')
 
 
 @when("I execute the maven install command")
 def step_impl(context):
-    mvn = "mvn install:install-file \
+    command = "mvn install:install-file \
         -Dfile=./orion.flink.connector-1.2.4.jar \
         -DgroupId=org.fiware.cosmos \
         -DartifactId=orion.flink.connector \
         -Dversion=1.2.4 \
         -Dpackaging=jar"
 
-    p = subprocess.Popen(mvn, shell=True, stdout=subprocess.PIPE)
+    my_env = environ.copy()
+    p = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, env=my_env)
 
-    std_out, std_err = p.communicate()
-    stdout.write(f'Return code maven install: {p.returncode}')  # is 0 if success
+    (std_out, std_err) = p.communicate()
 
-    if p.returncode == 0:
-        mvn = "mvn package"
-        p = subprocess.Popen(mvn, shell=True, stdout=subprocess.PIPE)
+    assert(p.returncode == 0, f'\nReturn code maven install: {p.returncode}')
 
-        std_out, std_err = p.communicate()
-        print(p.returncode)  # is 0 if success
-    else:
-        stdout.write(f'Return code maven package: {p.returncode}')
-
-    # A new JAR file called cosmos-examples-1.1.jar will be created within the cosmos-examples/target directory.
+    # We need to check the result of maven execution in the std_out to find BUILD FAILURE or BUILD BUILD SUCCESS
+    assert(str(std_out).find('BUILD SUCCESS') != -1, 'The maven install was not successful')
 
 
 @step("I execute the maven package command")
 def step_impl(context):
-    """
-    :type context: behave.runner.Context
-    """
-    raise NotImplementedError(u'STEP: And    I execute the maven package command')
+    command = "mvn package"
+
+    my_env = environ.copy()
+
+    p = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, env=my_env)
+
+    (std_out, std_err) = p.communicate()
+
+    assert(p.returncode == 0, f'\nReturn code maven install: {p.returncode}')
+
+    # We need to check the result of maven execution in the std_out to find BUILD FAILURE or BUILD BUILD SUCCESS
+    assert(str(std_out).find('BUILD SUCCESS') != -1, 'The maven install was not successful')
 
 
-@then('A new JAR file called "cosmos-examples-1.1.jar" will be created within the "cosmos-examples/target" directory')
-def step_impl(context):
+@then('A new JAR file called "{file}" is created within the "{folder}" directory')
+def step_impl(context, file, folder):
     """
+    :param file: The name of the jar file
+    :param folder: The folder in which this jar file is located
     :type context: behave.runner.Context
     """
-    raise NotImplementedError(
-        u'STEP: Then   A new JAR file called "cosmos-examples-1.1.jar" will be created within the "cosmos-examples/target" directory')
+
+    folder = "./" + folder.split("/")[1]
+    file = folder + "/" + file
+    # Check that the file is downloaded
+    file_exists = False
+    context.possible_file = ''
+    file_exists = exists(file)
+
+    if file_exists is False:
+        files = listdir(folder)
+        aux = [match('cosmos-examples-.*\.jar', file) for file in files]
+        context.possible_file = [x for x in aux if x is not None][0].group(0)
+
+        raise AssertionError(f'The {file} jar file was not created. There is a {context.possible_file} to be used now')

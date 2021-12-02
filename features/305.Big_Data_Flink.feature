@@ -11,13 +11,13 @@ Feature: test tutorial 305.Big Data (Flink)
   Background:
     Given I set the tutorial 305
 
+  @ongoing
   Scenario: Compiling a jar file for Flink
     Given  I download the Orion Flink Connector "orion.flink.connector-1.2.4.jar"
     When   I execute the maven install command
     And    I execute the maven package command
-    Then   A new JAR file called "cosmos-examples-1.1.jar" will be created within the "cosmos-examples/target" directory
+    Then   A new JAR file called "cosmos-examples-1.1.jar" is created within the "cosmos-examples/target" directory
 
-  @ongoing
   Scenario Outline: Generating context data
     Given  the fiware-service header is "openiot" and the fiware-servicepath header is "/"
     When   I send PATCH HTTP request with the following data
