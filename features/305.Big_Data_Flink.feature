@@ -29,3 +29,15 @@ Feature: test tutorial 305.Big Data (Flink)
         | command | entity_id |
         | unlock  | Door:001  |
         | on      | Lamp:001  |
+
+  Scenario: Upload generated jar file
+    Given  I have generated the "cosmos-examples-1.1.jar" in the target directory
+    When   I submit this new jar file to the Flink instance
+    Then   I receive the response with the following data
+      | filename | status  | status_code |
+      | ANY      | success | 200         |
+
+  Scenario: Create Logger Flink job
+    Given  I have a proper jar file id
+    When   I try to create a new job with Entry Class "org.fiware.cosmos.tutorial.Logger"
+    Then   I receive the 200 Ok response with the id of the new created job
