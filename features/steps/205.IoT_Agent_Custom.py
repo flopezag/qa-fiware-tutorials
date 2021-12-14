@@ -12,11 +12,6 @@ def step_impl_tutorial_205(context):
     context.data_home = join(join(join(CODE_HOME, "features"), "data"), "205.IoT_Agent_Custom")
 
 
-@when(u'I goto wait place')
-def goto_wait_place(context):
-    pass
-
-
 @when(u'I prepare a "{method}" HTTP request to "{url}"')
 def prepare_http_request(context, method, url):
     context.method = method
@@ -37,8 +32,6 @@ def set_payload_from_file(context, filename):
     file = join(context.data_home, filename)
     with open(file) as f:
         context.payload = f.read().strip('\n').replace("\n", " ")
-    print(type (context.payload))
-    pass
 
 
 @step(u'I perform the request')
@@ -60,5 +53,3 @@ def perform_request(context):
         context.response = response.json()
     except json.decoder.JSONDecodeError:
         context.response = response.text
-
-    pass
