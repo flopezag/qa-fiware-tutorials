@@ -95,6 +95,7 @@ def step_impl(context, url, file):
 
     context.statusCode = str(response.status_code)
     context.response = response.reason
+    context.id = response.headers['Location']
 
 
 @given('I connect to the MongoDB with the host "{host}" and the port "{port}"')

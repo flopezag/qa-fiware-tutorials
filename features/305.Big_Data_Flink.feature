@@ -60,7 +60,7 @@ Feature: test tutorial 305.Big Data (Flink)
   Scenario: Logger - Checking the output
     Given  I wait "90" seconds
     When   I obtain the stderr log from the flink-taskmanager
-    Then   I obtain the output "console305-01.txt" from the console
+    Then   I obtain the output from the console
 
   Scenario: Create Feedback Loop Flink job
     Given  I have a proper jar file id
@@ -70,13 +70,13 @@ Feature: test tutorial 305.Big Data (Flink)
   Scenario: Feedback Loop - Subscribing to context changes
     Given  The fiware-service header is "openiot" and the fiware-servicepath header is "/"
     When   I send a subscription to the Url "http://localhost:1026/v2/subscriptions" and payload "request305-03.json"
-    Then   I receive a HTTP "201" response
+    Then   I receive a HTTP "201" response with a subscriptionId
 
   Scenario: Feedback Loop - Check that subscription is firing
     Given  The fiware-service header is "openiot" and the fiware-servicepath header is "/"
     And    I wait "90" seconds
     When   I send GET HTTP request to "http://localhost:1026/v2/subscriptions" with fiware-service and fiware-servicepath
-    Then   I receive a HTTP "200" response code from Broker with the body "response305-02.json" and exclusions "response305-02.excludes"
+    Then   I receive a HTTP "200" response code from Broker
     And    The timesSent is bigger than 0
     And    The lastNotification should be a recent timestamp
     And    The lastSuccess should match the lastNotification date

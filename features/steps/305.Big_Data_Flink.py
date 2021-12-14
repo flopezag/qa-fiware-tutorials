@@ -1,5 +1,3 @@
-from sys import stdout
-
 from behave import given, when, step, then
 from config.settings import CODE_HOME
 from os.path import join, isdir, exists, basename
@@ -11,12 +9,15 @@ from features.funtions import check_java_version, read_data_from_file
 import subprocess
 from re import match
 from warnings import warn
+from features.timeout import Timeout
+from datetime import datetime, time, timedelta
 
 __logger__ = getLogger(__name__)
 
 
 new_file = ''
 jar_file_id = ''
+subscription_id = ''
 
 
 @given(u'I set the tutorial 305')
@@ -249,7 +250,15 @@ def step_impl(context):
     """
     :type context: behave.runner.Context
     """
-    raise NotImplementedError(u'STEP: And    The timesSent is bigger than 0')
+    if len(context.response) == 1:
+        context.aux = context.response
+    else:
+        context.aux = [x for x in context.response if x['id'] == subscription_id]
+
+    times_sent = context.aux[0]['notification']['timesSent']
+    assert(times_sent != 0, 'The timesSent is equal to 0')
+
+
 
 
 @step("The lastNotification should be a recent timestamp")
@@ -257,7 +266,21 @@ def step_impl(context):
     """
     :type context: behave.runner.Context
     """
-    raise NotImplementedError(u'STEP: And    The lastNotification should be a recent timestamp')
+    # We assume that the recent timestamp is an interval [-10min, 10min]
+    lastnotification = context.aux[0]['notification']['lastNotification']
+
+    t1 = datetime.strptime(lastnotification, "%Y-%m-%dT%H:%M:%S.%fZ")
+
+    print(t1)
+
+    current_date = datetime.now()
+    print(current_date)
+    interval = timedelta(minutes=10)
+
+    a = current_date - interval
+    b = current_date + interval
+
+    assert(a <= t1 <= b, f'The lastNotification ({lastnotification}) is not inside the range [{a}, {b}]')
 
 
 @step("The lastSuccess should match the lastNotification date")
@@ -265,7 +288,10 @@ def step_impl(context):
     """
     :type context: behave.runner.Context
     """
-    raise NotImplementedError(u'STEP: And    The lastSuccess should match the lastNotification date')
+    last_notification = context.aux[0]['notification']['lastNotification']
+    last_success = context.aux[0]['notification']['lastSuccess']
+    assert(last_notification == last_success,
+           f'The value of lastNotification ({last_notification}) and lastSuccess ({last_success}) are not the same')
 
 
 @step('The status is "active"')
@@ -273,25 +299,37 @@ def step_impl(context):
     """
     :type context: behave.runner.Context
     """
-    raise NotImplementedError(u'STEP: And    The status is "active"')
+    status = context.aux[0]['status']
+    assert(status == 'active', 'The status is not active')
 
 
-@then('I obtain the output "{file}" from the console')
-def step_impl(context, file):
+@then('I obtain the output from the console')
+def step_impl(context):
     """
     :type context: behave.runner.Context
     """
-    payload = read_data_from_file(context, file)
-    print(file)
+    # Check that std_out is equal to file in the structural way
+    index_motion = str(context.std_out).find('Sensor(Motion,')
+    index_lamp = str(context.std_out).find('Sensor(Lamp,')
+    index_door = str(context.std_out).find('Sensor(Door,')
+    #index_bell = str(context.std_out).find('Sensor(Bell,')
+
+    assert(index_motion != -1, '\nThere is no Sensor(Motion, xx) detail in the log')
+    assert(index_lamp != -1, '\nThere is no Sensor(Lamp, xx) detail in the log')
+    assert(index_door != -1, '\nThere is no Sensor(Door, xx) detail in the log')
+    #assert(index_bell != -1, '\nThere is no Sensor(Bell, xx) detail in the log')
 
 
 @when("I obtain the stderr log from the flink-taskmanager")
+@Timeout(10)
 def step_impl(context):
     """
     :type context: behave.runner.Context
     """
     command = "docker logs flink-taskmanager -f --until=60s > stdout.log 2>stderr.log"
 
+    # WARNING, if there is some previous problem, the execution of the following code never end... we need to
+    # implement a timeout to get the response before 10 seconds...
     my_env = environ.copy()
     p = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, env=my_env)
 
@@ -305,3 +343,27 @@ def step_impl(context):
     (std_out, std_err) = p.communicate()
 
     assert(p.returncode == 0, f'\nReturn cat: {p.returncode}')
+
+    context.std_out = std_out
+
+
+@then('I receive a HTTP "{code}" response code from Broker')
+def step_impl(context, code):
+    """
+    :param code: The HTTP core response
+    :type context: behave.runner.Context
+    """
+    assert(context.statusCode == code, f'\nThe status code received was not "200": {context.statusCode}')
+
+
+@then('I receive a HTTP "{status_code}" response with a subscriptionId')
+def step_impl(context, status_code):
+    """
+    :param status_code: The HTTP status code expected
+    :type context: behave.runner.Context
+    """
+    global subscription_id
+
+    subscription_id = basename(context.id)
+    assert(context.statusCode == status_code,
+           f'Response to CB notification has not got the expected HTTP response code: Message: {context.response}')
