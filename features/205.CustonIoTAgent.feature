@@ -45,4 +45,5 @@ Feature: Test tutorial 205.IoT Agent Custom (XML)
 
     Scenario: 08 - Read the result of the previous command (Ring a bell)
         When  I send IoT "GET" HTTP request with data to "http://localhost:1026/v2/entities/urn:ngsi-ld:Bell:001?type=Bell&options=keyValues" With headers fiware-service "openiot" and fiware-servicepath "/" and data is "empty-data.json"
+        And   I wait "1" seconds
         Then I receive a HTTP "200" response code from Broker with the body "response205-08.json" and exclusions "08.excludes"

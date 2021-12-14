@@ -44,7 +44,7 @@ def perform_request(context):
         elif context.method == "PATCH":
             response = patch(context.url, data=context.payload, headers=context.headers)
         else:
-            raise exceptions.RequestException("Unknown method krt")
+            raise AssertionError(u"Unknown method {context.method}")
     except exceptions.RequestException as e:
         raise SystemExit(e)
 
