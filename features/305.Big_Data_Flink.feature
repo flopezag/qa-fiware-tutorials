@@ -41,3 +41,45 @@ Feature: test tutorial 305.Big Data (Flink)
     Given  I have a proper jar file id
     When   I try to create a new job with Entry Class "org.fiware.cosmos.tutorial.Logger"
     Then   I receive the 200 Ok response with the id of the new created job
+
+  Scenario: Logger - Subscribing to context changes
+    Given  The fiware-service header is "openiot" and the fiware-servicepath header is "/"
+    When   I send a subscription to the Url "http://localhost:1026/v2/subscriptions" and payload "request305-01.json"
+    Then   I receive a HTTP "201" response
+
+  Scenario: Logger - Check that subscription is firing
+    Given  The fiware-service header is "openiot" and the fiware-servicepath header is "/"
+    And    I wait "90" seconds
+    When   I send GET HTTP request to "http://localhost:1026/v2/subscriptions" with fiware-service and fiware-servicepath
+    Then   I receive a HTTP "200" response code from Broker with the body "response305-02.json" and exclusions "response305-02.excludes"
+    And    The timesSent is bigger than 0
+    And    The lastNotification should be a recent timestamp
+    And    The lastSuccess should match the lastNotification date
+    And    The status is "active"
+
+  Scenario: Logger - Checking the output
+    Given  I wait "90" seconds
+    When   I obtain the stderr log from the flink-taskmanager
+    Then   I obtain the output "console305-01.txt" from the console
+
+  Scenario: Create Feedback Loop Flink job
+    Given  I have a proper jar file id
+    When   I try to create a new job with Entry Class "org.fiware.cosmos.tutorial.Feedback"
+    Then   I receive the 200 Ok response with the id of the new created job
+
+  Scenario: Feedback Loop - Subscribing to context changes
+    Given  The fiware-service header is "openiot" and the fiware-servicepath header is "/"
+    When   I send a subscription to the Url "http://localhost:1026/v2/subscriptions" and payload "request305-03.json"
+    Then   I receive a HTTP "201" response
+
+  Scenario: Feedback Loop - Check that subscription is firing
+    Given  The fiware-service header is "openiot" and the fiware-servicepath header is "/"
+    And    I wait "90" seconds
+    When   I send GET HTTP request to "http://localhost:1026/v2/subscriptions" with fiware-service and fiware-servicepath
+    Then   I receive a HTTP "200" response code from Broker with the body "response305-02.json" and exclusions "response305-02.excludes"
+    And    The timesSent is bigger than 0
+    And    The lastNotification should be a recent timestamp
+    And    The lastSuccess should match the lastNotification date
+    And    The status is "active"
+
+#  Scenario: Feedback Loop - Checking the output
