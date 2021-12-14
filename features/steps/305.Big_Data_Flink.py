@@ -7,7 +7,7 @@ from os import chdir, getcwd, environ, listdir
 from requests import get, post
 from requests import ConnectionError, HTTPError, URLRequired, Timeout, TooManyRedirects
 from logging import getLogger
-from features.funtions import check_java_version
+from features.funtions import check_java_version, read_data_from_file
 import subprocess
 from re import match
 from warnings import warn
@@ -242,3 +242,66 @@ def step_impl(context, status_code):
 
     assert(context.json['jobid'] is not None,
            f'The key jsonid is Empty')
+
+
+@step("The timesSent is bigger than 0")
+def step_impl(context):
+    """
+    :type context: behave.runner.Context
+    """
+    raise NotImplementedError(u'STEP: And    The timesSent is bigger than 0')
+
+
+@step("The lastNotification should be a recent timestamp")
+def step_impl(context):
+    """
+    :type context: behave.runner.Context
+    """
+    raise NotImplementedError(u'STEP: And    The lastNotification should be a recent timestamp')
+
+
+@step("The lastSuccess should match the lastNotification date")
+def step_impl(context):
+    """
+    :type context: behave.runner.Context
+    """
+    raise NotImplementedError(u'STEP: And    The lastSuccess should match the lastNotification date')
+
+
+@step('The status is "active"')
+def step_impl(context):
+    """
+    :type context: behave.runner.Context
+    """
+    raise NotImplementedError(u'STEP: And    The status is "active"')
+
+
+@then('I obtain the output "{file}" from the console')
+def step_impl(context, file):
+    """
+    :type context: behave.runner.Context
+    """
+    payload = read_data_from_file(context, file)
+    print(file)
+
+
+@when("I obtain the stderr log from the flink-taskmanager")
+def step_impl(context):
+    """
+    :type context: behave.runner.Context
+    """
+    command = "docker logs flink-taskmanager -f --until=60s > stdout.log 2>stderr.log"
+
+    my_env = environ.copy()
+    p = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, env=my_env)
+
+    (std_out, std_err) = p.communicate()
+
+    assert(p.returncode == 0, f'\nReturn code docker logs: {p.returncode}')
+
+    command = "cat stderr.log"
+    p = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, env=my_env)
+
+    (std_out, std_err) = p.communicate()
+
+    assert(p.returncode == 0, f'\nReturn cat: {p.returncode}')
