@@ -1,3 +1,5 @@
+import os
+
 from deepdiff import DeepDiff
 from os.path import join
 from requests.adapters import HTTPAdapter
