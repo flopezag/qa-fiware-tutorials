@@ -1,0 +1,18 @@
+{
+ "devices": [
+   {
+     "device_id":   "motion001",
+     "entity_name": "urn:ngsi-ld:Motion:001",
+     "entity_type": "Motion",
+     "protocol":    "PDI-IoTA-UltraLight",
+     "transport":   "MQTT",
+     "timezone":    "Europe/Berlin",
+     "attributes": [
+       { "object_id": "c", "name": "count", "type": "Integer" }
+     ],
+     "static_attributes": [
+       { "name":"refStore", "type": "Relationship", "value": "urn:ngsi-ld:Store:001"}
+     ]
+   }
+ ]
+}
