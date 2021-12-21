@@ -5,15 +5,15 @@ from os import chdir, getcwd, environ, listdir
 from requests import get, post
 from requests import ConnectionError, HTTPError, URLRequired, Timeout, TooManyRedirects
 from logging import getLogger
-from features.funtions import check_java_version, read_data_from_file
+from features.funtions import check_java_version
 import subprocess
 from re import match
 from warnings import warn
 from features.timeout import Timeout
-from datetime import datetime, time, timedelta
+from datetime import datetime, timedelta
+from pytz import UTC, timezone
 
 __logger__ = getLogger(__name__)
-
 
 new_file = ''
 jar_file_id = ''
@@ -46,7 +46,7 @@ def step_impl(context, orion_flink_connector):
         if version != 8:
             raise AssertionError("Java Runtime Environment must be 8 in the tutorial: {}".format(version))
 
-        url = "https://github.com/ging/fiware-cosmos-orion-flink-connector/releases/download/FIWARE_7.9.1/"\
+        url = "https://github.com/ging/fiware-cosmos-orion-flink-connector/releases/download/FIWARE_7.9.1/" \
               + orion_flink_connector
 
         try:
@@ -64,24 +64,27 @@ def step_impl(context, orion_flink_connector):
             raise AssertionError(file_exists, 'The Orion-Flink-Connector file was not downloaded')
 
 
-@when("I execute the maven install command")
+@when("I execute the maven install command with the following data")
 def step_impl(context):
-    command = "mvn install:install-file \
-        -Dfile=./orion.flink.connector-1.2.4.jar \
-        -DgroupId=org.fiware.cosmos \
-        -DartifactId=orion.flink.connector \
-        -Dversion=1.2.4 \
-        -Dpackaging=jar"
+    for element in context.table.rows:
+        valid_response = dict(element.as_dict())
 
-    my_env = environ.copy()
-    p = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, env=my_env)
+        command = f"mvn install:install-file \
+            -Dfile=./{valid_response['file']} \
+            -DgroupId=org.fiware.cosmos \
+            -DartifactId={valid_response['artifactId']}  \
+            -Dversion={valid_response['version']} \
+            -Dpackaging=jar"
 
-    (std_out, std_err) = p.communicate()
+        my_env = environ.copy()
+        p = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, env=my_env)
 
-    assert(p.returncode == 0, f'\nReturn code maven install: {p.returncode}')
+        (std_out, std_err) = p.communicate()
 
-    # We need to check the result of maven execution in the std_out to find BUILD FAILURE or BUILD BUILD SUCCESS
-    assert(str(std_out).find('BUILD SUCCESS') != -1, 'The maven install was not successful')
+        assert (p.returncode == 0), f'\nReturn code maven install: {p.returncode}'
+
+        # We need to check the result of maven execution in the std_out to find BUILD FAILURE or BUILD BUILD SUCCESS
+        assert (str(std_out).find('BUILD SUCCESS') != -1), 'The maven install was not successful'
 
 
 @step("I execute the maven package command")
@@ -94,10 +97,10 @@ def step_impl(context):
 
     (std_out, std_err) = p.communicate()
 
-    assert(p.returncode == 0, f'\nReturn code maven install: {p.returncode}')
+    assert (p.returncode == 0), f'\nReturn code maven install: {p.returncode}'
 
     # We need to check the result of maven execution in the std_out to find BUILD FAILURE or BUILD BUILD SUCCESS
-    assert(str(std_out).find('BUILD SUCCESS') != -1, 'The maven install was not successful')
+    assert (str(std_out).find('BUILD SUCCESS') != -1), 'The maven install was not successful'
 
 
 @then('A new JAR file called "{file}" is created within the "{folder}" directory')
@@ -176,14 +179,14 @@ def step_impl(context):
     for element in context.table.rows:
         valid_response = dict(element.as_dict())
 
-        assert(valid_response['status'] == context.json['status'],
-               f"The status of the Flink response should be \"success\", received: : {context.json['status']}")
+        assert (valid_response['status'] == context.json['status']), \
+            f"The status of the Flink response should be \"success\", received: : {context.json['status']}"
 
-        assert(valid_response['status_code'] == context.status_code,
-               f"The status code should be \"200\", received: {context.status_code}")
+        assert (int(valid_response['status_code']) == context.status_code), \
+            f"The status code should be \"200\", received: {context.status_code}"
 
-        assert(context.json['filename'] is not None,
-               f"The Flink response should contain a filename")
+        assert (context.json['filename'] is not None), \
+            f"The Flink response should contain a filename"
 
         jar_file_id = basename(context.json['filename'])
 
@@ -230,19 +233,19 @@ def step_impl(context, status_code):
     :param status_code: The status code of the response of the creation of a new Flink job
     :type context: behave.runner.Context
     """
-    assert(context.status_code == status_code,
-           f"The status code should be \"200\", received: {context.status_code}")
+    assert (context.status_code == int(status_code)), \
+        f"The status code should be \"200\", received: {context.status_code}"
 
     job_id = context.json['jobid']
 
-    assert(isinstance(context.json, dict),
-           f"The response is not a dict, received {context.json}")
+    assert (isinstance(context.json, dict)), \
+        f"The response is not a dict, received {context.json}"
 
-    assert('jobid' in context.json,
-           f'The response does not include the key \"jobid\", received {context.json}')
+    assert ('jobid' in context.json), \
+        f'The response does not include the key \"jobid\", received {context.json}'
 
-    assert(context.json['jobid'] is not None,
-           f'The key jsonid is Empty')
+    assert (context.json['jobid'] is not None), \
+        f'The key jsonid is Empty'
 
 
 @step("The timesSent is bigger than 0")
@@ -256,9 +259,7 @@ def step_impl(context):
         context.aux = [x for x in context.response if x['id'] == subscription_id]
 
     times_sent = context.aux[0]['notification']['timesSent']
-    assert(times_sent != 0, 'The timesSent is equal to 0')
-
-
+    assert (times_sent != 0), 'The timesSent is equal to 0'
 
 
 @step("The lastNotification should be a recent timestamp")
@@ -270,17 +271,16 @@ def step_impl(context):
     lastnotification = context.aux[0]['notification']['lastNotification']
 
     t1 = datetime.strptime(lastnotification, "%Y-%m-%dT%H:%M:%S.%fZ")
+    t1 = t1.replace(tzinfo=UTC)
 
-    print(t1)
+    current_date = datetime.now(timezone('Europe/Berlin'))
 
-    current_date = datetime.now()
-    print(current_date)
     interval = timedelta(minutes=10)
 
     a = current_date - interval
     b = current_date + interval
 
-    assert(a <= t1 <= b, f'The lastNotification ({lastnotification}) is not inside the range [{a}, {b}]')
+    assert (a <= t1 <= b), f'The lastNotification ({lastnotification}) is not inside the range [{a}, {b}]'
 
 
 @step("The lastSuccess should match the lastNotification date")
@@ -289,9 +289,14 @@ def step_impl(context):
     :type context: behave.runner.Context
     """
     last_notification = context.aux[0]['notification']['lastNotification']
-    last_success = context.aux[0]['notification']['lastSuccess']
-    assert(last_notification == last_success,
-           f'The value of lastNotification ({last_notification}) and lastSuccess ({last_success}) are not the same')
+
+    try:
+        last_success = context.aux[0]['notification']['lastSuccess']
+    except KeyError:
+        raise AssertionError('The key lastSuccess was not received in the response.')
+
+    assert (last_notification == last_success), \
+        f'The value of lastNotification ({last_notification}) and lastSuccess ({last_success}) are not the same'
 
 
 @step('The status is "active"')
@@ -300,7 +305,7 @@ def step_impl(context):
     :type context: behave.runner.Context
     """
     status = context.aux[0]['status']
-    assert(status == 'active', 'The status is not active')
+    assert (status == 'active'), 'The status is not active'
 
 
 @then('I obtain the output from the console')
@@ -312,12 +317,12 @@ def step_impl(context):
     index_motion = str(context.std_out).find('Sensor(Motion,')
     index_lamp = str(context.std_out).find('Sensor(Lamp,')
     index_door = str(context.std_out).find('Sensor(Door,')
-    #index_bell = str(context.std_out).find('Sensor(Bell,')
+    # index_bell = str(context.std_out).find('Sensor(Bell,')
 
-    assert(index_motion != -1, '\nThere is no Sensor(Motion, xx) detail in the log')
-    assert(index_lamp != -1, '\nThere is no Sensor(Lamp, xx) detail in the log')
-    assert(index_door != -1, '\nThere is no Sensor(Door, xx) detail in the log')
-    #assert(index_bell != -1, '\nThere is no Sensor(Bell, xx) detail in the log')
+    assert (index_motion != -1), '\nThere is no Sensor(Motion, xx) detail in the log'
+    assert (index_lamp != -1), '\nThere is no Sensor(Lamp, xx) detail in the log'
+    assert (index_door != -1), '\nThere is no Sensor(Door, xx) detail in the log'
+    # assert(index_bell != -1, '\nThere is no Sensor(Bell, xx) detail in the log')
 
 
 @when("I obtain the stderr log from the flink-taskmanager")
@@ -335,15 +340,16 @@ def step_impl(context):
 
     (std_out, std_err) = p.communicate()
 
-    assert(p.returncode == 0, f'\nReturn code docker logs: {p.returncode}')
+    assert (p.returncode == 0), f'\nReturn code docker logs: {p.returncode}'
 
     command = "cat stderr.log"
     p = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, env=my_env)
 
     (std_out, std_err) = p.communicate()
 
-    assert(p.returncode == 0, f'\nReturn cat: {p.returncode}')
-
+    print(f'p.returncode: {p.returncode}')
+    assert (p.returncode == 0), f'\nReturn cat: {p.returncode}'
+    print(std_out)
     context.std_out = std_out
 
 
@@ -353,7 +359,8 @@ def step_impl(context, code):
     :param code: The HTTP core response
     :type context: behave.runner.Context
     """
-    assert(context.statusCode == code, f'\nThe status code received was not "200": {context.statusCode}')
+    assert (context.statusCode == code), \
+        f'\nThe status code received was not "200": {context.statusCode}'
 
 
 @then('I receive a HTTP "{status_code}" response with a subscriptionId')
@@ -365,5 +372,5 @@ def step_impl(context, status_code):
     global subscription_id
 
     subscription_id = basename(context.id)
-    assert(context.statusCode == status_code,
-           f'Response to CB notification has not got the expected HTTP response code: Message: {context.response}')
+    assert (context.statusCode == status_code), \
+        f'Response to CB notification has not got the expected HTTP response code: Message: {context.response}'

@@ -14,7 +14,9 @@ Feature: test tutorial 305.Big Data (Flink)
   @ongoing
   Scenario: Compiling a jar file for Flink
     Given  I download the Orion Flink Connector "orion.flink.connector-1.2.4.jar"
-    When   I execute the maven install command
+    When   I execute the maven install command with the following data
+      | file                            | artifactId            | version |
+      | orion.flink.connector-1.2.4.jar | orion.flink.connector | 1.2.4   |
     And    I execute the maven package command
     Then   A new JAR file called "cosmos-examples-1.1.jar" is created within the "cosmos-examples/target" directory
 
@@ -49,7 +51,7 @@ Feature: test tutorial 305.Big Data (Flink)
 
   Scenario: Logger - Check that subscription is firing
     Given  The fiware-service header is "openiot" and the fiware-servicepath header is "/"
-    And    I wait "90" seconds
+    And    I wait "120" seconds
     When   I send GET HTTP request to "http://localhost:1026/v2/subscriptions" with fiware-service and fiware-servicepath
     Then   I receive a HTTP "200" response code from Broker with the body "response305-02.json" and exclusions "response305-02.excludes"
     And    The timesSent is bigger than 0
@@ -58,7 +60,7 @@ Feature: test tutorial 305.Big Data (Flink)
     And    The status is "active"
 
   Scenario: Logger - Checking the output
-    Given  I wait "90" seconds
+    Given  I wait "5" seconds
     When   I obtain the stderr log from the flink-taskmanager
     Then   I obtain the output from the console
 
@@ -74,7 +76,7 @@ Feature: test tutorial 305.Big Data (Flink)
 
   Scenario: Feedback Loop - Check that subscription is firing
     Given  The fiware-service header is "openiot" and the fiware-servicepath header is "/"
-    And    I wait "90" seconds
+    And    I wait "120" seconds
     When   I send GET HTTP request to "http://localhost:1026/v2/subscriptions" with fiware-service and fiware-servicepath
     Then   I receive a HTTP "200" response code from Broker
     And    The timesSent is bigger than 0
@@ -82,4 +84,7 @@ Feature: test tutorial 305.Big Data (Flink)
     And    The lastSuccess should match the lastNotification date
     And    The status is "active"
 
-#  Scenario: Feedback Loop - Checking the output
+  Scenario: Feedback Loop - Checking the output
+    Given  I wait "5" seconds
+    When   I obtain the stderr log from the flink-taskmanager
+    Then   I obtain the output from the console
