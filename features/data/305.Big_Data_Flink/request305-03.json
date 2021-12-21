@@ -9,7 +9,7 @@
   },
   "notification": {
     "http": {
-      "url": "http://taskmanger:9001"
+      "url": "http://taskmanager:9001"
     }
   }
 }

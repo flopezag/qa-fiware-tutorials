@@ -121,7 +121,7 @@ def receive_post_iot_dummy_response_with_data(context, code, server, file, excl_
     body = json.loads(read_data_from_file(context, file))
 
     diff = dict_diff_with_exclusions(context, body, context.response, excl_file)
-    stdout.write(f'{diff}\n\n')
+
     assert_that(diff.to_dict(), is_(dict()),
                 f'Response from {server} has not got the expected HTTP response body:\n  {diff}')
     assert (context.statusCode == code)
