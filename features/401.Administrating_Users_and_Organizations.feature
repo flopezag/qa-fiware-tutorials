@@ -17,3 +17,14 @@ Feature: Test tutorial 401.Administrating Users and Organizations
     Then   I obtain the following data from MySQL
       | id    | username | email          | password |
       | admin | admin    | admin@test.com | ANY      |
+
+  Scenario: 01 - Create token with password
+    When   I send POST HTTP request to "http://localhost:3005/v1/auth/tokens"
+    And    With the body request described in file "request401-01.json"
+    Then   I receive a HTTP response with the following data in header and payload
+      | Status-Code | X-Subject-Token | Connection | data                | excluded                |
+      | 201         | Any             | keep-alive | response401-01.json | response401-01.excludes |
+
+  Scenario: 02 - Get user information via a token
+    When   I send GET HTTP request to "http://localhost:3005/v1/auth/tokens" with equal X-Auth-Token and X-Subject-Token
+    Then   I receive a HTTP "200" status code from Keyrock with the body "response401-02.json" and exclusions "response401-02.excludes"

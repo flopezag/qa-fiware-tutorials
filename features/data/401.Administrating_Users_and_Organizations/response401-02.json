@@ -1,0 +1,13 @@
+{
+    "access_token": "51f2e380-c959-4dee-a0af-380f730137c3",
+    "expires": "2018-07-30T13:02:37.000Z",
+    "valid": true,
+    "User": {
+        "id": "admin",
+        "username": "admin",
+        "email": "admin@test.com",
+        "date_password": "2018-07-30T09:55:38.000Z",
+        "enabled": true,
+        "admin": true
+    }
+}
