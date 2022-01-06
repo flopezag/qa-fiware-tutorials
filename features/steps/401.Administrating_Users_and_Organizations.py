@@ -6,7 +6,8 @@ import subprocess
 from hamcrest import assert_that, is_
 from features.funtions import read_data_from_file, dict_diff_with_exclusions
 from json import loads
-from requests import get, RequestException
+from json.decoder import JSONDecodeError
+from requests import get, post, RequestException
 
 Token = str()
 
@@ -16,6 +17,8 @@ def step_impl_tutorial_203(context):
 
 
 @when("I request the information from user table")
+@when("I update the information into the user table")
+@step("I request the information from user table")
 def step_impl(context):
     my_env = environ.copy()
     temp = subprocess.Popen(context.command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, env=my_env)
@@ -23,17 +26,20 @@ def step_impl(context):
     if temp.returncode == 0 or temp.returncode is None:  # is 0 or None if success
         (output, stderr) = temp.communicate()
 
-        output = output.decode('utf-8').replace('\t', ' ').split('\n')
+        if len(output) != 0:  # Update command return no data
+            output = output.decode('utf-8').replace('\t', ' ').split('\n')
 
-        del output[2]
-        output[0] = output[0].split(" ")
-        output[1] = output[1].split(" ")
+            del output[2]
+            output[0] = output[0].split(" ")
+            output[1] = output[1].split(" ")
 
-        aux = dict()
-        for i in range(0, len(output[0])):
-            aux[output[0][i]] = output[1][i]
+            aux = dict()
+            for i in range(0, len(output[0])):
+                aux[output[0][i]] = output[1][i]
 
-        context.output = aux
+            context.output = aux
+        else:
+            context.output = ''
     else:
         raise AssertionError('An docker error was produced during the execution of the command')
 
@@ -150,9 +156,129 @@ def receive_post_iot_dummy_response_with_data(context, code, file, excl_file):
 
     diff = dict_diff_with_exclusions(context, body, context.response, excl_file)
 
+    assert (context.statusCode == code), \
+        f'Wrong Status Code, reveiced \"{context.statusCode}\", but it was expected \"{code}\"'
+
     assert_that(diff.to_dict(), is_(dict()),
                 f'Response from Keyrock has not got the expected HTTP response body:\n  {diff}')
 
-    assert (context.statusCode == code)
-
     assert (context.response['access_token'] == Token)
+
+
+@step("With the body request containing the previous token")
+def step_impl(context):
+    """
+    :type context: behave.runner.Context
+    """
+    payload = {
+        "token": Token
+    }
+
+    try:
+        response = post(context.url, data=payload, headers=context.header)
+    except RequestException as e:
+        raise SystemExit(e)
+
+    context.responseHeaders = response.headers
+    context.statusCode = str(response.status_code)
+
+    try:
+        context.response = response.json()
+    except JSONDecodeError as e:
+        context.response = ""
+
+
+@step("With the X-Auth-Token header with the previous obtained token")
+def step_impl(context):
+    """
+    :type context: behave.runner.Context
+    """
+    context.header['X-Auth-Token'] = Token
+
+
+@given("I connect to the MySQL docker instance to grant user with the following data")
+def step_impl(context):
+    """
+    :type context: behave.runner.Context
+    """
+    # docker exec -it <docker instance> mysql -u<user> -p<password> <database>
+    #             -e "update user set admin = 1 where username='alice';"
+
+    for element in context.table.rows:
+        valid_response = dict(element.as_dict())
+        # | DockerInstance | User | Password | Database | Table | Username |
+        docker_instance = valid_response['DockerInstance']
+        user = valid_response['User']
+        password = valid_response['Password']
+        database = valid_response['Database']
+        table = valid_response['Table']
+        username = valid_response['Username']
+
+        update_stmt = f"\"update {table} set admin = 1 where username='{username}';\""
+
+        context.command = f"docker exec {docker_instance} mysql -u{user} -p{password} {database} -e {update_stmt}"
+
+
+@then('I can check the table with the following data')
+def step_impl(context):
+    """
+    :type context: behave.runner.Context
+    """
+    # docker exec -it <docker instance> mysql -u<user> -p<password> <database>
+    #             -e 'select id, username, email, password from user;'
+
+    for element in context.table.rows:
+        valid_response = dict(element.as_dict())
+        # | DockerInstance | User | Password | Database | Table | Column | Username |
+        docker_instance = valid_response['DockerInstance']
+        user = valid_response['User']
+        password = valid_response['Password']
+        database = valid_response['Database']
+        table = valid_response['Table']
+        column = valid_response['Column']
+        username = valid_response['Username']
+
+        select_stmt = f"\"select {column} from {table} where username = \'{username}\';\""
+
+        context.command = f"docker exec {docker_instance} mysql -u{user} -p{password} {database} -e {select_stmt}"
+
+
+@then("I obtain the value \"{value}\" from the select")
+def step_impl(context, value):
+    """
+    :type context: behave.runner.Context
+    """
+    obtained_value = context.output['admin']
+
+    assert (value == obtained_value), \
+        f"\nThe id value is not the expected, obtained {obtained_value}, but expected: {value}"
+
+
+@step('With the body request with "{username}", "{email}", and "{password}" data')
+def step_impl(context, username, email, password):
+    """
+    :type context: behave.runner.Context
+    :type username: str
+    :type email: str
+    :type password: str
+    """
+    payload = {
+        "user": {
+            "username": username,
+            "email": email,
+            "password": password
+        }
+    }
+
+    try:
+        response = post(context.url, data=payload, headers=context.header)
+    except RequestException as e:
+        raise SystemExit(e)
+
+    context.responseHeaders = response.headers
+    context.statusCode = str(response.status_code)
+
+    try:
+        context.response = response.json()
+    except JSONDecodeError as e:
+        context.response = ""

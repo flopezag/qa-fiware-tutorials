@@ -28,3 +28,40 @@ Feature: Test tutorial 401.Administrating Users and Organizations
   Scenario: 02 - Get user information via a token
     When   I send GET HTTP request to "http://localhost:3005/v1/auth/tokens" with equal X-Auth-Token and X-Subject-Token
     Then   I receive a HTTP "200" status code from Keyrock with the body "response401-02.json" and exclusions "response401-02.excludes"
+
+  Scenario: 03 - Refresh token
+    When   I send POST HTTP request to "http://localhost:3005/v1/auth/tokens"
+    And    With the body request containing the previous token
+    Then   I receive a HTTP "200" status code from Keyrock with the body "response401-03.json" and exclusions "response401-01.excludes"
+
+  Scenario: 04.1 - Creating admin user
+    When   I send POST HTTP request to "http://localhost:3005/v1/users"
+    And    With the X-Auth-Token header with the previous obtained token
+    And    With the body request described in file "request401-04.json"
+    Then   I receive a HTTP "201" status code from Keyrock with the body "response401-04.json" and exclusions "response401-04.excludes"
+
+  Scenario: 04.02 - Grant super-admin to Alice user
+    Given  I connect to the MySQL docker instance to grant user with the following data
+      | DockerInstance | User | Password | Database | Table | Username |
+      | db-mysql       | root | secret   | idm      | user  | alice    |
+    When   I update the information into the user table
+    Then   I can check the table with the following data
+      | DockerInstance | User | Password | Database | Table | Column | Username |
+      | db-mysql       | root | secret   | idm      | user  | admin  | alice    |
+    And    I request the information from user table
+    And    I obtain the value "1" from the select
+
+  Scenario Outline: 04.03 - Creating the rest of the users
+    When   I send POST HTTP request to "http://localhost:3005/v1/users"
+    And    With the X-Auth-Token header with the previous obtained token
+    And    With the body request with "<username>", "<email>", and "<password>" data
+    Then   I receive a HTTP "201" status code from Keyrock with the body "response401-04.json" and exclusions "response401-04.excludes"
+
+    Examples:
+        | username   | email                     | password |
+        | bob        | bob-the-manager@test.com  | test     |
+        | charlie    | charlie-security@test.com | test     |
+        | manager1   | manager1@test.com         | test     |
+        | manager2   | manager2@test.com         | test     |
+        | detective1 | detective1@test.com       | test     |
+        | detective2 | detective2@test.com       | test     |
