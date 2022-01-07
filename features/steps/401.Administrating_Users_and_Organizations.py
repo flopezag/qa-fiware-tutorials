@@ -5,11 +5,12 @@ from os import environ
 import subprocess
 from hamcrest import assert_that, is_
 from features.funtions import read_data_from_file, dict_diff_with_exclusions
-from json import loads
+from json import loads, dumps
 from json.decoder import JSONDecodeError
 from requests import get, post, RequestException
 
 Token = str()
+global adminId
 
 @given(u'I set the tutorial 401')
 def step_impl_tutorial_203(context):
@@ -127,7 +128,7 @@ def step_impl(context):
                     f'Response from Keyrock has not got the expected HTTP response body:\n  {diff}')
 
 
-@when('I send GET HTTP request to "{url}" with equal X-Auth-Token and X-Subject-Token')
+@when('I send a GET HTTP request to "{url}" with equal X-Auth-Token and X-Subject-Token')
 def step_impl(context, url):
     """
     :type context: behave.runner.Context
@@ -152,6 +153,12 @@ def step_impl(context, url):
 
 @then(u'I receive a HTTP "{code}" status code from Keyrock with the body "{file}" and exclusions "{excl_file}"')
 def receive_post_iot_dummy_response_with_data(context, code, file, excl_file):
+    global adminId
+
+    if 'user' in context.response:
+        if context.response['user']['username'] == 'alice':
+            adminId = context.response['user']['id']
+
     body = loads(read_data_from_file(context, file))
 
     diff = dict_diff_with_exclusions(context, body, context.response, excl_file)
@@ -193,7 +200,11 @@ def step_impl(context):
     """
     :type context: behave.runner.Context
     """
-    context.header['X-Auth-Token'] = Token
+    try:
+        context.header['X-Auth-Token'] = Token
+    except AttributeError:
+        # Context object has no attribute 'header'
+        context.header = {'X-Auth-Token': Token}
 
 
 @given("I connect to the MySQL docker instance to grant user with the following data")
@@ -271,7 +282,7 @@ def step_impl(context, username, email, password):
     }
 
     try:
-        response = post(context.url, data=payload, headers=context.header)
+        response = post(context.url, data=dumps(payload), headers=context.header)
     except RequestException as e:
         raise SystemExit(e)
 
@@ -282,3 +293,60 @@ def step_impl(context, username, email, password):
         context.response = response.json()
     except JSONDecodeError as e:
         context.response = ""
+
+
+@then('I receive a HTTP "{code}" response with the corresponding "{username}" and "{email}" data')
+def step_impl(context, code, username, email):
+    """
+    :param username: the name of the user
+    :param code: the status code of the response
+    :param email: the email of the user
+    :type context: behave.runner.Context
+    """
+    assert (context.statusCode == code), \
+        f'The status code is not the expected value, received {context.statusCode}, expected {code}'
+
+    assert (context.response['user']['username'] == username), \
+        f"The username is not the expected, received {context.response['user']['username']}, expected {username}"
+
+    assert (context.response['user']['email'] == email), \
+        f"The email value is not the expected value, received {context.response['user']['email']}, expected {email}"
+
+    assert (context.response['user']['enabled'] is True), \
+        f"The enabled value is not the expected value, received {context.response['user']['enabled']}, expected True"
+
+    assert (context.response['user']['admin'] is False), \
+        f"The admin value is not the expected value, received {context.response['user']['admin']}, expected False"
+
+
+@step('With the admin user id from the previous operation')
+def step_impl(context):
+    """
+    :type context: behave.runner.Context
+    """
+    global adminId
+
+    context.url = context.url + f'/{adminId}'
+    context.header['Content-Type'] = 'application/json'
+
+    try:
+        response = get(context.url, headers=context.header)
+    except RequestException as e:
+        raise SystemExit(e)
+
+    context.responseHeaders = response.headers
+    context.statusCode = str(response.status_code)
+
+    try:
+        context.response = response.json()
+    except JSONDecodeError as e:
+        context.response = ""
+
+
+@when('I send a GET HTTP request to "{url}"')
+def step_impl(context, url):
+    """
+    :type context: behave.runner.Context
+    """
+    context.url = url
+    context.header = {'Content-Type': 'application/json'}
