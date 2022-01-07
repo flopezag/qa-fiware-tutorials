@@ -26,7 +26,7 @@ Feature: Test tutorial 401.Administrating Users and Organizations
       | 201         | Any             | keep-alive | response401-01.json | response401-01.excludes |
 
   Scenario: 02 - Get user information via a token
-    When   I send GET HTTP request to "http://localhost:3005/v1/auth/tokens" with equal X-Auth-Token and X-Subject-Token
+    When   I send a GET HTTP request to "http://localhost:3005/v1/auth/tokens" with equal X-Auth-Token and X-Subject-Token
     Then   I receive a HTTP "200" status code from Keyrock with the body "response401-02.json" and exclusions "response401-02.excludes"
 
   Scenario: 03 - Refresh token
@@ -55,7 +55,7 @@ Feature: Test tutorial 401.Administrating Users and Organizations
     When   I send POST HTTP request to "http://localhost:3005/v1/users"
     And    With the X-Auth-Token header with the previous obtained token
     And    With the body request with "<username>", "<email>", and "<password>" data
-    Then   I receive a HTTP "201" status code from Keyrock with the body "response401-04.json" and exclusions "response401-04.excludes"
+    Then   I receive a HTTP "201" response with the corresponding "<username>" and "<email>" data
 
     Examples:
         | username   | email                     | password |
@@ -65,3 +65,9 @@ Feature: Test tutorial 401.Administrating Users and Organizations
         | manager2   | manager2@test.com         | test     |
         | detective1 | detective1@test.com       | test     |
         | detective2 | detective2@test.com       | test     |
+
+  Scenario: 05 - Read information about the admin user
+    When   I send a GET HTTP request to "http://localhost:3005/v1/users"
+    And    With the X-Auth-Token header with the previous obtained token
+    And    With the admin user id from the previous operation
+    Then   I receive a HTTP "200" status code from Keyrock with the body "response401-05.json" and exclusions "response401-04.excludes"
