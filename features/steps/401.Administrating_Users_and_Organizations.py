@@ -7,7 +7,7 @@ from hamcrest import assert_that, is_
 from features.funtions import read_data_from_file, dict_diff_with_exclusions
 from json import loads, dumps
 from json.decoder import JSONDecodeError
-from requests import get, post, RequestException
+from requests import get, post, patch, RequestException
 
 Token = str()
 global adminId
@@ -173,29 +173,18 @@ def receive_post_iot_dummy_response_with_data(context, code, file, excl_file):
 
 
 @step("With the body request containing the previous token")
+@when("We defined a payload with token equal to the previous token")
 def step_impl(context):
     """
     :type context: behave.runner.Context
     """
-    payload = {
+    context.payload = {
         "token": Token
     }
 
-    try:
-        response = post(context.url, data=payload, headers=context.header)
-    except RequestException as e:
-        raise SystemExit(e)
-
-    context.responseHeaders = response.headers
-    context.statusCode = str(response.status_code)
-
-    try:
-        context.response = response.json()
-    except JSONDecodeError as e:
-        context.response = ""
-
 
 @step("With the X-Auth-Token header with the previous obtained token")
+@when("I set the X-Auth-Token header with the previous obtained token")
 def step_impl(context):
     """
     :type context: behave.runner.Context
@@ -273,7 +262,7 @@ def step_impl(context, username, email, password):
     :type email: str
     :type password: str
     """
-    payload = {
+    context.payload = {
         "user": {
             "username": username,
             "email": email,
@@ -281,18 +270,7 @@ def step_impl(context, username, email, password):
         }
     }
 
-    try:
-        response = post(context.url, data=dumps(payload), headers=context.header)
-    except RequestException as e:
-        raise SystemExit(e)
-
-    context.responseHeaders = response.headers
-    context.statusCode = str(response.status_code)
-
-    try:
-        context.response = response.json()
-    except JSONDecodeError as e:
-        context.response = ""
+    context.payload = dumps(context.payload)
 
 
 @then('I receive a HTTP "{code}" response with the corresponding "{username}" and "{email}" data')
@@ -319,18 +297,13 @@ def step_impl(context, code, username, email):
         f"The admin value is not the expected value, received {context.response['user']['admin']}, expected False"
 
 
-@step('With the admin user id from the previous operation')
-def step_impl(context):
+@when('I send a GET HTTP request to "{url}"')
+def step_impl(context, url):
     """
     :type context: behave.runner.Context
     """
-    global adminId
-
-    context.url = context.url + f'/{adminId}'
-    context.header['Content-Type'] = 'application/json'
-
     try:
-        response = get(context.url, headers=context.header)
+        response = get(url, headers=context.header)
     except RequestException as e:
         raise SystemExit(e)
 
@@ -343,10 +316,139 @@ def step_impl(context):
         context.response = ""
 
 
-@when('I send a GET HTTP request to "{url}"')
+@step('I send a GET HTTP request to "{url}" with the admin user id from previous execution')
 def step_impl(context, url):
     """
     :type context: behave.runner.Context
     """
-    context.url = url
-    context.header = {'Content-Type': 'application/json'}
+    global adminId
+    url = url + f'/{adminId}'
+
+    try:
+        response = get(url, headers=context.header)
+    except RequestException as e:
+        raise SystemExit(e)
+
+    context.responseHeaders = response.headers
+    context.statusCode = str(response.status_code)
+
+    try:
+        context.response = response.json()
+    except JSONDecodeError as e:
+        context.response = ""
+
+
+@then('I receive a HTTP "{code}" status code from Keyrock wit the following data for each created user')
+def step_impl(context, code):
+    """
+    :type context: behave.runner.Context
+    """
+
+    assert (context.statusCode == code), \
+        f'The status code is not the expected value, received {context.statusCode}, expected {code}'
+
+    number_users = len(context.response['users'])
+
+    index = 0
+    for element in context.table.rows:
+        valid_response = dict(element.as_dict())
+        # | id | username | email | enabled | gravatar | date_password | description | website |
+        username = valid_response['username']
+        email = valid_response['email']
+        enabled = valid_response['enabled']
+        gravatar = valid_response['gravatar']
+        description = valid_response['description']
+        website = valid_response['website']
+
+        assert ("id" in context.response['users'][index]), \
+            f"The id is not in the description of the user {index}, data received: \n{context.response['users'][index]}"
+
+        assert (context.response['users'][index]['username'] == username), \
+            f"The username is not the expected, received {context.response['users'][index]['username']}, expected {username}"
+
+        assert (context.response['users'][index]['email'] == email), \
+            f"The email value is not the expected value, received {context.response['users'][index]['email']}, expected {email}"
+
+        assert (context.response['users'][index]['enabled'] == enabled), \
+            f"The enabled value is not the expected value, received {context.response['users'][index]['enabled']}, expected {enabled}"
+
+        assert (context.response['users'][index]['gravatar'] == gravatar), \
+            f"The enabled value is not the expected value, received {context.response['users'][index]['enabled']}, expected {gravatar}"
+
+        assert ("date_password" in context.response['users'][index]), \
+            f"The date_password is not in the description of the user {index}, data received: \n{context.response['users'][index]}"
+
+        assert (context.response['users'][index]['description'] == description), \
+            f"The description value is not the expected value, received {context.response['users'][index]['description']}, expected {description}"
+
+        assert (context.response['users'][index]['website'] == website), \
+            f"The website value is not the expected value, received {context.response['users'][index]['website']}, expected {website}"
+
+        index += 1
+
+    assert (index == number_users), \
+        f'The number of received users are not the expected value, received {number_users}, expected {index}'
+
+
+@step('the body request described in file "{file}"')
+def step_impl(context, file):
+    """
+    :type context: behave.runner.Context
+    """
+    file = join(context.data_home, file)
+    with open(file) as f:
+        context.payload = f.read()
+
+
+@step('I send a PATCH HTTP request to the url "{url}" with the admin user id from previous execution')
+def step_impl(context, url):
+    """
+    :type context: behave.runner.Context
+    """
+    global adminId
+
+    url = url + f'/{adminId}'
+    context.header['Content-Type'] = 'application/json'
+
+    try:
+        response = patch(url, data=context.payload, headers=context.header)
+    except RequestException as e:
+        raise SystemExit(e)
+
+    context.responseHeaders = response.headers
+    context.statusCode = str(response.status_code)
+
+    try:
+        context.response = response.json()
+    except JSONDecodeError as e:
+        context.response = ""
+
+
+@when('I send a POST HTTP request to "{url}"')
+def step_impl(context, url):
+    """
+    :type context: behave.runner.Context
+    """
+    try:
+        response = post(url, data=context.payload, headers=context.header)
+    except RequestException as e:
+        raise SystemExit(e)
+
+    context.responseHeaders = response.headers
+    context.statusCode = str(response.status_code)
+
+    try:
+        context.response = response.json()
+    except JSONDecodeError as e:
+        context.response = ""
+
+
+@step('the content-type header key equal to "{value}"')
+def step_impl(context, value):
+    """
+    :type context: behave.runner.Context
+    """
+    try:
+        context.header['Content-Type'] = value
+    except AttributeError:
+        context.header = {'Content-Type': value}

@@ -53,24 +53,11 @@ def set_req_body2(context, url):
 
 
 @step(u'With the body request described in file "{file}"')
+@step(u'I define the body request described in file "{file}"')
 def send_orion_post_entity2(context, file):
     file = join(context.data_home, file)
     with open(file) as f:
-        payload = f.read()
-
-    try:
-        response = post(context.url, data=payload, headers=context.header)
-    except exceptions.RequestException as e:  
-        raise SystemExit(e)
-
-    context.responseHeaders = response.headers
-    context.statusCode = str(response.status_code)
-    stdout.write(f'{context.responseHeaders}\n\n\n\n')
-    stdout.flush()
-    try:
-        context.response = response.json()
-    except Exception as e:
-        context.response = ""
+        context.payload = f.read()
 
 
 @then(u'I receive a HTTP response with the following data')

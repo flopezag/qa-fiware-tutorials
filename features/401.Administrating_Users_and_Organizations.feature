@@ -19,8 +19,9 @@ Feature: Test tutorial 401.Administrating Users and Organizations
       | admin | admin    | admin@test.com | ANY      |
 
   Scenario: 01 - Create token with password
-    When   I send POST HTTP request to "http://localhost:3005/v1/auth/tokens"
-    And    With the body request described in file "request401-01.json"
+    When   I define the body request described in file "request401-01.json"
+    And    the content-type header key equal to "application/json"
+    And    I send a POST HTTP request to "http://localhost:3005/v1/auth/tokens"
     Then   I receive a HTTP response with the following data in header and payload
       | Status-Code | X-Subject-Token | Connection | data                | excluded                |
       | 201         | Any             | keep-alive | response401-01.json | response401-01.excludes |
@@ -30,14 +31,16 @@ Feature: Test tutorial 401.Administrating Users and Organizations
     Then   I receive a HTTP "200" status code from Keyrock with the body "response401-02.json" and exclusions "response401-02.excludes"
 
   Scenario: 03 - Refresh token
-    When   I send POST HTTP request to "http://localhost:3005/v1/auth/tokens"
-    And    With the body request containing the previous token
+    When   We defined a payload with token equal to the previous token
+    And    the content-type header key equal to "application/json"
+    And    I send a POST HTTP request to "http://localhost:3005/v1/auth/tokens"
     Then   I receive a HTTP "200" status code from Keyrock with the body "response401-03.json" and exclusions "response401-01.excludes"
 
   Scenario: 04.1 - Creating admin user
-    When   I send POST HTTP request to "http://localhost:3005/v1/users"
-    And    With the X-Auth-Token header with the previous obtained token
+    When   I set the X-Auth-Token header with the previous obtained token
+    And    the content-type header key equal to "application/json"
     And    With the body request described in file "request401-04.json"
+    And    I send a POST HTTP request to "http://localhost:3005/v1/users"
     Then   I receive a HTTP "201" status code from Keyrock with the body "response401-04.json" and exclusions "response401-04.excludes"
 
   Scenario: 04.02 - Grant super-admin to Alice user
@@ -52,9 +55,10 @@ Feature: Test tutorial 401.Administrating Users and Organizations
     And    I obtain the value "1" from the select
 
   Scenario Outline: 04.03 - Creating the rest of the users
-    When   I send POST HTTP request to "http://localhost:3005/v1/users"
-    And    With the X-Auth-Token header with the previous obtained token
+    When   I set the X-Auth-Token header with the previous obtained token
+    And    the content-type header key equal to "application/json"
     And    With the body request with "<username>", "<email>", and "<password>" data
+    And    I send a POST HTTP request to "http://localhost:3005/v1/users"
     Then   I receive a HTTP "201" response with the corresponding "<username>" and "<email>" data
 
     Examples:
@@ -67,7 +71,27 @@ Feature: Test tutorial 401.Administrating Users and Organizations
         | detective2 | detective2@test.com       | test     |
 
   Scenario: 05 - Read information about the admin user
-    When   I send a GET HTTP request to "http://localhost:3005/v1/users"
-    And    With the X-Auth-Token header with the previous obtained token
-    And    With the admin user id from the previous operation
+    When   I set the X-Auth-Token header with the previous obtained token
+    And    the content-type header key equal to "application/json"
+    And    I send a GET HTTP request to "http://localhost:3005/v1/users" with the admin user id from previous execution
     Then   I receive a HTTP "200" status code from Keyrock with the body "response401-05.json" and exclusions "response401-04.excludes"
+
+  Scenario: 06 - List all users
+    When   I set the X-Auth-Token header with the previous obtained token
+    And    the content-type header key equal to "application/json"
+    And    I send a GET HTTP request to "http://localhost:3005/v1/users"
+    Then   I receive a HTTP "200" status code from Keyrock wit the following data for each created user
+        | id  | username   | email                     | enabled | gravatar | date_password | description | website |
+        | any | alice      | alice-the-admin@test.com  | true    | false    | any           | null        | null    |
+        | any | bob        | bob-the-manager@test.com  | true    | false    | any           | null        | null    |
+        | any | charlie    | charlie-security@test.com | true    | false    | any           | null        | null    |
+        | any | manager1   | manager1@test.com         | true    | false    | any           | null        | null    |
+        | any | manager2   | manager2@test.com         | true    | false    | any           | null        | null    |
+        | any | detective1 | detective1@test.com       | true    | false    | any           | null        | null    |
+        | any | detective2 | detective2@test.com       | true    | false    | any           | null        | null    |
+
+  Scenario: 07 - Update an user
+    When  I set the X-Auth-Token header with the previous obtained token
+    And   the body request described in file "request401-07.json"
+    And   I send a PATCH HTTP request to the url "http://localhost:3005/v1/users" with the admin user id from previous execution
+    Then  I receive a HTTP "200" response code from Keyrock with the body "response401-07.json"
