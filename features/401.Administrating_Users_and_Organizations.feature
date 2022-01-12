@@ -79,7 +79,7 @@ Feature: Test tutorial 401.Administrating Users and Organizations
   Scenario: 06 - List all users
     When   I set the X-Auth-Token header with the previous obtained token
     And    the content-type header key equal to "application/json"
-    And    I send a GET HTTP request to "http://localhost:3005/v1/users"
+    And    I send a GET HTTP request to the url "http://localhost:3005/v1/users"
     Then   I receive a HTTP "200" status code from Keyrock wit the following data for each created user
         | id  | username   | email                     | enabled | gravatar | date_password | description | website |
         | any | alice      | alice-the-admin@test.com  | true    | false    | any           | null        | null    |
@@ -90,8 +90,33 @@ Feature: Test tutorial 401.Administrating Users and Organizations
         | any | detective1 | detective1@test.com       | true    | false    | any           | null        | null    |
         | any | detective2 | detective2@test.com       | true    | false    | any           | null        | null    |
 
-  Scenario: 07 - Update an user
+  Scenario: 07 - Update a user
     When  I set the X-Auth-Token header with the previous obtained token
+    And   the content-type header key equal to "application/json"
     And   the body request described in file "request401-07.json"
-    And   I send a PATCH HTTP request to the url "http://localhost:3005/v1/users" with the admin user id from previous execution
+    And   I send a PATCH HTTP request to the url "http://localhost:3005/v1/users" with the "admin user" id from previous execution
     Then  I receive a HTTP "200" response code from Keyrock with the body "response401-07.json"
+
+  Scenario: 08 - Delete a user
+    When  I set the X-Auth-Token header with the previous obtained token
+    And   the content-type header key equal to "application/json"
+    And   I send a DELETE HTTP request to the url "http://localhost:3005/v1/users" with the "admin user" id from previous execution
+
+  Scenario: 09 - Create an organization
+    When  I set the X-Auth-Token header with the previous obtained token
+    And   the content-type header key equal to "application/json"
+    And   the body request described in file "request401-09.json"
+    And   I send a POST HTTP request to "http://localhost:3005/v1/organizations"
+    Then  I receive a HTTP "201" status code from Keyrock with the body "response401-09.json" and exclusions "response401-09.excludes"
+
+  Scenario: 10 - Read organization details
+    When  I set the X-Auth-Token header with the previous obtained token
+    And   the content-type header key equal to "application/json"
+    And   I send a GET HTTP request to the url "http://localhost:3005/v1/organizations" with the "organization" id from previous execution
+    Then  I receive a HTTP "200" status code from Keyrock with the body "response401-10.json" and exclusions "response401-09.excludes"
+
+  Scenario: 11 - List all organizations
+    When  I set the X-Auth-Token header with the previous obtained token
+    And   the content-type header key equal to "application/json"
+    And   I send a GET HTTP request to the url "http://localhost:3005/v1/organizations"
+    Then  I receive a HTTP "200" status code from Keyrock with the body "response401-11.json" and exclusions "response401-11.excludes"

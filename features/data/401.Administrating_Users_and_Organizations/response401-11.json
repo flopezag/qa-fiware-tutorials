@@ -1,0 +1,24 @@
+{
+    "organizations": [
+        {
+            "role": "owner",
+            "Organization": {
+                "id": "18deea43-e12a-4018-a45a-664c3158780d",
+                "name": "Security",
+                "description": "This group is for the store detectives",
+                "image": "default",
+                "website": null
+            }
+        },
+        {
+            "role": "owner",
+            "Organization": {
+                "id": "a45f9b5a-dd23-4d0f-a0d4-e97e2d7431a3",
+                "name": "Management",
+                "description": "This group is for the store manangers",
+                "image": "default",
+                "website": null
+            }
+        }
+    ]
+}
