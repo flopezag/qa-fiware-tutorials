@@ -7,10 +7,12 @@ from hamcrest import assert_that, is_
 from features.funtions import read_data_from_file, dict_diff_with_exclusions
 from json import loads, dumps
 from json.decoder import JSONDecodeError
-from requests import get, post, patch, RequestException
+from requests import get, post, patch, delete, RequestException
 
-Token = str()
+global Token
 global adminId
+global organizationId
+
 
 @given(u'I set the tutorial 401')
 def step_impl_tutorial_203(context):
@@ -131,6 +133,7 @@ def step_impl(context):
 @when('I send a GET HTTP request to "{url}" with equal X-Auth-Token and X-Subject-Token')
 def step_impl(context, url):
     """
+    :param url: the url of the HTTP operation
     :type context: behave.runner.Context
     """
     try:
@@ -154,10 +157,17 @@ def step_impl(context, url):
 @then(u'I receive a HTTP "{code}" status code from Keyrock with the body "{file}" and exclusions "{excl_file}"')
 def receive_post_iot_dummy_response_with_data(context, code, file, excl_file):
     global adminId
+    global organizationId
+    global Token
 
     if 'user' in context.response:
         if context.response['user']['username'] == 'alice':
             adminId = context.response['user']['id']
+    elif 'organization' in context.response:
+        organizationId = context.response['organization']['id']
+    elif 'access_token' in context.response:
+        assert (context.response['access_token'] == Token), \
+            f"Wrong access_token received, expected {Token}, but received {context.response['access_token']}"
 
     body = loads(read_data_from_file(context, file))
 
@@ -168,8 +178,6 @@ def receive_post_iot_dummy_response_with_data(context, code, file, excl_file):
 
     assert_that(diff.to_dict(), is_(dict()),
                 f'Response from Keyrock has not got the expected HTTP response body:\n  {diff}')
-
-    assert (context.response['access_token'] == Token)
 
 
 @step("With the body request containing the previous token")
@@ -246,6 +254,7 @@ def step_impl(context):
 @then("I obtain the value \"{value}\" from the select")
 def step_impl(context, value):
     """
+    :param value: The returned value of the select operation
     :type context: behave.runner.Context
     """
     obtained_value = context.output['admin']
@@ -297,9 +306,10 @@ def step_impl(context, code, username, email):
         f"The admin value is not the expected value, received {context.response['user']['admin']}, expected False"
 
 
-@when('I send a GET HTTP request to "{url}"')
+@when('I send a GET HTTP request to the url "{url}"')
 def step_impl(context, url):
     """
+    :param url: The url of the HTTP GET operation
     :type context: behave.runner.Context
     """
     try:
@@ -312,13 +322,14 @@ def step_impl(context, url):
 
     try:
         context.response = response.json()
-    except JSONDecodeError as e:
+    except JSONDecodeError:
         context.response = ""
 
 
 @step('I send a GET HTTP request to "{url}" with the admin user id from previous execution')
 def step_impl(context, url):
     """
+    :param url: The HTTP GET operation url
     :type context: behave.runner.Context
     """
     global adminId
@@ -334,13 +345,14 @@ def step_impl(context, url):
 
     try:
         context.response = response.json()
-    except JSONDecodeError as e:
+    except JSONDecodeError:
         context.response = ""
 
 
 @then('I receive a HTTP "{code}" status code from Keyrock wit the following data for each created user')
 def step_impl(context, code):
     """
+    :param code: The HTTP response status code
     :type context: behave.runner.Context
     """
 
@@ -364,25 +376,32 @@ def step_impl(context, code):
             f"The id is not in the description of the user {index}, data received: \n{context.response['users'][index]}"
 
         assert (context.response['users'][index]['username'] == username), \
-            f"The username is not the expected, received {context.response['users'][index]['username']}, expected {username}"
+            f"The username is not the expected, received {context.response['users'][index]['username']}, " \
+            f"expected {username}"
 
         assert (context.response['users'][index]['email'] == email), \
-            f"The email value is not the expected value, received {context.response['users'][index]['email']}, expected {email}"
+            f"The email value is not the expected value, received {context.response['users'][index]['email']}, " \
+            f"expected {email}"
 
         assert (context.response['users'][index]['enabled'] == enabled), \
-            f"The enabled value is not the expected value, received {context.response['users'][index]['enabled']}, expected {enabled}"
+            f"The enabled value is not the expected value, received {context.response['users'][index]['enabled']}, " \
+            f"expected {enabled}"
 
         assert (context.response['users'][index]['gravatar'] == gravatar), \
-            f"The enabled value is not the expected value, received {context.response['users'][index]['enabled']}, expected {gravatar}"
+            f"The enabled value is not the expected value, received {context.response['users'][index]['enabled']}, " \
+            f"expected {gravatar}"
 
         assert ("date_password" in context.response['users'][index]), \
-            f"The date_password is not in the description of the user {index}, data received: \n{context.response['users'][index]}"
+            f"The date_password is not in the description of the user {index}, " \
+            f"data received: \n{context.response['users'][index]}"
 
         assert (context.response['users'][index]['description'] == description), \
-            f"The description value is not the expected value, received {context.response['users'][index]['description']}, expected {description}"
+            f"The description value is not the expected value, " \
+            f"received {context.response['users'][index]['description']}, expected {description}"
 
         assert (context.response['users'][index]['website'] == website), \
-            f"The website value is not the expected value, received {context.response['users'][index]['website']}, expected {website}"
+            f"The website value is not the expected value, " \
+            f"received {context.response['users'][index]['website']}, expected {website}"
 
         index += 1
 
@@ -393,6 +412,7 @@ def step_impl(context, code):
 @step('the body request described in file "{file}"')
 def step_impl(context, file):
     """
+    :param file: the expected response content of the HTTP operation
     :type context: behave.runner.Context
     """
     file = join(context.data_home, file)
@@ -400,18 +420,31 @@ def step_impl(context, file):
         context.payload = f.read()
 
 
-@step('I send a PATCH HTTP request to the url "{url}" with the admin user id from previous execution')
-def step_impl(context, url):
+@step('I send a {op} HTTP request to the url "{url}" with the "{resource}" id from previous execution')
+def step_impl(context, op, url, resource):
     """
+    :param resource: The specific resource of the HTTP operation {admin user, organization}
+    :param url: The url of the HTTP operation
+    :param op: The corresponding HTTP operation {patch, delete, get}
     :type context: behave.runner.Context
     """
     global adminId
+    global organizationId
 
-    url = url + f'/{adminId}'
-    context.header['Content-Type'] = 'application/json'
+    if resource == 'admin user':
+        url = url + f'/{adminId}'
+    elif resource == 'organization':
+        url = url + f'/{organizationId}'
 
     try:
-        response = patch(url, data=context.payload, headers=context.header)
+        if op.lower() == 'patch':
+            response = patch(url, data=context.payload, headers=context.header)
+        elif op.lower() == 'delete':
+            response = delete(url, headers=context.header)
+        elif op.lower() == 'get':
+            response = get(url, headers=context.header)
+        else:
+            raise Exception(f'HTTP operation not allowed or unknown: {op}')
     except RequestException as e:
         raise SystemExit(e)
 
@@ -420,13 +453,14 @@ def step_impl(context, url):
 
     try:
         context.response = response.json()
-    except JSONDecodeError as e:
+    except JSONDecodeError:
         context.response = ""
 
 
 @when('I send a POST HTTP request to "{url}"')
 def step_impl(context, url):
     """
+    :param url: the url of the HTTP operation
     :type context: behave.runner.Context
     """
     try:
@@ -439,13 +473,14 @@ def step_impl(context, url):
 
     try:
         context.response = response.json()
-    except JSONDecodeError as e:
+    except JSONDecodeError:
         context.response = ""
 
 
 @step('the content-type header key equal to "{value}"')
 def step_impl(context, value):
     """
+    :param value: The corresponding value of the Content-Type key
     :type context: behave.runner.Context
     """
     try:
