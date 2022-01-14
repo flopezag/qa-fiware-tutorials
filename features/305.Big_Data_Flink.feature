@@ -25,7 +25,7 @@ Feature: test tutorial 305.Big Data (Flink)
     When   I send PATCH HTTP request with the following data
       | Url                      | Entity_ID   | Command |
       | http://localhost:1026/v2 | <entity_id> | <command> |
-    Then  I receive a HTTP "204" response
+    Then  I receive a HTTP "204" status code response
 
     Examples:
         | command | entity_id |
@@ -47,7 +47,7 @@ Feature: test tutorial 305.Big Data (Flink)
   Scenario: Logger - Subscribing to context changes
     Given  The fiware-service header is "openiot" and the fiware-servicepath header is "/"
     When   I send a subscription to the Url "http://localhost:1026/v2/subscriptions" and payload "request305-01.json"
-    Then   I receive a HTTP "201" response
+    Then   I receive a HTTP "201" status code response
 
   Scenario: Logger - Check that subscription is firing
     Given  The fiware-service header is "openiot" and the fiware-servicepath header is "/"

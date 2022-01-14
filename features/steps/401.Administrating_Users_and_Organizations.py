@@ -410,6 +410,7 @@ def step_impl(context, code):
 
 
 @step('the body request described in file "{file}"')
+@when('I define the body request described in file "{file}"')
 def step_impl(context, file):
     """
     :param file: the expected response content of the HTTP operation
@@ -478,6 +479,7 @@ def step_impl(context, url):
 
 
 @step('the content-type header key equal to "{value}"')
+@when('the content-type header key equal to "{value}"')
 def step_impl(context, value):
     """
     :param value: The corresponding value of the Content-Type key
