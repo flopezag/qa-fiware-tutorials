@@ -1,9 +1,7 @@
 # created by Amani Boughanmi on 20.05.2021
-import time
-
 from behave import given, when, then, step
-from requests import get, post, exceptions
-from hamcrest import assert_that, is_, has_key
+from requests import get, exceptions
+from hamcrest import assert_that, is_
 from os.path import join
 from json import load
 from deepdiff import DeepDiff
@@ -11,7 +9,7 @@ from config.settings import CODE_HOME
 from sys import stdout
 
 
-@given(u'I set the tutorial')
+@given(u'I set the tutorial 101')
 def step_impl(context):
     context.data_home = join(join(join(CODE_HOME, "features"), "data"), "101.Getting_started")
 
@@ -46,28 +44,12 @@ def http_code_is_returned(context, status_code, server, response):
                 f'Response from CB has not got the expected HTTP response body:\n  {diff}')
 
 
-@when(u'I send POST HTTP request to "{url}"')
-def set_req_body2(context, url):
-    context.url = url
-    context.header = {'Content-Type': 'application/json'}
-
-
-@step(u'With the body request described in file "{file}"')
-@step(u'I define the body request described in file "{file}"')
-def send_orion_post_entity2(context, file):
-    file = join(context.data_home, file)
-    with open(file) as f:
-        context.payload = f.read()
-
-
 @then(u'I receive a HTTP response with the following data')
 def receive_post_response2(context):
 
     for element in context.table.rows:
         valid_response = dict(element.as_dict())
-        print(valid_response)
-        valid_response['Status-Code']
-        valid_response['Location']
+
         assert_that(context.responseHeaders['Connection'], is_(valid_response['Connection']))
         assert_that(context.responseHeaders['Location'], is_(valid_response['Location']))
         assert_that(context.statusCode, is_(valid_response['Status-Code']))
@@ -82,11 +64,3 @@ def step_impl(context):
     :type context: behave.runner.Context
     """
     raise NotImplementedError(u'STEP: And  I receive the entities dictionary')
-
-
-@then('I receive a HTTP "200" code response')
-def step_impl(context):
-    """
-    :type context: behave.runner.Context
-    """
-    raise NotImplementedError(u'STEP: Then I receive a HTTP "200" code response')

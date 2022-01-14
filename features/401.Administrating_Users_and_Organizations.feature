@@ -39,7 +39,7 @@ Feature: Test tutorial 401.Administrating Users and Organizations
   Scenario: 04.1 - Creating admin user
     When   I set the X-Auth-Token header with the previous obtained token
     And    the content-type header key equal to "application/json"
-    And    With the body request described in file "request401-04.json"
+    And    the body request described in file "request401-04.json"
     And    I send a POST HTTP request to "http://localhost:3005/v1/users"
     Then   I receive a HTTP "201" status code from Keyrock with the body "response401-04.json" and exclusions "response401-04.excludes"
 
@@ -101,6 +101,7 @@ Feature: Test tutorial 401.Administrating Users and Organizations
     When  I set the X-Auth-Token header with the previous obtained token
     And   the content-type header key equal to "application/json"
     And   I send a DELETE HTTP request to the url "http://localhost:3005/v1/users" with the "admin user" id from previous execution
+    Then  I receive a HTTP "204" status code response
 
   Scenario: 09 - Create an organization
     When  I set the X-Auth-Token header with the previous obtained token
@@ -120,3 +121,21 @@ Feature: Test tutorial 401.Administrating Users and Organizations
     And   the content-type header key equal to "application/json"
     And   I send a GET HTTP request to the url "http://localhost:3005/v1/organizations"
     Then  I receive a HTTP "200" status code from Keyrock with the body "response401-11.json" and exclusions "response401-11.excludes"
+
+  Scenario: 12 - Update an organization
+    When  I set the X-Auth-Token header with the previous obtained token
+    And   the content-type header key equal to "application/json"
+    And   the body request described in file "request401-12.json"
+    And   I send a PATCH HTTP request to the url "http://localhost:3005/v1/organizations" with the "organization" id from previous execution
+    Then  I receive a HTTP "200" response code from Keyrock with the body "response401-12.json"
+
+  Scenario: 13 - Delete an organization
+    When  I set the X-Auth-Token header with the previous obtained token
+    And   the content-type header key equal to "application/json"
+    And   I send a DELETE HTTP request to the url "http://localhost:3005/v1/organizations" with the "organization" id from previous execution
+    Then  I receive a HTTP "204" status code response
+
+  # In the documentation there is no reference to the user that has to be assigned
+  Scenario: 14 - Add a user as a member of an organization
+    When  I set the X-Auth-Token header with the previous obtained token
+    And   the content-type header key equal to "application/json"
