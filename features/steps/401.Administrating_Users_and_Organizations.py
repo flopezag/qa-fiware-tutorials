@@ -7,11 +7,12 @@ from hamcrest import assert_that, is_
 from features.funtions import read_data_from_file, dict_diff_with_exclusions
 from json import loads, dumps
 from json.decoder import JSONDecodeError
-from requests import get, post, patch, delete, RequestException
+from requests import get, post, patch, delete, put, RequestException
 
 global Token
 global adminId
 global organizationId
+global userId
 
 
 @given(u'I set the tutorial 401')
@@ -174,7 +175,7 @@ def receive_post_iot_dummy_response_with_data(context, code, file, excl_file):
     diff = dict_diff_with_exclusions(context, body, context.response, excl_file)
 
     assert (context.statusCode == code), \
-        f'Wrong Status Code, reveiced \"{context.statusCode}\", but it was expected \"{code}\"'
+        f'Wrong Status Code, received \"{context.statusCode}\", but it was expected \"{code}\"'
 
     assert_that(diff.to_dict(), is_(dict()),
                 f'Response from Keyrock has not got the expected HTTP response body:\n  {diff}')
@@ -349,7 +350,7 @@ def step_impl(context, url):
         context.response = ""
 
 
-@then('I receive a HTTP "{code}" status code from Keyrock wit the following data for each created user')
+@then('I receive a HTTP "{code}" status code from Keyrock with the following data for each created user')
 def step_impl(context, code):
     """
     :param code: The HTTP response status code
@@ -437,12 +438,13 @@ def step_impl(context, op, url, resource):
     elif resource == 'organization':
         url = url + f'/{organizationId}'
 
+    op = op.lower()
     try:
-        if op.lower() == 'patch':
+        if op == 'patch':
             response = patch(url, data=context.payload, headers=context.header)
-        elif op.lower() == 'delete':
+        elif op == 'delete':
             response = delete(url, headers=context.header)
-        elif op.lower() == 'get':
+        elif op == 'get':
             response = get(url, headers=context.header)
         else:
             raise Exception(f'HTTP operation not allowed or unknown: {op}')
@@ -489,3 +491,102 @@ def step_impl(context, value):
         context.header['Content-Type'] = value
     except AttributeError:
         context.header = {'Content-Type': value}
+
+
+@step('I receive a HTTP "{code}" status code from Keyrock and extract the id from "{user}" user')
+def step_impl(context, code, user):
+    """
+    :type context: behave.runner.Context
+    """
+    global userId
+
+    assert (context.statusCode == code), \
+        f'Wrong Status Code, received \"{context.statusCode}\", but it was expected \"{code}\"'
+
+    out = list(filter(lambda x: x['username'] == user, context.response['users']))
+    context.userId = out[0]['id']
+
+
+@step('I set the organization_roles as "{role}" url with organizationId and userId')
+def step_impl(context, role):
+    """
+    :type context: behave.runner.Context
+    """
+    global userId
+    global organizationId
+
+    context.url = f'http://localhost:3005/v1/organizations/{organizationId}/users/{userId}/organization_roles/{role}'
+
+
+@when("I send a {op} HTTP request to that url")
+def step_impl(context, op):
+    """
+    :type context: behave.runner.Context
+    """
+    op = op.lower()
+
+    try:
+        if op == 'put':
+            response = put(context.url, headers=context.header)
+        elif op == 'get':
+            response = get(context.url, headers=context.header)
+        elif op == 'delete':
+            response = delete(context.url, headers=context.header)
+        else:
+            raise Exception(f'HTTP operation not allowed or unknown: {op}')
+    except RequestException as e:
+        raise SystemExit(e)
+
+    context.responseHeaders = response.headers
+    context.statusCode = str(response.status_code)
+
+    try:
+        context.response = response.json()
+    except JSONDecodeError:
+        context.response = ""
+
+
+@then('I receive a HTTP "{code}" status code with the same organizationId and userId and role equal to "{role}"')
+def step_impl(context, code, role):
+    """
+    :type context: behave.runner.Context
+    """
+    assert (context.statusCode == code), \
+        f'Wrong Status Code, received \"{context.statusCode}\", but it was expected \"{code}\"'
+
+    raise NotImplementedError(
+        u'STEP: And   I receive a HTTP "200" status code from Keyrock and extract the id from the first organization')
+
+
+@step('I receive a HTTP "{code}" status code from Keyrock and extract the id from the first organization')
+def step_impl(context, code):
+    """
+    :type context: behave.runner.Context
+    """
+    assert (context.statusCode == code), \
+        f'Wrong Status Code, received \"{context.statusCode}\", but it was expected \"{code}\"'
+
+    # We need to extract the organizaitonId from this operation
+
+    raise NotImplementedError(
+        u'STEP: And   I receive a HTTP "200" status code from Keyrock and extract the id from the first organization')
+
+
+@step("I set the organization users url with organizationId from the previous scenario")
+def step_impl(context):
+    """
+    :type context: behave.runner.Context
+    """
+    global organizationId
+
+    context.url = f'http://localhost:3005/v1/organizations/{organizationId}/users'
+
+
+@step('I set the organization roles url with organizationId from the previous scenario and userId from "bob"')
+def step_impl(context):
+    """
+    :type context: behave.runner.Context
+    """
+    global organizationId
+
+    context.url = f'http://localhost:3005/v1/organizations/{organizationId}/users/{context.userId}/organization_roles'

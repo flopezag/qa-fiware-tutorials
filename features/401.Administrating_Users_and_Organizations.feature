@@ -80,7 +80,7 @@ Feature: Test tutorial 401.Administrating Users and Organizations
     When   I set the X-Auth-Token header with the previous obtained token
     And    the content-type header key equal to "application/json"
     And    I send a GET HTTP request to the url "http://localhost:3005/v1/users"
-    Then   I receive a HTTP "200" status code from Keyrock wit the following data for each created user
+    Then   I receive a HTTP "200" status code from Keyrock with the following data for each created user
         | id  | username   | email                     | enabled | gravatar | date_password | description | website |
         | any | alice      | alice-the-admin@test.com  | true    | false    | any           | null        | null    |
         | any | bob        | bob-the-manager@test.com  | true    | false    | any           | null        | null    |
@@ -135,7 +135,58 @@ Feature: Test tutorial 401.Administrating Users and Organizations
     And   I send a DELETE HTTP request to the url "http://localhost:3005/v1/organizations" with the "organization" id from previous execution
     Then  I receive a HTTP "204" status code response
 
-  # In the documentation there is no reference to the user that has to be assigned
+  # In the documentation there is no reference to which user that has to be assigned, so we decided to use charlie user
+  # In the documentation there is no reference to which organization to use, in fact there is no organization
   Scenario: 14 - Add a user as a member of an organization
     When  I set the X-Auth-Token header with the previous obtained token
     And   the content-type header key equal to "application/json"
+    And   I send a GET HTTP request to the url "http://localhost:3005/v1/users"
+    And   I receive a HTTP "200" status code from Keyrock and extract the id from "charlie" user
+    And   I send a GET HTTP request to the url "http://localhost:3005/v1/organizations"
+    And   I receive a HTTP "200" status code from Keyrock and extract the id from the first organization
+    And   I set the organization_roles as "member" url with organizationId and userId
+    And   I send a PUT HTTP request to that url
+    Then  I receive a HTTP "200" status code with the same organizationId and userId and role equal to "member"
+
+  # In the documentation there is no reference to which user that has to be assigned, so we decided to use charlie user
+  # In the documentation there is no reference to which organization to use, in fact there is no organization
+  Scenario: 15 - Add a user as an owner of an organization
+    When  I set the X-Auth-Token header with the previous obtained token
+    And   the content-type header key equal to "application/json"
+    And   I send a GET HTTP request to the url "http://localhost:3005/v1/users"
+    And   I receive a HTTP "200" status code from Keyrock and extract the id from "bob" user
+    And   I send a GET HTTP request to the url "http://localhost:3005/v1/organizations"
+    And   I receive a HTTP "200" status code from Keyrock and extract the id from the first organization
+    And   I set the organization_roles as "owner" url with organizationId and userId
+    And   I send a PUT HTTP request to that url
+    Then  I receive a HTTP "200" status code with the same organizationId and userId and role equal to "owner"
+
+  # There is no organization in this point
+  Scenario: 16 - List users within an organization
+    When  I set the X-Auth-Token header with the previous obtained token
+    And   the content-type header key equal to "application/json"
+    And   I send a GET HTTP request to the url "http://localhost:3005/v1/organizations"
+    And   I receive a HTTP "200" status code from Keyrock and extract the id from the first organization
+    And   I set the organization users url with organizationId from the previous scenario
+    And   I send a GET HTTP request to that url
+    Then  I receive a HTTP "200" status code with the same organizationId and userId and role equal to "owner"
+
+  # There is no organization in this point
+  Scenario: 17 - Read user roles within an organization
+    When  I set the X-Auth-Token header with the previous obtained token
+    And   the content-type header key equal to "application/json"
+    And   I send a GET HTTP request to the url "http://localhost:3005/v1/users"
+    And   I receive a HTTP "200" status code from Keyrock and extract the id from "bob" user
+    And   I set the organization roles url with organizationId from the previous scenario and userId from "bob"
+    And   I send a GET HTTP request to that url
+    Then  I receive a HTTP "200" status code with the same organizationId and userId and role equal to "owner"
+
+  # There is no organization in this point
+  Scenario: 18 - Remove a user from an organization
+    When  I set the X-Auth-Token header with the previous obtained token
+    And   the content-type header key equal to "application/json"
+    And   I send a GET HTTP request to the url "http://localhost:3005/v1/users"
+    And   I receive a HTTP "200" status code from Keyrock and extract the id from "bob" user
+    And   I set the organization roles url with organizationId from the previous scenario and userId from "bob"
+    And   I send a DELETE HTTP request to that url
+    Then  I receive a HTTP "200" status code with the same organizationId and userId and role equal to "owner"
