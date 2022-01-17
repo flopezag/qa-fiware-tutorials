@@ -20,7 +20,7 @@ Feature: test tutorial 102.Entity_Relationships
 
   Scenario: Checking the service health
     When  I send GET HTTP request to "http://localhost:1026/version"
-    Then  I receive a HTTP "200" response code with the body "response101-01.json"
+    Then  I receive a HTTP "200" response code from Broker with the body "response101-01.json"
 
 
 #

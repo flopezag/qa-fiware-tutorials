@@ -1,4 +1,5 @@
 # created by Amani Boughanmi on 20.05.2021
+import time
 
 from behave import given, when, then, step
 from requests import get, post, exceptions
@@ -28,11 +29,11 @@ def send_orion_get_version(context, url):
     context.statusCode = str(response.status_code)
 
 
-@step(u'I receive a HTTP "{status_code}" response code with the body "{response}"')
-def http_code_is_returned(context, status_code, response):
+@step(u'I receive a HTTP "{status_code}" response code from {server} with the body "{response}"')
+def http_code_is_returned(context, status_code, server, response):
     assert_that(context.statusCode, is_(status_code),
-                "Response to CB notification has not got the expected HTTP response code: Message: {}"
-                .format(context.response))
+                "Response to {} notification has not got the expected HTTP response code: Message: {}"
+                .format(server, context.response))
 
     file = join(context.data_home, response)
     with open(file) as f:
@@ -64,6 +65,12 @@ def send_orion_post_entity2(context, file):
 
     context.responseHeaders = response.headers
     context.statusCode = str(response.status_code)
+    stdout.write(f'{context.responseHeaders}\n\n\n\n')
+    stdout.flush()
+    try:
+        context.response = response.json()
+    except Exception as e:
+        context.response = ""
 
 
 @then(u'I receive a HTTP response with the following data')

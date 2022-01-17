@@ -1,0 +1,27 @@
+[
+    {
+        "id": "5b39d7c866df40ed84284174",
+        "description": "Notify Cygnus Mongo-DB of all context changes",
+        "status": "active",
+        "subject": {
+            "entities": [
+                {
+                    "idPattern": ".*"
+                }
+            ],
+            "condition": {
+                "attrs": []
+            }
+        },
+        "notification": {
+            "timesSent": 158,
+            "lastNotification": "2018-07-02T07:59:21.00Z",
+            "attrs": [],
+            "http": {
+                "url": "http://cygnus:5050/notify"
+            },
+            "lastSuccess": "2018-07-02T07:59:21.00Z"
+        },
+        "throttling": 5
+    }
+]
