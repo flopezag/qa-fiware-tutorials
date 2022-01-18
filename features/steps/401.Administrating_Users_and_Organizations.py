@@ -120,7 +120,10 @@ def step_impl(context):
         assert ('X-Subject-Token' in context.responseHeaders), \
             f"Unable to get X-Subject-Token in the header of the response"
 
-        Token = context.responseHeaders['X-Subject-Token']
+        if valid_response['X-Subject-Token'] == "Any":
+            Token = context.responseHeaders['X-Subject-Token']
+        else:
+            Token = valid_response['X-Subject-Token']
 
         # Check the HTTP response
         body = loads(read_data_from_file(context, valid_response['data']))
