@@ -1,0 +1,11 @@
+{
+  "application": {
+    "name": "Tutorial New Name",
+    "description": "This is a new description",
+    "redirect_uri": "http://tutorial/login",
+    "grant_type": [
+      "authorization_code",
+      "password"
+    ]
+  }
+}

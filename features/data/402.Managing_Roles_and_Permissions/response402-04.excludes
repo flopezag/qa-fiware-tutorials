@@ -1,0 +1,8 @@
+root['application']['id']
+root['application']['secret']
+root['application']['urls']['permissions_url']
+root['application']['urls']['roles_url']
+root['application']['urls']['users_url']
+root['application']['urls']['pep_proxies_url']
+root['application']['urls']['iot_agents_url']
+root['application']['urls']['trusted_applications_url']

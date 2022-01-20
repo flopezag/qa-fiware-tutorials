@@ -1,0 +1,10 @@
+{
+    "values_updated": {
+        "name": "Tutorial New Name",
+        "description": "This is a new description",
+        "grant_type": "password,authorization_code",
+        "response_type": "code",
+        "token_types": "permanent,bearer,bearer",
+        "scope": ""
+    }
+}

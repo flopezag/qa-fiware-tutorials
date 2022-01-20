@@ -32,3 +32,35 @@ Feature: Test tutorial 402.Managing roles and permissions
     And   the content-type header key equal to "application/json"
     And   I send a GET HTTP request to the url "http://localhost:3005/v1/auth/tokens"
     Then  I receive a HTTP "200" status code from Keyrock with the body "response402-02.json" and exclusions "response402-02.excludes"
+
+  Scenario: 03 - Create an application
+    When  I set the "X-Auth-Token" header with the value "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
+    And   the content-type header key equal to "application/json"
+    And   the body request described in file "request402-03.json"
+    And   I send a POST HTTP request to "http://localhost:3005/v1/applications"
+    Then  I receive a HTTP "201" status code from Keyrock with the body "response402-03.json" and exclusions "response402-03.excludes"
+
+  Scenario: 04 - Read application details
+    When  I set the "X-Auth-Token" header with the value "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
+    And   the content-type header key equal to "application/json"
+    And   I send a GET HTTP request to the url "http://localhost:3005/v1/applications" with the "application" id from previous execution
+    Then  I receive a HTTP "200" status code from Keyrock with the body "response402-04.json" and exclusions "response402-04.excludes"
+
+  Scenario: 05 - List all applications
+    When  I set the "X-Auth-Token" header with the value "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
+    And   the content-type header key equal to "application/json"
+    And   I send a GET HTTP request to the url "http://localhost:3005/v1/applications"
+    Then  I receive a HTTP "200" status code from Keyrock with the body "response402-05.json" and exclusions "response402-05.excludes"
+
+  Scenario: 06 - Update an application
+    When  I set the "X-Auth-Token" header with the value "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
+    And   the content-type header key equal to "application/json"
+    And   the body request described in file "request402-06.json"
+    And   I send a PATCH HTTP request to the url "http://localhost:3005/v1/applications" with the "application" id from previous execution
+    Then  I receive a HTTP "200" status code from Keyrock with the body "response402-06.json" and exclusions "response402-05.excludes"
+
+  Scenario: 07 - Delete an application
+    When  I set the "X-Auth-Token" header with the value "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
+    And   the content-type header key equal to "application/json"
+    And   I send a DELETE HTTP request to the url "http://localhost:3005/v1/applications" with the "application" id from previous execution
+    Then  I receive a HTTP "204" status code response
