@@ -29,5 +29,8 @@ __version__ = '1.0.0'
 
 name = 'qa-fiware-tutorials'
 
+permissionId = str()
+applicationId = str()
+
 CODE_HOME = dirname(dirname(abspath(__file__)))
 LOG_HOME = join(CODE_HOME, 'logs')

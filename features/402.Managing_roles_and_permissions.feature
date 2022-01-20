@@ -64,3 +64,47 @@ Feature: Test tutorial 402.Managing roles and permissions
     And   the content-type header key equal to "application/json"
     And   I send a DELETE HTTP request to the url "http://localhost:3005/v1/applications" with the "application" id from previous execution
     Then  I receive a HTTP "204" status code response
+
+  Scenario: 08.0 - Create the application again
+    When  I set the "X-Auth-Token" header with the value "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
+    And   the content-type header key equal to "application/json"
+    And   the body request described in file "request402-03.json"
+    And   I send a POST HTTP request to "http://localhost:3005/v1/applications"
+    Then  I receive a HTTP "201" status code from Keyrock with the body "response402-03.json" and exclusions "response402-03.excludes"
+
+  Scenario: 08.1 - Create a permission
+    When  I set the "X-Auth-Token" header with the value "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
+    And   the content-type header key equal to "application/json"
+    And   the body request described in file "request402-08.json"
+    And   I set the permission url with an application id
+    And   I send a POST HTTP request to that url
+    Then  I receive a HTTP "201" status code from Keyrock with the body "response402-08.json" and exclusions "response402-08.excludes"
+
+  Scenario: 09 - Read permission details
+    When  I set the "X-Auth-Token" header with the value "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
+    And   the content-type header key equal to "application/json"
+    And   I set the permission url with the application and permission ids
+    And   I send a GET HTTP request to that url
+    Then  I receive a HTTP "200" status code from Keyrock with the body "response402-09.json" and exclusions "response402-08.excludes"
+
+  Scenario: 10 - List permissions
+    When  I set the "X-Auth-Token" header with the value "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
+    And   the content-type header key equal to "application/json"
+    And   I set the permission url with an application id
+    And   I send a GET HTTP request to that url
+    Then  I receive a HTTP "200" status code from Keyrock with the body "response402-10.json" and exclusions "response402-10.excludes"
+
+  Scenario: 11 - Update a permission
+    When  I set the "X-Auth-Token" header with the value "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
+    And   the content-type header key equal to "application/json"
+    And   the body request described in file "request402-11.json"
+    And   I set the permission url with the application and permission ids
+    And   I send a PATCH HTTP request to that url
+    Then  I receive a HTTP "200" response code from Keyrock with the body "response402-11.json"
+
+  Scenario: 12 - Delete a permission
+    When  I set the "X-Auth-Token" header with the value "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
+    And   the content-type header key equal to "application/json"
+    And   I set the permission url with the application and permission ids
+    And   I send a DELETE HTTP request to that url
+    Then  I receive a HTTP "204" status code response

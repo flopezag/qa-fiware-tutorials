@@ -145,5 +145,5 @@ def after_feature(context, feature):
 
 
 def after_all(context):
-    __logger__.info("... END  :)")
-    stdout.write(f'... END  :)\n')
+    __logger__.info("\n... END  :)")
+    stdout.write(f'\n... END  :)\n')

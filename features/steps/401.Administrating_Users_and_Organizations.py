@@ -1,5 +1,5 @@
 from behave import given, when, then, step
-from config.settings import CODE_HOME
+from config import settings
 from os.path import join
 from os import environ
 import subprocess
@@ -13,12 +13,11 @@ global Token
 global adminId
 global organizationId
 global userId
-global applicationId
 
 
 @given(u'I set the tutorial 401')
 def step_impl_tutorial_203(context):
-    context.data_home = join(join(join(CODE_HOME, "features"), "data"), "401.Administrating_Users_and_Organizations")
+    context.data_home = join(join(join(settings.CODE_HOME, "features"), "data"), "401.Administrating_Users_and_Organizations")
 
 
 @when("I request the information from user table")
@@ -164,7 +163,6 @@ def receive_post_iot_dummy_response_with_data(context, code, file, excl_file):
     global adminId
     global organizationId
     global Token
-    global applicationId
 
     if 'user' in context.response:
         if context.response['user']['username'] == 'alice':
@@ -175,7 +173,9 @@ def receive_post_iot_dummy_response_with_data(context, code, file, excl_file):
         assert (context.response['access_token'] == Token), \
             f"Wrong access_token received, expected {Token}, but received {context.response['access_token']}"
     elif 'application' in context.response:
-        applicationId = context.response['application']['id']
+        settings.applicationId = context.response['application']['id']
+    elif 'permission' in context.response:
+        settings.permissionId = context.response['permission']['id']
 
     body = loads(read_data_from_file(context, file))
 
@@ -363,7 +363,6 @@ def step_impl(context, code):
     :param code: The HTTP response status code
     :type context: behave.runner.Context
     """
-
     assert (context.statusCode == code), \
         f'The status code is not the expected value, received {context.statusCode}, expected {code}'
 
@@ -439,14 +438,14 @@ def step_impl(context, op, url, resource):
     """
     global adminId
     global organizationId
-    global applicationId
+    # global applicationId
 
     if resource == 'admin user':
         url = url + f'/{adminId}'
     elif resource == 'organization':
         url = url + f'/{organizationId}'
     elif resource == 'application':
-        url = url +f'/{applicationId}'
+        url = url +f'/{settings.applicationId}'
 
     op = op.lower()
     try:
@@ -542,6 +541,10 @@ def step_impl(context, op):
             response = get(context.url, headers=context.header)
         elif op == 'delete':
             response = delete(context.url, headers=context.header)
+        elif op == 'post':
+            response = post(context.url,  data=context.payload, headers=context.header)
+        elif op == 'patch':
+            response = patch(context.url,  data=context.payload, headers=context.header)
         else:
             raise Exception(f'HTTP operation not allowed or unknown: {op}')
     except RequestException as e:
