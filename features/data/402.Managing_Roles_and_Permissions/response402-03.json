@@ -1,0 +1,16 @@
+{
+    "application": {
+        "id": "6632bb2e-c8e5-418f-ba5b-c269d8a53dd2",
+        "secret": "d4128d06-1cba-4c33-9a3d-ff2de51940b5",
+        "image": "default",
+        "jwt_secret": null,
+        "name": "Tutorial Application",
+        "description": "FIWARE Application protected by OAuth2 and Keyrock",
+        "redirect_uri": "http://tutorial/login",
+        "url": "http://tutorial",
+        "grant_type": "password,authorization_code,implicit",
+        "token_types": "permanent,bearer",
+        "response_type": "code,token",
+        "scope": null
+    }
+}

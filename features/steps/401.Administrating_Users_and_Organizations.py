@@ -13,6 +13,7 @@ global Token
 global adminId
 global organizationId
 global userId
+global applicationId
 
 
 @given(u'I set the tutorial 401')
@@ -163,6 +164,7 @@ def receive_post_iot_dummy_response_with_data(context, code, file, excl_file):
     global adminId
     global organizationId
     global Token
+    global applicationId
 
     if 'user' in context.response:
         if context.response['user']['username'] == 'alice':
@@ -172,6 +174,8 @@ def receive_post_iot_dummy_response_with_data(context, code, file, excl_file):
     elif 'access_token' in context.response:
         assert (context.response['access_token'] == Token), \
             f"Wrong access_token received, expected {Token}, but received {context.response['access_token']}"
+    elif 'application' in context.response:
+        applicationId = context.response['application']['id']
 
     body = loads(read_data_from_file(context, file))
 
@@ -435,11 +439,14 @@ def step_impl(context, op, url, resource):
     """
     global adminId
     global organizationId
+    global applicationId
 
     if resource == 'admin user':
         url = url + f'/{adminId}'
     elif resource == 'organization':
         url = url + f'/{organizationId}'
+    elif resource == 'application':
+        url = url +f'/{applicationId}'
 
     op = op.lower()
     try:
