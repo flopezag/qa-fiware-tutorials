@@ -34,3 +34,19 @@ def step_impl(context):
     :type context: behave.runner.Context
     """
     context.url = f'http://localhost:3005/v1/applications/{settings.applicationId}/permissions/{settings.permissionId}'
+
+
+@step("I set the roles url with an application id")
+def step_impl(context):
+    """
+    :type context: behave.runner.Context
+    """
+    context.url = f'http://localhost:3005/v1/applications/{settings.applicationId}/roles'
+
+
+@step("I set the roles url with an application id and role id")
+def step_impl(context):
+    """
+    :type context: behave.runner.Context
+    """
+    context.url = f'http://localhost:3005/v1/applications/{settings.applicationId}/roles/{settings.roleId}'

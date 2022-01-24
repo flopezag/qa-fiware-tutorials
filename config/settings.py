@@ -31,6 +31,7 @@ name = 'qa-fiware-tutorials'
 
 permissionId = str()
 applicationId = str()
+roleId = str()
 
 CODE_HOME = dirname(dirname(abspath(__file__)))
 LOG_HOME = join(CODE_HOME, 'logs')

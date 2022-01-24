@@ -108,3 +108,40 @@ Feature: Test tutorial 402.Managing roles and permissions
     And   I set the permission url with the application and permission ids
     And   I send a DELETE HTTP request to that url
     Then  I receive a HTTP "204" status code response
+
+  Scenario: 13 - Create a role
+    When  I set the "X-Auth-Token" header with the value "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
+    And   the content-type header key equal to "application/json"
+    And   the body request described in file "request402-13.json"
+    And   I set the roles url with an application id
+    And   I send a POST HTTP request to that url
+    Then  I receive a HTTP "201" status code from Keyrock with the body "response402-13.json" and exclusions "response402-13.excludes"
+
+  Scenario: 14 - Read role details
+    When  I set the "X-Auth-Token" header with the value "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
+    And   the content-type header key equal to "application/json"
+    And   I set the roles url with an application id and role id
+    And   I send a GET HTTP request to that url
+    Then  I receive a HTTP "200" status code from Keyrock with the body "response402-14.json" and exclusions "response402-13.excludes"
+
+  Scenario: 15 - List roles
+    When  I set the "X-Auth-Token" header with the value "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
+    And   the content-type header key equal to "application/json"
+    And   I set the roles url with an application id
+    And   I send a GET HTTP request to that url
+    Then  I receive a HTTP "200" response code from Keyrock with the body "response402-15.json" and exclusions "response402-15.excludes"
+
+  Scenario: 16 - Update a role
+    When  I set the "X-Auth-Token" header with the value "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
+    And   the content-type header key equal to "application/json"
+    And   the body request described in file "request402-16.json"
+    And   I set the roles url with an application id and role id
+    And   I send a PATCH HTTP request to that url
+    Then  I receive a HTTP "200" response code from Keyrock with the body "response402-16.json"
+
+  Scenario: 17 - Delete a role
+    When  I set the "X-Auth-Token" header with the value "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
+    And   the content-type header key equal to "application/json"
+    And   I set the roles url with an application id and role id
+    And   I send a DELETE HTTP request to that url
+    Then  I receive a HTTP "204" status code response

@@ -176,6 +176,8 @@ def receive_post_iot_dummy_response_with_data(context, code, file, excl_file):
         settings.applicationId = context.response['application']['id']
     elif 'permission' in context.response:
         settings.permissionId = context.response['permission']['id']
+    elif 'role' in context.response:
+        settings.roleId = context.response['role']['id']
 
     body = loads(read_data_from_file(context, file))
 
