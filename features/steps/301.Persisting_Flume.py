@@ -49,7 +49,7 @@ def response_services_information(context, status_code):
     context.services_info = dict((key, d[key]) for d in aux for key in d)
 
 
-@then('I receive a HTTP "{status_code}" response')
+@then('I receive a HTTP "{status_code}" status code response')
 def step_impl(context, status_code):
     assert_that(context.statusCode, is_(status_code),
                 "Response to CB notification has not got the expected HTTP response code: Message: {}"

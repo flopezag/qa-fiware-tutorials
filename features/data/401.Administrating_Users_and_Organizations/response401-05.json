@@ -1,0 +1,14 @@
+{
+    "user": {
+        "id": "96154659-cb3b-4d2d-afef-18d6aec0518e",
+        "username": "alice",
+        "email": "alice-the-admin@test.com",
+        "enabled": true,
+        "admin": false,
+        "image": "default",
+        "gravatar": false,
+        "date_password": "2018-07-30T09:56:37.000Z",
+        "description": null,
+        "website": null
+    }
+}
