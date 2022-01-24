@@ -81,6 +81,7 @@ def send_post_iot_dummy_request(context, file):
     context.responseHeaders = response.headers
     context.statusCode = str(response.status_code)
 
+
 @step(u'I wait "{n}" seconds')
 def wait_some_seconds_before_continuing(context, n):
     n = int(n)
@@ -95,8 +96,9 @@ def receive_post_iot_dummy_response(context, code):
 @when(u'I send IoT "{method}" HTTP request with data to "{url}" With headers fiware-service "{fw_service}" and '
       u'fiware-servicepath "{fw_servicepath}" and data is "{file}"')
 def get_with_context_headers(context, method, url, fw_service, fw_servicepath, file):
-    context.header = { 'fiware-service': fw_service,
+    context.header = {'fiware-service': fw_service,
                       'fiware-servicepath': fw_servicepath}
+
     data = read_data_from_file(context, file)
     try:
         if method == "DELETE":
@@ -119,7 +121,7 @@ def receive_post_iot_dummy_response_with_data(context, code, server, file, excl_
     body = json.loads(read_data_from_file(context, file))
 
     diff = dict_diff_with_exclusions(context, body, context.response, excl_file)
-    stdout.write(f'{diff}\n\n')
+
     assert_that(diff.to_dict(), is_(dict()),
                 f'Response from {server} has not got the expected HTTP response body:\n  {diff}')
     assert (context.statusCode == code)
