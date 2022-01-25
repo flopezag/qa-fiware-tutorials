@@ -68,14 +68,14 @@ Feature: Test tutorial 402.Managing roles and permissions
   # In order to work these permissions CRUD it is needed to have a created application previously
   # the previous operations end with the operation to delete the application therefore, the tutorial will fail
   # due to there is no application
-  Scenario: 08.0 - Create the application again
+  Scenario: 08.1 - Create the application again
     When  I set the "X-Auth-Token" header with the value "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
     And   the content-type header key equal to "application/json"
     And   the body request described in file "request402-03.json"
     And   I send a POST HTTP request to "http://localhost:3005/v1/applications"
     Then  I receive a HTTP "201" status code from Keyrock with the body "response402-03.json" and exclusions "response402-03.excludes"
 
-  Scenario: 08.1 - Create a permission
+  Scenario: 08.2 - Create a permission
     When  I set the "X-Auth-Token" header with the value "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
     And   the content-type header key equal to "application/json"
     And   the body request described in file "request402-08.json"
@@ -153,7 +153,7 @@ Feature: Test tutorial 402.Managing roles and permissions
   # in the API, there is a figure that show the "Secret Viewer" and the permission "SecretViewer"
   # the previous operation finished with the delete of the role and delete of the permission therefore
   # there is no role and no permission.
-  Scenario: 18.0 - Create the role again
+  Scenario: 18.1 - Create the role again
     When  I set the "X-Auth-Token" header with the value "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
     And   the content-type header key equal to "application/json"
     And   the body request described in file "request402-13.json"
@@ -161,7 +161,7 @@ Feature: Test tutorial 402.Managing roles and permissions
     And   I send a POST HTTP request to that url
     Then  I receive a HTTP "201" status code from Keyrock with the body "response402-13.json" and exclusions "response402-13.excludes"
 
-  Scenario: 18.1 - Create the permission again
+  Scenario: 18.2 - Create the permission again
     When  I set the "X-Auth-Token" header with the value "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
     And   the content-type header key equal to "application/json"
     And   the body request described in file "request402-18-01.json"
@@ -187,5 +187,63 @@ Feature: Test tutorial 402.Managing roles and permissions
     When  I set the "X-Auth-Token" header with the value "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
     And   the content-type header key equal to "application/json"
     And   I set the permission to the role of an application
+    And   I send a DELETE HTTP request to that url
+    Then  I receive a HTTP "204" status code response
+
+
+#user-id	ID of an existing user, found with the user table	bbbbbbbb-good-0000-0000-000000000000 - Bob's User ID
+#application-id	ID of an existing application, found with the oauth_client table	c978218d-ad63-4427-b12b-542b81299cfb
+#role-id	ID of an existing role, found with the role table	d28baa00-839e-4b45-a6b2-1cec563942ee
+#permission-id	ID of an existing permission, found with the permission table	6b6cd19c-9398-4834-9ba1-1616c57139c0
+#organization-id	ID of an existing organization, found with the organization table	e424ed98-c966-46e3-b161-a165fd31bc01
+#organization-role-id	type of role a user has within an organization either owner or member	member
+#iot-agent-id	ID of an existing IoT Agent, found with the iot table	iot_sensor_f3d0245b-3330-4e64-a513-81bf4b0dae64
+#pep-proxy-id	ID of an existing PEP Proxy, found with the pep_proxy table	iot_sensor_f3d0245b-3330-4e64-a513-81bf4b0dae64
+
+  # At this point of the tutorial there are no application, no organization, and no role with the id described in the
+  # tutorial, therefore we need to create the application and organization and reuse the last role created in previous
+  # step.
+  Scenario: 21.1 - Create an application again
+    When  I set the "X-Auth-Token" header with the value "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
+    And   the content-type header key equal to "application/json"
+    And   the body request described in file "request402-03.json"
+    And   I send a POST HTTP request to "http://localhost:3005/v1/applications"
+    Then  I receive a HTTP "201" status code from Keyrock with the body "response402-03.json" and exclusions "response402-03.excludes"
+
+  Scenario: 21.2 - Create an organization again
+    When  I set the X-Auth-Token header with the previous obtained token
+    And   the content-type header key equal to "application/json"
+    And   the body request described in file "request401-09.json"
+    And   I send a POST HTTP request to "http://localhost:3005/v1/organizations"
+    Then  I receive a HTTP "201" status code from Keyrock with the body "response401-09.json" and exclusions "response401-09.excludes"
+
+  Scenario: 21.3 - Grant a role to an organization
+    When  I set the "X-Auth-Token" header with the value "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
+    And   the content-type header key equal to "application/json"
+    And   I set the organization_roles url with the following data
+        | application_id | organization_id | role_id | organization_role |
+        | applicationId  | organizationId  | roleId  | member            |
+    And   I send a PUT HTTP request to that url
+    Then  I receive a HTTP "201" status code from Keyrock with the following data for organizations
+        | role_organization_assignments | role_id | organization_id | oauth_client_id | role_organization |
+        | any                           | roleId  | organizationId  | any             | member            |
+
+  Scenario: 22 - List granted organization roles
+    When  I set the "X-Auth-Token" header with the value "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
+    And   the content-type header key equal to "application/json"
+    And   I set the roles url with the following data
+        | application_id | organization_id |
+        | applicationId  | organizationId  |
+    And   I send a GET HTTP request to that url
+    Then  I receive a HTTP "201" status code from Keyrock with the following data for an organization
+        | role_organization_assignments | role_id | organization_id |
+        | any                           | roleId  | organizationId  |
+
+  Scenario: 23 - Revoke a role from an organization
+    When  I set the "X-Auth-Token" header with the value "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
+    And   the content-type header key equal to "application/json"
+    And   I set the organization_roles url with the following data
+        | application_id | organization_id | role_id | organization_role |
+        | applicationId  | organizationId  | roleId  | member            |
     And   I send a DELETE HTTP request to that url
     Then  I receive a HTTP "204" status code response
