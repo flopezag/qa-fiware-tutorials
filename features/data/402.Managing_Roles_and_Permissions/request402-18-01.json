@@ -1,0 +1,7 @@
+{
+  "permission": {
+    "name": "Access Price Changes 1",
+    "action": "GET",
+    "resource": "/price-change"
+  }
+}
