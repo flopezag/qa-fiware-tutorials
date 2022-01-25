@@ -65,6 +65,9 @@ Feature: Test tutorial 402.Managing roles and permissions
     And   I send a DELETE HTTP request to the url "http://localhost:3005/v1/applications" with the "application" id from previous execution
     Then  I receive a HTTP "204" status code response
 
+  # In order to work these permissions CRUD it is needed to have a created application previously
+  # the previous operations end with the operation to delete the application therefore, the tutorial will fail
+  # due to there is no application
   Scenario: 08.0 - Create the application again
     When  I set the "X-Auth-Token" header with the value "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
     And   the content-type header key equal to "application/json"
@@ -143,5 +146,46 @@ Feature: Test tutorial 402.Managing roles and permissions
     When  I set the "X-Auth-Token" header with the value "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
     And   the content-type header key equal to "application/json"
     And   I set the roles url with an application id and role id
+    And   I send a DELETE HTTP request to that url
+    Then  I receive a HTTP "204" status code response
+
+  # There is no details information in the tutorial regarding the role and permissions to be used
+  # in the API, there is a figure that show the "Secret Viewer" and the permission "SecretViewer"
+  # the previous operation finished with the delete of the role and delete of the permission therefore
+  # there is no role and no permission.
+  Scenario: 18.0 - Create the role again
+    When  I set the "X-Auth-Token" header with the value "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
+    And   the content-type header key equal to "application/json"
+    And   the body request described in file "request402-13.json"
+    And   I set the roles url with an application id
+    And   I send a POST HTTP request to that url
+    Then  I receive a HTTP "201" status code from Keyrock with the body "response402-13.json" and exclusions "response402-13.excludes"
+
+  Scenario: 18.1 - Create the permission again
+    When  I set the "X-Auth-Token" header with the value "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
+    And   the content-type header key equal to "application/json"
+    And   the body request described in file "request402-18-01.json"
+    And   I set the permission url with an application id
+    And   I send a POST HTTP request to that url
+    Then  I receive a HTTP "201" status code from Keyrock with the body "response402-18-01.json" and exclusions "response402-08.excludes"
+
+  Scenario: 18.2 - Add a permission to a role
+    When  I set the "X-Auth-Token" header with the value "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
+    And   the content-type header key equal to "application/json"
+    And   I set the permission to the role of an application
+    And   I send a PUT HTTP request to that url
+    Then  I receive a HTTP "201" status code from Keyrock with the "role_permission_assignments" with this "roleId" and "permissionId"
+
+  Scenario: 19 - List permissions of a role
+    When  I set the "X-Auth-Token" header with the value "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
+    And   the content-type header key equal to "application/json"
+    And   I set the permissions url to the role of an application
+    And   I send a GET HTTP request to that url
+    Then  I receive a HTTP "200" response code from Keyrock with the body "response402-19.json" and exclusions "response402-19.excludes"
+
+  Scenario: 20 - Remove a permission from a role
+    When  I set the "X-Auth-Token" header with the value "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
+    And   the content-type header key equal to "application/json"
+    And   I set the permission to the role of an application
     And   I send a DELETE HTTP request to that url
     Then  I receive a HTTP "204" status code response

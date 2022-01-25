@@ -261,7 +261,7 @@ def step_impl(context):
         context.command = f"docker exec {docker_instance} mysql -u{user} -p{password} {database} -e {select_stmt}"
 
 
-@then("I obtain the value \"{value}\" from the select")
+@then('I obtain the value "{value}" from the select')
 def step_impl(context, value):
     """
     :param value: The returned value of the select operation
