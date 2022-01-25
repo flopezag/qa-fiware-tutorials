@@ -11,7 +11,6 @@ from requests import get, post, patch, delete, put, RequestException
 
 global Token
 global adminId
-global organizationId
 global userId
 
 
@@ -161,14 +160,13 @@ def step_impl(context, url):
 @then(u'I receive a HTTP "{code}" status code from Keyrock with the body "{file}" and exclusions "{excl_file}"')
 def receive_post_iot_dummy_response_with_data(context, code, file, excl_file):
     global adminId
-    global organizationId
     global Token
 
     if 'user' in context.response:
         if context.response['user']['username'] == 'alice':
             adminId = context.response['user']['id']
     elif 'organization' in context.response:
-        organizationId = context.response['organization']['id']
+        settings.organizationId = context.response['organization']['id']
     elif 'access_token' in context.response:
         assert (context.response['access_token'] == Token), \
             f"Wrong access_token received, expected {Token}, but received {context.response['access_token']}"
@@ -439,13 +437,11 @@ def step_impl(context, op, url, resource):
     :type context: behave.runner.Context
     """
     global adminId
-    global organizationId
-    # global applicationId
 
     if resource == 'admin user':
         url = url + f'/{adminId}'
     elif resource == 'organization':
-        url = url + f'/{organizationId}'
+        url = url + f'/{settings.organizationId}'
     elif resource == 'application':
         url = url +f'/{settings.applicationId}'
 
@@ -524,9 +520,9 @@ def step_impl(context, role):
     :type context: behave.runner.Context
     """
     global userId
-    global organizationId
 
-    context.url = f'http://localhost:3005/v1/organizations/{organizationId}/users/{userId}/organization_roles/{role}'
+    context.url = f'http://localhost:3005/v1/organizations/{settings.organizationId}' \
+                  f'/users/{userId}/organization_roles/{role}'
 
 
 @when("I send a {op} HTTP request to that url")
@@ -592,9 +588,7 @@ def step_impl(context):
     """
     :type context: behave.runner.Context
     """
-    global organizationId
-
-    context.url = f'http://localhost:3005/v1/organizations/{organizationId}/users'
+    context.url = f'http://localhost:3005/v1/organizations/{settings.organizationId}/users'
 
 
 @step('I set the organization roles url with organizationId from the previous scenario and userId from "bob"')
@@ -602,6 +596,5 @@ def step_impl(context):
     """
     :type context: behave.runner.Context
     """
-    global organizationId
-
-    context.url = f'http://localhost:3005/v1/organizations/{organizationId}/users/{context.userId}/organization_roles'
+    context.url = f'http://localhost:3005/v1/organizations/{settings.organizationId}' \
+                  f'/users/{context.userId}/organization_roles'
