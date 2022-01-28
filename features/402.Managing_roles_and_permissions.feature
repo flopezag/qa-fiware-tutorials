@@ -254,3 +254,19 @@ Feature: Test tutorial 402.Managing roles and permissions
         | applicationId  | organizationId  | roleId  | member            |
     And   I send a DELETE HTTP request to that url
     Then  I receive a HTTP "204" status code response
+
+  Scenario: 24 - Grant a role to a user
+    When  I set the "X-Auth-Token" header with the value "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
+    And   the content-type header key equal to "application/json"
+    And   I set the user roles url with the following data
+        | application_id | user_id                               | role_id |
+        | applicationId  | bbbbbbbb-good-0000-0000-000000000000  | roleId  |
+    And   I send a PUT HTTP request to that url
+    Then  I receive a HTTP "201" status code from Keyrock with the following data for a role_user_assignments
+        | role_user_assignments | role_id | user_id                               | oauth_client_id |
+        | any                   | roleId  | bbbbbbbb-good-0000-0000-000000000000  | any             |
+
+  Scenario: 25 - List granted user roles
+
+  Scenario: 26 - Revoke a role from a user
+
