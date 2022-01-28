@@ -169,7 +169,7 @@ Feature: Test tutorial 402.Managing roles and permissions
     And   I send a POST HTTP request to that url
     Then  I receive a HTTP "201" status code from Keyrock with the body "response402-18-01.json" and exclusions "response402-08.excludes"
 
-  Scenario: 18.2 - Add a permission to a role
+  Scenario: 18.3 - Add a permission to a role
     When  I set the "X-Auth-Token" header with the value "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
     And   the content-type header key equal to "application/json"
     And   I set the permission to the role of an application
@@ -201,8 +201,7 @@ Feature: Test tutorial 402.Managing roles and permissions
 #pep-proxy-id	ID of an existing PEP Proxy, found with the pep_proxy table	iot_sensor_f3d0245b-3330-4e64-a513-81bf4b0dae64
 
   # At this point of the tutorial there are no application, no organization, and no role with the id described in the
-  # tutorial, therefore we need to create the application and organization and reuse the last role created in previous
-  # step.
+  # tutorial, therefore we need to create the application, organization, and role.
   Scenario: 21.1 - Create an application again
     When  I set the "X-Auth-Token" header with the value "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
     And   the content-type header key equal to "application/json"
@@ -217,14 +216,22 @@ Feature: Test tutorial 402.Managing roles and permissions
     And   I send a POST HTTP request to "http://localhost:3005/v1/organizations"
     Then  I receive a HTTP "201" status code from Keyrock with the body "response401-09.json" and exclusions "response401-09.excludes"
 
-  Scenario: 21.3 - Grant a role to an organization
+  Scenario: 21.3 - Create the role again
+    When  I set the "X-Auth-Token" header with the value "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
+    And   the content-type header key equal to "application/json"
+    And   the body request described in file "request402-13.json"
+    And   I set the roles url with an application id
+    And   I send a POST HTTP request to that url
+    Then  I receive a HTTP "201" status code from Keyrock with the body "response402-13.json" and exclusions "response402-13.excludes"
+
+  Scenario: 21.4 - Grant a role to an organization
     When  I set the "X-Auth-Token" header with the value "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
     And   the content-type header key equal to "application/json"
     And   I set the organization_roles url with the following data
         | application_id | organization_id | role_id | organization_role |
         | applicationId  | organizationId  | roleId  | member            |
     And   I send a PUT HTTP request to that url
-    Then  I receive a HTTP "201" status code from Keyrock with the following data for organizations
+    Then  I receive a HTTP "201" status code from Keyrock with the following data for an organization
         | role_organization_assignments | role_id | organization_id | oauth_client_id | role_organization |
         | any                           | roleId  | organizationId  | any             | member            |
 
@@ -235,7 +242,7 @@ Feature: Test tutorial 402.Managing roles and permissions
         | application_id | organization_id |
         | applicationId  | organizationId  |
     And   I send a GET HTTP request to that url
-    Then  I receive a HTTP "201" status code from Keyrock with the following data for an organization
+    Then  I receive a HTTP "200" status code from Keyrock with the following data for organizations
         | role_organization_assignments | role_id | organization_id |
         | any                           | roleId  | organizationId  |
 

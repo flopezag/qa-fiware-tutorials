@@ -108,7 +108,6 @@ def step_impl(context, code):
         # | role_organization_assignments | role_id | organization_id | oauth_client_id | role_organization |
         roleId = getattr(settings, valid_response["role_id"])
         organizationId = getattr(settings, valid_response["organization_id"])
-        role_organization = valid_response['role_organization']
 
         # Check the status code
         assert (context.statusCode == code), \
@@ -124,28 +123,32 @@ def step_impl(context, code):
         assert ("organization_id" in context.response['role_organization_assignments'][0]), \
             f'The Response of the Keyrock does not contain the "organization_id" subkey'
 
-        assert ("oauth_client_id" in context.response['role_organization_assignments'][0]), \
-            f'The Response of the Keyrock does not contain the "oauth_client_id" subkey'
-
-        assert ("role_organization" in context.response['role_organization_assignments'][0]), \
-            f'The Response of the Keyrock does not contain the "role_organization" subkey'
-
-        assert (context.response['role_organization_assignments'] not in ["role_id", "organization_id", "oauth_client_id", "role_organization"]), \
-            f'The Response of the Keyrock does not contain the "role_organization" subkey'
+        #TODO: assert (context.response['role_organization_assignments'] not in ["role_id", "organization_id", "oauth_client_id", "role_organization"]), \
+        ##    f'The Response of the Keyrock does not contain the "role_organization" subkey'
 
         # Check the values of the keys
-        assert (context.response['role_organization_assignments'][0]['role_id']), \
+        assert (context.response['role_organization_assignments'][0]['role_id'] == roleId), \
             f"The role_id received is not the expected value, received: " \
             f"{context.response['role_organization_assignments'][0]['role_id']}, but was expected {roleId}"
 
-        assert (context.response['role_organization_assignments'][0]['organization_id']), \
+        assert (context.response['role_organization_assignments'][0]['organization_id'] == organizationId), \
             f"The permission_id received is not the expected value, received: " \
-            f"{context.response['role_organization_assignments'][0]['organization_id']}, but was expected {organizationId}"
+            f"{context.response['role_organization_assignments'][0]['organization_id']}, " \
+            f"but was expected {organizationId}"
 
-        assert (context.response['role_organization_assignments'][0]['role_organization']), \
-            f"The permission_id received is not the expected value, received: " \
-            f"{context.response['role_organization_assignments'][0]['role_organization']}, " \
-            f"but was expected {role_organization}"
+        if "role_organization" in valid_response:
+            role_organization = valid_response['role_organization']
+
+            assert ("role_organization" in context.response['role_organization_assignments'][0]), \
+                f'The Response of the Keyrock does not contain the "role_organization" subkey'
+
+            assert (context.response['role_organization_assignments'][0]['role_organization'] == role_organization), \
+                f"The permission_id received is not the expected value, received: " \
+                f"{context.response['role_organization_assignments'][0]['role_organization']}, " \
+                f"but was expected {role_organization}"
+
+            assert ("oauth_client_id" in context.response['role_organization_assignments'][0]), \
+                f'The Response of the Keyrock does not contain the "oauth_client_id" subkey'
 
 
 @step("I set the organization_roles url with the following data")
@@ -189,7 +192,6 @@ def step_impl(context, code):
         # | role_organization_assignments | role_id | organization_id | oauth_client_id | role_organization |
         roleId = getattr(settings, valid_response["role_id"])
         organizationId = getattr(settings, valid_response["organization_id"])
-        role_organization = valid_response['role_organization']
 
         # Check the status code
         assert (context.statusCode == code), \
@@ -209,10 +211,18 @@ def step_impl(context, code):
             f'The Response of the Keyrock does not contain the "role_organization" subkey'
 
         # Check the values of the keys
-        assert (context.response['role_organization_assignments']['role_id']), \
+        assert (context.response['role_organization_assignments']['role_id'] == roleId), \
             f"The role_id received is not the expected value, received: " \
             f"{context.response['role_organization_assignments']['role_id']}, but was expected {roleId}"
 
-        assert (context.response['role_organization_assignments']['organization_id']), \
+        assert (context.response['role_organization_assignments']['organization_id'] == organizationId), \
             f"The permission_id received is not the expected value, received: " \
             f"{context.response['role_organization_assignments']['organization_id']}, but was expected {organizationId}"
+
+        if "organization_role" in valid_response:
+            organization_role = valid_response['organization_role']
+
+            assert (context.response['role_organization_assignments']['organization_role'] == organization_role), \
+                f"The permission_id received is not the expected value, received: " \
+                f"{context.response['role_organization_assignments']['organization_role']}, " \
+                f"but was expected {organization_role}"
