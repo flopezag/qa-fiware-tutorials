@@ -190,16 +190,6 @@ Feature: Test tutorial 402.Managing roles and permissions
     And   I send a DELETE HTTP request to that url
     Then  I receive a HTTP "204" status code response
 
-
-#user-id	ID of an existing user, found with the user table	bbbbbbbb-good-0000-0000-000000000000 - Bob's User ID
-#application-id	ID of an existing application, found with the oauth_client table	c978218d-ad63-4427-b12b-542b81299cfb
-#role-id	ID of an existing role, found with the role table	d28baa00-839e-4b45-a6b2-1cec563942ee
-#permission-id	ID of an existing permission, found with the permission table	6b6cd19c-9398-4834-9ba1-1616c57139c0
-#organization-id	ID of an existing organization, found with the organization table	e424ed98-c966-46e3-b161-a165fd31bc01
-#organization-role-id	type of role a user has within an organization either owner or member	member
-#iot-agent-id	ID of an existing IoT Agent, found with the iot table	iot_sensor_f3d0245b-3330-4e64-a513-81bf4b0dae64
-#pep-proxy-id	ID of an existing PEP Proxy, found with the pep_proxy table	iot_sensor_f3d0245b-3330-4e64-a513-81bf4b0dae64
-
   # At this point of the tutorial there are no application, no organization, and no role with the id described in the
   # tutorial, therefore we need to create the application, organization, and role.
   Scenario: 21.1 - Create an application again
@@ -267,6 +257,37 @@ Feature: Test tutorial 402.Managing roles and permissions
         | any                   | roleId  | bbbbbbbb-good-0000-0000-000000000000  | any             |
 
   Scenario: 25 - List granted user roles
+    When  I set the "X-Auth-Token" header with the value "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
+    And   the content-type header key equal to "application/json"
+    And   I set the roles url with the following data
+        | application_id | user_id                               |
+        | applicationId  | bbbbbbbb-good-0000-0000-000000000000  |
+    And   I send a GET HTTP request to that url
+    Then  I receive a HTTP "200" status code from Keyrock with the following role user data
+        | role_user_assignments | user_id                               | role_id |
+        | any                   | bbbbbbbb-good-0000-0000-000000000000  | roleId  |
 
   Scenario: 26 - Revoke a role from a user
+    When  I set the "X-Auth-Token" header with the value "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
+    And   the content-type header key equal to "application/json"
+    And   I set the user roles url with the following data
+        | application_id | user_id                               | role_id |
+        | applicationId  | bbbbbbbb-good-0000-0000-000000000000  | roleId  |
+    And   I send a DELETE HTTP request to that url
+    Then  I receive a HTTP "204" status code response
 
+  Scenario: 27 - List authorized organizations
+    When  I set the "X-Auth-Token" header with the value "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
+    And   the content-type header key equal to "application/json"
+    And   I set the "organizations" url with the "application_id"
+    And   I send a GET HTTP request to that url
+    Then  I receive a HTTP "200" status code from Keyrock with the following role organization data
+        | role_organization_assignments | organization_id | role_organization | role_id |
+        | any                           | organizationId  | member            | roleId  |
+
+  Scenario: 28 - List authorized users
+    When  I set the "X-Auth-Token" header with the value "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
+    And   the content-type header key equal to "application/json"
+    And   I set the "users" url with the "application_id"
+    And   I send a GET HTTP request to that url
+    Then  I receive a HTTP "200" response code from Keyrock with the body "response402-28.json"

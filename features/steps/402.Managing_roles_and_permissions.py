@@ -192,10 +192,15 @@ def step_impl(context):
     for element in context.table.rows:
         valid_response = dict(element.as_dict())
         # | application-id | organization-id |
+        # | application_id | user_id |
         applicationId = getattr(settings, valid_response["application_id"])
-        organizationId = getattr(settings, valid_response["organization_id"])
 
-        context.url = f'http://localhost:3005/v1/applications/{applicationId}/organizations/{organizationId}/roles'
+        if "organization_id" in valid_response:
+            organizationId = getattr(settings, valid_response["organization_id"])
+            context.url = f'http://localhost:3005/v1/applications/{applicationId}/organizations/{organizationId}/roles'
+        elif "user_id" in valid_response:
+            userId = valid_response['user_id']
+            context.url = f'http://localhost:3005/v1/applications/{applicationId}/users/{userId}/roles'
 
 
 @then('I receive a HTTP "{code}" status code from Keyrock with the following data for an organization')
@@ -283,3 +288,103 @@ def step_impl(context, code):
         assert (context.response['role_user_assignments']['user_id'] == userId), \
             f"The permission_id received is not the expected value, received: " \
             f"{context.response['role_user_assignments']['user_id']}, but was expected {userId}"
+
+
+@then('I receive a HTTP "{code}" status code from Keyrock with the following role user data')
+def step_impl(context, code):
+    """
+    :type context: behave.runner.Context
+    """
+    for element in context.table.rows:
+        valid_response = dict(element.as_dict())
+        # | role_user_assignments | user_id | role_id |
+        roleId = getattr(settings, valid_response["role_id"])
+        userId = valid_response["user_id"]
+
+        # Check the status code
+        assert (context.statusCode == code), \
+            f'The status code is not the expected value, received {context.statusCode}, expected {code}'
+
+        # Check the key values of the response
+        assert ("role_user_assignments" in context.response), \
+            f'The Response of the Keyrock does not contain the "role_user_assignments key"'
+
+        assert (len(context.response['role_user_assignments']) == 1), \
+            f"The length of the role_user_assignments is not the expected, " \
+            f"received {len(context.response['role_user_assignments'])}," \
+            f" but expected 1"
+
+        assert ("role_id" in context.response['role_user_assignments'][0]), \
+            f'The Response of the Keyrock does not contain the "role_id" subkey'
+
+        assert ("user_id" in context.response['role_user_assignments'][0]), \
+            f'The Response of the Keyrock does not contain the "user_id" subkey'
+
+        # Check the values of the keys
+        assert (context.response['role_user_assignments'][0]['role_id'] == roleId), \
+            f"The role_id received is not the expected value, received: " \
+            f"{context.response['role_user_assignments'][0]['role_id']}, but was expected {roleId}"
+
+        assert (context.response['role_user_assignments'][0]['user_id'] == userId), \
+            f"The permission_id received is not the expected value, received: " \
+            f"{context.response['role_user_assignments'][0]['user_id']}, but was expected {userId}"
+
+
+@step('I set the "{entity}" url with the "application_id"')
+def step_impl(context, entity):
+    """
+    :type context: behave.runner.Context
+    """
+    context.url = f'http://localhost:3005/v1/applications/{settings.applicationId}/{entity}'
+
+
+@then('I receive a HTTP "{code}" status code from Keyrock with the following role organization data')
+def step_impl(context, code):
+    """
+    :type context: behave.runner.Context
+    """
+    for element in context.table.rows:
+        valid_response = dict(element.as_dict())
+        # | role_organization_assignments | organization_id | role_organization | role_id |
+        # | any                           | organizationId  | member            | roleId  |
+        organizationId = getattr(settings, valid_response["organization_id"])
+        roleOrganization = valid_response['role_organization']
+        roleId = getattr(settings, valid_response["role_id"])
+
+        # Check the status code
+        assert (context.statusCode == code), \
+            f'The status code is not the expected value, received {context.statusCode}, expected {code}'
+
+        # Check the key values of the response
+        assert ("role_organization_assignments" in context.response), \
+            f'The Response of the Keyrock does not contain the "role_user_assignments key"'
+
+        assert (len(context.response['role_organization_assignments']) == 1), \
+            f"The length of the role_user_assignments is not the expected, " \
+            f"received {len(context.response['role_organization_assignments'])}," \
+            f" but expected 1"
+
+        assert ("role_id" in context.response['role_organization_assignments'][0]), \
+            f'The Response of the Keyrock does not contain the "role_id" subkey'
+
+        assert ("organization_id" in context.response['role_organization_assignments'][0]), \
+            f'The Response of the Keyrock does not contain the "organization_id" subkey'
+
+        assert ("role_organization" in context.response['role_organization_assignments'][0]), \
+            f'The Response of the Keyrock does not contain the "role_organization" subkey'
+
+        # Check the values of the keys
+        assert (context.response['role_organization_assignments'][0]['role_id'] == roleId), \
+            f"The role_id received is not the expected value, received: " \
+            f"{context.response['role_organization_assignments'][0]['role_id']}, " \
+            f"but was expected {roleId}"
+
+        assert (context.response['role_organization_assignments'][0]['organization_id'] == organizationId), \
+            f"The organization_id received is not the expected value, received: " \
+            f"{context.response['role_organization_assignments'][0]['organization_id']}, " \
+            f"but was expected {organizationId}"
+
+        assert (context.response['role_organization_assignments'][0]['role_organization'] == roleOrganization), \
+            f"The role_organization received is not the expected value, received: " \
+            f"{context.response['role_organization_assignments'][0]['role_organization']}, " \
+            f"but was expected {roleOrganization}"
