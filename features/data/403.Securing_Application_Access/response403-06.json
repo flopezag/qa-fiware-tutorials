@@ -1,0 +1,22 @@
+{
+  "organizations": [],
+  "displayName": "",
+  "roles": [],
+  "app_id": "tutorial-dckr-site-0000-xpresswebapp",
+  "trusted_apps": [],
+  "isGravatarEnabled": "",
+  "id": "aaaaaaaa-good-0000-0000-000000000000",
+  "authorization_decision": "",
+  "app_azf_domain": "",
+  "eidas_profile": {},
+  "attributes": {},
+  "shared_attributes": "",
+  "username": "alice",
+  "email": "alice-the-admin@test.com",
+  "given_name": "alice",
+  "family_name": "alice",
+  "image": "",
+  "gravatar": "",
+  "extra": "",
+  "sub": "aaaaaaaa-good-0000-0000-000000000000"
+}
