@@ -1,0 +1,3 @@
+^.* gateway:app connected to IOTA Tangle: https://chrysalis-nodes.iota.cafe$
+^.* gateway:app Subscribing to 'messages/indexation/fiware/attrs'$
+^.* gateway:app Subscribing to 'messages/indexation/fiware/cmdexe'$

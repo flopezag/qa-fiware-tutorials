@@ -34,22 +34,4 @@ def set_payload_from_file(context, filename):
         context.payload = f.read().strip('\n').replace("\n", " ")
 
 
-@step(u'I perform the request')
-def perform_request(context):
-    try:
-        if context.method == "POST":
-            response = post(context.url, data=context.payload, headers=context.headers)
-        elif context.method == "PUT":
-            response = put(context.url, data=context.payload, headers=context.headers)
-        elif context.method == "PATCH":
-            response = patch(context.url, data=context.payload, headers=context.headers)
-        else:
-            raise AssertionError(f"Unknown method {context.method}")
-    except exceptions.RequestException as e:
-        raise AssertionError("A request exception occurred")
 
-    context.statusCode = str(response.status_code)
-    try:
-        context.response = response.json()
-    except json.decoder.JSONDecodeError:
-        context.response = response.text

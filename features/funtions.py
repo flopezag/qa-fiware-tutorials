@@ -10,6 +10,7 @@ from re import search
 from time import sleep
 from sys import stdout
 from os import environ, getcwd
+import json
 
 DEFAULT_TIMEOUT = 5  # seconds
 DEFAULT_RETRIES = 3
@@ -134,3 +135,9 @@ def check_java_version():
         jre_version = int(version.split(".")[1])
 
     return jre_version
+
+
+def dump_tmp_file(file, data):
+    with open(join("/tmp", file), "w") as f:
+        f.write(json.dumps(data))
+        f.write("\n")
