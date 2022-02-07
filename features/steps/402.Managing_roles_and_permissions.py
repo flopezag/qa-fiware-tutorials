@@ -19,6 +19,8 @@ def step_impl(context, key, value):
         # Context object has no attribute 'header'
         context.header = {key: value}
 
+    if key == 'X-Auth-Token':
+        settings.token = value
 
 @step("I set the permission url with an application id")
 def step_impl(context):

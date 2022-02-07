@@ -11,14 +11,47 @@ Feature: Test tutorial 404.Securing microservices with a PEP Proxy (Orion)
     Given I set the tutorial 404
 
   Scenario: 01 - Create token with password
+    When   I define the body request described in file "request404-01.json"
+    And    the content-type header key equal to "application/json"
+    And    I send a POST HTTP request to "http://localhost:3005/v1/auth/tokens"
+    Then   I receive a HTTP response with the following data in header and payload
+      | Status-Code | X-Subject-Token                      | Connection | data                | excluded                |
+      | 201         | any                                  | keep-alive | response404-01.json | response404-01.excludes |
 
   Scenario: 02 - Get token info
+    When  I set the "X-Auth-Token" header with the value "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
+    And   I set the "X-Subject-token" header with the value "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
+    And   the content-type header key equal to "application/json"
+    And   I send a GET HTTP request to the url "http://localhost:3005/v1/auth/tokens"
+    Then  I receive a HTTP "200" status code from Keyrock with the body "response404-02.json" and exclusions "response404-02.excludes"
 
+  # {'error': {'message': 'Pep Proxy already registered', 'code': 409, 'title': 'Conflict'}}
   Scenario: 03 - Create a PEP Proxy
+    When  I set the "X-Auth-Token" header with the value "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
+    And   I set the "Content-Type" header with the value "application/json"
+    And   I set the application_id equal to "tutorial-dckr-site-0000-xpresswebapp"
+    And   I set the "pep_proxies" url with the "application_id"
+    And   I do not specify any payload
+    And   I send a POST HTTP request to that url
+    Then  I receive a HTTP "200" status code from Keyrock with the following data for a pep proxy
+            | id  | password |
+            | any | any      |
 
   Scenario: 04 - Read PEP Proxy details
+    When  I set the "X-Auth-Token" header with the value "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
+    And   I set the "pep_proxies" url with the "application_id"
+    And   I send a GET HTTP request to that url
+    Then  I receive a HTTP "200" status code from Keyrock with the following data for a pep proxy
+            | id  | oauth_client_id |
+            | any | any             |
 
   Scenario: 05 - Reset password of a PEP Proxy
+    When  I set the "X-Auth-Token" header with the value "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
+    And   I set the "Content-Type" header with the value "application/json"
+    And   I set the "pep_proxies" url with the "application_id"
+    And   I do not specify any payload
+    And   I send a PATCH HTTP request to that url
+    Then  I receive a HTTP "200" status code from Keyrock with the new password
 
   Scenario: 06 - Delete a PEP Proxy
 
