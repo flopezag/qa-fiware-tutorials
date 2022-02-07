@@ -1,0 +1,13 @@
+{
+    "access_token": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
+    "expires": "2036-07-30T12:04:45.000Z",
+    "valid": true,
+    "User": {
+        "id": "aaaaaaaa-good-0000-0000-000000000000",
+        "username": "alice",
+        "email": "alice-the-admin@test.com",
+        "date_password": "2018-07-30T11:41:14.000Z",
+        "enabled": true,
+        "admin": true
+    }
+}

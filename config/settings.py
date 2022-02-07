@@ -33,6 +33,7 @@ permissionId = str()
 applicationId = str()
 roleId = str()
 organizationId = str()
+token = str()
 
 CODE_HOME = dirname(dirname(abspath(__file__)))
 LOG_HOME = join(CODE_HOME, 'logs')
