@@ -54,12 +54,40 @@ Feature: Test tutorial 404.Securing microservices with a PEP Proxy (Orion)
     Then  I receive a HTTP "200" status code from Keyrock with the new password
 
   Scenario: 06 - Delete a PEP Proxy
+curl -X DELETE \
+  'http://localhost:3005/v1/applications/{{application-id}}/pep_proxies' \
+  -H 'Content-Type: application/json' \
+  -H 'X-Auth-token: {{X-Auth-token}}'
+    When  I set the "X-Auth-Token" header with the value "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
+    And   I set the "Content-Type" header with the value "application/json"
+    And   I set the "pep_proxies" url with the "application_id"
+    And   I send a DELETE HTTP request to that url
+    Then  I receive a HTTP "204" status code response
 
   Scenario: 07 - Create an IoT Agent
+    When  I set the "X-Auth-Token" header with the value "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
+    And   I set the "Content-Type" header with the value "application/json"
+    And   I set the "iot_agents" url with the "application_id"
+    And   I do not specify any payload
+    And   I send a POST HTTP request to that url
+    Then  I receive a HTTP "201" status code from Keyrock with the following data for an iot agent
+            | id  | password |
+            | any | any      |
+    Then  fail: the key received is iot_agent and not iot
 
   Scenario: 08 - Read IoT Agent details
+    When  I set the "X-Auth-Token" header with the value "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
+    And   I set the "iot_agents" url with the "application_id" and "iot_agent_id"
+    And   I send a GET HTTP request to that url
+    Then  I receive a HTTP "200" status code from Keyrock with the following data for an iot agent
+            | id  | oauth_client_id |
+            | any | any             |
 
   Scenario: 09 - List IoT Agents
+    When  I set the "X-Auth-Token" header with the value "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
+    And   I set the "iot_agents" url with the "application_id"
+    And   I send a GET HTTP request to that url
+    Then  I receive a HTTP "200" status code from Keyrock with the list of iot agents
 
   Scenario: 10 - Reset password of an IoT Agent
 
