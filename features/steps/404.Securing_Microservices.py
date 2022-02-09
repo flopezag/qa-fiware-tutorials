@@ -52,7 +52,7 @@ def step_impl(context, code, element):
                     f"The {key} key has unexpected value, " \
                     f"received '{context.response[element][key]}', but expected '{valid_response[key]}'"
 
-        if element == 'iot':
+        if element == 'iot_agent':
             iotAgentId = context.response[element]['id']
 
 
@@ -129,3 +129,22 @@ def step_impl(context, message):
     :type context: behave.runner.Context
     """
     raise AssertionError(message)
+
+
+@then('I receive a HTTP "{code}" status code response and the following message')
+def step_impl(context, code):
+    """
+    :type context: behave.runner.Context
+    """
+    for row in context.table.rows:
+        # | message |
+        # | id | oauth_client_id |
+        valid_response = dict(row.as_dict())
+
+        # Check the status code
+        assert (context.statusCode == code), \
+            f'The status code is not the expected value, received {context.statusCode}, expected {code}'
+
+        assert (context.response == valid_response['message']), \
+            f"The received message is not the expected one." \
+            f"\nReceived\n{context.response}\n\nExpected\n{valid_response['message']}"
