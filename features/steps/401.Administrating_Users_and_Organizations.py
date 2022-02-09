@@ -1,5 +1,5 @@
 from behave import given, when, then, step
-from config.settings import CODE_HOME
+from config import settings
 from os.path import join
 from os import environ
 import subprocess
@@ -11,13 +11,12 @@ from requests import get, post, patch, delete, put, RequestException
 
 global Token
 global adminId
-global organizationId
 global userId
 
 
 @given(u'I set the tutorial 401')
 def step_impl_tutorial_203(context):
-    context.data_home = join(join(join(CODE_HOME, "features"), "data"), "401.Administrating_Users_and_Organizations")
+    context.data_home = join(join(join(settings.CODE_HOME, "features"), "data"), "401.Administrating_Users_and_Organizations")
 
 
 @when("I request the information from user table")
@@ -120,7 +119,10 @@ def step_impl(context):
         assert ('X-Subject-Token' in context.responseHeaders), \
             f"Unable to get X-Subject-Token in the header of the response"
 
-        Token = context.responseHeaders['X-Subject-Token']
+        if valid_response['X-Subject-Token'] == "Any":
+            Token = context.responseHeaders['X-Subject-Token']
+        else:
+            Token = valid_response['X-Subject-Token']
 
         # Check the HTTP response
         body = loads(read_data_from_file(context, valid_response['data']))
@@ -158,17 +160,22 @@ def step_impl(context, url):
 @then(u'I receive a HTTP "{code}" status code from Keyrock with the body "{file}" and exclusions "{excl_file}"')
 def receive_post_iot_dummy_response_with_data(context, code, file, excl_file):
     global adminId
-    global organizationId
     global Token
 
     if 'user' in context.response:
         if context.response['user']['username'] == 'alice':
             adminId = context.response['user']['id']
     elif 'organization' in context.response:
-        organizationId = context.response['organization']['id']
+        settings.organizationId = context.response['organization']['id']
     elif 'access_token' in context.response:
         assert (context.response['access_token'] == Token), \
             f"Wrong access_token received, expected {Token}, but received {context.response['access_token']}"
+    elif 'application' in context.response:
+        settings.applicationId = context.response['application']['id']
+    elif 'permission' in context.response:
+        settings.permissionId = context.response['permission']['id']
+    elif 'role' in context.response:
+        settings.roleId = context.response['role']['id']
 
     body = loads(read_data_from_file(context, file))
 
@@ -252,7 +259,7 @@ def step_impl(context):
         context.command = f"docker exec {docker_instance} mysql -u{user} -p{password} {database} -e {select_stmt}"
 
 
-@then("I obtain the value \"{value}\" from the select")
+@then('I obtain the value "{value}" from the select')
 def step_impl(context, value):
     """
     :param value: The returned value of the select operation
@@ -356,7 +363,6 @@ def step_impl(context, code):
     :param code: The HTTP response status code
     :type context: behave.runner.Context
     """
-
     assert (context.statusCode == code), \
         f'The status code is not the expected value, received {context.statusCode}, expected {code}'
 
@@ -431,12 +437,13 @@ def step_impl(context, op, url, resource):
     :type context: behave.runner.Context
     """
     global adminId
-    global organizationId
 
     if resource == 'admin user':
         url = url + f'/{adminId}'
     elif resource == 'organization':
-        url = url + f'/{organizationId}'
+        url = url + f'/{settings.organizationId}'
+    elif resource == 'application':
+        url = url +f'/{settings.applicationId}'
 
     op = op.lower()
     try:
@@ -513,9 +520,9 @@ def step_impl(context, role):
     :type context: behave.runner.Context
     """
     global userId
-    global organizationId
 
-    context.url = f'http://localhost:3005/v1/organizations/{organizationId}/users/{userId}/organization_roles/{role}'
+    context.url = f'http://localhost:3005/v1/organizations/{settings.organizationId}' \
+                  f'/users/{userId}/organization_roles/{role}'
 
 
 @when("I send a {op} HTTP request to that url")
@@ -532,6 +539,10 @@ def step_impl(context, op):
             response = get(context.url, headers=context.header)
         elif op == 'delete':
             response = delete(context.url, headers=context.header)
+        elif op == 'post':
+            response = post(context.url,  data=context.payload, headers=context.header)
+        elif op == 'patch':
+            response = patch(context.url,  data=context.payload, headers=context.header)
         else:
             raise Exception(f'HTTP operation not allowed or unknown: {op}')
     except RequestException as e:
@@ -577,9 +588,7 @@ def step_impl(context):
     """
     :type context: behave.runner.Context
     """
-    global organizationId
-
-    context.url = f'http://localhost:3005/v1/organizations/{organizationId}/users'
+    context.url = f'http://localhost:3005/v1/organizations/{settings.organizationId}/users'
 
 
 @step('I set the organization roles url with organizationId from the previous scenario and userId from "bob"')
@@ -587,6 +596,5 @@ def step_impl(context):
     """
     :type context: behave.runner.Context
     """
-    global organizationId
-
-    context.url = f'http://localhost:3005/v1/organizations/{organizationId}/users/{context.userId}/organization_roles'
+    context.url = f'http://localhost:3005/v1/organizations/{settings.organizationId}' \
+                  f'/users/{context.userId}/organization_roles'

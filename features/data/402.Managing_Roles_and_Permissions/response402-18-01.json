@@ -1,0 +1,11 @@
+{
+    "permission": {
+        "id": "8052b95b-3ff6-481c-b779-893b6c3f1488",
+        "is_internal": false,
+        "name": "Access Price Changes 1",
+        "action": "GET",
+        "resource": "/price-change",
+        "is_regex": false,
+        "oauth_client_id": "6632bb2e-c8e5-418f-ba5b-c269d8a53dd2"
+    }
+}
