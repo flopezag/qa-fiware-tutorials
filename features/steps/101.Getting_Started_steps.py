@@ -38,10 +38,13 @@ def http_code_is_returned(context, status_code, server, response):
         data = load(f)
 
     diff = DeepDiff(data, context.response)
-    stdout.write(f'{diff}\n\n')
 
-    assert_that(diff.to_dict(), is_(dict()),
-                f'Response from CB has not got the expected HTTP response body:\n  {diff}')
+    if len(diff) != 0:
+        assert_that(diff.to_dict(), is_(dict()),
+                    f'Response from CB has not got the expected HTTP response body:\n  {diff}')
+
+        stdout.write(f'{diff}\n\n')
+
 
 
 @then(u'I receive a HTTP response with the following data')

@@ -6,7 +6,6 @@ from json.decoder import JSONDecodeError
 from requests import get, RequestException
 
 auth_token = ''
-access_token = ''
 refresh_token = ''
 ClientID = ''
 
@@ -82,7 +81,6 @@ def step_impl(context, code):
     """
     :type context: behave.runner.Context
     """
-    global access_token
     global refresh_token
 
     for element in context.table.rows:
@@ -107,7 +105,7 @@ def step_impl(context, code):
             f'The Response of the Keyrock does not contain the "expires_in" key'
 
         # Get the important values for future execution
-        access_token = context.response['access_token']
+        settings.token = context.response['access_token']
 
         if 'refresh_token' in valid_response:
             assert ("refresh_token" in context.response), \
@@ -141,8 +139,7 @@ def step_impl(context):
     """
     :type context: behave.runner.Context
     """
-    global access_token
-    context.url = f'http://localhost:3005/user?access_token={access_token}'
+    context.url = f'http://localhost:3005/user?access_token={settings.token}'
 
 @step("the data equal to refresh_token value obtained previously")
 def step_impl(context):
@@ -159,9 +156,8 @@ def step_impl(context):
     """
     # Application ID is equal to ClientId
     global ClientID
-    global access_token
 
-    context.url = f'http://localhost:3005/user?access_token={access_token}&app_id={ClientID}'
+    context.url = f'http://localhost:3005/user?access_token={settings.token}&app_id={ClientID}'
 
 
 @step("I set the user url with the following data")
@@ -169,7 +165,6 @@ def step_impl(context):
     """
     :type context: behave.runner.Context
     """
-    global access_token
     global ClientID
 
     for element in context.table.rows:
@@ -178,7 +173,7 @@ def step_impl(context):
         action = valid_response['action']
         resource = valid_response['resource']
 
-        context.url = f'http://localhost:3005/user?access_token={access_token}&action={action}' \
+        context.url = f'http://localhost:3005/user?access_token={settings.token}&action={action}' \
                       f'&resource={resource}&app_id={ClientID}'
 
 
@@ -201,4 +196,4 @@ def step_impl(context):
     try:
         context.response = response.json()
     except JSONDecodeError:
-        context.response = ""
+        context.response = response.text
