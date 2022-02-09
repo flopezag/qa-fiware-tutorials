@@ -14,6 +14,8 @@ from threading import Thread
 
 terminals = {}
 
+MAX_WAIT_UNTIL_OUTPUT = 15
+
 
 class ProcesPiper:
     def __init__(self, cmd, name):
@@ -101,13 +103,12 @@ def compare_some_lines_in_terminal(context, name, filename):
 
     context.matches = 0
     context.lines = len(re_lines)
-    max_timeout = 15
+    max_timeout = MAX_WAIT_UNTIL_OUTPUT
     n_timeout = 0
 
     fclosed = False
 
     for l in re_lines:
-        print(l.rstrip())
         rexp = re.compile(l.rstrip())
         while not fclosed:
             try:
@@ -115,7 +116,6 @@ def compare_some_lines_in_terminal(context, name, filename):
                     fclosed = True
                     break
                 nl = p.get_stderr().rstrip()
-                print(rexp, "--->", nl)
                 if rexp.match(nl):
                     context.matches = context.matches + 1
                     break
@@ -169,7 +169,6 @@ def compare_command_output_to_file(context, filename):
         exp_ln = z[0].rstrip()
         out_ln = z[1].rstrip()
         rexp = re.compile(exp_ln)
-        print(rexp.match(out_ln))
         assert(rexp.match(out_ln))
 
 
