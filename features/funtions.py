@@ -136,8 +136,3 @@ def check_java_version():
 
     return jre_version
 
-
-def dump_tmp_file(file, data):
-    with open(join("/tmp", file), "w") as f:
-        f.write(json.dumps(data))
-        f.write("\n")

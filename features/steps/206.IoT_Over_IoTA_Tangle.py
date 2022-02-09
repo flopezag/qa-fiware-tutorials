@@ -171,7 +171,3 @@ def compare_command_output_to_file(context, filename):
         rexp = re.compile(exp_ln)
         assert(rexp.match(out_ln))
 
-
-@when('I wait patieintly')
-def wait_patiently(context):
-    time.sleep(1)

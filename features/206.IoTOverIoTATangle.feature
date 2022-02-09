@@ -14,9 +14,6 @@ Feature: Test tutorial 207.IoT over IOTA tangle
         Given I set the tutorial 206
 
 
-  Scenario: 00 - Wait for mnual testings.... A little bit
-    When I wait patieintly
-
     # Error - json line 5 and line 25 --
     #  "cbroker":     "'"http://orion:1026"'",   ---- Syntax Error json file
     #
