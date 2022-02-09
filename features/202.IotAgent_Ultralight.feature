@@ -161,7 +161,6 @@ Feature: test tutorial 202.Introduction to IoT Agent Ultralight
         And   I set header fiware-service to openiot
         And   I set header fiware-servicepath to /
         And   I set the body request as described in request202-18.json
-        And   I break here
         And   I perform the request
         Then  I receive a HTTP response with status 204 and empty dict
 

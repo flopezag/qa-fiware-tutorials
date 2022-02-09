@@ -133,7 +133,3 @@ def receive_simple_status_code(context, http_code):
 def wait_some_seconds_before_continuing(context, n):
     n = int(n)
     time.sleep(n)
-
-@step(u'I break here')
-def do_nothing_but_breakpoint(context):
-    pass
