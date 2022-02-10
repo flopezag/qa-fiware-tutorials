@@ -87,31 +87,11 @@ def step_impl(context, code):
         valid_response = dict(element.as_dict())
         # | access_token | token_type | expires_in | refresh_token |
         # | access_token | token_type | expires_in |
-        expires_in = valid_response["expires_in"]
-        token_type = valid_response['token_type']
+        # | access_token | token_type | scope |
 
-        # Check the status code
-        assert (context.statusCode == code), \
-            f'The status code is not the expected value, received {context.statusCode}, expected {code}'
-
-        # Check the key values of the response
-        assert ("access_token" in context.response), \
-            f'The Response of the Keyrock does not contain the "access_token" key'
-
-        assert ("token_type" in context.response), \
-            f'The Response of the Keyrock does not contain the "token_type" key'
-
-        assert ("expires_in" in context.response), \
-            f'The Response of the Keyrock does not contain the "expires_in" key'
-
-        # Get the important values for future execution
-        settings.token = context.response['access_token']
-
-        if 'refresh_token' in valid_response:
-            assert ("refresh_token" in context.response), \
-                f'The Response of the Keyrock does not contain the "refresh_token" key'
-
-            refresh_token = context.response['refresh_token']
+        # The response MUST be a dict or there is an error message
+        assert(isinstance(context.response, dict)), \
+            f'It was received a response that it is not a dictionary.\nReceived:\n{context.response}'
 
         # Check that there are no other keys in the response
         keys_received = list(context.response.keys())
@@ -122,16 +102,36 @@ def step_impl(context, code):
         assert (len(difference) == 0), \
             f'We have received unexpected keys in the response: {difference}'
 
-        # Check the values of the keys
-        assert (context.response['expires_in'] == expires_in), \
-            f"The expires_in received is not the expected value, " \
-            f"received: {context.response['expires_in']}, " \
-            f"but was expected {expires_in}"
+        difference = list(set(keys_expected) - set(keys_received))
 
-        assert (context.response['token_type'] == token_type), \
-            f"The token_type received is not the expected value, " \
-            f"received: {context.response['token_type']}, " \
-            f"but was expected {token_type}"
+        assert (len(difference) == 0), \
+            f'We have some expected keys that were not received: {difference}'
+
+        # Check the status code
+        assert (context.statusCode == code), \
+            f'The status code is not the expected value, received {context.statusCode}, expected {code}'
+
+        # Get the important values for future execution
+        assert ('access_token' in context.response), \
+            f'The response MUST include the key "access_token'
+
+        settings.token = context.response['access_token']
+
+        # Remove the key for the rest of chekings
+        keys_expected.remove('access_token')
+
+        # For each of the rest expected keys check the received values
+        for key in keys_expected:
+            received = context.response[key]
+            expected = valid_response[key]
+
+            if key == 'refresh_token':
+                refresh_token = context.response[key]
+
+            assert (received == expected), \
+                f"The {key} received is not the expected value, " \
+                f"received: {received}, " \
+                f"but was expected {expected}"
 
 
 @when("I set the the user url with the previous access_token")
