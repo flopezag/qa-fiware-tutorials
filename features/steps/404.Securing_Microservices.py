@@ -148,3 +148,14 @@ def step_impl(context, code):
         assert (context.response == valid_response['message']), \
             f"The received message is not the expected one." \
             f"\nReceived\n{context.response}\n\nExpected\n{valid_response['message']}"
+
+
+@step("the provisioning data with the previous access token (trust token) value")
+def step_impl(context):
+    """
+    :type context: behave.runner.Context
+    """
+    context.payload = {
+     "cbroker": "http://orion-proxy:1027",
+     "trust": settings.token
+    }
