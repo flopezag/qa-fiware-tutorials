@@ -5,9 +5,9 @@ from base64 import b64encode
 from json.decoder import JSONDecodeError
 from requests import get, RequestException
 
-auth_token = ''
-refresh_token = ''
-ClientID = ''
+auth_token = str()
+refresh_token = str()
+ClientID = str()
 
 
 @given(u'I set the tutorial 403')
@@ -27,6 +27,7 @@ def step_impl(context, parameter, value):
     elif parameter == 'ClientSecret':
         context.ClientSecret = value
 
+
 @when("I calculate the base64 of this ClientId and ClientSecret")
 def step_impl(context):
     """
@@ -39,6 +40,7 @@ def step_impl(context):
     b64_bytes = b64encode(message)
     context.b64 = b64_bytes.decode('ascii')
     auth_token = context.b64
+
 
 @then('I obtain the value "{value}"')
 def step_impl(context, value):
@@ -68,6 +70,7 @@ def step_impl(context, url):
     """
     context.url = url
 
+
 @step('the data equal to "{data}"')
 def step_impl(context, data):
     """
@@ -91,21 +94,11 @@ def step_impl(context, code):
 
         # The response MUST be a dict or there is an error message
         assert(isinstance(context.response, dict)), \
-            f'It was received a response that it is not a dictionary.\nReceived:\n{context.response}'
+            f'It was received a response that it was not a dictionary.\nReceived:\n{context.response}'
 
         # Check that there are no other keys in the response
         keys_received = list(context.response.keys())
         keys_expected = list(valid_response.keys())
-
-        difference = list(set(keys_received) - set(keys_expected))
-
-        assert (len(difference) == 0), \
-            f'We have received unexpected keys in the response: {difference}'
-
-        difference = list(set(keys_expected) - set(keys_received))
-
-        assert (len(difference) == 0), \
-            f'We have some expected keys that were not received: {difference}'
 
         # Check the status code
         assert (context.statusCode == code), \
@@ -117,8 +110,9 @@ def step_impl(context, code):
 
         settings.token = context.response['access_token']
 
-        # Remove the key for the rest of chekings
+        # Remove the key for the rest of checking
         keys_expected.remove('access_token')
+        keys_received.remove('access_token')
 
         # For each of the rest expected keys check the received values
         for key in keys_expected:
@@ -133,6 +127,16 @@ def step_impl(context, code):
                 f"received: {received}, " \
                 f"but was expected {expected}"
 
+        difference = list(set(keys_received) - set(keys_expected))
+
+        assert (len(difference) == 0), \
+            f'We have received unexpected keys in the response: {difference}'
+
+        difference = list(set(keys_expected) - set(keys_received))
+
+        assert (len(difference) == 0), \
+            f'We have some expected keys that were not received: {difference}'
+
 
 @when("I set the the user url with the previous access_token")
 def step_impl(context):
@@ -146,6 +150,8 @@ def step_impl(context):
     """
     :type context: behave.runner.Context
     """
+    global refresh_token
+
     context.payload = f'refresh_token={refresh_token}&grant_type=refresh_token'
 
 

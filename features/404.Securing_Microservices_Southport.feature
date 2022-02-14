@@ -30,4 +30,4 @@ Feature: Test tutorial 404.Securing microservices with a pep proxy PEP Proxy (Io
     Then  I receive a HTTP "201" status code from Keyrock with the following data for an iot agent
             | id  | password |
             | any | any      |
-    Then  fail: DEVICE_GROUP_NOT_FOUND: Couldn't find device group for fields: ["resource", "apikey"] and values: {"resource":m"/iot/d", "apikey": "4jggokgpepnvsb2uv4s40d59ov"}
+    Then  fail: DEVICE_GROUP_NOT_FOUND: Couldn't find device group for fields: ["resource", "apikey"] and values: {"resource":"/iot/d", "apikey": "4jggokgpepnvsb2uv4s40d59ov"}

@@ -54,10 +54,6 @@ Feature: Test tutorial 404.Securing microservices with a PEP Proxy (Orion)
     Then  I receive a HTTP "200" status code from Keyrock with the new password
 
   Scenario: 06 - Delete a PEP Proxy
-curl -X DELETE \
-  'http://localhost:3005/v1/applications/{{application-id}}/pep_proxies' \
-  -H 'Content-Type: application/json' \
-  -H 'X-Auth-token: {{X-Auth-token}}'
     When  I set the "X-Auth-Token" header with the value "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
     And   I set the "Content-Type" header with the value "application/json"
     And   I set the "pep_proxies" url with the "application_id"
