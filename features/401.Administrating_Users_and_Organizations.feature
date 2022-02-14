@@ -24,7 +24,7 @@ Feature: Test tutorial 401.Administrating Users and Organizations
     And    I send a POST HTTP request to "http://localhost:3005/v1/auth/tokens"
     Then   I receive a HTTP response with the following data in header and payload
       | Status-Code | X-Subject-Token | Connection | data                | excluded                |
-      | 201         | Any             | keep-alive | response401-01.json | response401-01.excludes |
+      | 201         | any             | keep-alive | response401-01.json | response401-01.excludes |
 
   Scenario: 02 - Get user information via a token
     When   I send a GET HTTP request to "http://localhost:3005/v1/auth/tokens" with equal X-Auth-Token and X-Subject-Token
@@ -34,7 +34,7 @@ Feature: Test tutorial 401.Administrating Users and Organizations
     When   We defined a payload with token equal to the previous token
     And    the content-type header key equal to "application/json"
     And    I send a POST HTTP request to "http://localhost:3005/v1/auth/tokens"
-    Then   I receive a HTTP "200" status code from Keyrock with the body "response401-03.json" and exclusions "response401-01.excludes"
+    Then   I receive a HTTP "201" status code from Keyrock with the body "response401-03.json" and exclusions "response401-01.excludes"
 
   Scenario: 04.1 - Creating admin user
     When   I set the X-Auth-Token header with the previous obtained token
@@ -161,7 +161,7 @@ Feature: Test tutorial 401.Administrating Users and Organizations
     And   I send a PUT HTTP request to that url
     Then  I receive a HTTP "200" status code with the same organizationId and userId and role equal to "owner"
 
-  # There is no organization in this point
+  # There is no organization at this point
   Scenario: 16 - List users within an organization
     When  I set the X-Auth-Token header with the previous obtained token
     And   the content-type header key equal to "application/json"
@@ -171,7 +171,7 @@ Feature: Test tutorial 401.Administrating Users and Organizations
     And   I send a GET HTTP request to that url
     Then  I receive a HTTP "200" status code with the same organizationId and userId and role equal to "owner"
 
-  # There is no organization in this point
+  # There is no organization at this point
   Scenario: 17 - Read user roles within an organization
     When  I set the X-Auth-Token header with the previous obtained token
     And   the content-type header key equal to "application/json"
@@ -181,7 +181,7 @@ Feature: Test tutorial 401.Administrating Users and Organizations
     And   I send a GET HTTP request to that url
     Then  I receive a HTTP "200" status code with the same organizationId and userId and role equal to "owner"
 
-  # There is no organization in this point
+  # There is no organization at this point
   Scenario: 18 - Remove a user from an organization
     When  I set the X-Auth-Token header with the previous obtained token
     And   the content-type header key equal to "application/json"

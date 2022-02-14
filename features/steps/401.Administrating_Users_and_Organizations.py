@@ -194,6 +194,8 @@ def step_impl(context):
         "token": settings.token
     }
 
+    context.payload = dumps(context.payload)
+
 
 @step("With the X-Auth-Token header with the previous obtained token")
 @when("I set the X-Auth-Token header with the previous obtained token")
@@ -439,7 +441,7 @@ def step_impl(context, op, url, resource):
     elif resource == 'organization':
         url = url + f'/{settings.organizationId}'
     elif resource == 'application':
-        url = url +f'/{settings.applicationId}'
+        url = url + f'/{settings.applicationId}'
 
     op = op.lower()
     try:
