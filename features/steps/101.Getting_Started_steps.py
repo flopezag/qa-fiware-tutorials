@@ -33,18 +33,21 @@ def http_code_is_returned(context, status_code, server, response):
                 "Response to {} notification has not got the expected HTTP response code: Message: {}"
                 .format(server, context.response))
 
-    file = join(context.data_home, response)
-    with open(file) as f:
-        data = load(f)
+    if server == 'AuthZForce':
+        # We need to parse and check the XML response
+        print(context.response)
+    else:
+        file = join(context.data_home, response)
+        with open(file) as f:
+            data = load(f)
 
-    diff = DeepDiff(data, context.response)
+        diff = DeepDiff(data, context.response)
 
-    if len(diff) != 0:
-        assert_that(diff.to_dict(), is_(dict()),
-                    f'Response from CB has not got the expected HTTP response body:\n  {diff}')
+        if len(diff) != 0:
+            assert_that(diff.to_dict(), is_(dict()),
+                        f'Response from CB has not got the expected HTTP response body:\n  {diff}')
 
-        stdout.write(f'{diff}\n\n')
-
+            stdout.write(f'{diff}\n\n')
 
 
 @then(u'I receive a HTTP response with the following data')

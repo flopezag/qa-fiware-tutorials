@@ -8,6 +8,7 @@ from features.funtions import read_data_from_file, dict_diff_with_exclusions
 from json import loads, dumps
 from json.decoder import JSONDecodeError
 from requests import get, post, patch, delete, put, RequestException
+from xml.dom import minidom
 
 global adminId
 global userId
@@ -534,7 +535,10 @@ def step_impl(context, op):
         if op == 'put':
             response = put(context.url, headers=context.header)
         elif op == 'get':
-            response = get(context.url, headers=context.header)
+            if hasattr(context, 'header'):
+                response = get(context.url, headers=context.header)
+            else:
+                response = get(context.url)
         elif op == 'delete':
             response = delete(context.url, headers=context.header)
         elif op == 'post':
@@ -558,7 +562,12 @@ def step_impl(context, op):
     try:
         context.response = response.json()
     except JSONDecodeError:
-        context.response = ""
+        # Tutorial 405 send XML content, we need to parse it
+        context.response = response.text
+        parser = minidom.parseString(response.text)
+        tag = parser.getElementsByTagName('ns3:link')
+        if len(tag) != 0:
+            settings.domainID = tag[0].attributes['href'].value
 
 
 @then('I receive a HTTP "{code}" status code with the same organizationId and userId and role equal to "{role}"')
