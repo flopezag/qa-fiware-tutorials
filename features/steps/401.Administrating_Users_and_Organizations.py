@@ -565,7 +565,7 @@ def step_impl(context, op):
         # Tutorial 405 send XML content, we need to parse it
         context.response = response.text
         parser = minidom.parseString(response.text)
-        tag = parser.getElementsByTagName('ns3:link')
+        tag = parser.getElementsByTagName('ns2:link')
         if len(tag) != 0:
             settings.domainID = tag[0].attributes['href'].value
 

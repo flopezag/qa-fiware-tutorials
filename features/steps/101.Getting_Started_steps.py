@@ -7,6 +7,8 @@ from json import load
 from deepdiff import DeepDiff
 from config.settings import CODE_HOME
 from sys import stdout
+from xml.dom import minidom
+from lxml.doctestcompare import LXMLOutputChecker, PARSE_XML
 
 
 @given(u'I set the tutorial 101')
@@ -35,7 +37,26 @@ def http_code_is_returned(context, status_code, server, response):
 
     if server == 'AuthZForce':
         # We need to parse and check the XML response
-        print(context.response)
+        file = join(context.data_home, response)
+        with open(file) as f:
+            file_content = f.read()
+
+        from xmldiff import main, formatting
+        from lxml import etree as ET
+
+        want = ET.XML(file_content.replace('\n', '').encode('utf-8'))
+        got = ET.XML(context.response.replace('\n', '').encode('utf-8'))
+        formatter = formatting.DiffFormatter()
+        result = main.diff_trees(want, got, formatter=formatter)
+
+        # We have to ignore the uptime value of the results
+        data1 = result.split("\n")
+        data1 = [x for x in data1 if 'uptime' not in x]
+        result = '\n'.join(data1)
+
+        assert (result == ''), \
+            f'The XML obtained is not the expected value, ' \
+            f'\nexpected:\n{file_content}\n\nreceived:\n{context.response}\n\ndifferences:\n{result}\n'
     else:
         file = join(context.data_home, response)
         with open(file) as f:
