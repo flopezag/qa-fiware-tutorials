@@ -10,3 +10,4 @@ SQLAlchemy==1.4.29
 PyMySQL==1.0.2
 allure-behave==2.9.45
 pytz==2021.3
+xmldiff==2.4
