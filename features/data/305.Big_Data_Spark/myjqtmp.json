@@ -1,0 +1,25 @@
+[
+  {
+    "id": "620ce79c5aa4a279dd401d09",
+    "description": "Notify Spark of all context changes",
+    "status": "active",
+    "subject": {
+      "entities": [
+        {
+          "idPattern": ".*"
+        }
+      ],
+      "condition": {
+        "attrs": []
+      }
+    },
+    "notification": {
+      "attrs": [],
+      "onlyChangedAttrs": false,
+      "attrsFormat": "normalized",
+      "http": {
+        "url": "http://spark-worker-1:9001"
+      }
+    }
+  }
+]

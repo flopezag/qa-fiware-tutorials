@@ -1,0 +1,4 @@
+Sensor(Bell,3)
+Sensor(Door,4)
+Sensor(Lamp,7)
+Sensor(Motion,6)
