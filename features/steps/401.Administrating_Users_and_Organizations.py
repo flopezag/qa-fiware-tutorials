@@ -565,9 +565,13 @@ def step_impl(context, op):
         # Tutorial 405 send XML content, we need to parse it
         context.response = response.text
         parser = minidom.parseString(response.text)
-        tag = parser.getElementsByTagName('ns2:link')
-        if len(tag) != 0:
-            settings.domainID = tag[0].attributes['href'].value
+        tag = parser.firstChild.tagName
+
+        if 'resources' in tag:
+            # We receive a resource, therefore we extract the domainID from ns2:link
+            tag = parser.firstChild.firstChild.tagName
+            tag = parser.getElementsByTagName(tag)
+            settings.domainId = tag[0].attributes['href'].value
 
 
 @then('I receive a HTTP "{code}" status code with the same organizationId and userId and role equal to "{role}"')
