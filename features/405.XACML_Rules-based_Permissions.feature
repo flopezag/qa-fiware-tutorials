@@ -21,8 +21,21 @@ Feature: Test tutorial 405.XACML Rules-based Permissions
     Then  I receive a HTTP "200" response code from AuthZForce with the body "response405-02.xml"
 
   Scenario: 03 - AuthZForce - Read a single domain
-curl -X GET \
-  http://localhost:8080/authzforce-ce/domains/gQqnLOnIEeiBFQJCrBIBDA
     When  I set the "AuthZForce" domains url with the "domainId"
     And   I send a GET HTTP request to that url
     Then  I receive a HTTP "200" response code from AuthZForce with the body "response405-03.xml"
+
+  Scenario: 04 - AuthZForce - List all policysetc available within a domain
+    When  I set the "AuthZForce" pap policies url with the "domainId"
+    And   I send a GET HTTP request to that url
+    Then  I receive a HTTP "200" response code from AuthZForce with the body "response405-04.xml"
+
+  Scenario: 05 - AuthZForce - List the available revisions of a policyset
+    When  I set the "AuthZForce" a pap policy set url with the "domainId" and "policyId"
+    And   I send a GET HTTP request to that url
+    Then  I receive a HTTP "200" response code from AuthZForce with the body "response405-05.xml"
+
+  Scenario: 06 - AuthZForce - Read a single version of a PolicySet
+    When  I set the "AuthZForce" to a single version of a pap policy set url with the "domainId" and "policyId"
+    And   I send a GET HTTP request to that url
+    Then  I receive a HTTP "200" response code from AuthZForce with the body "response405-06.xml"
