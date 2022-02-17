@@ -571,7 +571,15 @@ def step_impl(context, op):
             # We receive a resource, therefore we extract the domainID from ns2:link
             tag = parser.firstChild.firstChild.tagName
             tag = parser.getElementsByTagName(tag)
-            settings.domainId = tag[0].attributes['href'].value
+
+            if settings.domainId == '':
+                settings.domainId = tag[0].attributes['href'].value
+            elif settings.papPoliciesId == '':
+                # The 2nd time that I receive resources is to obtain the PAP Policies Id
+                settings.papPoliciesId = tag[0].attributes['href'].value
+            else:
+                # The 3rd time that I receive resources is to obtain the different versions of a policy set
+                settings.policySetVersion = tag[0].attributes['href'].value
 
 
 @then('I receive a HTTP "{code}" status code with the same organizationId and userId and role equal to "{role}"')
