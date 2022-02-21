@@ -8,6 +8,7 @@ from deepdiff import DeepDiff
 from config.settings import CODE_HOME
 from sys import stdout
 from xmldiff import main, formatting
+from xml.dom.minidom import parseString
 
 
 @given(u'I set the tutorial 101')
@@ -51,9 +52,13 @@ def http_code_is_returned(context, status_code, server, response):
         data1 = [x for x in data1 if 'uptime' not in x]
         result = '\n'.join(data1)
 
+        # Obtain the pretty print xml of the response
+        dom = parseString(context.response)  # or xml.dom.minidom.parseString(xml_string)
+        pretty_xml_as_string = dom.toprettyxml()
+
         assert (result == ''), \
             f'The XML obtained is not the expected value, ' \
-            f'\nexpected:\n{file_content}\n\nreceived:\n{context.response}\n\ndifferences:\n{result}\n'
+            f'\nexpected:\n{file_content}\n\nreceived:\n{pretty_xml_as_string}\n\ndifferences:\n{result}\n'
     else:
         file = join(context.data_home, response)
         with open(file) as f:
