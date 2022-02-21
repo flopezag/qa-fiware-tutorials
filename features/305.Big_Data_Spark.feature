@@ -127,7 +127,3 @@ Feature: test tutorial 305.Big Data (Spark)
        And   I wait "5" seconds
        And   I perform the query request
        Then  I receive a HTTP "200" response code from Broker with the body "03.response_305.json" and exclusions "03.excludes"
-
-    # FIXME
-  # Scenario: Remove me
-  #  Given I wait "190" seconds
