@@ -39,3 +39,45 @@ Feature: Test tutorial 405.XACML Rules-based Permissions
     When  I set the "AuthZForce" to a single version of a pap policy set url with the "domainId" and "policyId"
     And   I send a GET HTTP request to that url
     Then  I receive a HTTP "200" response code from AuthZForce with the body "response405-06.xml"
+
+  Scenario: 07 - AuthZForce - Permit access to a resource
+    When  I set the "AuthZForce" to the pdp endpoint url with the "domainId"
+    And   I set the "Content-Type" header with the value "application/xml"
+    And   the body request described in file "request405-07.xml"
+    And   I send a POST HTTP request to that url
+    Then  I receive a HTTP "200" response code from AuthZForce with the body "response405-07.xml"
+
+  Scenario: 08 - AuthZForce - Deny access to a resource
+    When  I set the "AuthZForce" to the pdp endpoint url with the "domainId"
+    And   I set the "Content-Type" header with the value "application/xml"
+    And   the body request described in file "request405-08.xml"
+    And   I send a POST HTTP request to that url
+    Then  I receive a HTTP "200" response code from AuthZForce with the body "response405-08.xml"
+
+  Scenario: 09 - Keystone - User obtain an access token
+    When  I set the "Authorization" header with the value "Basic dHV0b3JpYWwtZGNrci1zaXRlLTAwMDAteHByZXNzd2ViYXBwOnR1dG9yaWFsLWRja3Itc2l0ZS0wMDAwLWNsaWVudHNlY3JldA=="
+    And   I set the "Content-Type" header with the value "application/x-www-form-urlencoded"
+    And   I set the "Accept" header with the value "application/json"
+    And   I set the url to "http://localhost:3005/oauth2/token"
+    And   the data equal to "username=bob-the-manager@test.com&password=test&grant_type=password"
+    And   I send a POST HTTP request to that url
+    Then  I receive a HTTP "200" status code from Keyrock with the following data
+            | access_token | token_type | scope         |
+            | any          | Bearer     | ["permanent"] |
+
+  Scenario: 10 - Keystone - Obtain roles and domain
+    When  I set the user url to obtain roles and domain with the following data
+            | access_token | app_id                               |
+            | access_token | tutorial-dckr-site-0000-xpresswebapp |
+    And   I send a GET HTTP request to that url with no headers
+    Then  I receive a HTTP "200" response code from Keyrock with the body "response405-10.json"
+
+  Scenario: 11 - AuthZForce - Apply a policy to a request
+curl -X POST \
+  http://localhost:8080/authzforce-ce/domains/gQqnLOnIEeiBFQJCrBIBDA/pdp \
+  -H 'Content-Type: application/xml' \
+    When  I set the "AuthZForce" to the pdp endpoint url with the "domainId"
+    And   I set the "Content-Type" header with the value "application/xml"
+    And   the body request described in file "request405-11.xml"
+    And   I send a POST HTTP request to that url
+    Then  I receive a HTTP "200" response code from AuthZForce with the body "response405-11.xml"

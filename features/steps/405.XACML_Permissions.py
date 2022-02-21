@@ -23,6 +23,8 @@ def step_impl(context, entity):
         context.url = f'http://localhost:8080/authzforce-ce/domains/{settings.domainId}'
     elif entity == 'pap policies':
         context.url = f'http://localhost:8080/authzforce-ce/domains/{settings.domainId}/pap/policies'
+    elif entity == 'to the pdp endpoint':
+        context.url = f'http://localhost:8080/authzforce-ce/domains/{settings.domainId}/pdp'
 
 
 @when('I set the "AuthZForce" {entity} url with the "domainId" and "policyId"')
@@ -37,3 +39,15 @@ def step_impl(context, entity):
         context.url = \
             f'http://localhost:8080/authzforce-ce/domains/{settings.domainId}/pap/policies/{settings.papPoliciesId}' \
             f'/{settings.policySetVersion}'
+
+
+@when("I set the user url to obtain roles and domain with the following data")
+def step_impl(context):
+    """
+    :type context: behave.runner.Context
+    """
+    for row in context.table.rows:
+        # | access_token | app_id |
+        valid_response = dict(row.as_dict())
+        app_id = valid_response['app_id']
+        context.url = f'http://localhost:3005/user?access_token={settings.token}&app_id={app_id}&authzforce=true'

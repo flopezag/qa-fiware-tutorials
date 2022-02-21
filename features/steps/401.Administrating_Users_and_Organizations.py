@@ -545,7 +545,7 @@ def step_impl(context, op):
             if context.payload is None:
                 response = post(context.url, headers=context.header)
             else:
-                response = post(context.url,  data=context.payload, headers=context.header)
+                response = post(context.url, data=context.payload, headers=context.header)
         elif op == 'patch':
             if context.payload is None:
                 response = patch(context.url,  headers=context.header)
