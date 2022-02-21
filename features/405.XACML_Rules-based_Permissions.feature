@@ -73,9 +73,6 @@ Feature: Test tutorial 405.XACML Rules-based Permissions
     Then  I receive a HTTP "200" response code from Keyrock with the body "response405-10.json"
 
   Scenario: 11 - AuthZForce - Apply a policy to a request
-curl -X POST \
-  http://localhost:8080/authzforce-ce/domains/gQqnLOnIEeiBFQJCrBIBDA/pdp \
-  -H 'Content-Type: application/xml' \
     When  I set the "AuthZForce" to the pdp endpoint url with the "domainId"
     And   I set the "Content-Type" header with the value "application/xml"
     And   the body request described in file "request405-11.xml"
