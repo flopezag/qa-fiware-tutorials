@@ -1,3 +1,5 @@
+import subprocess
+
 from behave import given, when, then, step
 from config.settings import CODE_HOME
 from os.path import join

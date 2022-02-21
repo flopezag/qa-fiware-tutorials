@@ -74,6 +74,22 @@ class ProcesPiper:
         except Empty:
             return self.q_out.get_nowait()
 
+    def flush(self):
+        try:
+            while self.q_out.get_nowait():
+                pass
+        except Empty:
+            pass
+
+        try:
+            while self.q_err.get_nowait():
+                pass
+        except Empty:
+            pass
+
+    def kill(self):
+        self.proc.kill()
+
 
 @given(u'I set the tutorial 206')
 def step_impl_tutorial_207(context):
@@ -129,6 +145,53 @@ def compare_some_lines_in_terminal(context, name, filename):
 
     assert(context.lines == context.matches)
 
+@step(u'I Compare next lines in terminal {name} at least I can find {n_matches} in {output} with a timeout {timeout} matching filename {filename}')
+def step_impl(context, name,  n_matches, output, timeout, filename):
+    n_matches = int(n_matches)
+    timeout = int(timeout)
+    fn = join(context.data_home, filename)
+    p = terminals[name]
+
+    with open(fn, "r") as f:
+        re_lines = f.readlines( )
+
+    context.matches = 0
+
+    rexps = []
+    for l in re_lines:
+        rexps.append(re.compile(l.rstrip()))
+
+    fclosed = False
+    n_timeout = 0
+
+    while not fclosed:
+        try:
+            if p.poll() is not None:
+                fclosed = True
+                break
+
+            ln = p.get_stdout().rstrip()
+
+            for exp in rexps:
+                if exp.match(ln):
+                    context.matches = context.matches + 1
+                    break
+
+            if context.matches >= n_matches:
+                break
+        except Empty:
+            time.sleep(1)
+            n_timeout = n_timeout + 1
+            if n_timeout > timeout:
+                 break
+
+
+    assert(context.matches >= n_matches)
+
+@when(u'I flush the terminal {name} queues')
+def step_impl(context, name):
+   p = terminals[name]
+   p.flush()
 
 @then(u'All lines must have matched')
 def test_all_lines_in_terminal_matched(context):
@@ -171,3 +234,10 @@ def compare_command_output_to_file(context, filename):
         rexp = re.compile(exp_ln)
         assert(rexp.match(out_ln))
 
+
+@given(u'I kill process in terminal {name}')
+def step_impl(context, name):
+    p = terminals[name]
+    p.kill()
+
+    terminals.pop(name)
