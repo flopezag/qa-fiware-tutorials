@@ -11,4 +11,4 @@ iotAgentId = str()
 
 @given(u'I set the tutorial 406')
 def step_impl_tutorial_203(context):
-    context.data_home = join(join(join(settings.CODE_HOME, "features"), "data"), "405.Administrating_XACML_Rules")
+    context.data_home = join(join(join(settings.CODE_HOME, "features"), "data"), "406.Administrating_XACML_Rules")

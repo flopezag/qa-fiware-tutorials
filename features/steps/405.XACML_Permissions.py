@@ -25,6 +25,8 @@ def step_impl(context, entity):
         context.url = f'http://localhost:8080/authzforce-ce/domains/{settings.domainId}/pap/policies'
     elif entity == 'to the pdp endpoint':
         context.url = f'http://localhost:8080/authzforce-ce/domains/{settings.domainId}/pdp'
+    elif entity == 'pap policies with pdp.properties':
+        context.url = f'http://localhost:8080/authzforce-ce/domains/{settings.domainId}/pap/pdp.properties'
 
 
 @when('I set the "AuthZForce" {entity} url with the "domainId" and "policyId"')
