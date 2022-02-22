@@ -48,7 +48,7 @@ def step_impl(context, var_name, var_value):
     environ[var_name] = join(context.parameters['git-directory'], var_value)
 
 
-@when(u'I exec the script as in the tutorial page')
+@when(u'I run the script as in the tutorial page')
 def step_impl(context):
     res = os.system(context.script_name)
     context.result = res

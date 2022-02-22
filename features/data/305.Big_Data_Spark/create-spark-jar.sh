@@ -1,9 +1,5 @@
 #!/bin/bash
 
-# FIXME -- Just as testing environment
-set > /tmp/fooox
-
-
 mvn install:install-file \
   -Dfile=./orion.spark.connector-1.2.2.jar \
   -DgroupId=org.fiware.cosmos \
@@ -14,5 +10,5 @@ mvn install:install-file \
 
 mvn package
 
-sudo chown  -R jicg.jicg /tmp/tutorial*
 
+sudo chown -R jicg.jicg *

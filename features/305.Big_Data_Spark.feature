@@ -16,7 +16,7 @@ Feature: test tutorial 305.Big Data (Spark)
         Given I prepare the script create-spark-jar.sh to be run
         And   I set the environ variable WORKING_DIR to "cosmos-examples" under git
         And   I set the environ variable OUTPUT_DIR to "cosmos-examples/target" under git
-        When  I exec the script as in the tutorial page
+        When  I run the script as in the tutorial page
         Then  I expect the scripts shows a result of 0
 
     #   LOGGER - READING CONTEXT DATA STREAMS
@@ -25,6 +25,7 @@ Feature: test tutorial 305.Big Data (Spark)
         Given I prepare the script run-spark-jar.sh to be run
         When  I open a new shell terminal spark-run-jar and exec "features/data/305.Big_Data_Spark/run-spark-jar.sh"
         And   I wait "2" seconds
+        Then  everything is ok
 
     # -- Subscribing to Context changes. Request 1
     Scenario: Request 1 - Create a subscription with the Context Broker
@@ -54,12 +55,18 @@ Feature: test tutorial 305.Big Data (Spark)
         | unlock_door.json       | Door:001   | 204            |
 
     # Check the subscrition is done.
+    #
+    # Err -- Assertion Failed: The key lastSuccess was not received in the response.
     Scenario: Request 2 - Test the subscriptions
        When  I prepare a GET HTTP request to "http://localhost:1026/v2/subscriptions/"
        And   I set header fiware-service to openiot
        And   I set header fiware-servicepath to /
        And   I perform the query request
        Then  I receive a HTTP "200" response code from Broker with the body "02.response_305.json" and exclusions "02.excludes"
+       And   The timesSent is bigger than 0
+       And   The lastNotification should be a recent timestamp
+       And   The lastSuccess should match the lastNotification date
+       And   The status is "active"
 
     #  Remember to unlock the Smart Door and switch on the Smart Lamp
     # So I added a couple things before Request 2 to fulfill that requirement.
@@ -69,7 +76,7 @@ Feature: test tutorial 305.Big Data (Spark)
       When  I Compare next lines in terminal spark-run-jar at least I can find 1 in stdout with a timeout 10 matching filename 01.expected_on_terminal.txt
       And   I flush the terminal spark-run-jar queues
 
-    # LOGGER NGSI-DL:
+      # LOGGER NGSI-LD:
     # I guess this should be the same as previous case but for LD. Don't know if I have to do something in
     # between for this to work.
     Scenario: Run the generated jar in Spark using the LoggerLD. This process won't end
@@ -77,6 +84,7 @@ Feature: test tutorial 305.Big Data (Spark)
       And   I wait "10" seconds
       Given I prepare the script run-spark-ld-jar.sh to be run
       When  I open a new shell terminal spark-run-ld-jar and exec "features/data/305.Big_Data_Spark/run-spark-ld-jar.sh"
+      Then  everything is ok
 
 
     # I check the output as I did in previous case, but don't know what to expect here.
@@ -93,6 +101,7 @@ Feature: test tutorial 305.Big Data (Spark)
       Given I prepare the script run-spark-feedback-loop-jar.sh to be run
       When  I open a new shell terminal run-spark-feedback-loop-jar and exec "features/data/305.Big_Data_Spark/run-spark-feedback-loop-jar.sh"
       And   I wait "2" seconds
+      Then  everything is ok
 
     #   FEEDBACK LOOP - PERSISTING CONTEXT DATA
     # Subscrition as in 03
