@@ -10,6 +10,7 @@ from re import search
 from time import sleep
 from sys import stdout
 from os import environ, getcwd
+from config import settings
 
 DEFAULT_TIMEOUT = 5  # seconds
 DEFAULT_RETRIES = 3
@@ -134,3 +135,14 @@ def check_java_version():
         jre_version = int(version.split(".")[1])
 
     return jre_version
+
+
+def set_xml_data(tag):
+    if settings.domainId == '':
+        settings.domainId = tag[0].attributes['href'].value
+    elif settings.papPoliciesId == '':
+        # The 2nd time that I receive resources is to obtain the PAP Policies Id
+        settings.papPoliciesId = tag[0].attributes['href'].value
+    else:
+        # The 3rd time that I receive resources is to obtain the different versions of a policy set
+        settings.policySetVersion = tag[0].attributes['href'].value

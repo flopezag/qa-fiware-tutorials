@@ -10,12 +10,34 @@ Feature: Test tutorial 406.Administrating_XACML_Rules
     Given I set the tutorial 406
 
   Scenario: 01 - Creating a new domain
+    When  I set the url to "http://localhost:8080/authzforce-ce/domains"
+    And   I set the "Content-Type" header with the value "application/xml"
+    And   the body request described in file "request406-01.xml"
+    And   I send a POST HTTP request to that url
+    Then  I receive a HTTP "200" response code from AuthZForce with the body "response406-01.xml"
 
   Scenario: 02 - Request a decision from AuthZForce
+    When  I set the "AuthZForce" to the pdp endpoint url with the "domainId"
+    And   I set the "Content-Type" header with the value "application/xml"
+    And   the body request described in file "request406-02.xml"
+    And   I send a POST HTTP request to that url
+    Then  I receive a HTTP "200" response code from AuthZForce with the body "response406-02.xml"
 
   Scenario: 03 - Creating an initial policy set
+    When  I set the "AuthZForce" pap policies url with the "domainId"
+    And   I set the "Content-Type" header with the value "application/xml"
+    And   the body request described in file "request406-03.xml"
+    And   I send a POST HTTP request to that url
+    Then  I receive a HTTP "200" response code from AuthZForce with the body "response406-03.xml"
 
   Scenario: 04 - Activating the initial policy set
+curl -X PUT \
+  http://localhost:8080/authzforce-ce/domains/{domain-id}/pap/pdp.properties \
+    When  I set the "AuthZForce" pap policies with pdp.properties url with the "domainId"
+    And   I set the "Content-Type" header with the value "application/xml"
+    And   the body request described in file "request406-04.xml"
+    And   I send a PUT HTTP request to that url
+    Then  I receive a HTTP "200" response code from AuthZForce with the body "response406-04.xml"
 
   Scenario: 05 - Request to access to loading in the white zone
 
