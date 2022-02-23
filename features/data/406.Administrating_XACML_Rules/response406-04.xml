@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<ns3:pdpProperties xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" xmlns:ns2="http://authzforce.github.io/pap-dao-flat-file/xmlns/properties/3.6" xmlns:ns3="http://authzforce.github.io/rest-api-model/xmlns/authz/5" xmlns:ns4="http://www.w3.org/2005/Atom" xmlns:ns5="http://authzforce.github.io/core/xmlns/pdp/6.0" lastModifiedTime="2019-01-03T15:54:45.341Z">
-    <ns3:feature type="urn:ow2:authzforce:feature-type:pdp:core" enabled="false">urn:ow2:authzforce:feature:pdp:core:strict-attribute-issuer-match</ns3:feature>
-    <ns3:feature type="urn:ow2:authzforce:feature-type:pdp:core" enabled="false">urn:ow2:authzforce:feature:pdp:core:xpath-eval</ns3:feature>
-... ETC
-    <ns3:rootPolicyRefExpression>f8194af5-8a07-486a-9581-c1f05d05483c</ns3:rootPolicyRefExpression>
-    <ns3:applicablePolicies>
-        <ns3:rootPolicyRef Version="1">f8194af5-8a07-486a-9581-c1f05d05483c</ns3:rootPolicyRef>
-    </ns3:applicablePolicies>
-</ns3:pdpProperties>
+<ns4:pdpProperties xmlns="http://authzforce.github.io/pap-dao-flat-file/xmlns/properties/3.6" xmlns:ns2="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" xmlns:ns3="http://www.w3.org/2005/Atom" xmlns:ns4="http://authzforce.github.io/rest-api-model/xmlns/authz/5" xmlns:ns5="http://authzforce.github.io/core/xmlns/pdp/6.0" lastModifiedTime="2022-02-23T11:21:57.624Z">
+    <ns4:feature type="urn:ow2:authzforce:feature-type:pdp:core" enabled="false">urn:ow2:authzforce:feature:pdp:core:strict-attribute-issuer-match</ns4:feature>
+    <ns4:feature type="urn:ow2:authzforce:feature-type:pdp:core" enabled="false">urn:ow2:authzforce:feature:pdp:core:xpath-eval</ns4:feature>
+    <ns4:feature type="urn:ow2:authzforce:feature-type:pdp:request-preproc" enabled="true">urn:ow2:authzforce:feature:pdp:request-preproc:xacml-xml:default-lax</ns4:feature>
+    <ns4:feature type="urn:ow2:authzforce:feature-type:pdp:request-preproc" enabled="false">urn:ow2:authzforce:feature:pdp:request-preproc:xacml-xml:multiple:repeated-attribute-categories-strict</ns4:feature>
+    <ns4:feature type="urn:ow2:authzforce:feature-type:pdp:request-preproc" enabled="false">urn:ow2:authzforce:feature:pdp:request-preproc:xacml-xml:multiple:repeated-attribute-categories-lax</ns4:feature>
+    <ns4:feature type="urn:ow2:authzforce:feature-type:pdp:request-preproc" enabled="false">urn:ow2:authzforce:feature:pdp:request-preproc:xacml-json:default-strict</ns4:feature>
+    <ns4:feature type="urn:ow2:authzforce:feature-type:pdp:request-preproc" enabled="false">urn:ow2:authzforce:feature:pdp:request-preproc:xacml-xml:default-strict</ns4:feature>
+    <ns4:feature type="urn:ow2:authzforce:feature-type:pdp:request-preproc" enabled="false">urn:ow2:authzforce:feature:pdp:request-preproc:xacml-json:default-lax</ns4:feature>
+    <ns4:feature type="urn:ow2:authzforce:feature-type:pdp:result-postproc" enabled="false">urn:ow2:authzforce:feature:pdp:result-postproc:xacml-xml:default</ns4:feature>
+    <ns4:feature type="urn:ow2:authzforce:feature-type:pdp:result-postproc" enabled="false">urn:ow2:authzforce:feature:pdp:result-postproc:xacml-json:default</ns4:feature>
+    <ns4:rootPolicyRefExpression>f8194af5-8a07-486a-9581-c1f05d05483c</ns4:rootPolicyRefExpression>
+    <ns4:applicablePolicies>
+        <ns4:rootPolicyRef Version="1">f8194af5-8a07-486a-9581-c1f05d05483c</ns4:rootPolicyRef>
+    </ns4:applicablePolicies>
+</ns4:pdpProperties>
