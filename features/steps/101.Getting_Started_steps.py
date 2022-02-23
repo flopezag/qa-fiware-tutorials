@@ -48,8 +48,9 @@ def http_code_is_returned(context, status_code, server, response):
         result = main.diff_texts(want, got, formatter=formatter)
 
         # We have to ignore the uptime, href, and title values of the results
+        excluded_tags = ['lastModifiedTime', 'uptime', 'href', 'title']
         data1 = result.split("\n")
-        data1 = [x for x in data1 if all(y not in x for y in ['uptime', 'href', 'title'])]
+        data1 = [x for x in data1 if all(y not in x for y in excluded_tags)]
         result = '\n'.join(data1)
 
         # Obtain the pretty print xml of the response

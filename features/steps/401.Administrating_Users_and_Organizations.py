@@ -535,7 +535,10 @@ def step_impl(context, op):
 
     try:
         if op == 'put':
-            response = put(context.url, headers=context.header)
+            if context.payload is None:
+                response = put(context.url, headers=context.header)
+            else:
+                response = put(context.url, data=context.payload, headers=context.header)
         elif op == 'get':
             if hasattr(context, 'header'):
                 response = get(context.url, headers=context.header)
