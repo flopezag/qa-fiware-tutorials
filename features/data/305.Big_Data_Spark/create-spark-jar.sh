@@ -9,6 +9,3 @@ mvn install:install-file \
 
 
 mvn package
-
-
-sudo chown -R jicg.jicg *
