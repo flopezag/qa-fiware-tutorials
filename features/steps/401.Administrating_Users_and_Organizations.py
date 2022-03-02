@@ -8,6 +8,7 @@ from features.funtions import read_data_from_file, dict_diff_with_exclusions
 from json import loads, dumps
 from json.decoder import JSONDecodeError
 from requests import get, post, patch, delete, put, RequestException
+from xml.dom import minidom
 
 global adminId
 global userId
@@ -534,14 +535,17 @@ def step_impl(context, op):
         if op == 'put':
             response = put(context.url, headers=context.header)
         elif op == 'get':
-            response = get(context.url, headers=context.header)
+            if hasattr(context, 'header'):
+                response = get(context.url, headers=context.header)
+            else:
+                response = get(context.url)
         elif op == 'delete':
             response = delete(context.url, headers=context.header)
         elif op == 'post':
             if context.payload is None:
                 response = post(context.url, headers=context.header)
             else:
-                response = post(context.url,  data=context.payload, headers=context.header)
+                response = post(context.url, data=context.payload, headers=context.header)
         elif op == 'patch':
             if context.payload is None:
                 response = patch(context.url,  headers=context.header)
@@ -558,7 +562,24 @@ def step_impl(context, op):
     try:
         context.response = response.json()
     except JSONDecodeError:
-        context.response = ""
+        # Tutorial 405 send XML content, we need to parse it
+        context.response = response.text
+        parser = minidom.parseString(response.text)
+        tag = parser.firstChild.tagName
+
+        if 'resources' in tag:
+            # We receive a resource, therefore we extract the domainID from ns2:link
+            tag = parser.firstChild.firstChild.tagName
+            tag = parser.getElementsByTagName(tag)
+
+            if settings.domainId == '':
+                settings.domainId = tag[0].attributes['href'].value
+            elif settings.papPoliciesId == '':
+                # The 2nd time that I receive resources is to obtain the PAP Policies Id
+                settings.papPoliciesId = tag[0].attributes['href'].value
+            else:
+                # The 3rd time that I receive resources is to obtain the different versions of a policy set
+                settings.policySetVersion = tag[0].attributes['href'].value
 
 
 @then('I receive a HTTP "{code}" status code with the same organizationId and userId and role equal to "{role}"')

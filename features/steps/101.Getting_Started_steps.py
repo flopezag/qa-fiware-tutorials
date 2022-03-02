@@ -7,6 +7,8 @@ from json import load
 from deepdiff import DeepDiff
 from config.settings import CODE_HOME
 from sys import stdout
+from xmldiff import main, formatting
+from xml.dom.minidom import parseString
 
 
 @given(u'I set the tutorial 101')
@@ -33,18 +35,42 @@ def http_code_is_returned(context, status_code, server, response):
                 "Response to {} notification has not got the expected HTTP response code: Message: {}"
                 .format(server, context.response))
 
-    file = join(context.data_home, response)
-    with open(file) as f:
-        data = load(f)
+    if server == 'AuthZForce':
+        # We need to parse and check the XML response
+        file = join(context.data_home, response)
+        with open(file) as f:
+            file_content = f.read()
 
-    diff = DeepDiff(data, context.response)
+        formatter = formatting.DiffFormatter()
 
-    if len(diff) != 0:
-        assert_that(diff.to_dict(), is_(dict()),
-                    f'Response from CB has not got the expected HTTP response body:\n  {diff}')
+        want = file_content.replace('\n', '').encode('utf-8')
+        got = context.response.replace('\n', '').encode('utf-8')
+        result = main.diff_texts(want, got, formatter=formatter)
 
-        stdout.write(f'{diff}\n\n')
+        # We have to ignore the uptime value of the results
+        data1 = result.split("\n")
+        data1 = [x for x in data1 if 'uptime' not in x]
+        result = '\n'.join(data1)
 
+        # Obtain the pretty print xml of the response
+        dom = parseString(context.response)  # or xml.dom.minidom.parseString(xml_string)
+        pretty_xml_as_string = dom.toprettyxml()
+
+        assert (result == ''), \
+            f'The XML obtained is not the expected value, ' \
+            f'\nexpected:\n{file_content}\n\nreceived:\n{pretty_xml_as_string}\n\ndifferences:\n{result}\n'
+    else:
+        file = join(context.data_home, response)
+        with open(file) as f:
+            data = load(f)
+
+        diff = DeepDiff(data, context.response)
+
+        if len(diff) != 0:
+            assert_that(diff.to_dict(), is_(dict()),
+                        f'Response from CB has not got the expected HTTP response body:\n  {diff}')
+
+            stdout.write(f'{diff}\n\n')
 
 
 @then(u'I receive a HTTP response with the following data')
