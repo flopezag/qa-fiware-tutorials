@@ -202,9 +202,9 @@ Feature: Test tutorial 402.Managing roles and permissions
   Scenario: 21.2 - Create an organization again
     When  I set the X-Auth-Token header with the previous obtained token
     And   the content-type header key equal to "application/json"
-    And   the body request described in file "request401-09.json"
+    And   the body request described in file "request402-09.json"
     And   I send a POST HTTP request to "http://localhost:3005/v1/organizations"
-    Then  I receive a HTTP "201" status code from Keyrock with the body "response401-09.json" and exclusions "response401-09.excludes"
+    Then  I receive a HTTP "201" status code from Keyrock with the body "response402-21-2.json" and exclusions "response402-21-2.excludes"
 
   Scenario: 21.3 - Create the role again
     When  I set the "X-Auth-Token" header with the value "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"

@@ -9,7 +9,6 @@ from json import loads, dumps
 from json.decoder import JSONDecodeError
 from requests import get, post, patch, delete, put, RequestException
 
-global Token
 global adminId
 global userId
 
@@ -103,8 +102,6 @@ def step_impl(context):
     """
     :type context: behave.runner.Context
     """
-    global Token
-
     for element in context.table.rows:
         valid_response = dict(element.as_dict())
 
@@ -119,10 +116,10 @@ def step_impl(context):
         assert ('X-Subject-Token' in context.responseHeaders), \
             f"Unable to get X-Subject-Token in the header of the response"
 
-        if valid_response['X-Subject-Token'] == "Any":
-            Token = context.responseHeaders['X-Subject-Token']
+        if valid_response['X-Subject-Token'] == "any":
+            settings.token = context.responseHeaders['X-Subject-Token']
         else:
-            Token = valid_response['X-Subject-Token']
+            settings.token = valid_response['X-Subject-Token']
 
         # Check the HTTP response
         body = loads(read_data_from_file(context, valid_response['data']))
@@ -142,8 +139,8 @@ def step_impl(context, url):
     try:
         headers = {
             'Content-Type': 'application/json',
-            'X-Auth-token': Token,
-            'X-Subject-token': Token
+            'X-Auth-token': settings.token,
+            'X-Subject-token': settings.token
         }
 
         response = get(url, headers=headers, verify=False)
@@ -160,7 +157,6 @@ def step_impl(context, url):
 @then(u'I receive a HTTP "{code}" status code from Keyrock with the body "{file}" and exclusions "{excl_file}"')
 def receive_post_iot_dummy_response_with_data(context, code, file, excl_file):
     global adminId
-    global Token
 
     if 'user' in context.response:
         if context.response['user']['username'] == 'alice':
@@ -168,8 +164,8 @@ def receive_post_iot_dummy_response_with_data(context, code, file, excl_file):
     elif 'organization' in context.response:
         settings.organizationId = context.response['organization']['id']
     elif 'access_token' in context.response:
-        assert (context.response['access_token'] == Token), \
-            f"Wrong access_token received, expected {Token}, but received {context.response['access_token']}"
+        assert (context.response['access_token'] == settings.token), \
+            f"Wrong access_token received, expected {settings.token}, but received {context.response['access_token']}"
     elif 'application' in context.response:
         settings.applicationId = context.response['application']['id']
     elif 'permission' in context.response:
@@ -195,8 +191,10 @@ def step_impl(context):
     :type context: behave.runner.Context
     """
     context.payload = {
-        "token": Token
+        "token": settings.token
     }
+
+    context.payload = dumps(context.payload)
 
 
 @step("With the X-Auth-Token header with the previous obtained token")
@@ -206,10 +204,10 @@ def step_impl(context):
     :type context: behave.runner.Context
     """
     try:
-        context.header['X-Auth-Token'] = Token
+        context.header['X-Auth-Token'] = settings.token
     except AttributeError:
         # Context object has no attribute 'header'
-        context.header = {'X-Auth-Token': Token}
+        context.header = {'X-Auth-Token': settings.token}
 
 
 @given("I connect to the MySQL docker instance to grant user with the following data")
@@ -443,7 +441,7 @@ def step_impl(context, op, url, resource):
     elif resource == 'organization':
         url = url + f'/{settings.organizationId}'
     elif resource == 'application':
-        url = url +f'/{settings.applicationId}'
+        url = url + f'/{settings.applicationId}'
 
     op = op.lower()
     try:
@@ -540,9 +538,15 @@ def step_impl(context, op):
         elif op == 'delete':
             response = delete(context.url, headers=context.header)
         elif op == 'post':
-            response = post(context.url,  data=context.payload, headers=context.header)
+            if context.payload is None:
+                response = post(context.url, headers=context.header)
+            else:
+                response = post(context.url,  data=context.payload, headers=context.header)
         elif op == 'patch':
-            response = patch(context.url,  data=context.payload, headers=context.header)
+            if context.payload is None:
+                response = patch(context.url,  headers=context.header)
+            else:
+                response = patch(context.url,  data=context.payload, headers=context.header)
         else:
             raise Exception(f'HTTP operation not allowed or unknown: {op}')
     except RequestException as e:

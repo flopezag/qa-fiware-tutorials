@@ -1,5 +1,5 @@
 Feature: Test tutorial 403.Securing application access
-    This is feature file of the FIWARE step by step tutorial for Managing roles and permissions
+    This is feature file of the FIWARE step by step tutorial for securing application access
     url: https://fiware-tutorials.readthedocs.io/en/latest/securing-access.html
     git-clone: https://github.com/FIWARE/tutorials.Securing-Access.git
     git-directory: /tmp/tutorials.Securing-Access
