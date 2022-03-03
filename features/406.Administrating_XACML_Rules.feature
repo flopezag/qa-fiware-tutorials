@@ -110,24 +110,15 @@ Feature: Test tutorial 406.Administrating_XACML_Rules
     And   I send a POST HTTP request to that url
     Then  I receive a HTTP "200" response code from AuthZForce with the body "response406-14.xml"
 
-  @fail
   Scenario: 15 - Update an XACML permission
-curl -X PATCH \
-  http://localhost:3005/v1/applications/tutorial-dckr-site-0000-xpresswebapp/permissions/alrmbell-ring-24hr-xaml-000000000000 \
-  -H 'Content-Type: application/json' \
-  -H 'X-Auth-token: aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa' \
     When   I set the "Content-Type" header with the value "application/json"
     And    I set the "X-Auth-token" header with the value "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
+    And    the body request described in file "request406-15.json"
     And    I set the url to "http://localhost:3005/v1/applications/tutorial-dckr-site-0000-xpresswebapp/permissions/alrmbell-ring-24hr-xaml-000000000000"
     And    I send a PATCH HTTP request to that url
     Then   I receive a HTTP "200" response code from Keystone with the body "response406-15.json"
 
-  @fail
-  Scenario: 16 - Passing the updated policy set to AuthZForce
-curl -X DELETE \
-  http://localhost:3005/v1/applications/tutorial-dckr-site-0000-xpresswebapp/roles/security-role-0000-0000-000000000000/permissions/alrmbell-ring-24hr-xaml-000000000000 \
-  -H 'Content-Type: application/json' \
-  -H 'X-Auth-token: aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa'
+  Scenario: 16 - Passing the updated policy set to AuthZForce, delete an association
     When   I set the "Content-Type" header with the value "application/json"
     And    I set the "X-Auth-token" header with the value "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
     And    I set the url to "http://localhost:3005/v1/applications/tutorial-dckr-site-0000-xpresswebapp/roles/security-role-0000-0000-000000000000/permissions/alrmbell-ring-24hr-xaml-000000000000"
@@ -135,16 +126,13 @@ curl -X DELETE \
     Then   I receive a HTTP "204" status code response
 
   @fail
-  Scenario: 17 - Recreating the policy set
-curl -X POST \
-  http://localhost:3005/v1/applications/tutorial-dckr-site-0000-xpresswebapp/roles/security-role-0000-0000-000000000000/permissions/alrmbell-ring-24hr-xaml-000000000000 \
-  -H 'Content-Type: application/json' \
-  -H 'X-Auth-token: aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa'
+  Scenario: 17 - Passing the updated policy set to AuthZForce, recreating the policy set
     When   I set the "Content-Type" header with the value "application/json"
     And    I set the "X-Auth-token" header with the value "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
     And    I set the url to "http://localhost:3005/v1/applications/tutorial-dckr-site-0000-xpresswebapp/roles/security-role-0000-0000-000000000000/permissions/alrmbell-ring-24hr-xaml-000000000000"
+    And    I do not specify any payload
     And    I send a POST HTTP request to that url
-    Then   I receive a HTTP "200" response code from Keystone with the body "response406-17.json"
+    Then   I receive a HTTP "201" response code from Keystone with the body "response406-17.json"
 
   Scenario: 18 - Permit access to a resource
     When  I set the "AuthZForce" to the pdp endpoint url with the "domainId"
