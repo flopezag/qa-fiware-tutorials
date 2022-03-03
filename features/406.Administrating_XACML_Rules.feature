@@ -125,7 +125,6 @@ Feature: Test tutorial 406.Administrating_XACML_Rules
     And    I send a DELETE HTTP request to that url
     Then   I receive a HTTP "204" status code response
 
-  @fail
   Scenario: 17 - Passing the updated policy set to AuthZForce, recreating the policy set
     When   I set the "Content-Type" header with the value "application/json"
     And    I set the "X-Auth-token" header with the value "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
