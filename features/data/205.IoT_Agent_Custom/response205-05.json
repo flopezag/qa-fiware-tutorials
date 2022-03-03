@@ -1,0 +1,29 @@
+{
+    "id": "urn:ngsi-ld:Motion:001",
+    "type": "Motion",
+    "TimeInstant": {
+        "type": "ISO8601",
+        "value": "2018-05-25T10:51:32.00Z",
+        "metadata": {}
+    },
+    "count": {
+        "type": "Integer",
+        "value": "3",
+        "metadata": {
+            "TimeInstant": {
+                "type": "ISO8601",
+                "value": "2018-05-25T10:51:32.646Z"
+            }
+        }
+    },
+    "refStore": {
+        "type": "Relationship",
+        "value": "urn:ngsi-ld:Store:001",
+        "metadata": {
+            "TimeInstant": {
+                "type": "ISO8601",
+                "value": "2018-05-25T10:51:32.646Z"
+            }
+        }
+    }
+}
