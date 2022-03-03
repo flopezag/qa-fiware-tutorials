@@ -1,0 +1,10 @@
+{
+    "token": {
+        "methods": ["password"],
+        "expires_at": "2018-07-30T13:02:37.116Z"
+    },
+    "idm_authorization_config": {
+        "level": "basic",
+        "authzforce": false
+    }
+}
