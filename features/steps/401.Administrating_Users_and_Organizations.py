@@ -565,7 +565,10 @@ def step_impl(context, op):
     context.statusCode = str(response.status_code)
 
     try:
-        context.response = response.json()
+        if response.text != '':
+            context.response = response.json()
+        else:
+            context.response = ''
     except JSONDecodeError:
         # Tutorial 405 send XML content, we need to parse it
         context.response = response.text
