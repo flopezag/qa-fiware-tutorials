@@ -23,7 +23,7 @@ Feature: test tutorial 305.Big Data (Spark)
     # - Logger - Installing the JAR
     Scenario: Run the generated jar in Spark. This process won't end
         Given I prepare the script run-spark-jar.sh to be run
-        When  I open a new shell terminal spark-run-jar and exec "features/data/305.Big_Data_Spark/run-spark-jar.sh"
+        When  I open a new shell terminal spark-run-jar and run "features/data/305.Big_Data_Spark/run-spark-jar.sh"
         And   I wait "2" seconds
         Then  everything is ok
 
@@ -83,7 +83,7 @@ Feature: test tutorial 305.Big Data (Spark)
       Given I kill process in terminal spark-run-jar
       And   I wait "10" seconds
       Given I prepare the script run-spark-ld-jar.sh to be run
-      When  I open a new shell terminal spark-run-ld-jar and exec "features/data/305.Big_Data_Spark/run-spark-ld-jar.sh"
+      When  I open a new shell terminal spark-run-ld-jar and run "features/data/305.Big_Data_Spark/run-spark-ld-jar.sh"
       Then  everything is ok
 
 
@@ -99,7 +99,7 @@ Feature: test tutorial 305.Big Data (Spark)
       Given I kill process in terminal spark-run-ld-jar
       And   I wait "10" seconds
       Given I prepare the script run-spark-feedback-loop-jar.sh to be run
-      When  I open a new shell terminal run-spark-feedback-loop-jar and exec "features/data/305.Big_Data_Spark/run-spark-feedback-loop-jar.sh"
+      When  I open a new shell terminal run-spark-feedback-loop-jar and run "features/data/305.Big_Data_Spark/run-spark-feedback-loop-jar.sh"
       And   I wait "2" seconds
       Then  everything is ok
 

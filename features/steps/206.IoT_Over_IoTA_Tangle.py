@@ -15,7 +15,7 @@ def step_impl_tutorial_207(context):
     context.data_home = join(join(join(CODE_HOME, "features"), "data"), "206.IoT_Over_IoTA_Tangle")
 
 
-@when(u'I open a new shell terminal {name} and exec "{command}"')
+@when(u'I open a new shell terminal {name} and run "{command}"')
 def open_a_new_terminal(context, name, command):
     p = ProcesPiper(command, name)
     terminals[name] = p
@@ -117,7 +117,7 @@ def test_all_lines_in_terminal_matched(context):
     assert(context.lines == context.matches)
 
 
-@when(u'I exec the shell command "{command}"')
+@when(u'I run the shell command "{command}"')
 def exec_shell_command(context, command):
     p = subprocess.Popen(command, stderr=subprocess.PIPE, shell=True)
 
