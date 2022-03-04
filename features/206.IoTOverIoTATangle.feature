@@ -40,11 +40,11 @@ Feature: Test tutorial 207.IoT over IOTA tangle
       And   I wait "1" seconds
 
     Scenario: 02.prev - Terminal for iota gateway
-        When  I open a new shell terminal iota-gateway and exec "docker logs -f iota-gateway"
+        When  I open a new shell terminal iota-gateway and run "docker logs -f iota-gateway"
         Then  everything is ok
 
     Scenario: 02.prev - Terminal for iota gateway
-        When  I open a new shell terminal fiware-tutorial and exec "docker logs -f fiware-tutorial"
+        When  I open a new shell terminal fiware-tutorial and run "docker logs -f fiware-tutorial"
         Then  everything is ok
 
      Scenario: 02.1 - Check stderr logs from iota-gateway
