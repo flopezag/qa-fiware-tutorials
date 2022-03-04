@@ -540,10 +540,18 @@ def step_impl(context, op):
             else:
                 response = put(context.url, data=context.payload, headers=context.header)
         elif op == 'get':
+            kwargs = dict()
             if hasattr(context, 'header'):
-                response = get(context.url, headers=context.header)
-            else:
-                response = get(context.url)
+                kwargs['headers'] = context.header
+
+            if hasattr(context, 'params'):
+                kwargs['params'] = context.params
+
+            response = get(url=context.url, **kwargs)
+            #if hasattr(context, 'header'):
+            #    response = get(context.url, headers=context.header)
+            #else:
+            #    response = get(context.url)
         elif op == 'delete':
             response = delete(context.url, headers=context.header)
         elif op == 'post':
