@@ -1,0 +1,20 @@
+{
+    "id": "urn:ngsi-ld:Building:store005",
+    "type": "ビル",
+    "カテゴリー": {"type": "Property", "value": ["コマーシャル"]},
+    "住所": {
+        "type": "Property",
+        "value": {
+            "streetAddress": "Eisenacher Straße 98",
+            "addressRegion": "Berlin",
+            "addressLocality": "Marzahn",
+            "postalCode": "12685"
+        }
+    },
+    "場所": {
+        "type": "GeoProperty",
+        "value": {"type": "Point","coordinates": [13.5646, 52.5435]}
+    },
+    "名前": {"type": "Property","value": "Yuusui-en"},
+    "@context":"https://fiware.github.io/tutorials.Step-by-Step/japanese-context.jsonld"
+}

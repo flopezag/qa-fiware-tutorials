@@ -26,3 +26,12 @@ def step_impl(context, params):
         context.params = dict()
 
     context.params[params[0]] = params[1]
+
+
+@step('I encode this body in "{codec}"')
+def step_impl(context, codec):
+    """
+    :type context: behave.runner.Context
+    """
+    if hasattr(context, 'payload'):
+        context.payload = context.payload.encode(codec)
