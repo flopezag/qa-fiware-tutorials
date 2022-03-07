@@ -1,0 +1,23 @@
+{
+  "devices": [
+    {
+      "device_id": "door001",
+      "entity_name": "urn:ngsi-ld:Door:001",
+      "entity_type": "Door",
+      "protocol": "PDI-IoTA-UltraLight",
+      "transport": "MQTT",
+      "commands": [
+        {"name": "unlock","type": "command"},
+        {"name": "open","type": "command"},
+        {"name": "close","type": "command"},
+        {"name": "lock","type": "command"}
+       ],
+       "attributes": [
+        {"object_id": "s", "name": "state", "type":"Text"}
+       ],
+       "static_attributes": [
+         {"name":"refStore", "type": "Relationship","value": "urn:ngsi-ld:Store:001"}
+       ]
+    }
+  ]
+}

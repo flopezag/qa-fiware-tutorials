@@ -11,6 +11,7 @@ from time import sleep
 from sys import stdout
 from os import environ, getcwd
 from config import settings
+import json
 
 DEFAULT_TIMEOUT = 5  # seconds
 DEFAULT_RETRIES = 3
@@ -135,7 +136,6 @@ def check_java_version():
         jre_version = int(version.split(".")[1])
 
     return jre_version
-
 
 def set_xml_data(tag):
     if settings.domainId == '':
