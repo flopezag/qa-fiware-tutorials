@@ -157,8 +157,8 @@ def step_impl(context, url):
     context.statusCode = str(response.status_code)
 
 
-@then(u'I receive a HTTP "{code}" status code from Keyrock with the body "{file}" and exclusions "{excl_file}"')
-def receive_post_iot_dummy_response_with_data(context, code, file, excl_file):
+@then(u'I receive a HTTP "{code}" status code from {server} with the body "{file}" and exclusions "{excl_file}"')
+def receive_post_iot_dummy_response_with_data(context, code, server, file, excl_file):
     global adminId
 
     if 'user' in context.response:
