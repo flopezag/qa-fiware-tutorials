@@ -1,0 +1,1 @@
+\(Sensor\((Bell|Door|Motion|Lamp)\),[0-9]+\)

@@ -1,0 +1,45 @@
+{
+ "services": [
+   {
+     "apikey":      "1068318794",
+     "cbroker":     "http://orion:1026",
+     "entity_type": "Motion",
+     "resource":    "",
+     "protocol":    "PDI-IoTA-UltraLight",
+     "transport":   "MQTT",
+     "timezone":    "Europe/Berlin",
+     "attributes": [
+        {"object_id": "c", "name":"count", "type":"Integer"},
+        {"object_id": "t", "name": "TimeInstant", "type":"DateTime"}
+      ],
+      "static_attributes": [
+          {"name": "category", "type":"Text", "value": ["sensor"]},
+          {"name": "controlledProperty", "type": "Text", "value": "motion"},
+          {"name": "function", "type": "Text", "value":["sensing"]},
+          {"name": "supportedProtocol", "type": "Text", "value": ["ul20"]},
+          {"name": "supportedUnits", "type": "Text", "value": "C62"}
+      ]
+   },
+   {
+     "apikey":      "3020035",
+     "cbroker":     "http://orion:1026",
+     "entity_type": "Bell",
+     "resource":    "",
+     "protocol":    "PDI-IoTA-UltraLight",
+     "transport":   "MQTT",
+     "timezone":    "Europe/Berlin",
+     "commands": [
+        {
+          "name": "ring",
+          "type": "command"
+        }
+      ],
+      "static_attributes": [
+          {"name": "category", "type":"Text", "value": ["actuator"]},
+          {"name": "controlledProperty", "type": "Text", "value": "noiseLevel"},
+          {"name": "function", "type": "Text", "value":["onOff"]},
+          {"name": "supportedProtocol", "type": "Text", "value": ["ul20"]}
+      ]
+   }
+ ]
+}

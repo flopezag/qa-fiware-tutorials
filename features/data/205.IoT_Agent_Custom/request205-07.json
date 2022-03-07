@@ -1,0 +1,13 @@
+{
+    "actionType": "update",
+    "entities": [
+        {
+            "type": "Bell",
+            "id": "urn:ngsi-ld:Bell:001",
+            "ring" : {
+                "type": "command",
+                "value": ""
+            }
+        }
+    ]
+}

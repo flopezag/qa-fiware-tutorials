@@ -1,0 +1,12 @@
+{
+    "id": "urn:ngsi-ld:Motion:001",
+    "type": "Motion",
+    "TimeInstant": "2021-12-07T16:34:44.891Z",
+    "category": ["sensor"],
+    "controlledProperty": "motion",
+    "count": "0",
+    "function": ["sensing"],
+    "refStore": "urn:ngsi-ld:Store:001",
+    "supportedProtocol": ["ul20"],
+    "supportedUnits": "C62"
+}
