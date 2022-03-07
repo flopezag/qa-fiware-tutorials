@@ -1,4 +1,4 @@
-from behave import given, when, step
+from behave import given, step
 from os.path import join
 from config import settings
 

@@ -1,9 +1,9 @@
-Feature: Test tutorial 603.Traversing_Linked_Data (Orion)
-  This is feature file of the FIWARE step by step tutorial for Traversing Linked Data (Orion)
+Feature: Test tutorial 603.Traversing_Linked_Data (Stellio)
+  This is feature file of the FIWARE step by step tutorial for Traversing Linked Data (Stellio)
   url: https://fiware-tutorials.readthedocs.io/en/latest/open-id-connect.html
   git-clone: https://github.com/FIWARE/tutorials.Working-with-Linked-Data.git
   git-directory: /tmp/tutorials.Working-with-Linked-Data
-  shell-commands: ./services create; ./services orion
+  shell-commands: ./services create; ./services stellio
   clean-shell-commands: ./services stop
 
   Background:
