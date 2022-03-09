@@ -32,8 +32,8 @@ representation of it.
 |   |-- environment.py
 |   |-- *.feature
 |   |-- data
-|       |-- 101.Getting_started
-|       |-- 102.Entity_Relationships
+|   |   |-- 101.Getting_started
+|   |   |-- 102.Entity_Relationships
 |   `-- steps
 |       `-- *_steps.py
 `-- [behave.ini]
@@ -111,6 +111,13 @@ behave features/102.Entity_Relationships.feature
 ```
 
 will execute just the steps corresponding to the Tutorial 102 feature.
+
+In case that you want to execute only the failing scenarios you can execute the following
+command:
+
+```bash
+behave --tags=fail features/102.Entity_Relationships.feature 
+```
 
 [Top](#top)
 
