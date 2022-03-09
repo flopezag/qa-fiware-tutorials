@@ -88,8 +88,8 @@ process is only about the python dependencies, because the python code do not ne
 installation.
 
 1. Clone this repository.
-2. Create the virtualenv: `virtualenv -ppython3.9 venv`          (depa\'s laptop --> python3 -m virtualenv .venv)
-3. Activate the python environment: `source ./venv/bin/activate` (depa\'s laptop --> source .venv/bin/activate)
+2. Create the virtualenv: `virtualenv -ppython3.9 venv`
+3. Activate the python environment: `source ./venv/bin/activate`
 5. Install the requirements: `pip install -r requirements.txt
 
 [Top](#top)

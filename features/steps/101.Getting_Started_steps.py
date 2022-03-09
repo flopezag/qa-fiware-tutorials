@@ -42,7 +42,7 @@ def http_code_is_returned(context, status_code, response):
     stdout.write(f'{diff}\n\n')
 
     assert_that(diff.to_dict(), is_(dict()),
-                f'(depa) Response from CB test execution does not match the tutorial expected HTTP response body:\n  {diff}')
+                f'Response from CB test execution does not match the tutorial expected HTTP response body:\n  {diff}')
 
 
 @when(u'I send POST HTTP request to "{url}"')
