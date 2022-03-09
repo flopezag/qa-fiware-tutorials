@@ -1,4 +1,4 @@
-import os
+import subprocess
 
 from deepdiff import DeepDiff
 from os.path import join
@@ -9,6 +9,9 @@ from datetime import datetime, timezone, timedelta
 from re import search
 from time import sleep
 from sys import stdout
+from os import environ, getcwd
+from config import settings
+import json
 
 DEFAULT_TIMEOUT = 5  # seconds
 DEFAULT_RETRIES = 3
@@ -45,7 +48,7 @@ retry_strategy = Retry(
     total=DEFAULT_RETRIES,
     status_forcelist=[429, 500, 502, 503, 504],
     backoff_factor=1,
-    method_whitelist=["HEAD", "GET", "OPTIONS"]
+    allowed_methods=["HEAD", "GET", "OPTIONS"]
 )
 
 http = Session()
@@ -115,3 +118,32 @@ def check_cratedb_health_status(url, headers):
             # wait 1 second and try again
             sleep(1)
             continue
+
+
+def check_java_version():
+    # JRE MUST be 8, version is in the format 1.x.y_z, where x is the version of the JRE
+    jre_version = 0
+
+    command = "java -version"
+
+    my_env = environ.copy()
+    temp = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, env=my_env)
+
+    if temp.returncode == 0 or temp.returncode is None:  # is 0 or None if success
+        (output, stderr) = temp.communicate()
+
+        version = str(stderr).split('\\n')[0].split(" ")[2].replace("\"", "")
+        jre_version = int(version.split(".")[1])
+
+    return jre_version
+
+
+def set_xml_data(tag):
+    if settings.domainId == '':
+        settings.domainId = tag[0].attributes['href'].value
+    elif settings.papPoliciesId == '':
+        # The 2nd time that I receive resources is to obtain the PAP Policies Id
+        settings.papPoliciesId = tag[0].attributes['href'].value
+    else:
+        # The 3rd time that I receive resources is to obtain the different versions of a policy set
+        settings.policySetVersion = tag[0].attributes['href'].value

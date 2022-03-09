@@ -62,6 +62,10 @@ def before_feature(context, feature):
     stdout.write("=========== START FEATURE ===========\n")
     stdout.write(f'Feature name: {feature.name}\n\n')
 
+    # 1st: We need to take an overview of the current docker network configuration
+    # os.system("docker network ls -q")
+    context.dockerNetworkList = [x.id for x in docker.network.list()]
+
     p = [s for s in feature.description if is_interesting_feature_string(s)]
 
     parameters = {}
@@ -131,7 +135,15 @@ def after_feature(context, feature):
         stdout.write(f'\nDeleting temporal folder...\n')
         rmtree(context.parameters['git-directory'])
 
+    # Cleaning docker network
+    current_status = [x.id for x in docker.network.list()]
+    new_docker_network_id = [x for x in current_status if x not in context.dockerNetworkList]
+
+    if new_docker_network_id != []:
+        stdout.write(f'\nDeleting Docker Network...\n')
+        docker.network.remove(new_docker_network_id)
+
 
 def after_all(context):
-    __logger__.info("... END  :)")
-    stdout.write(f'... END  :)\n')
+    __logger__.info("\n... END  :)")
+    stdout.write(f'\n... END  :)\n')

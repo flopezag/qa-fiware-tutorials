@@ -19,119 +19,191 @@ Feature: test tutorial 202.Introduction to IoT Agent Ultralight
         Then  I receive a HTTP "200" response code from IoTAgent with the body "response202-01.json" and exclusions "01.excludes"
 
     Scenario: 02 - Provisioning a Service Group
-        When  I send POST HTTP request to "http://localhost:4041/iot/services"
-        And  With body request and headers described in file "request202-02.json" and headers fiware-service "openiot" and fiware-servicepath "/"
-        Then  I receive an HTTP response with the code "201" and empty dict
+        When  I prepare a POST HTTP request to "http://localhost:4041/iot/services"
+        And   I set header fiware-service to openiot
+        And   I set header fiware-servicepath to /
+        And   I set the body request as described in request202-02.json
+        And   I perform the request
+        Then  I receive a HTTP response with status 201 and empty dict
 
     Scenario: 03 - Provisioning a Sensor
-        When  I send POST HTTP request to "http://localhost:4041/iot/devices"
-        And  With body request and headers described in file "request202-03.json" and headers fiware-service "openiot" and fiware-servicepath "/"
-        Then  I receive an HTTP response with the code "201" and empty dict
+        When  I prepare a POST HTTP request to "http://localhost:4041/iot/devices"
+        And   I set header fiware-service to openiot
+        And   I set header fiware-servicepath to /
+        And   I set the body request as described in request202-03.json
+        And   I perform the request
+        Then  I receive a HTTP response with status 201 and empty dict
 
     Scenario: 04 - Simulate dummy IoT device measurement coming from the Motion Sensor
-        When  I send POST HTTP IoT dummy request to "http://localhost:7896/iot/d?k=4jggokgpepnvsb2uv4s40d59ov&i=motion001"
-        And   With dummy body request in file "request202-04.txt"
-        Then  I receive a HTTP "200" IoT response from dummy device
+        When  I prepare a POST HTTP request to "http://localhost:7896/iot/d?k=4jggokgpepnvsb2uv4s40d59ov&i=motion001"
+        And   I set the body request as described in request202-04.txt
+        And   I set header Content-Type to text/plain
+        And   I perform the request
+        Then  I simply receive a HTTP response with status 200
+        And   I wait "1" seconds
 
     Scenario: 05 - A measurement has been recorded, by retrieving the entity data from the context broker
-        When  I send IoT "GET" HTTP request with data to "http://localhost:1026/v2/entities/urn:ngsi-ld:Motion:001" With headers fiware-service "openiot" and fiware-servicepath "/" and data is "request202-05.json"
+        When  I prepare a GET HTTP request to "http://localhost:1026/v2/entities/urn:ngsi-ld:Motion:001"
+        And   I set header fiware-service to openiot
+        And   I set header fiware-servicepath to /
+        And   I set the body request as described in request202-05.json
+        And   I perform the query request
         Then  I receive a HTTP "200" response code from Broker with the body "response202-05.json" and exclusions "05.excludes"
 
     Scenario: 06 - Provisioning an actuator via command
-        When  I send POST HTTP request to "http://localhost:4041/iot/devices"
-        And  With body request and headers described in file "request202-06.json" and headers fiware-service "openiot" and fiware-servicepath "/"
-        Then  I receive an HTTP response with the code "201" and empty dict
+        When  I prepare a POST HTTP request to "http://localhost:4041/iot/devices"
+        And   I set header fiware-service to openiot
+        And   I set header fiware-servicepath to /
+        And   I set the body request as described in request202-06.json
+        And   I perform the request
+        Then  I receive a HTTP response with status 201 and empty dict
 
     Scenario: 07 - Provisioning an actuator via a bidirectional attribute
-        When  I send POST HTTP request to "http://localhost:4041/iot/devices"
-        And  With body request and headers described in file "request202-07.json" and headers fiware-service "openiot" and fiware-servicepath "/"
-        Then  I receive an HTTP response with the code "201" and empty dict
+        When  I prepare a POST HTTP request to "http://localhost:4041/iot/devices"
+        And   I set header fiware-service to openiot
+        And   I set header fiware-servicepath to /
+        And   I set the body request as described in request202-07.json
+        And   I perform the request
+        Then  I receive a HTTP response with status 201 and empty dict
 
     Scenario: 08 - Testing a command before Wire-up the Context Broker
-        When  I send POST HTTP request to "http://localhost:4041/v2/op/update"
-        And   With body request and headers described in file "request202-08.json" and headers fiware-service "openiot" and fiware-servicepath "/"
-        Then  I receive an HTTP response with the code "204" and empty dict
+        When  I prepare a POST HTTP request to "http://localhost:4041/v2/op/update"
+        And   I set header fiware-service to openiot
+        And   I set header fiware-servicepath to /
+        And   I set the body request as described in request202-08.json
+        And   I perform the request
+        Then  I receive a HTTP response with status 204 and empty dict
         And   I wait "1" seconds
 
     Scenario: 09 - The result of the command to ring the bell can be read by querying the entity within the Orion Context Broker.
-        When  I send IoT "GET" HTTP request with data to "http://localhost:1026/v2/entities/urn:ngsi-ld:Bell:001" With headers fiware-service "openiot" and fiware-servicepath "/" and data is "request202-09.json"
+        When  I prepare a GET HTTP request to "http://localhost:1026/v2/entities/urn:ngsi-ld:Bell:001"
+        And   I set header fiware-service to openiot
+        And   I set header fiware-servicepath to /
+        And   I set the body request as described in request202-09.json
+        And   I perform the query request
         Then  I receive a HTTP "200" response code from Broker with the body "response202-09.json" and exclusions "09.excludes"
 
     Scenario: 10 - Provisioning a Smart Door
-        When  I send POST HTTP request to "http://localhost:4041/iot/devices"
-        And  With body request and headers described in file "request202-10.json" and headers fiware-service "openiot" and fiware-servicepath "/"
-        Then  I receive an HTTP response with the code "201" and empty dict
+        When  I prepare a POST HTTP request to "http://localhost:4041/iot/devices"
+        And   I set header fiware-service to openiot
+        And   I set header fiware-servicepath to /
+        And   I set the body request as described in request202-10.json
+        And   I perform the request
+        Then  I receive a HTTP response with status 201 and empty dict
 
     Scenario: 11 - Provisioning a Smart Lamp
-        When  I send POST HTTP request to "http://localhost:4041/iot/devices"
-        And  With body request and headers described in file "request202-11.json" and headers fiware-service "openiot" and fiware-servicepath "/"
-        Then  I receive an HTTP response with the code "201" and empty dict
+        When  I prepare a POST HTTP request to "http://localhost:4041/iot/devices"
+        And   I set header fiware-service to openiot
+        And   I set header fiware-servicepath to /
+        And   I set the body request as described in request202-11.json
+        And   I perform the request
+        Then  I receive a HTTP response with status 201 and empty dict
 
     Scenario: 12 - The result of the command to ring the bell can be read by querying the entity within the Orion Context Broker.
-        When  I send IoT "GET" HTTP request with data to "http://localhost:4041/iot/devices" With headers fiware-service "openiot" and fiware-servicepath "/" and data is "request202-12.json"
-        Then  I receive a HTTP "200" response code from IoTAgent with the body "response202-12.json" and exclusions "12.excludes"
+        When  I prepare a GET HTTP request to "http://localhost:4041/iot/devices"
+        And   I set header fiware-service to openiot
+        And   I set header fiware-servicepath to /
+        And   I set the body request as described in request202-12.json
+        And   I perform the query request
+        Then  I receive a HTTP "200" response code from Broker with the body "response202-12.json" and exclusions "12.excludes"
 
     Scenario: 13 - Ringing the Bell
-        When  I send POST HTTP request to "http://localhost:1026/v2/entities/urn:ngsi-ld:Bell:001/attrs"
-        And  using "PATCH" HTTP method
-        And  With body request and headers described in file "request202-13.json" and headers fiware-service "openiot" and fiware-servicepath "/"
-        Then  I receive an HTTP response with the code "204" and empty dict
+        When  I prepare a POST HTTP request to "http://localhost:1026/v2/entities/urn:ngsi-ld:Bell:001/attrs"
+        And   I set header fiware-service to openiot
+        And   I set header fiware-servicepath to /
+        And   I set the body request as described in request202-13.json
+        And   I perform the request
+        Then  I receive a HTTP response with status 204 and empty dict
 
     Scenario: 14 - Opening a Smart Door
-        When  I send POST HTTP request to "http://localhost:1026/v2/entities/urn:ngsi-ld:Door:001/attrs"
-        And  using "PATCH" HTTP method
-        And  With body request and headers described in file "request202-14.json" and headers fiware-service "openiot" and fiware-servicepath "/"
-        Then  I receive an HTTP response with the code "204" and empty dict
+        When  I prepare a POST HTTP request to "http://localhost:1026/v2/entities/urn:ngsi-ld:Door:001/attrs"
+        And   I set header fiware-service to openiot
+        And   I set header fiware-servicepath to /
+        And   I set the body request as described in request202-14.json
+        And   I perform the request
+        Then  I receive a HTTP response with status 204 and empty dict
 
     Scenario: 14bis - Switching on the smart lamp
-        When  I send POST HTTP request to "http://localhost:1026/v2/entities/urn:ngsi-ld:Lamp:001/attrs"
-        And  using "PATCH" HTTP method
-        And  With body request and headers described in file "request202-14bis.json" and headers fiware-service "openiot" and fiware-servicepath "/"
-        Then  I receive an HTTP response with the code "204" and empty dict
+        When  I prepare a POST HTTP request to "http://localhost:1026/v2/entities/urn:ngsi-ld:Lamp:001/attrs"
+        And   I set header fiware-service to openiot
+        And   I set header fiware-servicepath to /
+        And   I set the body request as described in request202-14bis.json
+        And   I perform the request
+        Then  I receive a HTTP response with status 204 and empty dict
 
     Scenario: 15 - Creating a Service Group
-        When  I send POST HTTP request to "http://localhost:4041/iot/services"
-        And  With body request and headers described in file "request202-15.json" and headers fiware-service "openiot" and fiware-servicepath "/"
-        Then  I receive an HTTP response with the code "201" and empty dict
+        When  I prepare a POST HTTP request to "http://localhost:4041/iot/services"
+        And   I set header fiware-service to openiot
+        And   I set header fiware-servicepath to /
+        And   I set the body request as described in request202-15.json
+        And   I perform the request
+        Then  I receive a HTTP response with status 201 and empty dict
         And   I wait "1" seconds
-
+#
     Scenario: 16 - Read the service group details
-        When  I send IoT "GET" HTTP request with data to "http://localhost:4041/iot/services" With headers fiware-service "openiot" and fiware-servicepath "/" and data is "request202-16.json"
-        Then  I receive a HTTP "200" response code from IoTAgent with the body "response202-16.json" and exclusions "16.excludes"
+        When  I prepare a GET HTTP request to "http://localhost:4041/iot/services"
+        And   I set header fiware-service to openiot
+        And   I set header fiware-servicepath to /
+        And   I set the body request as described in request202-16.json
+        And   I perform the query request
+        Then  I receive a HTTP "200" response code from Broker with the body "response202-16.json" and exclusions "16.excludes"
 
     Scenario: 17 - List all service groups
-        When  I send IoT "GET" HTTP request with data to "http://localhost:4041/iot/services" With headers fiware-service "openiot" and fiware-servicepath "/" and data is "request202-17.json"
-        Then  I receive a HTTP "200" response code from IoTAgent with the body "response202-17.json" and exclusions "17.excludes"
+        When  I prepare a GET HTTP request to "http://localhost:4041/iot/services"
+        And   I set header fiware-service to openiot
+        And   I set header fiware-servicepath to /
+        And   I set the body request as described in request202-17.json
+        And   I perform the query request
+        Then  I receive a HTTP "200" response code from Broker with the body "response202-17.json" and exclusions "17.excludes"
 
     Scenario: 18 - Update a Service Group
-        When  I send POST HTTP request to "http://localhost:4041/iot/services?resource=/iot/d&apikey=4jggokgpepnvsb2uv4s40d59ov"
-        And  using "PUT" HTTP method
-        And  With body request and headers described in file "request202-18.json" and headers fiware-service "openiot" and fiware-servicepath "/"
-        Then  I receive an HTTP response with the code "204" and empty dict
+        When  I prepare a PUT HTTP request to "http://localhost:4041/iot/services?resource=/iot/d&apikey=4jggokgpepnvsb2uv4s40d59ov"
+        And   I set header fiware-service to openiot
+        And   I set header fiware-servicepath to /
+        And   I set the body request as described in request202-18.json
+        And   I perform the request
+        Then  I receive a HTTP response with status 204 and empty dict
 
     Scenario: 19 - Delete a Service Group
-        When  I send IoT "DELETE" HTTP request with data to "http://localhost:4041/iot/services/?resource=/iot/d&apikey=4jggokgpepnvsb2uv4s40d59ov" With headers fiware-service "openiot" and fiware-servicepath "/" and data is "request202-empty.json"
-        Then  I receive an HTTP response with the code "204" and empty dict
+        When  I prepare a DELETE HTTP request to "http://localhost:4041/iot/services/?resource=/iot/d&apikey=4jggokgpepnvsb2uv4s40d59ov"
+        And   I set header fiware-service to openiot
+        And   I set header fiware-servicepath to /
+        And   I perform the query request
+        Then  I receive a HTTP response with status 204 and empty dict
 
     Scenario: 20 - Creating a Provisioned Device
-        When  I send POST HTTP request to "http://localhost:4041/iot/devices"
-        And  With body request and headers described in file "request202-20.json" and headers fiware-service "openiot" and fiware-servicepath "/"
-        Then  I receive an HTTP response with the code "201" and empty dict
+        When  I prepare a PUT HTTP request to "http://localhost:4041/iot/devices"
+        And   I set header fiware-service to openiot
+        And   I set header fiware-servicepath to /
+        And   I set the body request as described in request202-20.json
+        And   I perform the request
+        Then  I receive a HTTP response with status 201 and empty dict
 
     Scenario: 21 - Read the provisioned device details
-        When  I send IoT "GET" HTTP request with data to "http://localhost:4041/iot/devices/bell002" With headers fiware-service "openiot" and fiware-servicepath "/" and data is "request202-12.json"
-        Then  I receive a HTTP "200" response code from IoTAgent with the body "response202-21.json" and exclusions "21.excludes"
+        When  I prepare a GET HTTP request to "http://localhost:4041/iot/devices/bell002"
+        And   I set header fiware-service to openiot
+        And   I set header fiware-servicepath to /
+        And   I perform the query request
+        Then  I receive a HTTP "200" response code from Broker with the body "response202-21.json" and exclusions "21.excludes"
 
     Scenario: 22 - List all provisioned devices
-        When  I send IoT "GET" HTTP request with data to "http://localhost:4041/iot/devices" With headers fiware-service "openiot" and fiware-servicepath "/" and data is "request202-empty.json"
+        When  I prepare a GET HTTP request to "http://localhost:4041/iot/devices"
+        And   I set header fiware-service to openiot
+        And   I set header fiware-servicepath to /
+        And   I perform the query request
         Then  I receive a HTTP "200" response code from IoTAgent with the body "response202-22.json" and exclusions "22.excludes"
 
     Scenario: 23 - Update a Provisioned Device
-        When  I send POST HTTP request to "http://localhost:4041/iot/devices/bell002"
-        And  using "PUT" HTTP method
-        And  With body request and headers described in file "request202-23.json" and headers fiware-service "openiot" and fiware-servicepath "/"
-        Then  I receive an HTTP response with the code "204" and empty dict
+        When  I prepare a PUT HTTP request to "http://localhost:4041/iot/devices/bell002"
+        And   I set header fiware-service to openiot
+        And   I set header fiware-servicepath to /
+        And   I set the body request as described in request202-23.json
+        And   I perform the request
+        Then  I receive a HTTP response with status 204 and empty dict
 
     Scenario: 24 - Delete a Provisioned Device
-        When  I send IoT "DELETE" HTTP request with data to "http://localhost:4041/iot/devices/bell002" With headers fiware-service "openiot" and fiware-servicepath "/" and data is "request202-empty.json"
-        Then  I receive an HTTP response with the code "204" and empty dict
+        When  I prepare a DELETE HTTP request to "http://localhost:4041/iot/devices/bell002"
+        And   I set header fiware-service to openiot
+        And   I set header fiware-servicepath to /
+        And   I perform the query request
+        Then  I receive a HTTP response with status 204 and empty dict

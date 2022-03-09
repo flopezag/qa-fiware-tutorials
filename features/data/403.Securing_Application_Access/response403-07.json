@@ -1,0 +1,19 @@
+{
+    "organizations": [],
+    "displayName": "",
+    "roles": [
+        {
+            "id": "managers-role-0000-0000-000000000000",
+            "name": "Management"
+        }
+    ],
+    "app_id": "tutorial-dckr-site-0000-xpresswebapp",
+    "trusted_apps": [],
+    "isGravatarEnabled": false,
+    "email": "bob-the-manager@test.com",
+    "id": "bbbbbbbb-good-0000-0000-000000000000",
+    "authorization_decision": "Permit",
+    "app_azf_domain": "",
+    "username": "bob",
+    "trusted_applications": []
+}

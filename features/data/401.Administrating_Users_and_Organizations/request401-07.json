@@ -1,0 +1,11 @@
+{
+  "user": {
+      "username": "alice",
+      "email": "alice-the-admin@test.com",
+      "enabled": true,
+      "gravatar": false,
+      "date_password": "2018-07-26T15:25:14.000Z",
+      "description": "Alice works for FIWARE",
+      "website": "http://www.fiware.org"
+  }
+}

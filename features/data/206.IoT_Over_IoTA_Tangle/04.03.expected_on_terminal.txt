@@ -1,0 +1,4 @@
+^.* tutorial:iot-device IOTA Tangle message received: .*$
+^.* tutorial:ultralight command response sent to fiware/cmdexe$
+^.* tutorial:ultralight .*$
+^.* tutorial:devices actuateDevice: bell001 ring$

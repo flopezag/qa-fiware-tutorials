@@ -29,7 +29,7 @@ Feature: test tutorial 301.Persisting Context Data using Apache Flume (MongoDB)
     When   I send PATCH HTTP request with the following data
       | Url                      | Entity_ID   | Command |
       | http://localhost:1026/v2 | <entity_id> | <command> |
-    Then  I receive a HTTP "204" response
+    Then  I receive a HTTP "204" status code response
 
     Examples:
         | command | entity_id |
@@ -39,14 +39,14 @@ Feature: test tutorial 301.Persisting Context Data using Apache Flume (MongoDB)
   Scenario: 02 - Subscribing to context changes
     Given  the fiware-service header is "openiot" and the fiware-servicepath header is "/"
     When   I send a subscription to the Url "http://localhost:1026/v2/subscriptions" and payload "request301-02.json"
-    Then   I receive a HTTP "201" response
+    Then   I receive a HTTP "201" status code response
 
   ##
   # This Scenario will fail because the url of cygnus is different and there are two dictionary items
   # not presented in the tutorial 'onlyChangedAttrs' and 'attrsFormat'
   ##
   @fail
-  Scenario: 03 - Get all subscription
+  Scenario: 03 - Get all subscriptions
     Given  the fiware-service header is "openiot" and the fiware-servicepath header is "/"
     When   I send GET HTTP request to "http://localhost:1026/v2/subscriptions" with fiware-service and fiware-servicepath
     Then   I receive a HTTP "200" response code from Broker with the body "response303-03.json" and exclusions "response303-03.excludes"
