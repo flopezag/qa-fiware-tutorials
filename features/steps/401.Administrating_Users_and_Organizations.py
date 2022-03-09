@@ -9,6 +9,7 @@ from json import loads, dumps
 from json.decoder import JSONDecodeError
 from requests import get, post, patch, delete, put, RequestException
 from xml.dom import minidom
+from features.funtions import set_xml_data
 
 global adminId
 global userId
@@ -16,7 +17,8 @@ global userId
 
 @given(u'I set the tutorial 401')
 def step_impl_tutorial_203(context):
-    context.data_home = join(join(join(settings.CODE_HOME, "features"), "data"), "401.Administrating_Users_and_Organizations")
+    context.data_home = join(join(join(settings.CODE_HOME, "features"), "data"),
+                             "401.Administrating_Users_and_Organizations")
 
 
 @when("I request the information from user table")
@@ -533,7 +535,10 @@ def step_impl(context, op):
 
     try:
         if op == 'put':
-            response = put(context.url, headers=context.header)
+            if context.payload is None:
+                response = put(context.url, headers=context.header)
+            else:
+                response = put(context.url, data=context.payload, headers=context.header)
         elif op == 'get':
             if hasattr(context, 'header'):
                 response = get(context.url, headers=context.header)
@@ -560,7 +565,10 @@ def step_impl(context, op):
     context.statusCode = str(response.status_code)
 
     try:
-        context.response = response.json()
+        if response.text != '':
+            context.response = response.json()
+        else:
+            context.response = ''
     except JSONDecodeError:
         # Tutorial 405 send XML content, we need to parse it
         context.response = response.text
@@ -572,14 +580,15 @@ def step_impl(context, op):
             tag = parser.firstChild.firstChild.tagName
             tag = parser.getElementsByTagName(tag)
 
-            if settings.domainId == '':
-                settings.domainId = tag[0].attributes['href'].value
-            elif settings.papPoliciesId == '':
-                # The 2nd time that I receive resources is to obtain the PAP Policies Id
-                settings.papPoliciesId = tag[0].attributes['href'].value
-            else:
-                # The 3rd time that I receive resources is to obtain the different versions of a policy set
-                settings.policySetVersion = tag[0].attributes['href'].value
+            set_xml_data(tag=tag)
+        elif 'link' in tag:
+            tag = parser.getElementsByTagName(tag)
+
+            if 'rel' in tag[0].attributes:
+                rel = tag[0].attributes['rel'].value
+
+                if rel == 'item':
+                    set_xml_data(tag=tag)
 
 
 @then('I receive a HTTP "{code}" status code with the same organizationId and userId and role equal to "{role}"')
