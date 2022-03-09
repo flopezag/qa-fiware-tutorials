@@ -157,10 +157,10 @@ Feature: test tutorial 601 Introduction to Linked Data
 #     Note: the body response is quite different from what expected. In particular:
 #           - the attribute "@context" is at the beginning of the entity and not at the end as expected
 #           - the attribute "category" is of a wrong type and misplaced.
-#           The file "response601_10" is left unchanged.
+#           The file "response601_11" is left unchanged.
 #
     Scenario: [11] FILTER CONTEXT DATA BY COMPARING THE VALUES OF A GEO:JSON ATTRIBUTE
       When  I send GET HTTP request to orionld at "http://localhost:1026/ngsi-ld/v1/entities"
-      And   With headers "Link$<https://smartdatamodels.org/context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json""
+      And   With headers "Link": "<https://smartdatamodels.org/context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json""
       And   With parameters "type$Building$geometry$Point$coordinates$[13.3777,52.5162]$georel$near;maxDistance==2000$options$keyValues"
       Then  I receive from orionld "200" response code with the body equal to "response601-11.json"
