@@ -70,7 +70,6 @@ def http_code_is_returned(context, status_code, server, response):
         if len(diff) != 0:
             assert_that(diff.to_dict(), is_(dict()),
                         f'Response from CB has not got the expected HTTP response body:\n  {diff}')
-
             stdout.write(f'{diff}\n\n')
 
 
@@ -94,3 +93,11 @@ def step_impl(context):
     :type context: behave.runner.Context
     """
     raise NotImplementedError(u'STEP: And  I receive the entities dictionary')
+
+    
+@then('I receive a HTTP "200" code response')
+def step_impl(context):
+    """
+    :type context: behave.runner.Context
+    """
+    raise NotImplementedError(u'STEP: Then I receive a HTTP "200" code response')

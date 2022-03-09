@@ -1,0 +1,36 @@
+{
+
+  "actionType":"append_strict",
+  "entities":[
+    {
+      "id":"urn:ngsi-ld:Product:011", "type":"Product",
+      "name":{
+        "type":"Text", "value":"Brandy"
+      },
+      "size":{
+        "type":"Text", "value": "M"
+      },
+      "price":{
+        "type":"Integer", "value": 1199
+      }
+    },
+    {
+      "id":"urn:ngsi-ld:Product:012", "type":"Product",
+      "name":{
+        "type":"Text", "value":"Port"
+      },
+      "size":{
+        "type":"Text", "value": "M"
+      },
+      "price":{
+        "type":"Integer", "value": 1099
+      }
+    },
+    {
+      "id":"urn:ngsi-ld:Product:001", "type":"Product",
+      "offerPrice":{
+        "type":"Integer", "value": 89
+      }
+    }
+  ]
+ }

@@ -1,0 +1,14 @@
+{
+  "actionType":"update",
+  "entities":[
+    {
+      "id":"urn:ngsi-ld:Product:001", "type":"Product",
+      "price":{"type":"Integer", "value": 1199}
+    },
+    {
+      "id":"urn:ngsi-ld:Product:002", "type":"Product",
+      "price":{"type":"Integer", "value": 1199},
+      "size": {"type":"Text", "value": "L"}
+    }
+  ]
+}

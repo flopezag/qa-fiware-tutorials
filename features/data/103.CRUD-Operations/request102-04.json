@@ -1,0 +1,40 @@
+{
+  "actionType":"APPEND",
+  "entities":[
+    {
+      "id":"urn:ngsi-ld:Shelf:unit001", "type":"Shelf",
+      "refStore": {
+        "type": "Relationship",
+        "value": "urn:ngsi-ld:Store:001"
+      }
+    },
+    {
+      "id":"urn:ngsi-ld:Shelf:unit002", "type":"Shelf",
+      "refStore": {
+        "type": "Relationship",
+        "value": "urn:ngsi-ld:Store:001"
+      }
+    },
+    {
+      "id":"urn:ngsi-ld:Shelf:unit003", "type":"Shelf",
+      "refStore": {
+        "type": "Relationship",
+        "value": "urn:ngsi-ld:Store:001"
+      }
+    },
+    {
+      "id":"urn:ngsi-ld:Shelf:unit004", "type":"Shelf",
+      "refStore": {
+        "type": "Relationship",
+        "value": "urn:ngsi-ld:Store:002"
+      }
+    },
+    {
+      "id":"urn:ngsi-ld:Shelf:unit005", "type":"Shelf",
+      "refStore": {
+        "type": "Relationship",
+        "value": "urn:ngsi-ld:Store:002"
+      }
+    }
+  ]
+}

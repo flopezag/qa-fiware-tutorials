@@ -83,8 +83,8 @@ Feature: test tutorial 101.Getting Started
 
 ### Steps
 
-The recommended installation method is using a virtualenv. Actually, the installation 
-process is only about the python dependencies, because the python code do not need 
+The recommended installation method is using a virtualenv. Actually, the installation
+process is only about the python dependencies, because the python code do not need
 installation.
 
 1. Clone this repository.
@@ -107,10 +107,10 @@ It will execute all the features defined in the folder `features`. If you want t
 one of the features, you only need to specify which one to execute, for example:
 
 ```bash
-behave features/102.Entity_Relationships.feature 
+behave features/102.Entity_Relationships.feature
 ```
 
-Will execute the steps corresponding to the Tutorial 102 feature.
+will execute just the steps corresponding to the Tutorial 102 feature.
 
 In case that you want to execute only the failing scenarios you can execute the following
 command:
@@ -136,4 +136,3 @@ to extract maximum of useful information from everyday execution of tests.
 ## License
 
 This script is licensed under Apache License 2.0.
-
