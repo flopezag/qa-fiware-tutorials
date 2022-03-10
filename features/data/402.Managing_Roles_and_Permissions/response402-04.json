@@ -1,0 +1,27 @@
+{
+    "application": {
+        "id": "6632bb2e-c8e5-418f-ba5b-c269d8a53dd2",
+        "name": "Tutorial Application",
+        "description": "FIWARE Application protected by OAuth2 and Keyrock",
+        "secret": "d4128d06-1cba-4c33-9a3d-ff2de51940b5",
+        "url": "http://tutorial",
+        "redirect_uri": "http://tutorial/login",
+        "redirect_sign_out_uri": null,
+        "image": "default",
+        "grant_type": "password,authorization_code,implicit",
+        "response_type": "code,token",
+        "token_types": "permanent,bearer",
+        "jwt_secret": null,
+        "client_type": null,
+        "scope": null,
+        "extra": null,
+        "urls": {
+            "permissions_url": "/v1/applications/6632bb2e-c8e5-418f-ba5b-c269d8a53dd2/permissions",
+            "roles_url": "/v1/applications/6632bb2e-c8e5-418f-ba5b-c269d8a53dd2/roles",
+            "users_url": "/v1/applications/6632bb2e-c8e5-418f-ba5b-c269d8a53dd2/users",
+            "pep_proxies_url": "/v1/applications/6632bb2e-c8e5-418f-ba5b-c269d8a53dd2/pep_proxies",
+            "iot_agents_url": "/v1/applications/6632bb2e-c8e5-418f-ba5b-c269d8a53dd2/iot_agents",
+            "trusted_applications_url": "/v1/applications/6632bb2e-c8e5-418f-ba5b-c269d8a53dd2/trusted_applications"
+        }
+    }
+}

@@ -8,17 +8,19 @@ Feature: test tutorial 101.Getting Started
   clean-shell-commands: docker compose down
 
   Background:
-    Given I set the tutorial
+    Given I set the tutorial 101
 
 
   Scenario: Checking the service health
     When  I wait "5" seconds
     When  I send GET HTTP request to "http://localhost:1026/version"
-    Then  I receive a HTTP "200" response code from Context Broker with the body "response101-01.json"
+    Then  I receive a HTTP "200" response code from Broker with the body "response101-01.json"
+
 
   Scenario Outline: Creating Context Data
-    When I send POST HTTP request to "http://localhost:1026/v2/entities"
-    And  With the body request described in file "<file>"
+    When The content-type header key equal to "application/json"
+    And  the body request described in file "<file>"
+    And  I send a POST HTTP request to "http://localhost:1026/v2/entities"
     Then I receive a HTTP response with the following data
       | Status-Code | Location   | Connection | fiware-correlator |
       | 201         | <location> | Keep-Alive | Any               |
@@ -31,14 +33,14 @@ Feature: test tutorial 101.Getting Started
 
   Scenario: Obtain entity data by Id
     When I send GET HTTP request to "http://localhost:1026/v2/entities/urn:ngsi-ld:Store:001?options=keyValues"
-    Then  I receive a HTTP "200" response code from Context Broker with the body "response101-04.json"
+    Then  I receive a HTTP "200" response code from Broker with the body "response101-04.json"
 
 
   Scenario: Obtain entity data by Type
     When I send GET HTTP request to "http://localhost:1026/v2/entities?type=Store&options=keyValues"
-    Then  I receive a HTTP "200" response code from Context Broker with the body "response101-05.json"
+    Then I receive a HTTP "200" response code from Broker with the body "response101-05.json"
 
 
   Scenario: Filter context data by comparing the values of an attribute
     When I send GET HTTP request to "http://localhost:1026/v2/entities?type=Store&options=keyValues&q=name==%27Checkpoint%20Markt%27"
-    Then  I receive a HTTP "200" response code from Context Broker with the body "response101-06.json"
+    Then I receive a HTTP "200" response code from Broker with the body "response101-06.json"

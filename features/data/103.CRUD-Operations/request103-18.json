@@ -1,0 +1,9 @@
+{
+  "actionType":"replace",
+  "entities":[
+    {
+      "id":"urn:ngsi-ld:Product:010", "type":"Product",
+      "price":{"type":"Integer", "value": 1199}
+    }
+  ]
+}

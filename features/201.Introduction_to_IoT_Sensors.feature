@@ -14,10 +14,11 @@ Feature: test tutorial 201.Introduction to IoT Sensors
 
 
     Scenario Outline: Communicating with IoT Devices: Using Actuators
-    When  I send POST HTTP IoT request for "<description>" to "http://localhost:3001"/"<location>"
-    And   With the body IoT request described in "<request_file>"
-    Then  I receive a HTTP "200" IoT response code with the body "<response_file>"
-
+    When  I prepare a POST HTTP request for "<description>" to "http://localhost:3001/<location>"
+    And   I set header Content-Type to application/x-www-form-urlencoded
+    And   I set the body request as described in <request_file>
+    And   I perform the request
+    Then  I receive a HTTP response with status "200" and with the body as in file "<response_file>"
     Examples:
         | request_file           | location    | response_file      | description     |
         | request201-01.txt      | iot/bell001 | response201-01.txt | ring bell       |

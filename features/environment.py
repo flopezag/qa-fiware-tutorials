@@ -6,7 +6,6 @@ from logging import getLogger
 from python_on_whales import docker
 from requests import get
 from os.path import exists
-from os import remove
 from sys import stdout
 import subprocess
 import os

@@ -1,0 +1,13 @@
+{
+    "role_permission_assignments": [
+        {
+            "id": "8052b95b-3ff6-481c-b779-893b6c3f1488",
+            "is_internal": false,
+            "name": "Access Price Changes 1",
+            "description": null,
+            "action": "GET",
+            "resource": "/price-change",
+            "xml": null
+        }
+    ]
+}

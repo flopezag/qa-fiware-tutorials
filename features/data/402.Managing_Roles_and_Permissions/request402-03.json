@@ -1,0 +1,14 @@
+{
+  "application": {
+    "name": "Tutorial Application",
+    "description": "FIWARE Application protected by OAuth2 and Keyrock",
+    "redirect_uri": "http://tutorial/login",
+    "url": "http://tutorial",
+    "grant_type": [
+      "authorization_code",
+      "implicit",
+      "password"
+    ],
+    "token_types": ["permanent"]
+  }
+}

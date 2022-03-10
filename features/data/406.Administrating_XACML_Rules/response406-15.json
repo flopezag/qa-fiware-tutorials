@@ -1,0 +1,7 @@
+{
+    "values_updated": {
+        "action": null,
+        "resource": null,
+        "xml": "<Rule RuleId=\"alrmbell-ring-only-000000000000\" Effect=\"Permit\"> etc..."
+    }
+}

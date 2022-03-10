@@ -1,0 +1,12 @@
+{
+    "role_user_assignments": [
+        {
+            "user_id": "aaaaaaaa-good-0000-0000-000000000000",
+            "role_id": "provider"
+        },
+        {
+            "user_id": "bbbbbbbb-good-0000-0000-000000000000",
+            "role_id": "64535f4d-04b6-4688-a9bb-81b8df7c4e2c"
+        }
+    ]
+}

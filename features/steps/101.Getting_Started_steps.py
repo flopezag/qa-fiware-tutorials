@@ -11,7 +11,7 @@ from xmldiff import main, formatting
 from xml.dom.minidom import parseString
 
 
-@given(u'I set the tutorial')
+@given(u'I set the tutorial 101')
 def step_impl(context):
     context.data_home = join(join(join(CODE_HOME, "features"), "data"), "101.Getting_started")
 
@@ -99,17 +99,17 @@ def send_orion_post_entity2(context, file):
         context.response = response.json()
     except Exception as e:
         context.response = ""
-
+          
 
 @then(u'I receive a HTTP response with the following data')
 def receive_post_response2(context):
 
     for element in context.table.rows:
         valid_response = dict(element.as_dict())
-        print(valid_response)
 
         assert_that(context.statusCode, is_(valid_response['Status-Code']))
         assert_that(context.responseHeaders['Connection'], is_(valid_response['Connection']))
+        
         if valid_response['Location'] != "Any":
             assert_that(context.responseHeaders['Location'], is_(valid_response['Location']))
 
@@ -124,7 +124,7 @@ def step_impl(context):
     """
     raise NotImplementedError(u'STEP: And  I receive the entities dictionary')
 
-
+    
 @then('I receive a HTTP "200" code response')
 def step_impl(context):
     """

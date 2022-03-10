@@ -1,0 +1,11 @@
+{
+  "actionType":"delete",
+  "entities":[
+    {
+      "id":"urn:ngsi-ld:Product:001", "type":"Product"
+    },
+    {
+      "id":"urn:ngsi-ld:Product:002", "type":"Product"
+    }
+  ]
+}

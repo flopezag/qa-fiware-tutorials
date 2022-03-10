@@ -1,0 +1,53 @@
+{
+  "actionType":"APPEND",
+  "entities":[
+    {
+      "id":"urn:ngsi-ld:Product:001", "type":"Product",
+      "name":{
+        "type":"Text", "value":"Beer"
+      },
+      "size":{
+        "type":"Text", "value": "S"
+      },
+      "price":{
+        "type":"Integer", "value": 99
+      }
+    },
+    {
+      "id":"urn:ngsi-ld:Product:002", "type":"Product",
+      "name":{
+        "type":"Text", "value":"Red Wine"
+      },
+      "size":{
+        "type":"Text", "value": "M"
+      },
+      "price":{
+        "type":"Integer", "value": 1099
+      }
+    },
+    {
+      "id":"urn:ngsi-ld:Product:003", "type":"Product",
+      "name":{
+        "type":"Text", "value":"White Wine"
+      },
+      "size":{
+        "type":"Text", "value": "M"
+      },
+      "price":{
+        "type":"Integer", "value": 1499
+      }
+    },
+    {
+      "id":"urn:ngsi-ld:Product:004", "type":"Product",
+      "name":{
+        "type":"Text", "value":"Vodka"
+      },
+      "size":{
+        "type":"Text", "value": "XL"
+      },
+      "price":{
+        "type":"Integer", "value": 5000
+      }
+    }
+  ]
+}
