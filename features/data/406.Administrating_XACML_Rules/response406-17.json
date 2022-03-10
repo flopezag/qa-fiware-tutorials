@@ -1,0 +1,16 @@
+{
+    "role_permission_assignments": {
+        "role_id": "security-role-0000-0000-000000000000",
+        "permission_id": "alrmbell-ring-24hr-xaml-000000000000"
+    },
+    "authzforce": {
+        "create_policy": {
+            "message": " Success creating policy.",
+            "status": 200
+        },
+        "activate_policy": {
+            "message": "Success",
+            "status": 200
+        }
+    }
+}

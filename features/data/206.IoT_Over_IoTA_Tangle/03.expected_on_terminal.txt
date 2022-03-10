@@ -1,0 +1,5 @@
+^.* tutorial:server Listening on port 3000$
+^.* tutorial:server Listening on port 3001$
+^.* tutorial:application MongoDB is connected.$
+^.* tutorial:iot-device connected to IOTA Tangle: https://chrysalis-nodes.iota.cafe$
+^.* tutorial:iot-device Subscribing to 'messages/indexation/fiware/cmd'$

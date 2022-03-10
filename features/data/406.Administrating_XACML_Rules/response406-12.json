@@ -1,0 +1,12 @@
+{
+    "permission": {
+        "id": "entrance-open-0000-0000-000000000000",
+        "name": "Unlock",
+        "description": "Unlock main entrance",
+        "is_internal": false,
+        "action": "POST",
+        "resource": "/door/unlock",
+        "xml": null,
+        "oauth_client_id": "tutorial-dckr-site-0000-xpresswebapp"
+    }
+}

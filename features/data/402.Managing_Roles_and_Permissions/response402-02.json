@@ -1,0 +1,14 @@
+{
+    "access_token": "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb",
+    "expires": "2026-07-30T12:38:13.000Z",
+    "valid": true,
+    "User": {
+        "scope": [],
+        "id": "bbbbbbbb-good-0000-0000-000000000000",
+        "username": "bob",
+        "email": "bob-the-manager@test.com",
+        "date_password": "2018-07-30T11:41:14.000Z",
+        "enabled": true,
+        "admin": false
+    }
+}

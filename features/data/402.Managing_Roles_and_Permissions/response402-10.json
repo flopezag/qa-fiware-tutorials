@@ -1,0 +1,74 @@
+{
+  "permissions": [
+    {
+      "id": "7ad656b3-3616-4d2f-a921-97c8dd10ae33",
+      "name": "Access Price Changes",
+      "description": null,
+      "action": "GET",
+      "resource": "/price-change",
+      "authorization_service_header": null,
+      "use_authorization_service_header": 0,
+      "xml": null
+    },
+    {
+      "id": "6",
+      "name": "Get and assign only public owned roles",
+      "description": null,
+      "action": null,
+      "resource": null,
+      "authorization_service_header": null,
+      "use_authorization_service_header": 0,
+      "xml": null
+    },
+    {
+      "id": "5",
+      "name": "Get and assign all public application roles",
+      "description": null,
+      "action": null,
+      "resource": null,
+      "authorization_service_header": null,
+      "use_authorization_service_header": 0,
+      "xml": null
+    },
+    {
+      "id": "4",
+      "name": "Manage authorizations",
+      "description": null,
+      "action": null,
+      "resource": null,
+      "authorization_service_header": null,
+      "use_authorization_service_header": 0,
+      "xml": null
+    },
+    {
+      "id": "3",
+      "name": "Manage roles",
+      "description": null,
+      "action": null,
+      "resource": null,
+      "authorization_service_header": null,
+      "use_authorization_service_header": 0,
+      "xml": null
+    },
+    {
+      "id": "2",
+      "name": "Manage the application",
+      "description": null,
+      "action": null,
+      "resource": null,
+      "authorization_service_header": null,
+      "use_authorization_service_header": 0,
+      "xml": null
+    },
+    {
+      "id": "1",
+      "name": "Get and assign all internal application roles",
+      "description": null,
+      "action": null,
+      "resource": null,
+      "authorization_service_header": null,
+      "use_authorization_service_header": 0,
+      "xml": null
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "description": "Notify QuantumLeap on luminosity changes on any Lamp",
+  "subject": {
+    "entities": [
+      {
+        "idPattern": "Lamp.*"
+      }
+    ],
+    "condition": {
+      "attrs": [
+        "luminosity",
+        "location"
+      ]
+    }
+  },
+  "notification": {
+    "http": {
+      "url": "http://quantumleap:8668/v2/notify"
+    },
+    "attrs": [
+      "luminosity", "location"
+    ],
+    "metadata": ["dateCreated", "dateModified"]
+  },
+  "throttling": 1
+}

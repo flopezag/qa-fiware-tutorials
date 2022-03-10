@@ -1,0 +1,4 @@
+{
+     "price":{"type":"Integer", "value": 89},
+     "name": {"type":"Text", "value": "Ale"}
+}

@@ -1,0 +1,25 @@
+{
+  "description": "Notify QuantumLeap of count changes of any Motion Sensor",
+  "subject": {
+    "entities": [
+      {
+        "idPattern": "Motion.*"
+      }
+    ],
+    "condition": {
+      "attrs": [
+        "count"
+      ]
+    }
+  },
+  "notification": {
+    "http": {
+      "url": "http://quantumleap:8668/v2/notify"
+    },
+    "attrs": [
+      "count"
+    ],
+    "metadata": ["dateCreated", "dateModified"]
+  },
+  "throttling": 1
+}
