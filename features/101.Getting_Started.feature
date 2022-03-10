@@ -1,18 +1,20 @@
 Feature: test tutorial 101.Getting Started
 
   This is the feature file of the FIWARE Step by Step tutorial for NGSI-v2
-  url: https://fiware-tutorials.readthedocs.io/en/latest/getting-started/index.html
-  docker-compose: https://raw.githubusercontent.com/FIWARE/tutorials.Getting-Started/master/docker-compose.yml
-  environment: https://raw.githubusercontent.com/FIWARE/tutorials.Getting-Started/master/.env
+  url: https://fiware-tutorials.readthedocs.io/en/latest/getting-started.html
+  git-clone: https://github.com/FIWARE/tutorials.Getting-Started.git
+  git-directory: /tmp/tutorials.Getting-Started
+  shell-commands: export $(cat .env | grep "#" -v); docker compose up -d
+  clean-shell-commands: docker compose down
 
   Background:
     Given I set the tutorial
 
 
   Scenario: Checking the service health
+    When  I wait "5" seconds
     When  I send GET HTTP request to "http://localhost:1026/version"
-    Then  I receive a HTTP "200" response code with the body "response101-01.json"
-
+    Then  I receive a HTTP "200" response code from Context Broker with the body "response101-01.json"
 
   Scenario Outline: Creating Context Data
     When I send POST HTTP request to "http://localhost:1026/v2/entities"
@@ -29,14 +31,14 @@ Feature: test tutorial 101.Getting Started
 
   Scenario: Obtain entity data by Id
     When I send GET HTTP request to "http://localhost:1026/v2/entities/urn:ngsi-ld:Store:001?options=keyValues"
-    Then  I receive a HTTP "200" response code with the body "response101-04.json"
+    Then  I receive a HTTP "200" response code from Context Broker with the body "response101-04.json"
 
 
   Scenario: Obtain entity data by Type
     When I send GET HTTP request to "http://localhost:1026/v2/entities?type=Store&options=keyValues"
-    Then I receive a HTTP "200" response code with the body "response101-05.json"
+    Then  I receive a HTTP "200" response code from Context Broker with the body "response101-05.json"
 
 
   Scenario: Filter context data by comparing the values of an attribute
     When I send GET HTTP request to "http://localhost:1026/v2/entities?type=Store&options=keyValues&q=name==%27Checkpoint%20Markt%27"
-    Then I receive a HTTP "200" response code with the body "response101-06.json"
+    Then  I receive a HTTP "200" response code from Context Broker with the body "response101-06.json"

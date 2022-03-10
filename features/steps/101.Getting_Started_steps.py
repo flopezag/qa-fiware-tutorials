@@ -1,14 +1,14 @@
 # created by Amani Boughanmi on 20.05.2021
-import time
-
 from behave import given, when, then, step
 from requests import get, post, exceptions
-from hamcrest import assert_that, is_, has_key
+from hamcrest import assert_that, is_
 from os.path import join
-from json import load, loads
+from json import load
 from deepdiff import DeepDiff
 from config.settings import CODE_HOME
 from sys import stdout
+from xmldiff import main, formatting
+from xml.dom.minidom import parseString
 
 
 @given(u'I set the tutorial')
@@ -29,38 +29,49 @@ def send_orion_get_version(context, url):
     context.statusCode = str(response.status_code)
 
 
-@step(u'I receive a HTTP "{status_code}" response code with the body equal to "{response}"')
-def http_code_is_returned(context, status_code, response):
+@step(u'I receive a HTTP "{status_code}" response code from {server} with the body "{response}"')
+def http_code_is_returned(context, status_code, server, response):
     assert_that(context.statusCode, is_(status_code),
-                "Response to CB notification has not got the expected HTTP response code: Message: {}"
-                .format(context.response))
+                "Response to {} notification has not got the expected HTTP response code: Message: {}"
+                .format(server, context.response))
 
-    full_file_name = join(context.data_home, response)
-    file = open(full_file_name, 'r')
-    expectedResponseDict = load(file)
-    file.close()
+    if server == 'AuthZForce':
+        # We need to parse and check the XML response
+        file = join(context.data_home, response)
+        with open(file) as f:
+            file_content = f.read()
 
-    stdout.write(f'expectedResponseDict =\n {expectedResponseDict}\n\n')
-    stdout.write(f'context.response =\n {context.response}\n\n')
+        formatter = formatting.DiffFormatter()
 
+        want = file_content.replace('\n', '').encode('utf-8')
+        got = context.response.replace('\n', '').encode('utf-8')
+        result = main.diff_texts(want, got, formatter=formatter)
 
-#    for i in responseDict:
-#        stdout.write(f'i = {i}\n')
-#        for ii in data[i]:
-#            stdout.write(f'ii = {ii}\n')
+        # We have to ignore the uptime, href, and title values of the results
+        excluded_tags = ['lastModifiedTime', 'uptime', 'href', 'title']
+        data1 = result.split("\n")
+        data1 = [x for x in data1 if all(y not in x for y in excluded_tags)]
+        result = '\n'.join(data1)
 
-#    for iii in context.response:
-#        stdout.write(f'iii = {iii}\n')
-#
-#    diff = DeepDiff(data, context.response)
-#    stdout.write(f'{diff}\n\n')
-#
-#    assert_that(diff.to_dict(), is_(dict()),
-#                f'Response from CB has not got the expected HTTP response body:\n  {diff}')
-    assert_that(context.response, is_(expectedResponseDict),
-                f'Response from CB has not got the expected response body!\n')
+        # Obtain the pretty print xml of the response
+        dom = parseString(context.response)  # or xml.dom.minidom.parseString(xml_string)
+        pretty_xml_as_string = dom.toprettyxml()
 
+        assert (result == ''), \
+            f'The XML obtained is not the expected value, ' \
+            f'\nexpected:\n{file_content}\n\nreceived:\n{pretty_xml_as_string}\n\ndifferences:\n{result}\n'
+    else:
+        file = join(context.data_home, response)
+        with open(file) as f:
+            data = load(f)
 
+        diff = DeepDiff(data, context.response)
+
+        if len(diff) != 0:
+            assert_that(diff.to_dict(), is_(dict()),
+                        f'Response from CB has not got the expected HTTP response body:\n  {diff}')
+
+            stdout.write(f'{diff}\n\n')
 
 
 @when(u'I send POST HTTP request to "{url}"')
@@ -96,8 +107,6 @@ def receive_post_response2(context):
     for element in context.table.rows:
         valid_response = dict(element.as_dict())
         print(valid_response)
-        valid_response['Status-Code']
-        valid_response['Location']
 
         assert_that(context.statusCode, is_(valid_response['Status-Code']))
         assert_that(context.responseHeaders['Connection'], is_(valid_response['Connection']))

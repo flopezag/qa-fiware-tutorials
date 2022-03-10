@@ -1,16 +1,11 @@
-import time
-
-from behave import given, when, then, step
+from behave import given, when, step
 from config.settings import CODE_HOME
 from os.path import join
 from sys import stdout
-from requests import post, exceptions, get, patch, put, delete
+from requests import post, exceptions, get
 from logging import getLogger
-from json import load, loads
-from deepdiff import DeepDiff
+from json import load
 from hamcrest import assert_that, is_, has_key
-from features.funtions import read_data_from_file, dict_diff_with_exclusions
-import json
 
 
 __logger__ = getLogger(__name__)
@@ -74,7 +69,6 @@ def http_code_is_returned(context, status_code, response):
                 f'Response from CB has not got the expected response body!\n')
 
 
-
 @when(u'104 sends a GET HTTP request to "{url}"')
 def set_req_body2(context, url):
     try:
@@ -101,11 +95,13 @@ def http_code_is_returned(context, status_code, expectedType):
             i = int(context.response)
         except:
             stdout.write(f'Response type from CB {type(context.response)} is NOT of the expected response type: {expectedType}\n')
+
     if expectedType == "float":
         try:
             i = float(context.response)
         except:
             stdout.write(f'Response type from CB {type(context.response)} is NOT of the expected response type: {expectedType}\n')
+
     if expectedType == "str":
         try:
             i = str(context.response)
