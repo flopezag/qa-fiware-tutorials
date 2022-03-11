@@ -14,6 +14,7 @@ from shutil import rmtree
 from tempfile import mkstemp
 from shutil import move
 from os import remove
+from config.settings import config
 
 
 __logger__ = getLogger(__name__)
@@ -115,13 +116,11 @@ def before_feature(context, feature):
         stdout.write("********** START docker-compose-changes **********\n")
 
         changes = parameters['docker-compose-changes'].split(';')
-        l = len(changes)
-        for x in range(1, l, 2):
-            stdout.write(f'old-line = <{changes[x]}>\n')
-            stdout.write(f'new-line = <{changes[x+1]}>\n\n')
-            replace(source=parameters['git-directory']+"/"+"docker-compose.yml",
-                    pattern=changes[x],
-                    string=changes[x+1])
+        to_search = changes[1]
+        to_replace = to_search.replace("<ADD_YOUR_KEY_ID>", config['OPENWEATHERMAP_KEY_ID'])
+        replace(source=parameters['git-directory']+"/"+"docker-compose.yml",
+                pattern=to_search,
+                string=to_replace)
 
         stdout.write("********** END docker-compose-changes **********\n\n")
 

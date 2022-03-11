@@ -5,10 +5,10 @@ Feature: test tutorial 104.Context Data and Context Providers
 #
 #   Parameters to be considered (aka INTERESTING_FEATURES_STRINGS)
 #
-    url: https://https://fiware-tutorials.readthedocs.io/en/latest/context-providers.html
+    url: https://fiware-tutorials.readthedocs.io/en/latest/context-providers.html
     git-clone: https://github.com/FIWARE/tutorials.Context-Providers.git
     git-directory: /tmp/tutorials.Context-Providers
-    docker-compose-changes: ;      - "OPENWEATHERMAP_KEY_ID=<ADD_YOUR_KEY_ID>";      - "OPENWEATHERMAP_KEY_ID=402785bdc0373343e783b171ae6ef8ab"
+    docker-compose-changes: ;      - "OPENWEATHERMAP_KEY_ID=<ADD_YOUR_KEY_ID>"
 
     shell-commands: ./services create; ./services start
     clean-shell-commands: ./services stop
