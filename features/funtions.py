@@ -11,6 +11,7 @@ from time import sleep
 from sys import stdout
 from os import environ, getcwd
 from config import settings
+import json
 
 DEFAULT_TIMEOUT = 5  # seconds
 DEFAULT_RETRIES = 3
