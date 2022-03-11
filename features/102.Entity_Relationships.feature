@@ -8,17 +8,18 @@
 Feature: test tutorial 102.Entity_Relationships
 
   This is the feature file of the FIWARE Step by Step tutorial for NGSI-v2
-  url: https://fiware-tutorials.readthedocs.io/en/latest/entity-relationships/index.html
-  docker-compose: https://raw.githubusercontent.com/FIWARE/tutorials.Entity-Relationships/ce7531bc77b8576efddadaeec7ec84c9b5608d62/docker-compose.yml
-  environment: https://raw.githubusercontent.com/FIWARE/tutorials.Entity-Relationships/ce7531bc77b8576efddadaeec7ec84c9b5608d62/.env
-  init-script: https://raw.githubusercontent.com/FIWARE/tutorials.Entity-Relationships/ce7531bc77b8576efddadaeec7ec84c9b5608d62/services
-  aux: [https://raw.githubusercontent.com/FIWARE/tutorials.Entity-Relationships/ce7531bc77b8576efddadaeec7ec84c9b5608d62/import-data]
+  url: https://fiware-tutorials.readthedocs.io/en/latest/entity-relationships.html
+  git-clone: https://github.com/FIWARE/tutorials.Entity-Relationships.git
+  git-directory: /tmp/tutorials.Entity-Relationships
+  shell-commands: ./services start
+  clean-shell-commands: ./services stop
 
   Background:
     Given I set the tutorial 102
 
 
   Scenario: Checking the service health
+    #When  I wait "5" seconds
     When  I send GET HTTP request to "http://localhost:1026/version"
     Then  I receive a HTTP "200" response code from Broker with the body "response101-01.json"
 
@@ -44,7 +45,7 @@ Feature: test tutorial 102.Entity_Relationships
 #
  Scenario: Obtain entity data by Id
    When I send GET HTTP request to "http://localhost:1026/v2/entities/urn:ngsi-ld:Shelf:unit001/?type=Shelf&options=keyValues"
-   Then I receive a HTTP "200" response code with the body "response102-03.json"
+   Then I receive a HTTP "200" response code from Broker with the body "response102-03.json"
 
 
 #
@@ -66,7 +67,7 @@ Feature: test tutorial 102.Entity_Relationships
 #
  Scenario: Obtain entity data by Id
    When I send GET HTTP request to "http://localhost:1026/v2/entities/urn:ngsi-ld:Shelf:unit001/?type=Shelf&options=keyValues"
-   Then I receive a HTTP "200" response code with the body "response102-05.json"
+   Then I receive a HTTP "200" response code from Broker with the body "response102-05.json"
 
 
 #
@@ -74,7 +75,7 @@ Feature: test tutorial 102.Entity_Relationships
 #
  Scenario: Reading from Child Entity to Parent Entity
    When I send GET HTTP request to "http://localhost:1026/v2/entities/urn:ngsi-ld:Shelf:unit001/?type=Shelf&options=values&attrs=refStore"
-   Then I receive a HTTP "200" response code with the body "response102-06.json"
+   Then I receive a HTTP "200" response code from Broker with the body "response102-06.json"
 
 
 #
@@ -82,7 +83,7 @@ Feature: test tutorial 102.Entity_Relationships
 #
  Scenario: Reading from Parent Entity to Child Entity
    When I send GET HTTP request to "http://localhost:1026/v2/entities/?q=refStore==urn:ngsi-ld:Store:001&options=count&attrs=type&type=Shelf"
-   Then I receive a HTTP "200" response code with the body "response102-07.json"
+   Then I receive a HTTP "200" response code from Broker with the body "response102-07.json"
 
 
 #
@@ -90,7 +91,7 @@ Feature: test tutorial 102.Entity_Relationships
 #
  Scenario: Reading from Parent Entity to Child Entity values of a specific attribute
    When I send GET HTTP request to "http://localhost:1026/v2/entities/?q=refStore==urn:ngsi-ld:Store:001&type=Shelf&options=values&attrs=name"
-   Then I receive a HTTP "200" response code with the body "response102-08.json"
+   Then I receive a HTTP "200" response code from Broker with the body "response102-08.json"
 
 
 #
@@ -113,11 +114,12 @@ Scenario Outline: Creating many-to-many Relationships
 #
 Scenario: Reading from a bridge table
    When I send GET HTTP request to "http://localhost:1026/v2/entities/?q=refStore==urn:ngsi-ld:Store:001&options=values&attrs=refProduct&type=InventoryItem"
-   Then I receive a HTTP "200" response code with the body "response102-10.json"
+   Then I receive a HTTP "200" response code from Broker with the body "response102-10.json"
+
 
 Scenario: Reading from a bridge table
    When I send GET HTTP request to "http://localhost:1026/v2/entities/?q=refProduct==urn:ngsi-ld:Product:001&options=values&attrs=refStore&type=InventoryItem"
-   Then I receive a HTTP "200" response code with the body "response102-11.json"
+   Then I receive a HTTP "200" response code from Broker with the body "response102-11.json"
 
 
 #
@@ -125,4 +127,4 @@ Scenario: Reading from a bridge table
 #
 Scenario: Data Integrity
    When I send GET HTTP request to "http://localhost:1026/v2/entities/?q=refStore==urn:ngsi-ld:Store:001&options=count&attrs=type"
-   Then I receive a HTTP "200" response code with the body "response102-12.json"
+   Then I receive a HTTP "200" response code from Broker with the body "response102-12.json"

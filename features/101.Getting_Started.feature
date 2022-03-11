@@ -1,6 +1,7 @@
 Feature: test tutorial 101.Getting Started
 
   This is the feature file of the FIWARE Step by Step tutorial for NGSI-v2
+  url: https://fiware-tutorials.readthedocs.io/en/latest/getting-started.html
   git-clone: https://github.com/FIWARE/tutorials.Getting-Started.git
   git-directory: /tmp/tutorials.Getting-Started
   shell-commands: export $(cat .env | grep "#" -v); docker compose up -d
@@ -11,6 +12,7 @@ Feature: test tutorial 101.Getting Started
 
 
   Scenario: Checking the service health
+    When  I wait "5" seconds
     When  I send GET HTTP request to "http://localhost:1026/version"
     Then  I receive a HTTP "200" response code from Broker with the body "response101-01.json"
 

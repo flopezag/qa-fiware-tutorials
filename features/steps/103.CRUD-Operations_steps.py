@@ -2,12 +2,9 @@
 
 from behave import given, when, then, step
 from requests import get, post, put, patch, delete, exceptions
-from hamcrest import assert_that, is_, has_key
+from hamcrest import assert_that, is_
 from os.path import join
-from json import load
-from deepdiff import DeepDiff
 from config.settings import CODE_HOME
-from sys import stdout
 
 # create the context for the tutorial
 #

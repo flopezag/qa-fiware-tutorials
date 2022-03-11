@@ -1,6 +1,7 @@
 from behave import given, step, then
 from os.path import join
 from config import settings
+from json import dumps
 
 auth_token = str()
 access_token = str()
@@ -159,3 +160,5 @@ def step_impl(context):
      "cbroker": "http://orion-proxy:1027",
      "trust": settings.token
     }
+
+    context.payload = dumps(context.payload, indent=4, ensure_ascii=False)

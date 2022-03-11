@@ -1,0 +1,10 @@
+[
+    {
+        "id": "urn:ngsi-ld:Store:001",
+        "type": "Store",
+        "temperature": {
+            "type": "Number",
+            "value": 42
+        }
+    }
+]

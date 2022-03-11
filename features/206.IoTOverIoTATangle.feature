@@ -1,5 +1,5 @@
-Feature: Test tutorial 207.IoT over IOTA tangle
-    This is feature file of the FIWARE step by step tutorial for IoT Agent Ultrlight
+Feature: Test tutorial 206.IoT over IOTA tangle
+    This is feature file of the FIWARE step by step tutorial for IoT Agent Ultralight
     url: https://fiware-tutorials.readthedocs.io/en/latest/iot-over-iota-tangle.html
     git-clone: https://github.com/FIWARE/tutorials.IoT-over-IOTA.git
     git-directory: /tmp/tutorials.IoT_IoTA_Tangle

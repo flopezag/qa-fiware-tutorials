@@ -6,15 +6,21 @@ from logging import getLogger
 from python_on_whales import docker
 from requests import get
 from os.path import exists
-from os import remove
 from sys import stdout
 import subprocess
 import os
 from shutil import rmtree
 
+from tempfile import mkstemp
+from shutil import move
+from os import remove
+from config.settings import config
+
+
 __logger__ = getLogger(__name__)
 
 INTERESTING_FEATURES_STRINGS = ['docker-compose',
+                                'docker-compose-changes',
                                 'environment',
                                 'git-clone',
                                 'shell-commands',
@@ -50,6 +56,17 @@ def exec_commands(parameters: dict, which_commands: str):
     os.chdir(current_dir)
 
 
+def replace(source, pattern, string):
+    fh, target_file_path = mkstemp()
+    with open(target_file_path, 'w') as target_file:
+        with open(source, 'r') as source_file:
+            for line in source_file:
+                target_file.write(line.replace(pattern, string))
+
+    remove(source)
+    move(target_file_path, source)
+
+
 def before_all(context):
     __logger__.info("=========== INITIALIZE PROCESS ===========\n")
     stdout.write(f'=========== INITIALIZE PROCESS ===========\n')
@@ -57,7 +74,7 @@ def before_all(context):
 
 def before_feature(context, feature):
     __logger__.info("=========== START FEATURE ===========")
-    __logger__.info(f'Feature name: {feature.name}')
+    __logger__.info("Feature name: %s", feature.name)
 
     stdout.write("=========== START FEATURE ===========\n")
     stdout.write(f'Feature name: {feature.name}\n\n')
@@ -94,6 +111,18 @@ def before_feature(context, feature):
             rmtree(context.parameters['git-directory'])
 
         git("clone", parameters['git-clone'], parameters['git-directory'])
+
+    if 'docker-compose-changes' in parameters:
+        stdout.write("********** START docker-compose-changes **********\n")
+
+        changes = parameters['docker-compose-changes'].split(';')
+        to_search = changes[1]
+        to_replace = to_search.replace("<ADD_YOUR_KEY_ID>", config['OPENWEATHERMAP_KEY_ID'])
+        replace(source=parameters['git-directory']+"/"+"docker-compose.yml",
+                pattern=to_search,
+                string=to_replace)
+
+        stdout.write("********** END docker-compose-changes **********\n\n")
 
     if 'shell-commands' in parameters:
         exec_commands(parameters, 'shell-commands')
@@ -145,5 +174,5 @@ def after_feature(context, feature):
 
 
 def after_all(context):
-    __logger__.info("\n... END  :)")
-    stdout.write(f'\n... END  :)\n')
+    __logger__.info("... END  :)")
+    stdout.write(f'... END  :)\n')

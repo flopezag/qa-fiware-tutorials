@@ -8,59 +8,19 @@
 Feature: test tutorial 103.CRUD-Operations
 
   This is the feature file of the FIWARE Step by Step tutorial for NGSI-v2
-  url: https://fiware-tutorials.readthedocs.io/en/latest/entity-relationships/index.html
-  docker-compose: https://raw.githubusercontent.com/FIWARE/tutorials.Entity-Relationships/ce7531bc77b8576efddadaeec7ec84c9b5608d62/docker-compose.yml
-  environment: https://raw.githubusercontent.com/FIWARE/tutorials.Entity-Relationships/ce7531bc77b8576efddadaeec7ec84c9b5608d62/.env
-  init-script: https://raw.githubusercontent.com/FIWARE/tutorials.Entity-Relationships/ce7531bc77b8576efddadaeec7ec84c9b5608d62/services
-#  aux: [https://raw.githubusercontent.com/FIWARE/tutorials.Entity-Relationships/ce7531bc77b8576efddadaeec7ec84c9b5608d62/import-data]
+  url: https://fiware-tutorials.readthedocs.io/en/latest/crud-operations.html
+  git-clone: https://github.com/FIWARE/tutorials.CRUD-Operations.git
+  git-directory: /tmp/tutorials.CRUD-Operations
+  shell-commands: ./services start
+  clean-shell-commands: ./services stop
+
 
   Background:
     Given I set the tutorial 103
 
   Scenario: Checking the service health
     When  I send GET HTTP request to "http://localhost:1026/version"
-    Then  I receive a HTTP "200" response code with the body "response101-01.json"
-
-#
-# Creating the context as resulting from Tutorials 101 and 102 this way this feature can be executed
-# in a standalone manner.
-#
-
-  Scenario Outline: Creating Context Data
-    When I send POST HTTP request to "http://localhost:1026/v2/entities"
-    And  With the body request described in file "<file>"
-    Then I receive a HTTP response with the following data
-      | Status-Code | Location   | Connection | fiware-correlator |
-      | 201         | <location> | Keep-Alive | Any               |
-
-    Examples:
-      | file               | location                                      |
-      | request101-02.json | /v2/entities/urn:ngsi-ld:Store:001?type=Store |
-      | request101-03.json | /v2/entities/urn:ngsi-ld:Store:002?type=Store |
-
-  Scenario Outline: Create several entities at the same time
-    When I send POST HTTP batch request to "http://localhost:1026/v2/op/update"
-    And  With the body batch request described in file "<file>"
-    Then I receive a HTTP batch response with the following data
-      | Status-Code |
-      | 204         |
-
-    Examples:
-      | file               |
-      | request102-01.json |
-      | request102-02.json |
-      | request102-04.json |
-
-  Scenario Outline: Creating Context Data
-    When I send POST HTTP request to "http://localhost:1026/v2/entities"
-    And  With the body request described in file "<file>"
-    Then I receive a HTTP response with the following data
-      | Status-Code | Location   | Connection | fiware-correlator |
-      | 201         | <location> | Keep-Alive | Any               |
-
-    Examples:
-      | file               | location                                      |
-      | request102-09.json | /v2/entities/urn:ngsi-ld:InventoryItem:001?type=InventoryItem |
+    Then  I receive a HTTP "200" response code from Broker with the body "response101-01.json"
 
 
 #
@@ -155,7 +115,7 @@ Feature: test tutorial 103.CRUD-Operations
 #
   Scenario: Obtain entity data by Type
     When I send GET HTTP request to "http://localhost:1026/v2/entities/urn:ngsi-ld:Product:010?type=Product"
-    Then I receive a HTTP "200" response code with the body "response103-07.json"
+    Then I receive a HTTP "200" response code from Broker with the body "response103-07.json"
 
 
 #
@@ -163,14 +123,14 @@ Feature: test tutorial 103.CRUD-Operations
 #
   Scenario: Obtain the value of a single attribute from an existing entity with a known id
     When I send GET HTTP request to "http://localhost:1026/v2/entities/urn:ngsi-ld:Product:001/attrs/name/value"
-    Then I receive a HTTP "200" response code with the body "response103-08.json"
+    Then I receive a HTTP "200" response code from Broker with the body "response103-08.json"
 
 #
 #  Request 9
 #
   Scenario: Obtain the value of the key-value pairs of two attributes from the context of existing entities with a known id
     When I send GET HTTP request to "http://localhost:1026/v2/entities/urn:ngsi-ld:Product:001?type=Product&options=keyValues&attrs=name,price"
-    Then I receive a HTTP "200" response code with the body "response103-09.json"
+    Then I receive a HTTP "200" response code from Broker with the body "response103-09.json"
 
 
 #
@@ -178,7 +138,7 @@ Feature: test tutorial 103.CRUD-Operations
 #
   Scenario: Obtain the value of two attributes from the context of existing entities with a known id
     When I send GET HTTP request to "http://localhost:1026/v2/entities/urn:ngsi-ld:Product:001?type=Product&options=values&attrs=name,price"
-    Then I receive a HTTP "200" response code with the body "response103-10.json"
+    Then I receive a HTTP "200" response code from Broker with the body "response103-10.json"
 
 
 #
@@ -186,7 +146,7 @@ Feature: test tutorial 103.CRUD-Operations
 #
   Scenario: Obtain all entities of a given type and all of their attributes
     When I send GET HTTP request to "http://localhost:1026/v2/entities?type=Product"
-    Then I receive a HTTP "200" response code with the body "response103-11.json"
+    Then I receive a HTTP "200" response code from Broker with the body "response103-11.json"
 
 
 #
@@ -194,7 +154,7 @@ Feature: test tutorial 103.CRUD-Operations
 #
   Scenario: Obtain two specific attributes of all entities of a given type
     When I send GET HTTP request to "http://localhost:1026/v2/entities/?type=Product&options=keyValues&attrs=name,price"
-    Then I receive a HTTP "200" response code with the body "response103-12.json"
+    Then I receive a HTTP "200" response code from Broker with the body "response103-12.json"
 
 
 #
@@ -202,7 +162,7 @@ Feature: test tutorial 103.CRUD-Operations
 #
   Scenario: Obtain all entities of a given type
     When I send GET HTTP request to "http://localhost:1026/v2/entities/?type=Product&options=count&attrs=__NONE"
-    Then I receive a HTTP "200" response code with the body "response103-13.json"
+    Then I receive a HTTP "200" response code from Broker with the body "response103-13.json"
 
 
 #
@@ -343,4 +303,4 @@ Scenario: Delete an Entity
 #
   Scenario: Find existing data relationships
     When I send GET HTTP request to "http://localhost:1026/v2/entities/?q=refProduct==urn:ngsi-ld:Product:001&options=count&attrs=type"
-    Then I receive a HTTP "200" response code with the body "response103-23.json"
+    Then I receive a HTTP "200" response code from Broker with the body "response103-23.json"

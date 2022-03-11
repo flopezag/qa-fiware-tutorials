@@ -1,6 +1,6 @@
 # created by Amani Boughanmi on 20.05.2021
 from behave import given, when, then, step
-from requests import get, exceptions
+from requests import get, post, exceptions
 from hamcrest import assert_that, is_
 from os.path import join
 from json import load
@@ -70,8 +70,36 @@ def http_code_is_returned(context, status_code, server, response):
         if len(diff) != 0:
             assert_that(diff.to_dict(), is_(dict()),
                         f'Response from CB has not got the expected HTTP response body:\n  {diff}')
+
             stdout.write(f'{diff}\n\n')
 
+
+@when(u'I send POST HTTP request to "{url}"')
+def set_req_body2(context, url):
+    context.url = url
+    context.header = {'Content-Type': 'application/json'}
+
+
+@step(u'With the body request described in file "{file}"')
+def send_orion_post_entity2(context, file):
+    file = join(context.data_home, file)
+    with open(file) as f:
+        payload = f.read()
+
+    try:
+        response = post(context.url, data=payload, headers=context.header)
+    except exceptions.RequestException as e:
+        raise SystemExit(e)
+
+    context.responseHeaders = response.headers
+    context.statusCode = str(response.status_code)
+    stdout.write(f'{context.responseHeaders}\n\n\n\n')
+    stdout.flush()
+    try:
+        context.response = response.json()
+    except Exception as e:
+        context.response = ""
+          
 
 @then(u'I receive a HTTP response with the following data')
 def receive_post_response2(context):
@@ -79,9 +107,11 @@ def receive_post_response2(context):
     for element in context.table.rows:
         valid_response = dict(element.as_dict())
 
-        assert_that(context.responseHeaders['Connection'], is_(valid_response['Connection']))
-        assert_that(context.responseHeaders['Location'], is_(valid_response['Location']))
         assert_that(context.statusCode, is_(valid_response['Status-Code']))
+        assert_that(context.responseHeaders['Connection'], is_(valid_response['Connection']))
+        
+        if valid_response['Location'] != "Any":
+            assert_that(context.responseHeaders['Location'], is_(valid_response['Location']))
 
         aux = 'fiware-correlator' in valid_response
         assert_that(aux, is_(True))

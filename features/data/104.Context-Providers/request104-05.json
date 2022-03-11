@@ -1,0 +1,12 @@
+{
+    "entities": [
+        {
+            "type": "Store",
+            "isPattern": "false",
+            "id": "urn:ngsi-ld:Store:001"
+        }
+    ],
+    "attrs": [
+        "temperature"
+    ]
+}
