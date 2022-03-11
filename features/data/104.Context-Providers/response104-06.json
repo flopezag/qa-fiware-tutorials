@@ -1,0 +1,14 @@
+[
+    {
+        "id": "urn:ngsi-ld:Store:001",
+        "type": "Store",
+        "temperature": {
+            "type": "Number",
+            "value": 16
+        },
+        "relativeHumidity": {
+            "type": "Number",
+            "value": 30
+        }
+    }
+]

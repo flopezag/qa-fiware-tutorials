@@ -83,16 +83,22 @@ Feature: test tutorial 101.Getting Started
 
 ### Steps
 
-The recommended installation method is using a virtualenv. Actually, the installation 
-process is only about the python dependencies, because the python code do not need 
+The recommended installation method is using a virtualenv. Actually, the installation
+process is only about the python dependencies, because the python code do not need
 installation.
 
 1. Clone this repository.
-2. Create the virtualenv: `virtualenv -ppython3.9 venv`
-3. Activate the python environment: `source ./venv/bin/activate`
-5. Install the requirements: `pip install -r requirements.txt
+2. Create the virtualenv: `virtualenv -ppython3.9 venv`.
+3. Activate the python environment: `source ./venv/bin/activate`.
+4. Install the requirements: `pip install -r requirements.txt`.
+5. Add the OpenWeatherMap Key Id in the `.config/config.json` files.
+
+To obtain a OpenWeather API Key, you need to register in [OpenWeather](https://openweathermap.org). There is a Free
+option which allows 60 calls/minute and 1,000,000 calls/month, which is good enough for these tutorials.
 
 [Top](#top)
+
+
 
 ## Execution
 
@@ -107,10 +113,10 @@ It will execute all the features defined in the folder `features`. If you want t
 one of the features, you only need to specify which one to execute, for example:
 
 ```bash
-behave features/102.Entity_Relationships.feature 
+behave features/102.Entity_Relationships.feature
 ```
 
-Will execute the steps corresponding to the Tutorial 102 feature.
+will execute just the steps corresponding to the Tutorial 102 feature.
 
 In case that you want to execute only the failing scenarios you can execute the following
 command:
@@ -128,7 +134,7 @@ not only shows a very concise representation of what have been tested in a neat
 web report form, but allows everyone participating in the development process
 to extract maximum of useful information from everyday execution of tests.
 
-➜ behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features             
+➜ behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features
 
 ➜ allure serve ./tmp
 
@@ -136,4 +142,3 @@ to extract maximum of useful information from everyday execution of tests.
 ## License
 
 This script is licensed under Apache License 2.0.
-

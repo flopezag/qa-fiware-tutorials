@@ -1,10 +1,6 @@
-import time
-
 from behave import given, step, when
 from os.path import join
 from config.settings import CODE_HOME
-from requests import post, put, patch, exceptions
-import json
 
 
 @given(u'I set the tutorial 205')

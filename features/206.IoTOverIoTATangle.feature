@@ -1,5 +1,5 @@
-Feature: Test tutorial 207.IoT over IOTA tangle
-    This is feature file of the FIWARE step by step tutorial for IoT Agent Ultrlight
+Feature: Test tutorial 206.IoT over IOTA tangle
+    This is feature file of the FIWARE step by step tutorial for IoT Agent Ultralight
     url: https://fiware-tutorials.readthedocs.io/en/latest/iot-over-iota-tangle.html
     git-clone: https://github.com/FIWARE/tutorials.IoT-over-IOTA.git
     git-directory: /tmp/tutorials.IoT_IoTA_Tangle
@@ -40,11 +40,11 @@ Feature: Test tutorial 207.IoT over IOTA tangle
       And   I wait "1" seconds
 
     Scenario: 02.prev - Terminal for iota gateway
-        When  I open a new shell terminal iota-gateway and exec "docker logs -f iota-gateway"
+        When  I open a new shell terminal iota-gateway and run "docker logs -f iota-gateway"
         Then  everything is ok
 
     Scenario: 02.prev - Terminal for iota gateway
-        When  I open a new shell terminal fiware-tutorial and exec "docker logs -f fiware-tutorial"
+        When  I open a new shell terminal fiware-tutorial and run "docker logs -f fiware-tutorial"
         Then  everything is ok
 
      Scenario: 02.1 - Check stderr logs from iota-gateway

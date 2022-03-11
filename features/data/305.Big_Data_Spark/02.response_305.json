@@ -1,0 +1,28 @@
+[
+    {
+        "id": "5d76059d14eda92b0686f255",
+        "description": "Notify Spark of all context changes",
+        "status": "active",
+        "subject": {
+            "entities": [
+                {
+                    "idPattern": ".*"
+                }
+            ],
+            "condition": {
+                "attrs": []
+            }
+        },
+        "notification": {
+            "timesSent": 362,
+            "lastNotification": "2019-09-09T09:36:33.00Z",
+            "attrs": [],
+            "attrsFormat": "normalized",
+            "http": {
+                "url": "http://spark-worker-1:9001"
+            },
+            "lastSuccess": "2019-09-09T09:36:33.00Z",
+            "lastSuccessCode": 200
+        }
+    }
+]
