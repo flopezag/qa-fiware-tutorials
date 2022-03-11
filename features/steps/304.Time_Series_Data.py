@@ -1,7 +1,7 @@
 from behave import given, when, step
 from config.settings import CODE_HOME
 from os.path import join
-from requests import get, post, exceptions
+from requests import post, exceptions
 from logging import getLogger
 from json import loads, dumps
 from features.funtions import read_data_from_file, replace_dates_query, http, check_cratedb_health_status

@@ -1,4 +1,4 @@
-from behave import given, when, then, step
+from behave import given
 from config.settings import CODE_HOME
 from os.path import join
 

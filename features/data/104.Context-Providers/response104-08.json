@@ -1,0 +1,37 @@
+{
+    "id": "urn:ngsi-ld:Store:001",
+    "type": "Store",
+    "address": {
+        "type": "PostalAddress",
+        "value": {
+            "streetAddress": "Bornholmer Straße 65",
+            "addressRegion": "Berlin",
+            "addressLocality": "Prenzlauer Berg",
+            "postalCode": "10439"
+        },
+        "metadata": {}
+    },
+    "location": {
+        "type": "geo:json",
+        "value": {
+            "type": "Point",
+            "coordinates": [13.3986, 52.5547]
+        },
+        "metadata": {}
+    },
+    "name": {
+        "type": "Text",
+        "value": "Bösebrücke Einkauf",
+        "metadata": {}
+    },
+    "temperature": {
+        "type": "Number",
+        "value": "22.6",
+        "metadata": {}
+    },
+    "relativeHumidity": {
+        "type": "Number",
+        "value": "58",
+        "metadata": {}
+    }
+}
