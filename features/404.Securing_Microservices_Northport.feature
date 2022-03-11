@@ -22,6 +22,22 @@ Feature: Test tutorial 404.Securing microservices with a PEP Proxy (IoT Agent - 
             | any          | Bearer     | ["permanent"] |
     Then  fail: Invalid request: content must be application/x-www-form-urlencoded, but was missing
 
+    #curl -iX PUT \
+    #  'http://localhost:4041/iot/services?resource=/iot/d&apikey=1068318794' \
+    #  -H 'Content-Type: application/json' \
+    #  -H 'fiware-service: openiot' \
+    #  -H 'fiware-servicepath: /' \
+    #  -d '{
+    #     "cbroker": "http://orion-proxy:1027",
+    #     "trust": "30a5ce4c71e416bd199dcdcb7f8bcd8d70e8bb5e"
+    #}'
+    #HTTP/1.1 204 No Content
+    #X-Powered-By: Express
+    #Fiware-Correlator: 8c282a01-4149-45ab-91ac-a85a44142e59
+    #ETag: W/"2-vyGp6PvFo4RvsFtPoIWeCReyIC8"
+    #Date: Fri, 11 Mar 2022 08:49:47 GMT
+    #Connection: keep-alive
+    #Keep-Alive: timeout=5
   Scenario: 18 - IoT Agent - Provisioning a trusted service group
     When  I set the "Content-Type" header with the value "application/json"
     And   I set the "fiware-service" header with the value "openiot"
@@ -38,7 +54,7 @@ Feature: Test tutorial 404.Securing microservices with a PEP Proxy (IoT Agent - 
     And   I set the url to "http://localhost:4041/iot/devices"
     And   the body request described in file "request404-19.json"
     And   I send a POST HTTP request to that url
-    Then  fail: SECURITY_INFORMATION_MISSING, Some security information was missing for device type:Motion
+    Then  fail: SECURITY_INFORMATION_MISSING, Some security information was missing for device type:Motion. Message: {"name":"ENTITY_GENERIC_ERROR","message":"Error accesing entity data for device: motion001 of type: Motion"}
     Then  I receive a HTTP "204" status code from Keyrock with the following data
             | id  | password |
             | any | any      |

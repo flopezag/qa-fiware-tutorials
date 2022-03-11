@@ -5,7 +5,7 @@ from sys import stdout
 from requests import post, exceptions, get
 from logging import getLogger
 from json import load
-from hamcrest import assert_that, is_, has_key
+from hamcrest import assert_that, is_
 
 
 __logger__ = getLogger(__name__)

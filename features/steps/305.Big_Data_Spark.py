@@ -3,20 +3,10 @@ import os.path
 from behave import given, when, step, then
 from config.settings import CODE_HOME
 import os, stat
-from os.path import join, isdir, exists, basename
-from os import chdir, getcwd, environ, listdir
-from requests import get, post
-from requests import ConnectionError, HTTPError, URLRequired, Timeout, TooManyRedirects
+from os.path import join
 from logging import getLogger
-from features.funtions import check_java_version
 import subprocess
-from re import match
-from warnings import warn
-from features.timeout import Timeout
-from datetime import datetime, timedelta
-from pytz import UTC, timezone
 from os import environ
-import time
 
 __logger__ = getLogger(__name__)
 
