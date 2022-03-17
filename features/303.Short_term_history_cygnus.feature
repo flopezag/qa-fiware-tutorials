@@ -4,13 +4,10 @@ Feature: test tutorial 303 PROCESSING & HISTORY MANAGEMENT » SHORT TERM HISTORY
   url: https://fiware-tutorials.readthedocs.io/en/latest/short-term-history.html
   git-clone: https://github.com/FIWARE/tutorials.Short-Term-History.git
   git-directory: /tmp/tutorials.Short-Term-History
-  shell-commands: ./services create; export $(cat .env | grep '#' -v) && ./services sth-comet
+  shell-commands: ./services create; export $(cat .env | grep '#' -v) && ./services cygnus
   clean-shell-commands: ./services stop
 
-## ./services sth-comet seems to do nothing... We need to previously export
-#
-
-# STH-COMET - CHECKING SERVICE HEALTH
+# Cygnus- CHECKING SERVICE HEALTH
 
 Background:
    Given I set the tutorial 303
@@ -18,34 +15,39 @@ Background:
 
 # STH-Comet - Checking Service Health
 #   curl -X GET 'http://localhost:8666/version'
-# 1 - Request
+# 13 - Request
  Scenario: Checking sth service health
    When  I prepare a GET HTTP request to "http://localhost:8666/version"
    And   I perform the query request
    Then  I receive a HTTP "200" status code response
 
- # Generating Context Data....
- # Open a door, switch a Smart lamp...
- # TODO - xxxx
+  Scenario: Checking cygnus service health
+    When  I prepare a GET HTTP request to "http://localhost:5080/v1/version"
+    And   I perform the query request
+    Then  I receive a HTTP "200" status code response
+    And   I validate against JQ .success == "true"
 
-# Minimal mode - Subscribing STH-Comet to Context Changes
-# 2 - Request - Subscribing STH Coment to Context Changes
+# Minimal mode - Subscribing CYGNUS to Context Changes
+# 14 - Request - Subscribing cygnus
   Scenario: 2. Subscribe sht-comet to changes in Orion
     When  I prepare a POST HTTP request to "http://localhost:1026/v2/subscriptions/"
     And   I set header fiware-service to openiot
     And   I set header fiware-servicepath to /
-    And   I set the body request as described in 02.req.SubsbribeSthComent.json
+    And   I set the body request as described in 14.req.Subscribe.cygnus.json
     And   I perform the request
     Then  I receive a HTTP response with status 201 and empty dict
 
-# 3 - Request - Subscribing STH Coment to Lamp luminosity
+# 15 - Request - Subscribing cygnus to Lamp luminosity
   Scenario: 3. Subscribe sht-comet to changes in luminosity
     When  I prepare a POST HTTP request to "http://localhost:1026/v2/subscriptions/"
     And   I set header fiware-service to openiot
     And   I set header fiware-servicepath to /
-    And   I set the body request as described in 03.req.SubscribeSthLampLuminosity.json
+    And   I set the body request as described in 15.req.Subscribe.cygnus.LampLuminosity.json
     And   I perform the request
     Then  I receive a HTTP response with status 201 and empty dict
+
+ # -- As there is no difference in Getting data from STH-Comet with Cygnus, the rest of tutorial
+ # -- Should remain the same
 
  # 4 - Request - Test ORION Subsbriptions -- "The result should not be empty"
   Scenario: 4. Test that there are subscriptions in Orion

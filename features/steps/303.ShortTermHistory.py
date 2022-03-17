@@ -23,11 +23,6 @@ def step_impl(context, what, dst):
     context.payload = f
     pass
 
-@step(u'TODO - REMOVE ME')
-def step_impl(context):
-   time.sleep(1)
-
-
 @step(u'I validate against JQ {expr}')
 def step_impl(context, expr):
     expr = expr.replace('#124;', '|')
