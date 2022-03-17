@@ -141,7 +141,7 @@ Background:
       | type   | attribute  | sensor     | aggrMethod | aggrPeriod | jqExpr |
       | Motion | count      | Motion:001 | sum        | minute     | [.contextResponses[0].contextElement.attributes[0].values[].points[].samples] \| add == 10 |
       | Lamp   | luminosity | Lamp:001   | sum        | minute     | [.contextResponses[0].contextElement.attributes[0].values[].points[].samples] \| add == 10 |
-      | Lamp   | luminosity | Lamp:001   | max        | minute     | [.contextResponses[0].contextElement.attributes[0].values[].points[].max] \| .max == 1830  |
+      | Lamp   | luminosity | Lamp:001   | max        | minute     | [.contextResponses[0].contextElement.attributes[0].values[].points[].max] \| max == 1830  |
       | Lamp   | luminosity | Lamp:001   | min        | minute     | [.contextResponses[0].contextElement.attributes[0].values[].points[].min] \| min == 1550   |
 
   Scenario: REMOVE ME!!
