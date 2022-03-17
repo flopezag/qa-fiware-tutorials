@@ -55,7 +55,7 @@ Background:
 
  # 4 - Request - Test ORION Subsbriptions -- "The result should not be empty"
   Scenario: 4. Test that there are subscriptions in Orion
-    When  I prepare a GET HTTP request to "http://localhost:1026/v2/entities/urn:ngsi-ld:Motion:001?options=keyValues"
+    When  I prepare a GET HTTP request to "http://localhost:1026/v2/subscriptions/"
     And   I set header fiware-service to openiot
     And   I set header fiware-servicepath to /
     And   I perform the query request
@@ -75,16 +75,74 @@ Background:
     Then  I receive a HTTP "200" response code
     And   I wait "5" seconds
     Examples:
-        | sensor_value  | key_value | sensor  |
-        | s;ON;l;1750   | 3314136   | lamp001 |
-        | s;ON;l;1800   | 3314136   | lamp001 |
-        | s;ON;l;1775   | 3314136   | lamp001 |
-        | s;ON;l;1725   | 3314136   | lamp001 |
-        | s;ON;l;1760   | 3314136   | lamp001 |
-        | s;ON;l;1790   | 3314136   | lamp001 |
-        | s;ON;l;1810   | 3314136   | lamp001 |
-        | s;ON;l;1830   | 3314136   | lamp001 |
-        | s;ON;l;1720   | 3314136   | lamp001 |
-        | s;ON;l;1550   | 3314136   | lamp001 |
+        | sensor_value   | key_value  | sensor    |
+        | s\|ON\|l\|1750 | 3314136    | lamp001   |
+        | c\|1           | 1068318794 | motion001 |
+        | s\|ON\|l\|1800 | 3314136    | lamp001   |
+        | c\|0           | 1068318794 | motion001 |
+        | s\|ON\|l\|1775 | 3314136    | lamp001   |
+        | c\|1           | 1068318794 | motion001 |
+        | s\|ON\|l\|1725 | 3314136    | lamp001   |
+        | c\|0           | 1068318794 | motion001 |
+        | s\|ON\|l\|1760 | 3314136    | lamp001   |
+        | c\|1           | 1068318794 | motion001 |
+        | s\|ON\|l\|1790 | 3314136    | lamp001   |
+        | c\|0           | 1068318794 | motion001 |
+        | s\|ON\|l\|1810 | 3314136    | lamp001   |
+        | c\|1           | 1068318794 | motion001 |
+        | s\|ON\|l\|1830 | 3314136    | lamp001   |
+        | c\|0           | 1068318794 | motion001 |
+        | s\|ON\|l\|1720 | 3314136    | lamp001   |
+        | c\|1           | 1068318794 | motion001 |
+        | s\|ON\|l\|1550 | 3314136    | lamp001   |
+        | c\|0           | 1068318794 | motion001 |
 
-   Given I wait "10" seconds
+ Scenario: Just wait for a while -- Let's complet a minute
+   Given I wait "30" seconds
+
+# Request - Test lamp and motion sensors 5 y 6
+  Scenario Outline: Test Lamp and motion history. After 1 minute
+    When  I prepare a GET HTTP request to "http://localhost:8666/STH/v1/contextEntities/type/<type>/id/<sensor>/attributes/<attribute>?hLimit=<hlimit>&hOffset=<offset>"
+    And   I set header fiware-service to openiot
+    And   I set header fiware-servicepath to /
+    And   I perform the query request
+    Then  I receive a HTTP "200" response code
+    And   I validate against JQ <jqExpr>
+    # TODO - Test the results with json
+    Examples:
+      | type   | attribute  | sensor     | hlimit | offset | jqExpr |
+      | Lamp   | luminosity | Lamp:001   | 3      | 0      | .contextResponses[0].contextElement.attributes[] \| select(.name == "luminosity").values \| length == 3  |
+      | Motion | count      | Motion:001 | 3      | 3      | .contextResponses[0].contextElement.attributes[] \| select(.name == "count").values \| length == 3       |
+
+# Request 7 -- List the latest N elements (3 in this case)
+  Scenario Outline: List the latest elements
+    When  I prepare a GET HTTP request to "http://localhost:8666/STH/v1/contextEntities/type/<type>/id/<sensor>/attributes/<attribute>?lastN=<lastN>"
+    And   I set header fiware-service to openiot
+    And   I set header fiware-servicepath to /
+    And   I perform the query request
+    Then  I receive a HTTP "200" response code
+    And   I validate against JQ <jqExpr>
+    # TODO - Test the results with json
+    Examples:
+      | type   | attribute  | sensor     | lastN | jqExpr |
+      | Motion | count      | Motion:001 | 3     | .contextResponses[0].contextElement.attributes[] \| select(.name == "count").values \| length == 3 |
+
+# Request 8 & 9 -- Aggregation over a perid (minute)
+# Request 10 & 11 -- Min and Max over a period (minute)
+  Scenario Outline: List the latest elements
+    When  I prepare a GET HTTP request to "http://localhost:8666/STH/v1/contextEntities/type/<type>/id/<sensor>/attributes/<attribute>?aggrMethod=<aggrMethod>&aggrPeriod=<aggrPeriod>"
+    And   I set header fiware-service to openiot
+    And   I set header fiware-servicepath to /
+    And   I perform the query request
+    Then  I receive a HTTP "200" response code
+    And   I validate against JQ <jqExpr>
+    # TODO - Test the results with json
+    Examples:
+      | type   | attribute  | sensor     | aggrMethod | aggrPeriod | jqExpr |
+      | Motion | count      | Motion:001 | sum        | minute     | [.contextResponses[0].contextElement.attributes[0].values[].points[].samples] \| add == 10 |
+      | Lamp   | luminosity | Lamp:001   | sum        | minute     | [.contextResponses[0].contextElement.attributes[0].values[].points[].samples] \| add == 10 |
+      | Lamp   | luminosity | Lamp:001   | max        | minute     | [.contextResponses[0].contextElement.attributes[0].values[].points[].max] \| .max == 1830  |
+      | Lamp   | luminosity | Lamp:001   | min        | minute     | [.contextResponses[0].contextElement.attributes[0].values[].points[].min] \| min == 1550   |
+
+  Scenario: REMOVE ME!!
+    Given TODO - REMOVE ME

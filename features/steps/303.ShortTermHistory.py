@@ -1,3 +1,6 @@
+import time
+import jq
+
 from behave import given, step, when
 from os.path import join
 from config.settings import CODE_HOME
@@ -19,3 +22,18 @@ def step_impl(context, what, dst):
     f = f.replace(what, dst)
     context.payload = f
     pass
+
+@step(u'TODO - REMOVE ME')
+def step_impl(context):
+   time.sleep(1)
+
+
+@step(u'I validate against JQ {expr}')
+def step_impl(context, expr):
+    expr = expr.replace('#124;', '|')
+    pl = context.response
+    jqe = jq.compile(expr)
+
+    i = iter(jqe.input(pl))
+    r = next(i, None)
+    assert r == True
