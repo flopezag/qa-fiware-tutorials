@@ -137,7 +137,7 @@ def check_java_version():
 
     return jre_version
 
-
+  
 def set_xml_data(tag):
     if settings.domainId == '':
         settings.domainId = tag[0].attributes['href'].value
