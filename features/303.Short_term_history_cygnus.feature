@@ -14,7 +14,6 @@ Background:
 
 
 # STH-Comet - Checking Service Health
-#   curl -X GET 'http://localhost:8666/version'
 # 13 - Request
  Scenario: Checking sth service health
    When  I prepare a GET HTTP request to "http://localhost:8666/version"

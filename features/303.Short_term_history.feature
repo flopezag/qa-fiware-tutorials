@@ -17,16 +17,11 @@ Background:
 
 
 # STH-Comet - Checking Service Health
-#   curl -X GET 'http://localhost:8666/version'
 # 1 - Request
  Scenario: Checking sth service health
    When  I prepare a GET HTTP request to "http://localhost:8666/version"
    And   I perform the query request
    Then  I receive a HTTP "200" status code response
-
- # Generating Context Data....
- # Open a door, switch a Smart lamp...
- # TODO - xxxx
 
 # Minimal mode - Subscribing STH-Comet to Context Changes
 # 2 - Request - Subscribing STH Coment to Context Changes
