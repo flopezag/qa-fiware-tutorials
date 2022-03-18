@@ -40,3 +40,9 @@ policySetVersion = str()
 
 CODE_HOME = dirname(dirname(abspath(__file__)))
 LOG_HOME = join(CODE_HOME, 'logs')
+CONFIG_HOME = join(CODE_HOME, 'config')
+CONFIG_FILE = join(CONFIG_HOME, 'config.json')
+
+config = None
+with open(CONFIG_FILE) as config_file:
+    config = load(config_file)

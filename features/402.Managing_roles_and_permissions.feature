@@ -173,6 +173,7 @@ Feature: Test tutorial 402.Managing roles and permissions
     When  I set the "X-Auth-Token" header with the value "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
     And   the content-type header key equal to "application/json"
     And   I set the permission to the role of an application
+    And   I do not specify any payload
     And   I send a PUT HTTP request to that url
     Then  I receive a HTTP "201" status code from Keyrock with the "role_permission_assignments" with this "roleId" and "permissionId"
 
@@ -220,6 +221,7 @@ Feature: Test tutorial 402.Managing roles and permissions
     And   I set the organization_roles url with the following data
         | application_id | organization_id | role_id | organization_role |
         | applicationId  | organizationId  | roleId  | member            |
+    And   I do not specify any payload
     And   I send a PUT HTTP request to that url
     Then  I receive a HTTP "201" status code from Keyrock with the following data for an organization
         | role_organization_assignments | role_id | organization_id | oauth_client_id | role_organization |
@@ -251,6 +253,7 @@ Feature: Test tutorial 402.Managing roles and permissions
     And   I set the user roles url with the following data
         | application_id | user_id                               | role_id |
         | applicationId  | bbbbbbbb-good-0000-0000-000000000000  | roleId  |
+    And   I do not specify any payload
     And   I send a PUT HTTP request to that url
     Then  I receive a HTTP "201" status code from Keyrock with the following data for a role_user_assignments
         | role_user_assignments | role_id | user_id                               | oauth_client_id |

@@ -10,7 +10,7 @@ iotAgentId = str()
 
 
 @given(u'I set the tutorial 407')
-def step_impl_tutorial_203(context):
+def step_impl_tutorial_407(context):
     context.data_home = join(join(join(settings.CODE_HOME, "features"), "data"), "407.Securing_Access_OpenID_Connect")
 
 

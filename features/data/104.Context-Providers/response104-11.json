@@ -1,0 +1,22 @@
+[
+    {
+        "id": "5addeffd93e53f86d8264521",
+        "description": "Random Weather Conditions",
+        "dataProvided": {
+            "entities": [
+                {
+                    "id": "urn:ngsi-ld:Store:002",
+                    "type": "Store"
+                }
+            ],
+            "attrs": ["temperature", "relativeHumidity"]
+        },
+        "provider": {
+            "http": {
+                "url": "http://context-provider:3000/random/weatherConditions"
+            },
+            "supportedForwardingMode": "all"
+        },
+        "status": "active"
+    }
+]
