@@ -91,7 +91,7 @@ installation.
 2. Create the virtualenv: `virtualenv -ppython3.9 venv`.
 3. Activate the python environment: `source ./venv/bin/activate`.
 4. Install the requirements: `pip install -r requirements.txt`.
-5. Add the OpenWeatherMap Key Id in the `.config/config.json` files.
+5. Add the OpenWeatherMap Key Id in the `config/config.json` files.
 
 To obtain a OpenWeather API Key, you need to register in [OpenWeather](https://openweathermap.org). There is a Free
 option which allows 60 calls/minute and 1,000,000 calls/month, which is good enough for these tutorials.
