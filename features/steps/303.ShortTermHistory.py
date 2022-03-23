@@ -16,16 +16,8 @@ def step_impl(context, sensor_values):
     context.payload = sensor_values
 
 
-@step(u'I substitute in payload "{what}" for "{dst}"')
-def step_impl(context, what, dst):
-    f = context.payload
-    f = f.replace(what, dst)
-    context.payload = f
-    pass
-
 @step(u'I validate against JQ {expr}')
 def step_impl(context, expr):
-    expr = expr.replace('#124;', '|')
     pl = context.response
     jqe = jq.compile(expr)
 

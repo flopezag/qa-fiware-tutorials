@@ -59,7 +59,6 @@ Background:
     And   I set header fiware-servicepath to /
     And   I set header Content-Type to text/plain
     And   I set simple sensor values as described in "<sensor_value>"
-    And   I substitute in payload ";" for "|"
     And   I perform the request
     Then  I receive a HTTP "200" response code
     And   I wait "5" seconds
