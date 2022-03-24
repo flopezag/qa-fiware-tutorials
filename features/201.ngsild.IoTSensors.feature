@@ -33,6 +33,5 @@ Feature: test tutorial 201.Introduction to IoT Sensors
       And   I set header fiware-servicepath to /
       And   I set header Content-Type to text/plain
       And   I set the body text to h|20
-      And   I do some waiting to debug
       And   I perform the request
       Then  I receive a HTTP "201" response code

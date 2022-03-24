@@ -21,7 +21,3 @@ def step_impl(context, text_data : str):
 @step(u'I have a text response as {response_data}')
 def step_impl(context, response_data : str):
     assert(context.response.strip() == response_data.strip())
-
-@step(u'I do some waiting to debug')
-def step_impl(context):
-    time.sleep(1)
