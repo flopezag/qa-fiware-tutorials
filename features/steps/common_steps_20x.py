@@ -64,8 +64,6 @@ def perform_query_request(context):
 
     context.statusCode = str(response.status_code)
     context.responseHeaders = response.headers
-    stdout.write(f'--- statusCode: {response.status_code}\n')
-    stdout.flush()
     if context.statusCode != "204":
         context.response = response.json()
     else:
@@ -91,8 +89,6 @@ def perform_request(context):
 
     context.statusCode = str(response.status_code)
     context.responseHeaders = response.headers
-    stdout.write(f'--- statusCode: {response.status_code}\n')
-    stdout.flush()
 
     try:
         context.response = response.json()

@@ -21,6 +21,12 @@ def step_impl(context, expr):
     context.response = jqc.input(pl).first()
 
 
-@step(u'Just a debug at the end')
-def step_impl(context):
-    time.sleep(1)
+
+@step(u'I validate against JQ {expr}')
+def step_impl(context, expr):
+    pl = context.response
+    jqe = jq.compile(expr)
+
+    i = iter(jqe.input(pl))
+    r = next(i, None)
+    assert r == True

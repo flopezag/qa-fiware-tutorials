@@ -150,7 +150,6 @@ Feature: test tutorial 201.Introduction to IoT Sensors
       | services                 | 19.response.json | 19.excludes   |
 
   Scenario: Req 20 - Update a service Group
-    Given Just a debug at the end
     When  I prepare a PUT HTTP request to "http://localhost:4041/iot/services?resource=/iot/d&apikey=4jggokgpepnvsb2uv4s40d59ov"
     And   I set header fiware-service to openiot
     And   I set header fiware-servicepath to /
@@ -160,6 +159,48 @@ Feature: test tutorial 201.Introduction to IoT Sensors
 
   Scenario: Req 21 - Delete a service Group
     When  I prepare a DELETE HTTP request to "http://localhost:4041/iot/services?resource=/iot/d&apikey=4jggokgpepnvsb2uv4s40d59ov"
+    And   I set header fiware-service to openiot
+    And   I set header fiware-servicepath to /
+    And   I perform the query request
+    Then  I receive a HTTP response with status 204 and empty dict
+
+  Scenario: Req 22 - Creating a provisioned device Water002
+    When  I prepare a POST HTTP request to "http://localhost:4041/iot/devices"
+    And   I set header fiware-service to openiot
+    And   I set header fiware-servicepath to /
+    And   I set the body request as described in 22.request.json
+    And   I perform the request
+    Then  I receive a HTTP response with status 201 and empty dict
+
+  Scenario: Req 23 - Querying devices
+    Given I wait "2" seconds
+    When  I prepare a GET HTTP request to "http://localhost:4041/iot/devices/water002"
+    And   I set header fiware-service to openiot
+    And   I set header fiware-servicepath to /
+    And   I perform the query request
+    Then  I receive a HTTP "200" response code from IoTA with the body "23.response.json" and exclusions "23.excludes"
+
+  Scenario: Req 24 - List all provisioned devices
+    Given I wait "2" seconds
+    When  I prepare a GET HTTP request to "http://localhost:4041/iot/devices"
+    And   I set header fiware-service to openiot
+    And   I set header fiware-servicepath to /
+    And   I perform the query request
+    Then  I receive a HTTP "200" status code response
+    And   I validate against JQ .count>=5
+
+  # Strange error 200-ok with message:
+  # {"name":"ENTITY_GENERIC_ERROR","message":"Error accesing entity data for device: water002 of type: IoT-Device"}
+  Scenario: Req 25 - Update a provisioned device
+    When  I prepare a PUT HTTP request to "http://localhost:4041/iot/devices/water002"
+    And   I set header fiware-service to openiot
+    And   I set header fiware-servicepath to /
+    And   I set the body request as described in 25.request.json
+    And   I perform the request
+    Then  I receive a HTTP response with status 200 and empty dict
+
+  Scenario: Req 26 - Delete a provisioned device
+    When  I prepare a DELETE HTTP request to "http://localhost:4041/iot/devices/water002"
     And   I set header fiware-service to openiot
     And   I set header fiware-servicepath to /
     And   I perform the query request
