@@ -5,7 +5,7 @@ Feature: test tutorial 201.Introduction to IoT Sensors
   git-clone: https://github.com/FIWARE/tutorials.IoT-Agent.git
   git-directory: /tmp/tutorials.IoT-Agent
   # services orion | scorpio
-  shell-commands: git checkout NGSI-LD ; ./services create ; ./services orion
+  shell-commands: git checkout NGSI-LD ; ./services create ; ./services ${CB_ENVIRONMENT:-orion}
   clean-shell-commands: ./services stop
 
 
