@@ -7,7 +7,7 @@ from config.settings import CODE_HOME
 
 
 @given(u'I set the tutorial 303')
-def step_impl_tutorial_205(context):
+def step_impl_tutorial_303(context):
     context.data_home = join(join(join(CODE_HOME, "features"), "data"), "303.Short_Term_History")
 
 
@@ -24,3 +24,4 @@ def step_impl(context, expr):
     i = iter(jqe.input(pl))
     r = next(i, None)
     assert r == True
+

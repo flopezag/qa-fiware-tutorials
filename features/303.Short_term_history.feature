@@ -53,7 +53,6 @@ Background:
 
  # 4.5 - Request - Populate Lamp:001 history with curls
  Scenario Outline: Communicating with IoT Devices: Using Actuators
-    # When  I prepare a POST HTTP request to "http://localhost:7896/iot/d?k=3314136&i=lamp001"
     When  I prepare a POST HTTP request to "http://localhost:7896/iot/d?k=<key_value>&i=<sensor>"
     And   I set header fiware-service to openiot
     And   I set header fiware-servicepath to /
