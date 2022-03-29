@@ -16,7 +16,7 @@ Feature: test tutorial 201.Introduction to IoT Sensors
     When  I send GET HTTP request to "http://localhost:4041/iot/about"
     Then  I receive a HTTP "200" response code from IoTAgent with the body "response202-01.json" and exclusions "01.excludes"
 
-  Scenario Outline: Provisining a service Group
+  Scenario Outline: Provisioning a service Group and a device
     When  I prepare a POST HTTP request for "<description>" to "<url>"
     And   I set header fiware-service to openiot
     And   I set header fiware-servicepath to /
@@ -28,10 +28,8 @@ Feature: test tutorial 201.Introduction to IoT Sensors
       | http://localhost:4041/iot/services | 02.request.json | Provision a service |
       | http://localhost:4041/iot/devices  | 03.request.json | Provision a device  |
 
-  Scenario: Sending some simulating it from dummy iot device - Request 4
+  Scenario: simulate a dummy IoT device measurement coming from the Temperature Sensor device  - Request 4
     When I prepare a POST HTTP request to "http://localhost:7896/iot/d?k=4jggokgpepnvsb2uv4s40d59ov&i=temperature001"
-    # And   I set header fiware-service to openiot
-    # And   I set header fiware-servicepath to /
     And   I set header Content-Type to text/plain
     And   I set the body text to t|3
     And   I perform the request
