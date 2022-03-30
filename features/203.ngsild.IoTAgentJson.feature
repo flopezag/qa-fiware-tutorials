@@ -73,22 +73,21 @@ Feature: test tutorial 201.Introduction to IoT Sensors
     Then  I receive a HTTP "200" response code from Broker with the body "07.response.json" and exclusions "07.excludes"
 
 
-  Scenario: Req 8 - Provision an actuator
+  Scenario: Req 8 - Provision an actuator - Water001
     When  I prepare a POST HTTP request to "http://localhost:4041/iot/devices"
     And   I set header fiware-servicepath to /
     And   I set header fiware-service to openiot
     And   I set header Content-Type to application/json
     And   I set the body request as described in 08.request.json
     And   I perform the request
-    Then  I receive a HTTP "200" response code
+    Then  I receive a HTTP "201" response code
     And   I wait "1" seconds
 
   Scenario: Req 9 - Run a command in Water001 actuator
-    When  I prepare a POST HTTP request to "http://localhost:4041/ngsi-ld/v1/entities/urn:ngsi-ld:Device:water001/attrs/on"
+    When  I prepare a PATCH HTTP request to "http://localhost:4041/ngsi-ld/v1/entities/urn:ngsi-ld:Device:water001/attrs/on"
     And   I set header fiware-servicepath to /
     And   I set header fiware-service to openiot
     And   I set header Content-Type to application/json
     And   I set the body request as described in 09.request.json
     And   I perform the request
-    Then  I receive a HTTP "200" response code
-    And   I wait "1" seconds
+    Then  I receive a HTTP "204" response code
