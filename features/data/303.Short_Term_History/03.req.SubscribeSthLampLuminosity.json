@@ -1,0 +1,25 @@
+{
+  "description": "Notify Cygnus to sample Lamp luminosity every five seconds",
+  "subject": {
+    "entities": [
+      {
+        "idPattern": "Lamp.*"
+      }
+    ],
+    "condition": {
+      "attrs": [
+        "luminosity"
+      ]
+    }
+  },
+  "notification": {
+    "http": {
+      "url": "http://sth-comet:8666/notify"
+    },
+    "attrs": [
+      "luminosity"
+    ],
+    "attrsFormat": "legacy"
+  },
+  "throttling": 5
+}
