@@ -1,0 +1,41 @@
+{
+    "count": 1,
+    "services": [
+        {
+            "commands": [],
+            "lazy": [],
+            "attributes": [
+                {
+                    "object_id": "bpm",
+                    "type": "Property",
+                    "name": "heartRate",
+                    "metadata": {
+                        "unitCode": {
+                            "type": "Text",
+                            "value": "5K"
+                        }
+                    }
+                },
+                {
+                    "object_id": "s",
+                    "name": "status",
+                    "type": "Property"
+                },
+                {
+                    "object_id": "gps",
+                    "name": "location",
+                    "type": "geo:point"
+                }
+            ],
+            "_id": "5f5f8ad8eed02a000687dec5",
+            "resource": "/iot/d",
+            "apikey": "4jggokgpepnvsb2uv4s40d59ov",
+            "service": "openiot",
+            "subservice": "/",
+            "__v": 0,
+            "static_attributes": [],
+            "internal_attributes": [],
+            "entity_type": "Device"
+        }
+    ]
+}

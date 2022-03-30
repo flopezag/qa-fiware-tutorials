@@ -91,3 +91,123 @@ Feature: test tutorial 201.Introduction to IoT Sensors
     And   I set the body request as described in 09.request.json
     And   I perform the request
     Then  I receive a HTTP "204" response code
+
+  Scenario: Req 10 -- Read the result of the command by querying the CB
+    When  I prepare a GET HTTP request to "http://localhost:1026/ngsi-ld/v1/entities/urn:ngsi-ld:Device:water001"
+    And   I set header Accept to application/json
+    And   I set header NGSILD-Tenant to openiot
+    And   I set header Link to <http://context/ngsi-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"
+    And   I perform the query request
+    Then  I receive a HTTP "200" response code from Broker with the body "10.response.json" and exclusions "10.excludes"
+
+  Scenario Outline: Req 11, 12 - Provisioning filling station and tractor
+    When  I prepare a POST HTTP request for "<description>" to "http://localhost:4041/iot/devices"
+    And   I set header fiware-service to openiot
+    And   I set header fiware-servicepath to /
+    And   I set the body request as described in <file>
+    And   I perform the request
+    Then  I receive a HTTP response with status 201 and empty dict
+    Examples:
+      | file            | description                 |
+      | 11.request.json | Provision a filling station |
+      | 12.request.json | Provision a tractor         |
+
+
+  Scenario: Req 13 - Querying devices
+    Given I wait "2" seconds
+    When  I prepare a GET HTTP request to "http://localhost:4041/iot/devices"
+    And   I set header fiware-service to openiot
+    And   I set header fiware-servicepath to /
+    And   I perform the query request
+    Then  I receive a HTTP "200" response code
+
+  Scenario Outline: Req 14, 15, 16 - Activating things with actuators
+    When  I prepare a PATCH HTTP request for "<description>" to "http://localhost:1026/ngsi-ld/v1/entities/urn:ngsi-ld:Device:<device>/attrs/<attr>"
+    And   I set header content-type to application/json
+    And   I set header NGSILD-Tenant to openiot
+    And   I set header Link to <http://context/ngsi-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"
+    And   I set header fiware-service to openiot
+    And   I set header fiware-servicepath to /
+    And   I set the body request as described in <file>
+    And   I perform the request
+    Then  I receive a HTTP response with status 204 and empty dict
+    Examples:
+      | file                         | device     | attr  | description            |
+      | activate.things.request.json | water001   | on    | Act. irrigation system |
+      | activate.things.request.json | tractor001 | start | Act. tractor           |
+      | activate.things.request.json | filling001 | add   | Act. filling system    |
+
+  Scenario: Req 17 - Provisining a service Group for CRUD operations
+    When  I prepare a POST HTTP request to "http://localhost:4041/iot/services"
+    And   I set header fiware-service to openiot
+    And   I set header fiware-servicepath to /
+    And   I set the body request as described in 17.request
+    And   I perform the request
+    Then  I receive a HTTP response with status 201 and empty dict
+
+  ## ERR - Tutorial shows /iot/d -- should it be iot/json
+  Scenario Outline: Req 18 and 19 - Read service group details
+    When  I prepare a GET HTTP request to "http://localhost:4041/iot/<what>"
+    And   I set header fiware-service to openiot
+    And   I set header fiware-servicepath to /
+    And   I perform the query request
+    Then  I receive a HTTP "200" response code from IoTA with the body "<response_file>" and exclusions "<excludes_file>"
+    Examples:
+      | what                        | response_file    | excludes_file |
+      | services?resource=/iot/json | 18.response.json | 18.excludes   |
+      | services                    | 19.response.json | 19.excludes   |
+
+  Scenario: Req 20 - Update a service Group
+    When  I prepare a PUT HTTP request to "http://localhost:4041/iot/services?resource=/iot/d&apikey=4jggokgpepnvsb2uv4s40d59ov"
+    And   I set header fiware-service to openiot
+    And   I set header fiware-servicepath to /
+    And   I set the body request as described in 20.request.json
+    And   I perform the request
+    Then  I receive a HTTP response with status 204 and empty dict
+
+  Scenario: Req 21 - Delete a service Group
+    When  I prepare a DELETE HTTP request to "http://localhost:4041/iot/services?resource=/iot/d&apikey=4jggokgpepnvsb2uv4s40d59ov"
+    And   I set header fiware-service to openiot
+    And   I set header fiware-servicepath to /
+    And   I perform the query request
+    Then  I receive a HTTP response with status 204 and empty dict
+
+  Scenario: Req 22 - Creating a provisioned device Water002
+    When  I prepare a POST HTTP request to "http://localhost:4041/iot/devices"
+    And   I set header fiware-service to openiot
+    And   I set header fiware-servicepath to /
+    And   I set the body request as described in 22.request.json
+    And   I perform the request
+    Then  I receive a HTTP response with status 201 and empty dict
+
+  Scenario: Req 23 - Querying devices
+    Given I wait "2" seconds
+    When  I prepare a GET HTTP request to "http://localhost:4041/iot/devices/water002"
+    And   I set header fiware-service to openiot
+    And   I set header fiware-servicepath to /
+    And   I perform the query request
+    Then  I receive a HTTP "200" response code from IoTA with the body "23.response.json" and exclusions "23.excludes"
+
+  Scenario: Req 24 - List all provisioned devices
+    Given I wait "2" seconds
+    When  I prepare a GET HTTP request to "http://localhost:4041/iot/devices"
+    And   I set header fiware-service to openiot
+    And   I set header fiware-servicepath to /
+    And   I perform the query request
+    Then  I receive a HTTP "200" status code response
+    And   I validate against JQ .count>=5
+
+Scenario: Req 25 - Update a provisioned device
+    When  I prepare a PUT HTTP request to "http://localhost:4041/iot/devices/water002"
+    And   I set header fiware-service to openiot
+    And   I set header fiware-servicepath to /
+    And   I set the body request as described in 25.request.json
+    And   I perform the request
+    Then  I receive a HTTP response with status 200 and empty dict
+
+  Scenario: Req 26 - Delete a provisioned device
+    When  I prepare a DELETE HTTP request to "http://localhost:4041/iot/devices/water002"
+    And   I set header fiware-service to openiot
+    And   I set header fiware-servicepath to /
+    And   I perform the query request
+    Then  I receive a HTTP response with status 204 and empty dict
