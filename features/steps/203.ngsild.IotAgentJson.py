@@ -3,6 +3,7 @@ import time
 from behave import given, step
 from config.settings import CODE_HOME
 from os.path import join
+import jq
 
 
 @given(u'I set the tutorial 203 LD')
@@ -12,5 +13,23 @@ def step_impl_tutorial_203(context):
 
 @step(u'I wait for some debug')
 def step_impl(context):
+    r = context.response
     time.sleep(1)
 
+
+@step(u'I filter the result with jq {expr}')
+def step_impl(context, expr):
+    pl = context.response
+    jqc = jq.compile(expr)
+    r = jqc.input(pl).first()
+    context.response = r
+
+
+@step(u'I validate against JQ {expr}')
+def step_impl(context, expr):
+    pl = context.response
+    jqe = jq.compile(expr)
+
+    i = iter(jqe.input(pl))
+    r = next(i, None)
+    assert r == True
