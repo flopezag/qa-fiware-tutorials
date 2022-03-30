@@ -28,7 +28,7 @@
                 }
             ],
             "_id": "5f5f8ad8eed02a000687dec5",
-            "resource": "/iot/d",
+            "resource": "/iot/json",
             "apikey": "4jggokgpepnvsb2uv4s40d59ov",
             "service": "openiot",
             "subservice": "/",
@@ -39,3 +39,4 @@
         }
     ]
 }
+

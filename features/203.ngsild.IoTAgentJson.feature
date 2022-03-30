@@ -50,7 +50,6 @@ Feature: test tutorial 201.Introduction to IoT Sensors
     And   I set header NGSILD-Path to /
     And   I set header Link to <http://context/ngsi-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"
     And   I perform the query request
-    And   I wait for some debug
     Then  I receive a HTTP "200" response code from Broker with the body "05.response.json" and exclusions "05.excludes"
 
   Scenario: Req 6 - Create a new entity sending a meassure
@@ -137,11 +136,12 @@ Feature: test tutorial 201.Introduction to IoT Sensors
       | activate.things.request.json | tractor001 | start | Act. tractor           |
       | activate.things.request.json | filling001 | add   | Act. filling system    |
 
+  ## ERR - 409 Conflict -- the service is previously created
   Scenario: Req 17 - Provisining a service Group for CRUD operations
     When  I prepare a POST HTTP request to "http://localhost:4041/iot/services"
     And   I set header fiware-service to openiot
     And   I set header fiware-servicepath to /
-    And   I set the body request as described in 17.request
+    And   I set the body request as described in 17.request.json
     And   I perform the request
     Then  I receive a HTTP response with status 201 and empty dict
 
@@ -158,7 +158,7 @@ Feature: test tutorial 201.Introduction to IoT Sensors
       | services                    | 19.response.json | 19.excludes   |
 
   Scenario: Req 20 - Update a service Group
-    When  I prepare a PUT HTTP request to "http://localhost:4041/iot/services?resource=/iot/d&apikey=4jggokgpepnvsb2uv4s40d59ov"
+    When  I prepare a PUT HTTP request to "http://localhost:4041/iot/services?resource=/iot/json&apikey=4jggokgpepnvsb2uv4s40d59ov"
     And   I set header fiware-service to openiot
     And   I set header fiware-servicepath to /
     And   I set the body request as described in 20.request.json
@@ -166,7 +166,7 @@ Feature: test tutorial 201.Introduction to IoT Sensors
     Then  I receive a HTTP response with status 204 and empty dict
 
   Scenario: Req 21 - Delete a service Group
-    When  I prepare a DELETE HTTP request to "http://localhost:4041/iot/services?resource=/iot/d&apikey=4jggokgpepnvsb2uv4s40d59ov"
+    When  I prepare a DELETE HTTP request to "http://localhost:4041/iot/services?resource=/iot/json&apikey=4jggokgpepnvsb2uv4s40d59ov"
     And   I set header fiware-service to openiot
     And   I set header fiware-servicepath to /
     And   I perform the query request

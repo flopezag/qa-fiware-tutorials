@@ -11,12 +11,6 @@ def step_impl_tutorial_203(context):
     context.data_home = join(join(join(CODE_HOME, "features"), "data"),  "203.ld.IotAgentJSON")
 
 
-@step(u'I wait for some debug')
-def step_impl(context):
-    r = context.response
-    time.sleep(1)
-
-
 @step(u'I filter the result with jq {expr}')
 def step_impl(context, expr):
     pl = context.response
