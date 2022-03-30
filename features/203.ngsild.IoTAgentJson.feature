@@ -36,13 +36,14 @@ Feature: test tutorial 201.Introduction to IoT Sensors
   Scenario: Sending some simulating it from dummy iot device - Request 4
     When I prepare a POST HTTP request to "http://localhost:7896/iot/json?k=4jggokgpepnvsb2uv4s40d59ov&i=temperature001"
     And   I set header Content-Type to application/json
-    And   I perform the request
     And   I set the body request as described in 04.request.json
+    And   I perform the request
     Then  I receive a HTTP "200" response code
     And   I wait "1" seconds
 
   # Request 5
-  # The headers should be this way not as explained in the tutorial with fiware-service and fiware-servicepath
+  ## ERR - The headers should be this way, not as explained in the tutorial with fiware-service and fiware-servicepath
+  ## ERR - No "@context" in response => failure
   Scenario: Querying the temperature in the context Broker
     When  I prepare a GET HTTP request to "http://localhost:1026/ngsi-ld/v1/entities/urn:ngsi-ld:Device:temperature001?attrs=temperature"
     And   I set header NGSILD-Tenant to openiot
@@ -60,7 +61,8 @@ Feature: test tutorial 201.Introduction to IoT Sensors
     Then  I receive a HTTP "200" response code
     And   I wait "1" seconds
 
-  # Modified c.value in response.json from "1" to 1 (str to int)
+  ## ERR - Modified c.value in response.json from "1" to 1 (str to int)
+  ## ERR - No "@context" in response => failure
   Scenario: Req 7 - Test the value of the new device
     When  I prepare a GET HTTP request to "http://localhost:1026/ngsi-ld/v1/entities/?type=Device"
     And   I set header NGSILD-Tenant to openiot
@@ -70,3 +72,23 @@ Feature: test tutorial 201.Introduction to IoT Sensors
     And   I filter the result with jq .[]|select(.id == "urn:ngsi-ld:Device:motion003")
     Then  I receive a HTTP "200" response code from Broker with the body "07.response.json" and exclusions "07.excludes"
 
+
+  Scenario: Req 8 - Provision an actuator
+    When  I prepare a POST HTTP request to "http://localhost:4041/iot/devices"
+    And   I set header fiware-servicepath to /
+    And   I set header fiware-service to openiot
+    And   I set header Content-Type to application/json
+    And   I set the body request as described in 08.request.json
+    And   I perform the request
+    Then  I receive a HTTP "200" response code
+    And   I wait "1" seconds
+
+  Scenario: Req 9 - Run a command in Water001 actuator
+    When  I prepare a POST HTTP request to "http://localhost:4041/ngsi-ld/v1/entities/urn:ngsi-ld:Device:water001/attrs/on"
+    And   I set header fiware-servicepath to /
+    And   I set header fiware-service to openiot
+    And   I set header Content-Type to application/json
+    And   I set the body request as described in 09.request.json
+    And   I perform the request
+    Then  I receive a HTTP "200" response code
+    And   I wait "1" seconds

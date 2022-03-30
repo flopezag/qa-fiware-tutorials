@@ -23,13 +23,3 @@ def step_impl(context, expr):
     jqc = jq.compile(expr)
     r = jqc.input(pl).first()
     context.response = r
-
-
-@step(u'I validate against JQ {expr}')
-def step_impl(context, expr):
-    pl = context.response
-    jqe = jq.compile(expr)
-
-    i = iter(jqe.input(pl))
-    r = next(i, None)
-    assert r == True
