@@ -1,0 +1,20 @@
+{
+        "@context": "http://context/ngsi-context.jsonld",
+        "id": "urn:ngsi-ld:Device:motion003",
+        "type": "Device",
+        "c": {
+            "type": "Property",
+            "value": "1",
+            "observedAt": "2020-09-17T09:41:56.755Z"
+        },
+        "category": {
+            "type": "Property",
+            "value": "sensor",
+            "observedAt": "2020-09-17T09:41:56.755Z"
+        },
+        "supportedProtocol": {
+            "type": "Property",
+            "value": "ul20",
+            "observedAt": "2020-09-17T09:41:56.755Z"
+        }
+}
