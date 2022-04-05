@@ -1,4 +1,4 @@
-Feature: test tutorial 201.Introduction to IoT Sensors
+Feature: test tutorial 203.IoT Agents using JSON
 
   This is the feature file of the FIWARE Step by Step tutorial for IoT Sensors - NGSI-LD
   url: https://ngsi-ld-tutorials.readthedocs.io/en/latest/iot-agent-json.html
