@@ -1,0 +1,8 @@
+root['on_status']['observedAt']
+root['on_info']['observedAt']
+root['controlledAsset']['observedAt']
+root['location']
+root['category']
+root['supportedProtocol']
+root['off_status']
+root['off_info']

@@ -14,7 +14,7 @@ def step_impl(context):
     context.data_home = join(join(join(CODE_HOME, "features"), "data"), "202.ld.IotAgentUltralight")
 
 
-@step(u'I filter the result with jq {expr}')
+@step(u"I filter the result with jq '{expr}'")
 def step_impl(context, expr):
     pl = context.response
     jqc = jq.compile(expr)
@@ -22,7 +22,7 @@ def step_impl(context, expr):
 
 
 
-@step(u'I validate against JQ {expr}')
+@step(u"I validate against jq '{expr}'")
 def step_impl(context, expr):
     pl = context.response
     jqe = jq.compile(expr)
@@ -30,3 +30,4 @@ def step_impl(context, expr):
     i = iter(jqe.input(pl))
     r = next(i, None)
     assert r == True
+

@@ -1,0 +1,11 @@
+{
+    "@context": "http://context/ngsi-context.jsonld",
+    "id": "urn:ngsi-ld:Device:temperature001",
+    "type": "Device",
+    "temperature": {
+        "type": "Property",
+        "value": 3,
+        "unitCode": "CEL",
+        "observedAt": "2020-09-14T15:23:12.263Z"
+    }
+}

@@ -1,0 +1,5 @@
+root['c']['observedAt']
+root['supportedProtocol']['observedAt']
+root['category']['observedAt']
+root['location']
+root['@context']
