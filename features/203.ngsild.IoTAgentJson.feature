@@ -19,7 +19,7 @@ Feature: test tutorial 203.IoT Agents using JSON
 
   # Request 2, 3 - Provision service and provision device
   ## Modified json file -- changed /iot/d for /iot/json
-  Scenario Outline: Provisining a service Group
+  Scenario Outline: Provisioning a service Group
     When  I prepare a POST HTTP request for "<description>" to "<url>"
     And   I set header fiware-service to openiot
     And   I set header fiware-servicepath to /
@@ -33,7 +33,7 @@ Feature: test tutorial 203.IoT Agents using JSON
       | http://localhost:4041/iot/devices  | 03.request.json | Provision a device  |
 
   # Request 4 - Set some value to sensor
-  Scenario: Sending some simulating it from dummy iot device - Request 4
+  Scenario: Sending some simulated data from dummy iot device - Request 4
     When I prepare a POST HTTP request to "http://localhost:7896/iot/json?k=4jggokgpepnvsb2uv4s40d59ov&i=temperature001"
     And   I set header Content-Type to application/json
     And   I set the body request as described in 04.request.json
@@ -137,7 +137,7 @@ Feature: test tutorial 203.IoT Agents using JSON
       | activate.things.request.json | filling001 | add   | Act. filling system    |
 
   ## ERR - 409 Conflict -- the service is previously created
-  Scenario: Req 17 - Provisining a service Group for CRUD operations
+  Scenario: Req 17 - Provisioning a service Group for CRUD operations
     When  I prepare a POST HTTP request to "http://localhost:4041/iot/services"
     And   I set header fiware-service to openiot
     And   I set header fiware-servicepath to /
@@ -211,3 +211,4 @@ Scenario: Req 25 - Update a provisioned device
     And   I set header fiware-servicepath to /
     And   I perform the query request
     Then  I receive a HTTP response with status 204 and empty dict
+
