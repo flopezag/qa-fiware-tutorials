@@ -1,4 +1,4 @@
-Feature: test tutorial 201.Introduction to IoT Sensors
+Feature: test tutorial 202.Introduction to IoT Sensors
 
   This is the feature file of the FIWARE Step by Step tutorial for IoT Sensors - NGSI-LD
   url: https://ngsi-ld-tutorials.readthedocs.io/en/latest/iot-agent.html
@@ -28,7 +28,7 @@ Feature: test tutorial 201.Introduction to IoT Sensors
       | http://localhost:4041/iot/services | 02.request.json | Provision a service |
       | http://localhost:4041/iot/devices  | 03.request.json | Provision a device  |
 
-  Scenario: simulate a dummy IoT device measurement coming from the Temperature Sensor device  - Request 4
+  Scenario: Simulate a dummy IoT device measurement coming from the Temperature Sensor device  - Request 4
     When I prepare a POST HTTP request to "http://localhost:7896/iot/d?k=4jggokgpepnvsb2uv4s40d59ov&i=temperature001"
     And   I set header Content-Type to text/plain
     And   I set the body text to t|3
