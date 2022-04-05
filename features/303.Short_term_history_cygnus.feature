@@ -24,7 +24,7 @@ Background:
     When  I prepare a GET HTTP request to "http://localhost:5080/v1/version"
     And   I perform the query request
     Then  I receive a HTTP "200" status code response
-    And   I validate against JQ .success == "true"
+    And   I validate against jq '.success == "true"'
 
 # Minimal mode - Subscribing CYGNUS to Context Changes
 # 14 - Request - Subscribing cygnus
@@ -101,7 +101,7 @@ Background:
     And   I set header fiware-servicepath to /
     And   I perform the query request
     Then  I receive a HTTP "200" response code
-    And   I validate against JQ <jqExpr>
+    And   I validate against jq '<jqExpr>'
     # TODO - Test the results with json
     Examples:
       | type   | attribute  | sensor     | hlimit | offset | jqExpr |
@@ -115,7 +115,7 @@ Background:
     And   I set header fiware-servicepath to /
     And   I perform the query request
     Then  I receive a HTTP "200" response code
-    And   I validate against JQ <jqExpr>
+    And   I validate against jq '<jqExpr>'
     # TODO - Test the results with json
     Examples:
       | type   | attribute  | sensor     | lastN | jqExpr |
@@ -129,7 +129,7 @@ Background:
     And   I set header fiware-servicepath to /
     And   I perform the query request
     Then  I receive a HTTP "200" response code
-    And   I validate against JQ <jqExpr>
+    And   I validate against jq '<jqExpr>'
     # TODO - Test the results with json
     Examples:
       | type   | attribute  | sensor     | aggrMethod | aggrPeriod | jqExpr |

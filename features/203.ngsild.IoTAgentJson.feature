@@ -68,7 +68,7 @@ Feature: test tutorial 203.IoT Agents using JSON
     And   I set header NGSILD-Path to /
     And   I set header Link to <http://context/ngsi-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"
     And   I perform the query request
-    And   I filter the result with jq .[]|select(.id == "urn:ngsi-ld:Device:motion003")
+    And   I filter the result with jq '.[]|select(.id == "urn:ngsi-ld:Device:motion003")'
     Then  I receive a HTTP "200" response code from Broker with the body "07.response.json" and exclusions "07.excludes"
 
 
@@ -195,7 +195,7 @@ Feature: test tutorial 203.IoT Agents using JSON
     And   I set header fiware-servicepath to /
     And   I perform the query request
     Then  I receive a HTTP "200" status code response
-    And   I validate against JQ .count>=5
+    And   I validate against jq '.count>=5'
 
 Scenario: Req 25 - Update a provisioned device
     When  I prepare a PUT HTTP request to "http://localhost:4041/iot/devices/water002"

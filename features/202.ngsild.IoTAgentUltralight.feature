@@ -58,7 +58,7 @@ Feature: test tutorial 202.Introduction to IoT Sensors
     And   I set header fiware-servicepath to /
     And   I set header Link to <http://context/ngsi-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"
     And   I perform the query request
-    And   I filter the result with jq .[]|select(.id == "urn:ngsi-ld:Device:motion003")
+    And   I filter the result with jq '.[]|select(.id == "urn:ngsi-ld:Device:motion003")'
     Then  I receive a HTTP "200" response code from Broker with the body "07.response.json" and exclusions "07.excludes"
 
   Scenario: Req 8 - Providing an actuator - water001 device
@@ -185,7 +185,7 @@ Feature: test tutorial 202.Introduction to IoT Sensors
     And   I set header fiware-servicepath to /
     And   I perform the query request
     Then  I receive a HTTP "200" status code response
-    And   I validate against JQ .count>=5
+    And   I validate against jq '.count>=5'
 
   # Strange error 200-ok with message:
   # {"name":"ENTITY_GENERIC_ERROR","message":"Error accesing entity data for device: water002 of type: IoT-Device"}

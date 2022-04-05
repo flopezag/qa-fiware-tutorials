@@ -15,13 +15,3 @@ def step_impl_tutorial_303(context):
 def step_impl(context, sensor_values):
     context.payload = sensor_values
 
-
-@step(u'I validate against JQ {expr}')
-def step_impl(context, expr):
-    pl = context.response
-    jqe = jq.compile(expr)
-
-    i = iter(jqe.input(pl))
-    r = next(i, None)
-    assert r == True
-
