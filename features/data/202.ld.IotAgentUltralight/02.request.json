@@ -1,0 +1,30 @@
+{
+    "services": [
+        {
+            "apikey": "4jggokgpepnvsb2uv4s40d59ov",
+            "cbroker": "http://orion:1026",
+            "entity_type": "Device",
+            "resource": "/iot/d",
+            "attributes": [
+                {
+                    "object_id": "bpm", "type": "Property", "name": "heartRate",
+                    "metadata": { "unitCode": {"type": "Text", "value": "5K" }}
+                },
+                {
+                    "object_id": "s", "name": "status", "type": "Property"
+                },
+                {
+                    "object_id": "gps", "name": "location", "type": "geo:point"
+                }
+            ],
+            "static_attributes": [
+                {
+                    "name": "category", "type": "Property", "value": "sensor"
+                },
+                {
+                    "name": "supportedProtocol", "type": "Property", "value": "ul20"
+                }
+            ]
+        }
+    ]
+}
