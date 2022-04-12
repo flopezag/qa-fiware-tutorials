@@ -1,0 +1,8 @@
+from behave import given
+from config.settings import CODE_HOME
+from os.path import join
+
+
+@given(u'I set the tutorial 301 LD - Timedata series')
+def step_impl(context):
+    context.data_home = join(join(join(CODE_HOME, "features"), "data"), "301.ld.Time_Series_Data")
