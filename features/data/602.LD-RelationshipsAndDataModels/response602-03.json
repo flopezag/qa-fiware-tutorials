@@ -1,22 +1,142 @@
 [
-    {
-        "@context": "https://fiware.github.io/tutorials.Step-by-Step/tutorials-context.jsonld",
-        "id": "urn:ngsi-ld:Shelf:unit001",
-        "type": "Shelf",
-        "name": "Corner Unit",
-        "maxCapacity": 50,
-        "location": {
-            "type": "Point", "coordinates": [13.398611, 52.554699]
-        }
-    },
-    {
-        "@context": "https://fiware.github.io/tutorials.Step-by-Step/tutorials-context.jsonld",
-        "id": "urn:ngsi-ld:Shelf:unit002",
-        "type": "Shelf",
-        "name": "Wall Unit 1",
-        "maxCapacity": 100,
-        "location": {
-            "type": "Point", "coordinates": [13.398722, 52.554664]
-        }
+  {
+    "@context": "https://fiware.github.io/tutorials.Step-by-Step/tutorials-context.jsonld",
+    "id": "urn:ngsi-ld:Shelf:unit001",
+    "type": "Shelf",
+    "name": "Corner Unit",
+    "maxCapacity": 50,
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        13.398611,
+        52.554699
+      ]
     }
+  },
+  {
+    "@context": "https://fiware.github.io/tutorials.Step-by-Step/tutorials-context.jsonld",
+    "id": "urn:ngsi-ld:Shelf:unit002",
+    "type": "Shelf",
+    "name": "Wall Unit 1",
+    "maxCapacity": 100,
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        13.398722,
+        52.554664
+      ]
+    }
+  },
+  {
+    "@context": "https://fiware.github.io/tutorials.Step-by-Step/tutorials-context.jsonld",
+    "id": "urn:ngsi-ld:Shelf:unit003",
+    "type": "Shelf",
+    "maxCapacity": 100,
+    "name": "Wall Unit 2",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        13.398722,
+        52.554664
+      ]
+    }
+  },
+  {
+    "@context": "https://fiware.github.io/tutorials.Step-by-Step/tutorials-context.jsonld",
+    "id": "urn:ngsi-ld:Shelf:unit004",
+    "type": "Shelf",
+    "maxCapacity": 50,
+    "name": "Corner Unit",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        13.390311,
+        52.507522
+      ]
+    }
+  },
+  {
+    "@context": "https://fiware.github.io/tutorials.Step-by-Step/tutorials-context.jsonld",
+    "id": "urn:ngsi-ld:Shelf:unit005",
+    "type": "Shelf",
+    "maxCapacity": 100,
+    "name": "Long Wall Unit",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        13.390309,
+        52.50751
+      ]
+    }
+  },
+  {
+    "@context": "https://fiware.github.io/tutorials.Step-by-Step/tutorials-context.jsonld",
+    "id": "urn:ngsi-ld:Shelf:unit006",
+    "type": "Shelf",
+    "maxCapacity": 50,
+    "name": "Corner Unit",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        13.444711,
+        52.503199
+      ]
+    }
+  },
+  {
+    "@context": "https://fiware.github.io/tutorials.Step-by-Step/tutorials-context.jsonld",
+    "id": "urn:ngsi-ld:Shelf:unit007",
+    "type": "Shelf",
+    "maxCapacity": 100,
+    "name": "Wall Unit",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        13.444722,
+        52.503164
+      ]
+    }
+  },
+  {
+    "@context": "https://fiware.github.io/tutorials.Step-by-Step/tutorials-context.jsonld",
+    "id": "urn:ngsi-ld:Shelf:unit008",
+    "type": "Shelf",
+    "maxCapacity": 100,
+    "name": "Wall Unit 2",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        13.444722,
+        52.503164
+      ]
+    }
+  },
+  {
+    "@context": "https://fiware.github.io/tutorials.Step-by-Step/tutorials-context.jsonld",
+    "id": "urn:ngsi-ld:Shelf:unit009",
+    "type": "Shelf",
+    "maxCapacity": 50,
+    "name": "Corner Unit",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        13.444711,
+        52.503122
+      ]
+    }
+  },
+  {
+    "@context": "https://fiware.github.io/tutorials.Step-by-Step/tutorials-context.jsonld",
+    "id": "urn:ngsi-ld:Shelf:unit010",
+    "type": "Shelf",
+    "maxCapacity": 200,
+    "name": "Long Wall Unit",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        13.409411,
+        52.520803
+      ]
+    }
+  }
 ]

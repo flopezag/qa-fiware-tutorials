@@ -16,8 +16,8 @@ def step_impl_tutorial_601(context):
     context.data_home = join(join(join(CODE_HOME, "features"), "data"), "601.LD-Intro")
 
 
-@when(u'I send GET HTTP request to orionld at "{url}"')
-def set_req_url(context, url):
+@when(u'I send GET HTTP request to {server} at "{url}"')
+def set_req_url(context, server, url):
     context.url = url
 
 
@@ -27,9 +27,9 @@ def set_req_header(context, raw_headers):
 
     headers = raw_headers.split('$')
     hdr_payload = {}
-    l = len(headers)
+    length = len(headers)
     n = 1
-    for x in range(0, l, 2):
+    for x in range(0, length, 2):
         stdout.write(f'header_name_{n} = <{headers[x]}>\n')
         stdout.write(f'header_value_{n} = <{headers[x+1]}>\n\n')
         if headers[x] != "NA":
@@ -48,9 +48,9 @@ def send_orionld_get(context, raw_parameters):
 
     parameters = raw_parameters.split('$')
     par_payload = {}
-    l = len(parameters)
+    length = len(parameters)
     n = 1
-    for x in range(0, l, 2):
+    for x in range(0, length, 2):
         stdout.write(f'parameter_name_{n} = <{parameters[x]}>\n')
         stdout.write(f'parameter_value_{n} = <{parameters[x+1]}>\n\n')
         par_payload.update({parameters[x]: parameters[x+1]})
@@ -71,26 +71,29 @@ def send_orionld_get(context, raw_parameters):
     context.statusCode = str(response.status_code)
 
 
-@then(u'I receive from orionld "{status_code}" response code with the body equal to "{response}"')
-def http_code_is_returned(context, status_code, response):
+@then(u'I receive from {server} "{status_code}" response code with the body equal to "{response}"')
+def http_code_is_returned(context, server, status_code, response):
     assert_that(context.statusCode, is_(status_code),
-                "Response to CB notification has not got the expected HTTP response code: Message: {}"
-                .format(context.response))
+                "Response to CB ({}) notification has not got the expected HTTP response code: Message: {}"
+                .format(server, context.response))
 
     full_file_name = join(context.data_home, response)
     file = open(full_file_name, 'r')
-    expectedResponseDict = load(file)
+    expected_response_dict = load(file)
     file.close()
 
-    stdout.write(f'expectedResponseDict =\n {expectedResponseDict}\n\n')
-    stdout.write(f'context.response =\n {context.response}\n\n')
+    from deepdiff import DeepDiff
+    diff = DeepDiff(expected_response_dict, context.response)
 
-    assert_that(context.response, is_(expectedResponseDict),
-                f'Response from CB has not got the expected response body!\n')
+    stdout.write(f'Expected response =\n {expected_response_dict}\n\n')
+    stdout.write(f'Context Broker response =\n {context.response}\n\n')
+
+    assert_that(diff.to_dict(), is_(dict()),
+                f'Response from {server} Context Broker has not got the expected HTTP response body:\n  {diff}')
 
 
-@when(u'I send POST HTTP request to orion-ld at "{url}"')
-def set_req_body(context, url):
+@when(u'I send POST HTTP request to {server} at "{url}"')
+def set_req_body(context, server, url):
     context.url = url
 
 
@@ -105,8 +108,8 @@ def set_req_header(context, hdr_att, hdr_value):
         context.header = {'Content-Type': 'application/ld+json'}
 
 
-@step(u'With the body request described in an orion-ld file "{file}"')
-def send_orion_ld_post(context, file):
+@step(u'With the body request described in an {server} file "{file}"')
+def send_orion_ld_post(context, server, file):
     file = join(context.data_home, file)
     with open(file) as f:
         payload = f.read()
@@ -126,8 +129,8 @@ def send_orion_ld_post(context, file):
         context.response = ""
 
 
-@then(u'I receive a HTTP response with the following orion-ld data')
-def receive_post_response2(context):
+@then(u'I receive a HTTP response with the following {server} data')
+def receive_post_response2(context, server):
 
     for element in context.table.rows:
         valid_response = dict(element.as_dict())
