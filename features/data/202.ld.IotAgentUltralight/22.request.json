@@ -1,0 +1,25 @@
+{
+  "devices": [
+    {
+      "device_id": "water002",
+      "entity_name": "urn:ngsi-ld:Device:water002",
+      "entity_type": "Device",
+      "protocol": "PDI-IoTA-UltraLight",
+      "transport": "HTTP",
+      "endpoint": "http://iot-sensors:3001/iot/water002",
+      "commands": [
+        {
+          "name": "on",
+          "type": "command"
+        },
+        {
+          "name": "off",
+          "type": "command"
+        }
+       ],
+       "static_attributes": [
+         {"name":"controlledAsset", "type": "Relationship","value": "urn:ngsi-ld:Building:barn002"}
+        ]
+    }
+  ]
+}

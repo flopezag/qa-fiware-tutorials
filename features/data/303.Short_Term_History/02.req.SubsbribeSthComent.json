@@ -1,0 +1,20 @@
+{
+  "description": "Notify STH-Comet of all Motion Sensor count changes",
+  "subject": {
+    "entities": [
+      {
+        "idPattern": "Motion.*"
+      }
+    ],
+    "condition": {"attrs": ["count"] }
+  },
+  "notification": {
+    "http": {
+      "url": "http://sth-comet:8666/notify"
+    },
+    "attrs": [
+      "count"
+    ],
+    "attrsFormat": "legacy"
+  }
+}

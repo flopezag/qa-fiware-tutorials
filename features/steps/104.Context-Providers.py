@@ -57,14 +57,6 @@ def http_code_is_returned(context, status_code, response):
     stdout.write(f'context.response =\n {context.response}\n')
     stdout.write(f'expectedResponseDict =\n {expected_response_dict}\n\n')
 
-#    for i in responseDict:
-#        stdout.write(f'i = {i}\n')
-#        for ii in data[i]:
-#            stdout.write(f'ii = {ii}\n')
-
-#    for iii in context.response:
-#        stdout.write(f'iii = {iii}\n')
-#
     assert_that(context.response, is_(expected_response_dict),
                 f'Response from CB has not got the expected response body!\n')
 

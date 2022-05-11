@@ -1,0 +1,23 @@
+{
+  "description": "Notify Cygnus of all Motion Sensor count changes",
+  "subject": {
+    "entities": [
+      {
+        "idPattern": "Motion.*"
+      }
+    ],
+    "condition": {
+      "attrs": [
+        "count"
+      ]
+    }
+  },
+  "notification": {
+    "http": {
+      "url": "http://cygnus:5051/notify"
+    },
+    "attrs": [
+      "count"
+    ]
+  }
+}

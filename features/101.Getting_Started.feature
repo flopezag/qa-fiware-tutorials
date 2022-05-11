@@ -1,22 +1,26 @@
 Feature: test tutorial 101.Getting Started
 
   This is the feature file of the FIWARE Step by Step tutorial for NGSI-v2
-  url: https://fiware-tutorials.readthedocs.io/en/latest/getting-started/index.html
-  docker-compose: https://raw.githubusercontent.com/FIWARE/tutorials.Getting-Started/master/docker-compose.yml
-  environment: https://raw.githubusercontent.com/FIWARE/tutorials.Getting-Started/master/.env
+  url: https://fiware-tutorials.readthedocs.io/en/latest/getting-started.html
+  git-clone: https://github.com/FIWARE/tutorials.Getting-Started.git
+  git-directory: /tmp/tutorials.Getting-Started
+  shell-commands: export $(cat .env | grep "#" -v); docker compose up -d
+  clean-shell-commands: docker compose down
 
   Background:
-    Given I set the tutorial
+    Given I set the tutorial 101
 
 
   Scenario: Checking the service health
+    When  I wait "5" seconds
     When  I send GET HTTP request to "http://localhost:1026/version"
     Then  I receive a HTTP "200" response code with the body equal to "response101-01.json"
 
 
   Scenario Outline: Creating Context Data
-    When I send POST HTTP request to "http://localhost:1026/v2/entities"
-    And  With the body request described in file "<file>"
+    When The content-type header key equal to "application/json"
+    And  the body request described in file "<file>"
+    And  I send a POST HTTP request to "http://localhost:1026/v2/entities"
     Then I receive a HTTP response with the following data
       | Status-Code | Location   | Connection | fiware-correlator |
       | 201         | <location> | Keep-Alive | Any               |

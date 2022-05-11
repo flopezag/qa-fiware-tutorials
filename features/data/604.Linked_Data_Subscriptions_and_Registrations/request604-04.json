@@ -1,0 +1,17 @@
+{
+    "type": "ContextSourceRegistration",
+    "information": [
+        {
+            "entities": [
+                {
+                    "type": "Building",
+                    "id": "urn:ngsi-ld:Building:store001"
+                }
+            ],
+            "properties": [
+                "tweets"
+            ]
+        }
+    ],
+    "endpoint": "http://tutorial:3000/static/tweets"
+}

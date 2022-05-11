@@ -6,7 +6,6 @@ from logging import getLogger
 from python_on_whales import docker
 from requests import get
 from os.path import exists
-from os import remove
 from sys import stdout
 import subprocess
 import os
@@ -15,11 +14,18 @@ from shutil import rmtree
 from tempfile import mkstemp
 from shutil import move
 from os import remove
+from config.settings import config
 
 
 __logger__ = getLogger(__name__)
 
-INTERESTING_FEATURES_STRINGS = ['docker-compose', 'docker-compose-changes', 'environment', 'git-clone', 'shell-commands', 'git-directory', 'clean-shell-commands']
+INTERESTING_FEATURES_STRINGS = ['docker-compose',
+                                'docker-compose-changes',
+                                'environment',
+                                'git-clone',
+                                'shell-commands',
+                                'git-directory',
+                                'clean-shell-commands']
 
 
 def is_interesting_feature_string(feature_description: str):
@@ -33,7 +39,7 @@ def git(*args):
     try:
         subprocess.check_output(['/usr/bin/git'] + list(args), stderr=subprocess.STDOUT)
     except subprocess.CalledProcessError as e:
-        stdout.write(f'\n -- GIT EXCEPTION-- \n\n{e.output}\n')
+        stdout.write(f'\n -- GIT EXCEPTION -- \n\n{e.output}\n')
         __logger__.error("Exception on process, rc=", e.returncode, "output=", e.output)
 
 
@@ -49,6 +55,7 @@ def exec_commands(parameters: dict, which_commands: str):
 
     os.chdir(current_dir)
 
+
 def replace(source, pattern, string):
     fh, target_file_path = mkstemp()
     with open(target_file_path, 'w') as target_file:
@@ -58,7 +65,6 @@ def replace(source, pattern, string):
 
     remove(source)
     move(target_file_path, source)
-
 
 
 def before_all(context):
@@ -73,12 +79,16 @@ def before_feature(context, feature):
     stdout.write("=========== START FEATURE ===========\n")
     stdout.write(f'Feature name: {feature.name}\n\n')
 
+    # 1st: We need to take an overview of the current docker network configuration
+    # os.system("docker network ls -q")
+    context.dockerNetworkList = [x.id for x in docker.network.list()]
+
     p = [s for s in feature.description if is_interesting_feature_string(s)]
 
     parameters = {}
     # parameters = dict(s.split(':', 1) for s in parameters)
     context.parameters = parameters
-    for k,v in (s.split(':', 1) for s in p):
+    for k, v in (s.split(':', 1) for s in p):
         parameters[k.strip()] = v.strip()
 
     if 'docker-compose' in parameters:
@@ -93,17 +103,24 @@ def before_feature(context, feature):
         docker.compose.up(detach=True)
 
     if 'git-clone' in parameters:
+        # We need to check if the corresponding temporal folder exists from a previous execution
+        # not finished properly, and in that case remove it
+        if exists(parameters['git-directory']):
+            # Remove folder
+            stdout.write(f'\nDeleting temporal folder...\n')
+            rmtree(context.parameters['git-directory'])
+
         git("clone", parameters['git-clone'], parameters['git-directory'])
 
     if 'docker-compose-changes' in parameters:
         stdout.write("********** START docker-compose-changes **********\n")
 
         changes = parameters['docker-compose-changes'].split(';')
-        l = len(changes)
-        for x in range(1, l, 2):
-            stdout.write(f'old-line = <{changes[x]}>\n')
-            stdout.write(f'new-line = <{changes[x+1]}>\n\n')
-            replace(source=parameters['git-directory']+"/"+"docker-compose.yml", pattern=changes[x], string=changes[x+1])
+        to_search = changes[1]
+        to_replace = to_search.replace("<ADD_YOUR_KEY_ID>", config['OPENWEATHERMAP_KEY_ID'])
+        replace(source=parameters['git-directory']+"/"+"docker-compose.yml",
+                pattern=to_search,
+                string=to_replace)
 
         stdout.write("********** END docker-compose-changes **********\n\n")
 
@@ -146,6 +163,14 @@ def after_feature(context, feature):
     if 'git-directory' in context.parameters:
         stdout.write(f'\nDeleting temporal folder...\n')
         rmtree(context.parameters['git-directory'])
+
+    # Cleaning docker network
+    current_status = [x.id for x in docker.network.list()]
+    new_docker_network_id = [x for x in current_status if x not in context.dockerNetworkList]
+
+    if new_docker_network_id != []:
+        stdout.write(f'\nDeleting Docker Network...\n')
+        docker.network.remove(new_docker_network_id)
 
 
 def after_all(context):
