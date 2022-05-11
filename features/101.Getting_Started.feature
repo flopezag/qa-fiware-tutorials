@@ -11,7 +11,7 @@ Feature: test tutorial 101.Getting Started
 
   Scenario: Checking the service health
     When  I send GET HTTP request to "http://localhost:1026/version"
-    Then  I receive a HTTP "200" response code with the body "response101-01.json"
+    Then  I receive a HTTP "200" response code with the body equal to "response101-01.json"
 
 
   Scenario Outline: Creating Context Data
@@ -29,14 +29,14 @@ Feature: test tutorial 101.Getting Started
 
   Scenario: Obtain entity data by Id
     When I send GET HTTP request to "http://localhost:1026/v2/entities/urn:ngsi-ld:Store:001?options=keyValues"
-    Then  I receive a HTTP "200" response code with the body "response101-04.json"
+    Then I receive a HTTP "200" response code with the body equal to "response101-04.json"
 
 
   Scenario: Obtain entity data by Type
     When I send GET HTTP request to "http://localhost:1026/v2/entities?type=Store&options=keyValues"
-    Then I receive a HTTP "200" response code with the body "response101-05.json"
+    Then I receive a HTTP "200" response code with the body equal to "response101-05.json"
 
 
   Scenario: Filter context data by comparing the values of an attribute
     When I send GET HTTP request to "http://localhost:1026/v2/entities?type=Store&options=keyValues&q=name==%27Checkpoint%20Markt%27"
-    Then I receive a HTTP "200" response code with the body "response101-06.json"
+    Then I receive a HTTP "200" response code with the body equal to "response101-06.json"

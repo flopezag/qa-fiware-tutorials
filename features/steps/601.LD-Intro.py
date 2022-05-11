@@ -1,17 +1,11 @@
-import time
-import requests
-
 from behave import given, when, then, step
 from config.settings import CODE_HOME
 from os.path import join
 from sys import stdout
-from requests import post, exceptions, get, patch, put, delete
+from requests import post, exceptions, get
 from logging import getLogger
-from json import load, loads
-from deepdiff import DeepDiff
-from hamcrest import assert_that, is_, has_key
-from features.funtions import read_data_from_file, dict_diff_with_exclusions
-import json
+from json import load
+from hamcrest import assert_that, is_
 
 
 __logger__ = getLogger(__name__)
@@ -26,7 +20,8 @@ def step_impl_tutorial_601(context):
 def set_req_url(context, url):
     context.url = url
 
-@step(u'With headers "{raw_headers}"')
+
+@step(u"With header '{raw_headers}'")
 def set_req_header(context, raw_headers):
     stdout.write("********** START building headers **********\n")
 
@@ -45,6 +40,7 @@ def set_req_header(context, raw_headers):
 
     stdout.write(f'hdr_payload = {hdr_payload}\n')
     stdout.write("********** END building headers **********\n\n")
+
 
 @step(u'With parameters "{raw_parameters}"')
 def send_orionld_get(context, raw_parameters):
@@ -74,6 +70,7 @@ def send_orionld_get(context, raw_parameters):
     context.response = response.json()
     context.statusCode = str(response.status_code)
 
+
 @then(u'I receive from orionld "{status_code}" response code with the body equal to "{response}"')
 def http_code_is_returned(context, status_code, response):
     assert_that(context.statusCode, is_(status_code),
@@ -96,6 +93,7 @@ def http_code_is_returned(context, status_code, response):
 def set_req_body(context, url):
     context.url = url
 
+
 @step(u'With the post header "{hdr_att}": "{hdr_value}"')
 def set_req_header(context, hdr_att, hdr_value):
     if hdr_att != "NA":
@@ -105,6 +103,7 @@ def set_req_header(context, hdr_att, hdr_value):
             }
     else:
         context.header = {'Content-Type': 'application/ld+json'}
+
 
 @step(u'With the body request described in an orion-ld file "{file}"')
 def send_orion_ld_post(context, file):
@@ -133,8 +132,6 @@ def receive_post_response2(context):
     for element in context.table.rows:
         valid_response = dict(element.as_dict())
         print(valid_response)
-        valid_response['Status-Code']
-        valid_response['Location']
 
         assert_that(context.statusCode, is_(valid_response['Status-Code']))
         assert_that(context.responseHeaders['Connection'], is_(valid_response['Connection']))

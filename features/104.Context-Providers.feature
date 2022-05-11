@@ -88,16 +88,12 @@ Feature: test tutorial 104.Context Data and Context Providers
 #             2) (this is github not in readthedocs!!) in the "provider" attribute, if you want to register the openweathermap API
 #                the correct statement url is: http://context-provider:3000/weather/weatherConditions
 #
-    Scenario Outline: [7] Registering a new Context Provider
+    Scenario: [7] Registering a new Context Provider
         When I send POST HTTP request to "http://localhost:1026/v2/registrations"
-        And  With the body request described in file "<file>"
+        And  With the body request described in file "request104-07.json"
         Then I receive a HTTP response with the following data
             | Status-Code | Location   | Connection | fiware-correlator |
             | 201         | Any        | Keep-Alive | Any               |
-
-        Examples:
-            | file               | location            |
-            | request104-07.json | /v2/registrations/* |
 
 
 #

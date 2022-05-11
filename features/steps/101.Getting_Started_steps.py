@@ -30,6 +30,7 @@ def send_orion_get_version(context, url):
 
 
 @step(u'I receive a HTTP "{status_code}" response code with the body equal to "{response}"')
+@step(u'I receive a HTTP "{status_code}" response code with the body "{response}"')
 def http_code_is_returned(context, status_code, response):
     assert_that(context.statusCode, is_(status_code),
                 "Response to CB notification has not got the expected HTTP response code: Message: {}"
@@ -37,10 +38,10 @@ def http_code_is_returned(context, status_code, response):
 
     full_file_name = join(context.data_home, response)
     file = open(full_file_name, 'r')
-    expectedResponseDict = load(file)
+    expected_response_dict = load(file)
     file.close()
 
-    stdout.write(f'expectedResponseDict =\n {expectedResponseDict}\n\n')
+    stdout.write(f'expectedResponseDict =\n {expected_response_dict}\n\n')
     stdout.write(f'context.response =\n {context.response}\n\n')
 
 
@@ -57,7 +58,7 @@ def http_code_is_returned(context, status_code, response):
 #
 #    assert_that(diff.to_dict(), is_(dict()),
 #                f'Response from CB has not got the expected HTTP response body:\n  {diff}')
-    assert_that(context.response, is_(expectedResponseDict),
+    assert_that(context.response, is_(expected_response_dict),
                 f'Response from CB has not got the expected response body!\n')
 
 
