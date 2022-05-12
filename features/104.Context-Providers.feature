@@ -25,7 +25,7 @@ Feature: test tutorial 104.Context Data and Context Providers
 #
     Scenario: [0] Checking the Orion service health
         When  I send GET HTTP request to "http://localhost:1026/version"
-        Then  I receive a HTTP "200" response code from Context Broker with the body "response101-01.json"
+        Then  I receive a HTTP "200" response code with the body equal to "response101-01.json"
 
 #
 #   Request 1
@@ -33,7 +33,7 @@ Feature: test tutorial 104.Context Data and Context Providers
 #
     Scenario: [1] Checking the health of the Static Data Context Provider endpoint
         When  I send GET HTTP request to "http://localhost:3000/health/static"
-        Then  I receive a HTTP "200" response code from Context Broker with the body "response104-01.json"
+        Then  I receive a HTTP "200" response code with the body equal to "response104-01.json"
 
 
 #
@@ -43,7 +43,7 @@ Feature: test tutorial 104.Context Data and Context Providers
 #
     Scenario: [2] Checking the health of the Random Data Generator Context Provider endpoint
         When  I send GET HTTP request to "http://localhost:3000/health/random"
-        Then  I receive a HTTP "200" response code from Context Broker with the body "response104-02.json"
+        Then  I receive a HTTP "200" response code with the body equal to "response104-02.json"
 
 
 #
@@ -56,7 +56,7 @@ Feature: test tutorial 104.Context Data and Context Providers
 #
     Scenario: [4] Weather API Context Provider (Health Check)
         When  I send GET HTTP request to "http://localhost:3000/health/weather"
-        Then  I receive a HTTP "200" response code from Context Broker with the body "response104-04.json"
+        Then  I receive a HTTP "200" response code with the body equal to "response104-04.json"
 
 
 #
@@ -88,16 +88,12 @@ Feature: test tutorial 104.Context Data and Context Providers
 #             2) (this is github not in readthedocs!!) in the "provider" attribute, if you want to register the
 #                openweathermap API the correct statement url is: http://context-provider:3000/weather/weatherConditions
 #
-    Scenario Outline: [7] Registering a new Context Provider
+    Scenario: [7] Registering a new Context Provider
         When I send POST HTTP request to "http://localhost:1026/v2/registrations"
-        And  With the body request described in file "<file>"
+        And  With the body request described in file "request104-07.json"
         Then I receive a HTTP response with the following data
             | Status-Code | Location   | Connection | fiware-correlator |
             | 201         | Any        | Keep-Alive | Any               |
-
-        Examples:
-            | file               |
-            | request104-07.json |
 
 
 #
@@ -105,7 +101,7 @@ Feature: test tutorial 104.Context Data and Context Providers
 #
     Scenario: [8] New context data is included if the context of the specific entity
         When  I send GET HTTP request to "http://localhost:1026/v2/entities/urn:ngsi-ld:Store:001?type=Store"
-        Then  I receive a HTTP "200" response code from Context Broker with the body "response104-08.json"
+        Then  I receive a HTTP "200" response code with the body equal to "response104-08.json"
 
 
 #
@@ -134,4 +130,4 @@ Feature: test tutorial 104.Context Data and Context Providers
 #
     Scenario: [11] List all registered Context Providers
         When  I send GET HTTP request to "http://localhost:1026/v2/registrations"
-        Then  I receive a HTTP "200" response code from Context Broker with the body "response104-11.json"
+        Then  I receive a HTTP "200" response code with the body equal to "response104-11.json"

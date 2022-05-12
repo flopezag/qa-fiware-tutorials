@@ -3,7 +3,7 @@ from behave import given, when, then, step
 from requests import get, post, exceptions
 from hamcrest import assert_that, is_
 from os.path import join
-from json import load
+from json import load, loads
 from deepdiff import DeepDiff
 from config.settings import CODE_HOME
 from sys import stdout
@@ -29,7 +29,7 @@ def send_orion_get_version(context, url):
     context.statusCode = str(response.status_code)
 
 
-@step(u'I receive a HTTP "{status_code}" response code from {server} with the body "{response}"')
+@step(u'I receive a HTTP "{status_code}" response code from {server} with the body equal to "{response}"')
 def http_code_is_returned(context, status_code, server, response):
     assert_that(context.statusCode, is_(status_code),
                 "Response to {} notification has not got the expected HTTP response code: Message: {}"
@@ -67,11 +67,12 @@ def http_code_is_returned(context, status_code, server, response):
 
         diff = DeepDiff(data, context.response)
 
+        stdout.write(f'Expected response =\n {data}\n\n')
+        stdout.write(f'Context Broker response =\n {context.response}\n\n')
+
         if len(diff) != 0:
             assert_that(diff.to_dict(), is_(dict()),
-                        f'Response from CB has not got the expected HTTP response body:\n  {diff}')
-
-            stdout.write(f'{diff}\n\n')
+                        f'Response from {server} Context Broker has not got the expected HTTP response body:\n  {diff}')
 
 
 @when(u'I send POST HTTP request to "{url}"')

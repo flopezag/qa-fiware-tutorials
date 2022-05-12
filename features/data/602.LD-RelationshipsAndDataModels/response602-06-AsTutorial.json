@@ -1,0 +1,44 @@
+{
+    "@context": "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.3.jsonld",
+    "id": "urn:ngsi-ld:Shelf:unit001",
+    "type": "https://fiware.github.io/tutorials.Step-by-Step/schema/Shelf",
+    "name": {
+        "type": "Property",
+        "value": "Corner Unit"
+    },
+    "https://fiware.github.io/tutorials.Step-by-Step/schema/locatedIn": {
+        "type": "Relationship",
+        "object": "urn:ngsi-ld:Building:store001",
+        "installedBy": {
+            "type": "Relationship",
+            "object": "urn:ngsi-ld:Person:employee001"
+        },
+        "requestedBy": {
+            "type": "Relationship",
+            "object": "urn:ngsi-ld:Person:bob-the-manager"
+        },
+        "statusOfWork": {
+            "type": "Property",
+            "value": "completed"
+        }
+    },
+    "https://fiware.github.io/tutorials.Step-by-Step/schema/maxCapacity": {
+        "type": "Property",
+        "value": 50
+    },
+    "https://fiware.github.io/tutorials.Step-by-Step/schema/numberOfItems": {
+        "type": "Property",
+        "value": 50
+    },
+    "https://fiware.github.io/tutorials.Step-by-Step/schema/stocks": {
+        "type": "Relationship",
+        "object": "urn:ngsi-ld:Product:001"
+    },
+    "location": {
+        "type": "GeoProperty",
+        "value": {
+            "type": "Point",
+            "coordinates": [13.398611, 52.554699]
+        }
+    }
+}
