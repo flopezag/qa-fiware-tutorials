@@ -13,46 +13,46 @@ Feature: Test tutorial 405.XACML Rules-based Permissions
     When  I set the "Accept" header with the value "application/xml"
     And   I set the url to "http://localhost:8080/authzforce-ce/version"
     And   I send a GET HTTP request to that url
-    Then  I receive a HTTP "200" response code from AuthZForce with the body "response405-01.xml"
+    Then  I receive a HTTP "200" response code from AuthZForce with the body equal to "response405-01.xml"
 
   Scenario: 02 - AuthZForce - List all domains
     When  I set the url to "http://localhost:8080/authzforce-ce/domains"
     And   I send a GET HTTP request to that url
-    Then  I receive a HTTP "200" response code from AuthZForce with the body "response405-02.xml"
+    Then  I receive a HTTP "200" response code from AuthZForce with the body equal to "response405-02.xml"
 
   Scenario: 03 - AuthZForce - Read a single domain
     When  I set the "AuthZForce" domains url with the "domainId"
     And   I send a GET HTTP request to that url
-    Then  I receive a HTTP "200" response code from AuthZForce with the body "response405-03.xml"
+    Then  I receive a HTTP "200" response code from AuthZForce with the body equal to "response405-03.xml"
 
   Scenario: 04 - AuthZForce - List all policysetc available within a domain
     When  I set the "AuthZForce" pap policies url with the "domainId"
     And   I send a GET HTTP request to that url
-    Then  I receive a HTTP "200" response code from AuthZForce with the body "response405-04.xml"
+    Then  I receive a HTTP "200" response code from AuthZForce with the body equal to "response405-04.xml"
 
   Scenario: 05 - AuthZForce - List the available revisions of a policyset
     When  I set the "AuthZForce" a pap policy set url with the "domainId" and "policyId"
     And   I send a GET HTTP request to that url
-    Then  I receive a HTTP "200" response code from AuthZForce with the body "response405-05.xml"
+    Then  I receive a HTTP "200" response code from AuthZForce with the body equal to "response405-05.xml"
 
   Scenario: 06 - AuthZForce - Read a single version of a PolicySet
     When  I set the "AuthZForce" to a single version of a pap policy set url with the "domainId" and "policyId"
     And   I send a GET HTTP request to that url
-    Then  I receive a HTTP "200" response code from AuthZForce with the body "response405-06.xml"
+    Then  I receive a HTTP "200" response code from AuthZForce with the body equal to "response405-06.xml"
 
   Scenario: 07 - AuthZForce - Permit access to a resource
     When  I set the "AuthZForce" to the pdp endpoint url with the "domainId"
     And   I set the "Content-Type" header with the value "application/xml"
     And   the body request described in file "request405-07.xml"
     And   I send a POST HTTP request to that url
-    Then  I receive a HTTP "200" response code from AuthZForce with the body "response405-07.xml"
+    Then  I receive a HTTP "200" response code from AuthZForce with the body equal to "response405-07.xml"
 
   Scenario: 08 - AuthZForce - Deny access to a resource
     When  I set the "AuthZForce" to the pdp endpoint url with the "domainId"
     And   I set the "Content-Type" header with the value "application/xml"
     And   the body request described in file "request405-08.xml"
     And   I send a POST HTTP request to that url
-    Then  I receive a HTTP "200" response code from AuthZForce with the body "response405-08.xml"
+    Then  I receive a HTTP "200" response code from AuthZForce with the body equal to "response405-08.xml"
 
   Scenario: 09 - Keystone - User obtain an access token
     When  I set the "Authorization" header with the value "Basic dHV0b3JpYWwtZGNrci1zaXRlLTAwMDAteHByZXNzd2ViYXBwOnR1dG9yaWFsLWRja3Itc2l0ZS0wMDAwLWNsaWVudHNlY3JldA=="
@@ -70,11 +70,11 @@ Feature: Test tutorial 405.XACML Rules-based Permissions
             | access_token | app_id                               |
             | access_token | tutorial-dckr-site-0000-xpresswebapp |
     And   I send a GET HTTP request to that url with no headers
-    Then  I receive a HTTP "200" response code from Keyrock with the body "response405-10.json"
+    Then  I receive a HTTP "200" response code from Keyrock with the body equal to "response405-10.json"
 
   Scenario: 11 - AuthZForce - Apply a policy to a request
     When  I set the "AuthZForce" to the pdp endpoint url with the "domainId"
     And   I set the "Content-Type" header with the value "application/xml"
     And   the body request described in file "request405-11.xml"
     And   I send a POST HTTP request to that url
-    Then  I receive a HTTP "200" response code from AuthZForce with the body "response405-11.xml"
+    Then  I receive a HTTP "200" response code from AuthZForce with the body equal to "response405-11.xml"

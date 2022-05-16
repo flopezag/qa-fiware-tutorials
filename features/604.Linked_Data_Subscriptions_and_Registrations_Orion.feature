@@ -49,17 +49,15 @@ Feature: Test tutorial 604.Linked_Data_Subscriptions_and_Registrations (Orion)
     And    I set the "Link" header with the value "<https://fiware.github.io/tutorials.Step-by-Step/tutorials-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json""
     And    I set the url to "http://localhost:1026/ngsi-ld/v1/entities/urn:ngsi-ld:Building:store001"
     And    I send a GET HTTP request to that url
-    Then   I receive a HTTP "200" response code from Broker with the body "response604-06.json"
+    Then   I receive a HTTP "200" response code from Orion-LD with the body equal to "response604-06.json"
 
+  # Something wrong with the execution of the PATCH, json decode error
   Scenario: 07 - Read direct from the Context Broker
-curl -L -X GET 'http://localhost:3000/static/tweets/ngsi-ld/v1/entities/urn:ngsi-ld:Building:store001?attrs=tweets' \
--H 'Link: <https://fiware.github.io/tutorials.Step-by-Step/tutorials-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"' \
--H 'Content-Type: application/ld+json'
     When   I set the "Content-Type" header with the value "application/ld+json"
     And    I set the url to "http://localhost:3000/static/tweets/ngsi-ld/v1/entities/urn:ngsi-ld:Building:store001?attrs=tweets"
     And    I set the "Link" header with the value "<https://fiware.github.io/tutorials.Step-by-Step/tutorials-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json""
     And    I send a GET HTTP request to that url
-    Then   I receive a HTTP "200" response code from Broker with the body "response604-07.json"
+    Then   I receive a HTTP "200" response code from Orion-LD with the body equal to "response604-07.json"
 
   Scenario: 08 - Direct update of the Context Provider
     When   I set the "Content-Type" header with the value "application/json"
@@ -74,7 +72,7 @@ curl -L -X GET 'http://localhost:3000/static/tweets/ngsi-ld/v1/entities/urn:ngsi
     When   I set the url to "http://localhost:1026/ngsi-ld/v1/entities/urn:ngsi-ld:Building:store001?attrs=tweets&options=keyValues"
     And    I set the "Link" header with the value "<https://fiware.github.io/tutorials.Step-by-Step/tutorials-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"
     And    I send a GET HTTP request to that url
-    Then   I receive a HTTP "200" response code from Broker with the body "response604-09.json"
+    Then   I receive a HTTP "200" response code from Orion-LD with the body equal to "response604-09.json"
 
   Scenario: 10 - Forwarded update
     When   I set the "Content-Type" header with the value "application/json"
@@ -89,4 +87,4 @@ curl -L -X GET 'http://localhost:3000/static/tweets/ngsi-ld/v1/entities/urn:ngsi
     And    I set the url to "http://localhost:1026/ngsi-ld/v1/entities/urn:ngsi-ld:Building:store001?attrs=tweets&options=keyValues"
     And    I set the "Link" header with the value "<https://fiware.github.io/tutorials.Step-by-Step/tutorials-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json""
     And    I send a GET HTTP request to that url
-    Then   I receive a HTTP "200" response code from Broker with the body "response604-11.json"
+    Then   I receive a HTTP "200" response code from Orion-LD with the body equal to "response604-11.json"

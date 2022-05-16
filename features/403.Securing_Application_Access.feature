@@ -29,7 +29,7 @@ Feature: Test tutorial 403.Securing application access
     Scenario: 02 - Retrieving user details from an access token
         When  I set the the user url with the previous access_token
         And   I send a GET HTTP request to that url with no headers
-        Then  I receive a HTTP "200" response code from Keyrock with the body "response403-02.json"
+        Then  I receive a HTTP "200" response code from Keyrock with the body equal to "response403-02.json"
 
     Scenario: 03 - Logging in as an application
         When  I set the Authorization header token with the calculated value
@@ -70,12 +70,12 @@ Feature: Test tutorial 403.Securing application access
     Scenario: 06 - Authentication access
         When  I set the the user url with the previous access_token and application_id
         And   I send a GET HTTP request to that url with no headers
-        Then  I receive a HTTP "200" response code from Keyrock with the body "response403-06.json"
+        Then  I receive a HTTP "200" response code from Keyrock with the body equal to "response403-06.json"
 
     Scenario: 07 - Basic authorization
         When  I set the user url with the following data
             | access_token | action | resource           | app_id   |
             | access_token | GET    | /app/price-change  | ClientID |
         And   I send a GET HTTP request to that url with no headers
-        Then  I receive a HTTP "200" response code from Keyrock with the body "response403-07.json"
+        Then  I receive a HTTP "200" response code from Keyrock with the body equal to "response403-07.json"
 
