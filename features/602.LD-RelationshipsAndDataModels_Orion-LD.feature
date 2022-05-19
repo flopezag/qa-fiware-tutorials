@@ -78,8 +78,8 @@ Feature: test tutorial 602 Linked Data: Relationships and Data Models (Orion-LD)
     And  With the post header "NA": "NA"
     And  With the body request described in an orion-ld file "<file>"
     Then I receive a HTTP response with the following orion-ld data
-      | Status-Code | Location   | Connection | fiware-correlator |
-      | 204         | <location> | Keep-Alive | Any               |
+      | Status-Code | Location   | Connection |
+      | 204         | <location> | Keep-Alive |
 
     Examples:
       | file               | location |

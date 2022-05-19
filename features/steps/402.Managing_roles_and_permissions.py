@@ -9,6 +9,7 @@ def step_impl_tutorial_203(context):
 
 
 @when('I set the "{key}" header with the value "{value}"')
+@when('I set the "{key}" header with the value \'{value}\'')
 def step_impl(context, key, value):
     """
     :type context: behave.runner.Context
@@ -21,6 +22,7 @@ def step_impl(context, key, value):
 
     if key == 'X-Auth-Token':
         settings.token = value
+
 
 @step("I set the permission url with an application id")
 def step_impl(context):

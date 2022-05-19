@@ -137,9 +137,29 @@ def receive_post_response2(context, server):
         print(valid_response)
 
         assert_that(context.statusCode, is_(valid_response['Status-Code']))
-        assert_that(context.responseHeaders['Connection'], is_(valid_response['Connection']))
+
+        if 'Connection' in valid_response:
+            assert_that(context.responseHeaders['Connection'], is_(valid_response['Connection']))
+
         if valid_response['Location'] != "Any":
             assert_that(context.responseHeaders['Location'], is_(valid_response['Location']))
 
-        aux = 'fiware-correlator' in valid_response
-        assert_that(aux, is_(True))
+        #if 'fiware-correlator' in valid_response:
+        #    assert_that(context.responseHeaders['fiware-correlator'], is_(valid_response['fiware-correlator']))
+
+
+@step('I set a parameter with the value equal to "{param}"')
+def step_impl(context, param):
+    """
+    :type context: behave.runner.Context
+    :type param: str
+    """
+    # type=Building
+    # check if context.params exist before adding new key: value
+    data= param.replace('%22', '"').replace("%20", " ").split("=", 1)
+
+    try:
+        context.params[data[0]] = data[1]
+    except AttributeError:
+        # Context object has no attribute 'header'
+        context.params = {data[0]: data[1]}

@@ -3,7 +3,7 @@ from behave import given, when, then, step
 from requests import get, post, exceptions
 from hamcrest import assert_that, is_
 from os.path import join
-from json import load, loads
+from json import load
 from deepdiff import DeepDiff
 from config.settings import CODE_HOME
 from sys import stdout
