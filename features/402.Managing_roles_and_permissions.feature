@@ -103,7 +103,7 @@ Feature: Test tutorial 402.Managing roles and permissions
     And   the body request described in file "request402-11.json"
     And   I set the permission url with the application and permission ids
     And   I send a PATCH HTTP request to that url
-    Then  I receive a HTTP "200" response code from Keyrock with the body "response402-11.json"
+    Then  I receive a HTTP "200" response code from Keyrock with the body equal to "response402-11.json"
 
   Scenario: 12 - Delete a permission
     When  I set the "X-Auth-Token" header with the value "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
@@ -140,7 +140,7 @@ Feature: Test tutorial 402.Managing roles and permissions
     And   the body request described in file "request402-16.json"
     And   I set the roles url with an application id and role id
     And   I send a PATCH HTTP request to that url
-    Then  I receive a HTTP "200" response code from Keyrock with the body "response402-16.json"
+    Then  I receive a HTTP "200" response code from Keyrock with the body equal to "response402-16.json"
 
   Scenario: 17 - Delete a role
     When  I set the "X-Auth-Token" header with the value "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
@@ -293,4 +293,4 @@ Feature: Test tutorial 402.Managing roles and permissions
     And   the content-type header key equal to "application/json"
     And   I set the "users" url with the "application_id"
     And   I send a GET HTTP request to that url
-    Then  I receive a HTTP "200" response code from Keyrock with the body "response402-28.json"
+    Then  I receive a HTTP "200" response code from Keyrock with the body equal to "response402-28.json"

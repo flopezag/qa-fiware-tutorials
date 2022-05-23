@@ -17,7 +17,7 @@ Feature: test tutorial 301.Persisting Context Data using Apache Flume (MongoDB)
   @fail
   Scenario: 01 - Checking the Cygnus service health
     When  I send GET HTTP request to "http://localhost:5080/v1/version"
-    Then  I receive a HTTP "200" response code from Cygnus with the body "response301-01.json"
+    Then  I receive a HTTP "200" response code from Cygnus with the body equal to "response301-01.json"
 
   Scenario: Getting API key for lamp and door
     Given  the fiware-service header is "openiot" and the fiware-servicepath header is "/"

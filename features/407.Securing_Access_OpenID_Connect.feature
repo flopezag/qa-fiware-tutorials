@@ -49,5 +49,5 @@ curl -X PATCH \
     And    the body request described in file "request407-00-02.json"
     And    I set the application url with an application id
     And    I send a PATCH HTTP request to that url
-    Then   I receive a HTTP "200" response code from Keystone with the body "response407-00-02.json"
+    Then   I receive a HTTP "200" response code from Keystone with the body equal to "response407-00-02.json"
     Then   fail: {'error': {'message': 'Token "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa" has expired', 'code': 401, 'title': 'Unauthorized'}}

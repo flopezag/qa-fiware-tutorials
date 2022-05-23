@@ -101,7 +101,7 @@ Feature: test tutorial 602 Linked Data: Relationships and Data Models (Stellio)
 #
     Scenario: [6] OBTAIN THE UPDATED SHELF
       When I send GET HTTP request to "http://localhost:1026/ngsi-ld/v1/entities/urn:ngsi-ld:Shelf:unit001"
-      Then I receive a HTTP "200" response code with the body equal to "response602-06.json"
+      Then I receive a HTTP "200" response code from Stellio with the body equal to "response602-06.json"
 
 
 #

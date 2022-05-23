@@ -95,9 +95,9 @@ Feature: test tutorial 202.Introduction to IoT Sensors
     And   I perform the request
     Then  I receive a HTTP response with status 201 and empty dict
     Examples:
-      | url                                | file            | description                 |
-      | http://localhost:4041/iot/services | 11.request.json | Provision a filling station |
-      | http://localhost:4041/iot/devices  | 12.request.json | Provision a tractor         |
+      | file            | description                 |
+      | 11.request.json | Provision a filling station |
+      | 12.request.json | Provision a tractor         |
 
   Scenario: Req 13 - Querying devices
     Given I wait "2" seconds

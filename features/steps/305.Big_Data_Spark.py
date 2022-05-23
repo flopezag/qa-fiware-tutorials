@@ -46,11 +46,12 @@ def step_impl(context):
 
 @given(u'I run the script in the background')
 def step_impl(context):
-    #run and forget about the process
-    p = subprocess.Popen(context.script_name, shell=True)
+    # run and forget about the process
+    _ = subprocess.Popen(context.script_name, shell=True)
     pass
 
 
 @then(u'I expect the scripts shows a result of {result}')
 def step_impl(context, result):
-    assert int(result) == context.result
+    assert (int(result) == context.result), \
+        f"\nThe result received is different to the expected value, received {context.result}, but expected: {result}"

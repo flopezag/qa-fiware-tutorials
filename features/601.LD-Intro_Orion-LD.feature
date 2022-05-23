@@ -21,7 +21,7 @@ Feature: test tutorial 601 Introduction to Linked Data (Orion-LD)
 #
     Scenario: [1] Checking the Orion-LD service health
         When  I send GET HTTP request to "http://localhost:1026/version"
-        Then  I receive a HTTP "200" response code with the body equal to "response601-01.json"
+        Then  I receive a HTTP "200" response code from Orion-LD with the body equal to "response601-01.json"
 
 #
 #   Request 2, 3: Creating an Entity
@@ -57,7 +57,7 @@ Feature: test tutorial 601 Introduction to Linked Data (Orion-LD)
 #
     Scenario: [4] OBTAIN ENTITY DATA BY FQN TYPE
       When  I send GET HTTP request to "http://localhost:1026/ngsi-ld/v1/entities?type=https://uri.fiware.org/ns/data-models%23Building"
-      Then  I receive a HTTP "200" response code with the body equal to "response601-04.json"
+      Then  I receive a HTTP "200" response code from Orion-LD with the body equal to "response601-04.json"
 
 
 #
@@ -77,7 +77,7 @@ Feature: test tutorial 601 Introduction to Linked Data (Orion-LD)
 #
     Scenario: [5] OBTAIN ENTITY DATA BY ID
       When  I send GET HTTP request to "http://localhost:1026/ngsi-ld/v1/entities/urn:ngsi-ld:Building:store001"
-      Then  I receive a HTTP "200" response code with the body equal to "response601-05.json"
+      Then  I receive a HTTP "200" response code from Orion-LD with the body equal to "response601-05.json"
 
 
 #

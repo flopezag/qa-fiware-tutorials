@@ -121,4 +121,4 @@ Feature: Test tutorial 404.Securing microservices with a PEP Proxy (Orion)
     When  I set the X-Auth-Token header with the previous obtained token
     And   I set the url to "http://localhost:1027/v2/entities/urn:ngsi-ld:Store:001?options=keyValues"
     And   I send a GET HTTP request to that url
-    Then  I receive a HTTP "200" response code from Keyrock with the body "response404-14.json"
+    Then  I receive a HTTP "200" response code from Keyrock with the body equal to "response404-14.json"
