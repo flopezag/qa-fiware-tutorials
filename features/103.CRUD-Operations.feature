@@ -20,7 +20,7 @@ Feature: test tutorial 103.CRUD-Operations
 
   Scenario: Checking the service health
     When  I send GET HTTP request to "http://localhost:1026/version"
-    Then  I receive a HTTP "200" response code from Broker with the body "response101-01.json"
+    Then  I receive a HTTP "200" response code from Orion with the body equal to "response101-01.json"
 
 
 #
@@ -115,7 +115,7 @@ Feature: test tutorial 103.CRUD-Operations
 #
   Scenario: Obtain entity data by Type
     When I send GET HTTP request to "http://localhost:1026/v2/entities/urn:ngsi-ld:Product:010?type=Product"
-    Then I receive a HTTP "200" response code from Broker with the body "response103-07.json"
+    Then I receive a HTTP "200" response code from Orion with the body equal to "response103-07.json"
 
 
 #
@@ -123,14 +123,14 @@ Feature: test tutorial 103.CRUD-Operations
 #
   Scenario: Obtain the value of a single attribute from an existing entity with a known id
     When I send GET HTTP request to "http://localhost:1026/v2/entities/urn:ngsi-ld:Product:001/attrs/name/value"
-    Then I receive a HTTP "200" response code from Broker with the body "response103-08.json"
+    Then I receive a HTTP "200" response code from Orion with the body equal to "response103-08.json"
 
 #
 #  Request 9
 #
   Scenario: Obtain the value of the key-value pairs of two attributes from the context of existing entities with a known id
     When I send GET HTTP request to "http://localhost:1026/v2/entities/urn:ngsi-ld:Product:001?type=Product&options=keyValues&attrs=name,price"
-    Then I receive a HTTP "200" response code from Broker with the body "response103-09.json"
+    Then I receive a HTTP "200" response code from Orion with the body equal to "response103-09.json"
 
 
 #
@@ -138,7 +138,7 @@ Feature: test tutorial 103.CRUD-Operations
 #
   Scenario: Obtain the value of two attributes from the context of existing entities with a known id
     When I send GET HTTP request to "http://localhost:1026/v2/entities/urn:ngsi-ld:Product:001?type=Product&options=values&attrs=name,price"
-    Then I receive a HTTP "200" response code from Broker with the body "response103-10.json"
+    Then I receive a HTTP "200" response code from Orion with the body equal to "response103-10.json"
 
 
 #
@@ -146,7 +146,7 @@ Feature: test tutorial 103.CRUD-Operations
 #
   Scenario: Obtain all entities of a given type and all of their attributes
     When I send GET HTTP request to "http://localhost:1026/v2/entities?type=Product"
-    Then I receive a HTTP "200" response code from Broker with the body "response103-11.json"
+    Then I receive a HTTP "200" response code from Orion with the body equal to "response103-11.json"
 
 
 #
@@ -154,7 +154,7 @@ Feature: test tutorial 103.CRUD-Operations
 #
   Scenario: Obtain two specific attributes of all entities of a given type
     When I send GET HTTP request to "http://localhost:1026/v2/entities/?type=Product&options=keyValues&attrs=name,price"
-    Then I receive a HTTP "200" response code from Broker with the body "response103-12.json"
+    Then I receive a HTTP "200" response code from Orion with the body equal to "response103-12.json"
 
 
 #
@@ -162,7 +162,7 @@ Feature: test tutorial 103.CRUD-Operations
 #
   Scenario: Obtain all entities of a given type
     When I send GET HTTP request to "http://localhost:1026/v2/entities/?type=Product&options=count&attrs=__NONE"
-    Then I receive a HTTP "200" response code from Broker with the body "response103-13.json"
+    Then I receive a HTTP "200" response code from Orion with the body equal to "response103-13.json"
 
 
 #
@@ -303,4 +303,4 @@ Scenario: Delete an Entity
 #
   Scenario: Find existing data relationships
     When I send GET HTTP request to "http://localhost:1026/v2/entities/?q=refProduct==urn:ngsi-ld:Product:001&options=count&attrs=type"
-    Then I receive a HTTP "200" response code from Broker with the body "response103-23.json"
+    Then I receive a HTTP "200" response code from Orion with the body equal to "response103-23.json"

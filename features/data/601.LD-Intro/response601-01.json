@@ -1,0 +1,12 @@
+{
+    "orion": {
+        "version": "1.15.0-next",
+        "uptime": "0 d, 3 h, 1 m, 51 s",
+        "git_hash": "af440c6e316075266094c2a5f3f4e4f8e3bb0668",
+        "compile_time": "Tue Jul 16 15:46:18 UTC 2019",
+        "compiled_by": "root",
+        "compiled_in": "51b4d802385a",
+        "release_date": "Tue Jul 16 15:46:18 UTC 2019",
+        "doc": "https://fiware-orion.readthedocs.org/en/master/"
+    }
+}

@@ -51,21 +51,13 @@ def http_code_is_returned(context, status_code, response):
 
     full_file_name = join(context.data_home, response)
     file = open(full_file_name, 'r')
-    expectedResponseDict = load(file)
+    expected_response_dict = load(file)
     file.close()
 
     stdout.write(f'context.response =\n {context.response}\n')
-    stdout.write(f'expectedResponseDict =\n {expectedResponseDict}\n\n')
+    stdout.write(f'expectedResponseDict =\n {expected_response_dict}\n\n')
 
-#    for i in responseDict:
-#        stdout.write(f'i = {i}\n')
-#        for ii in data[i]:
-#            stdout.write(f'ii = {ii}\n')
-
-#    for iii in context.response:
-#        stdout.write(f'iii = {iii}\n')
-#
-    assert_that(context.response, is_(expectedResponseDict),
+    assert_that(context.response, is_(expected_response_dict),
                 f'Response from CB has not got the expected response body!\n')
 
 
@@ -92,18 +84,19 @@ def http_code_is_returned(context, status_code, expectedType):
     stdout.write(f'context.response =\n {context.response} of type = {type(context.response)}\n')
     if expectedType == "int":
         try:
-            i = int(context.response)
-        except:
-            stdout.write(f'Response type from CB {type(context.response)} is NOT of the expected response type: {expectedType}\n')
-
+            _ = int(context.response)
+        except ValueError:
+            stdout.write(f'Response type from CB {type(context.response)} '
+                         f'is NOT of the expected response type: {expectedType}\n')
     if expectedType == "float":
         try:
-            i = float(context.response)
-        except:
-            stdout.write(f'Response type from CB {type(context.response)} is NOT of the expected response type: {expectedType}\n')
-
+            _ = float(context.response)
+        except ValueError:
+            stdout.write(f'Response type from CB {type(context.response)} '
+                         f'is NOT of the expected response type: {expectedType}\n')
     if expectedType == "str":
         try:
-            i = str(context.response)
-        except:
-            stdout.write(f'Response type from CB {type(context.response)} is NOT of the expected response type: {expectedType}\n')
+            _ = str(context.response)
+        except ValueError:
+            stdout.write(f'Response type from CB {type(context.response)} '
+                         f'is NOT of the expected response type: {expectedType}\n')

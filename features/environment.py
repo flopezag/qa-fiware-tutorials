@@ -39,7 +39,7 @@ def git(*args):
     try:
         subprocess.check_output(['/usr/bin/git'] + list(args), stderr=subprocess.STDOUT)
     except subprocess.CalledProcessError as e:
-        stdout.write(f'\n -- GIT EXCEPTION-- \n\n{e.output}\n')
+        stdout.write(f'\n -- GIT EXCEPTION -- \n\n{e.output}\n')
         __logger__.error("Exception on process, rc=", e.returncode, "output=", e.output)
 
 

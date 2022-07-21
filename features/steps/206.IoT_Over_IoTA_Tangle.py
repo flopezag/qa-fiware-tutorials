@@ -1,6 +1,7 @@
 import subprocess
 import time
 import re
+from sys import stdout
 
 from behave import given, step, when, then
 from os.path import join
@@ -40,17 +41,19 @@ def compare_some_lines_in_terminal(context, name, filename):
     context.lines = len(re_lines)
     max_timeout = MAX_WAIT_UNTIL_OUTPUT
     n_timeout = 0
+    data = list()
 
-    fclosed = False
+    file_closed = False
 
-    for l in re_lines:
-        rexp = re.compile(l.rstrip())
-        while not fclosed:
+    for line in re_lines:
+        rexp = re.compile(line.rstrip())
+        while not file_closed:
             try:
                 if p.poll() is not None:
-                    fclosed = True
+                    file_closed = True
                     break
                 nl = p.get_stderr().rstrip()
+                data.append(nl)
                 if rexp.match(nl):
                     context.matches = context.matches + 1
                     break
@@ -59,12 +62,19 @@ def compare_some_lines_in_terminal(context, name, filename):
                 n_timeout = n_timeout + 1
                 if n_timeout > max_timeout:
                     break
-        if fclosed:
+        if file_closed:
             break
 
-    assert(context.lines == context.matches)
+    stdout.write(f'Expected lines =\n {re_lines}\n\n')
+    stdout.write(f'Received lines in terminal =\n {data}\n\n')
 
-@step(u'I Compare next lines in terminal {name} at least I can find {n_matches} in {output} with a timeout {timeout} matching filename {filename}')
+    assert (context.lines == context.matches), \
+        f"\nThe number of matches lines is not equal to the number of expected lines:" \
+        f" matches lines {context.matches}, expected lines: {context.lines}"
+
+
+@step(u'I Compare next lines in terminal {name} at least I can find {n_matches} in {output} with a timeout'
+      u' {timeout} matching filename {filename}')
 def step_impl(context, name,  n_matches, output, timeout, filename):
     n_matches = int(n_matches)
     timeout = int(timeout)
@@ -72,21 +82,21 @@ def step_impl(context, name,  n_matches, output, timeout, filename):
     p = terminals[name]
 
     with open(fn, "r") as f:
-        re_lines = f.readlines( )
+        re_lines = f.readlines()
 
     context.matches = 0
 
     rexps = []
-    for l in re_lines:
-        rexps.append(re.compile(l.rstrip()))
+    for line in re_lines:
+        rexps.append(re.compile(line.rstrip()))
 
-    fclosed = False
+    file_closed = False
     n_timeout = 0
 
-    while not fclosed:
+    while not file_closed:
         try:
             if p.poll() is not None:
-                fclosed = True
+                file_closed = True
                 break
 
             ln = p.get_stdout().rstrip()
@@ -102,19 +112,24 @@ def step_impl(context, name,  n_matches, output, timeout, filename):
             time.sleep(1)
             n_timeout = n_timeout + 1
             if n_timeout > timeout:
-                 break
+                break
 
+    assert (context.matches == n_matches), \
+        f"\nThe number of matches lines is not equal to the number of expected lines:" \
+        f" matches lines {n_matches}, expected lines: {context.matches}"
 
-    assert(context.matches >= n_matches)
 
 @when(u'I flush the terminal {name} queues')
 def step_impl(context, name):
-   p = terminals[name]
-   p.flush()
+    p = terminals[name]
+    p.flush()
+
 
 @then(u'All lines must have matched')
 def test_all_lines_in_terminal_matched(context):
-    assert(context.lines == context.matches)
+    assert (context.lines == context.matches), \
+        f"\nNot all the lines have been matched:" \
+        f" Number of lines {context.lines}, number of lines matches: {context.matches}"
 
 
 @when(u'I run the shell command "{command}"')
@@ -129,8 +144,9 @@ def exec_shell_command(context, command):
 @then(u'I write data to file {filename}')
 def write_things_to_a_file(context, filename):
     with open(filename, "w") as f:
-        for l in context.output_lines:
-            f.write(l+"\n")
+        for line in context.output_lines:
+            f.write(line+"\n")
+
 
 def write_to_file(line, compare):
     with open("/tmp/afoo", "a") as f:
