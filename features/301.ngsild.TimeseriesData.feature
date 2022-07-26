@@ -1,11 +1,15 @@
 Feature: test tutorial 301.Persisting and Querying timedata series
 
   This is the feature file of the FIWARE Step by Step tutorial Timedata Series - NGSI-LD
+  # url: https://ngsi-ld-tutorials.readthedocs.io/en/latest/time-series-data.html
   url: https://ngsi-ld-tutorials.readthedocs.io/en/latest/time-series-data.html
-#   git-clone: https://github.com/FIWARE/tutorials.IoT-Sensors.git
-#   git-directory: /tmp/tutorials.IoT-Sensors
-#   shell-commands: git checkout NGSI-LD ; ./services start
-#   clean-shell-commands: ./services stop
+  # git-clone: https://github.com/FIWARE/tutorials.IoT-Agent.git
+  ## I don't think I "referende" in tutorial to this... I'm thinking that this might be true.
+  # git-clone: https://github.com/FIWARE/tutorials.Time-Series-Data.git
+  git-clone: https://github.com/FIWARE/tutorials.Time-Series-Data.git
+  git-directory: /tmp/tutorials.IoT-Sensors
+  shell-commands: git checkout NGSI-LD ; ./services start
+  clean-shell-commands: ./services stop
 
   ## I Start the tutorial manually
   ## Cratedb needs increasing max_map_count
@@ -32,8 +36,8 @@ Feature: test tutorial 301.Persisting and Querying timedata series
     And   I set header NGSILD-Tenant to openiot
     Then  I receive a HTTP "200" response code
 
-
     # Somehow I need to add data to Sensors so they can add data to Cratedb
+    # This is not in tutorial, but it is the way to add data without Web dashboard
     ## Example post: 12:53:47 PM HTTP POST http://iot-agent:7896/iot/d?i=filling001&k=854782081 f|0.45
     Scenario Outline: Communicating with IoT Devices: Using Actuators
     When  I prepare a POST HTTP request to "http://localhost:7896/iot/d?k=<key_value>&i=<sensor>"
@@ -91,3 +95,10 @@ Feature: test tutorial 301.Persisting and Querying timedata series
       | {"stmt":"SELECT DATE_FORMAT (DATE_TRUNC ('minute', time_index)) AS minute, SUM (filling) AS sum FROM etFillingLevelSensor WHERE entity_id = 'urn:ngsi-ld:Device:filling001' GROUP BY minute LIMIT 3"} |
       | {"stmt":"SELECT DATE_FORMAT (DATE_TRUNC ('minute', time_index)) AS minute, MIN (filling) AS min FROM etFillingLevelSensor WHERE entity_id = 'urn:ngsi-ld:Device:filling001' GROUP BY minute"} |
       | {"stmt":"SELECT MAX(filling) AS max FROM etFillingLevelSensor WHERE entity_id = 'urn:ngsi-ld:Device:filling001' and time_index >= '2022-04-01T09:00:00' and time_index < '2025-06-30T23:59:59'"} |
+
+    # Request 3 -
+  Scenario: Check the subscriptions for quantum-leap to ngsi-ld
+    When  I send GET HTTP request to "http://localhost:1026/ngsi-ld/v1/subscriptions/"
+    And   I set header NGSILD-Tenant to openiot
+    And  Wait for debug
+    Then  I receive a HTTP "200" response code
