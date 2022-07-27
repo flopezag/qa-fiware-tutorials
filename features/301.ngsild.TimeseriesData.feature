@@ -1,27 +1,31 @@
-Feature: test tutorial 301.Persisting and Querying timedata series
-
-  This is the feature file of the FIWARE Step by Step tutorial Timedata Series - NGSI-LD
-  # url: https://ngsi-ld-tutorials.readthedocs.io/en/latest/time-series-data.html
-  url: https://ngsi-ld-tutorials.readthedocs.io/en/latest/time-series-data.html
-  # git-clone: https://github.com/FIWARE/tutorials.IoT-Agent.git
-  ## I don't think I "referende" in tutorial to this... I'm thinking that this might be true.
-  # git-clone: https://github.com/FIWARE/tutorials.Time-Series-Data.git
-  git-clone: https://github.com/FIWARE/tutorials.Time-Series-Data.git
-  git-directory: /tmp/tutorials.IoT-Sensors
-  shell-commands: git checkout NGSI-LD ; ./services start
-  clean-shell-commands: ./services stop
-
   ## I Start the tutorial manually
   ## Cratedb needs increasing max_map_count
   ##    sudo sysctl -w vm.max_map_count=262144
+
+Feature: test tutorial 301.Persisting and Querying timedata series
+
+  This is the feature file of the FIWARE Step by Step tutorial Timedata Series - NGSI-LD
+  # url (used): https://documenter.getpostman.com/view/513743/TWDUpxxx
+  #   -- This is linked in "url" as "POSTMAN" -- It works much better than the original.
+  url: https://ngsi-ld-tutorials.readthedocs.io/en/latest/time-series-data.html
+
+  # git-clone -- As shown in the "POSTMAN" part of the tutorial.
+  git-clone: https://github.com/FIWARE/tutorials.Time-Series-Data.git
+
+  git-directory: /tmp/tutorials.IoT-Sensors
+  shell-commands: git checkout NGSI-LD ; ./services create  ; ./services start
+  clean-shell-commands: ./services stop
+
 
   Background:
     Given I set the tutorial 301 LD - Timedata series
 
     Scenario Outline: Registering cratedb timedata series
     When I prepare a POST HTTP request for "<description>" to "http://localhost:1026/ngsi-ld/v1/subscriptions/"
-    And  I set header Content-Type to application/ld+json
+    And  I set header Content-Type to application/json
     And  I set header NGSILD-Tenant to openiot
+    And  I set header fiware-servicepath to /
+    And  I set header Link to <http://context/ngsi-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"
     And  I set the body request as described in <file>
     And  I perform the request
     Then  I receive a HTTP "201" response code
@@ -35,6 +39,12 @@ Feature: test tutorial 301.Persisting and Querying timedata series
     When  I send GET HTTP request to "http://localhost:1026/ngsi-ld/v1/subscriptions/"
     And   I set header NGSILD-Tenant to openiot
     Then  I receive a HTTP "200" response code
+
+    Scenario: Check the Quantum Leap Version
+    When  I send GET HTTP request to "http://localhost:8668/version"
+    Then  I receive a HTTP "200" response code
+    And   I validate against jq '. | has("version")'
+
 
     # Somehow I need to add data to Sensors so they can add data to Cratedb
     # This is not in tutorial, but it is the way to add data without Web dashboard
@@ -76,7 +86,7 @@ Feature: test tutorial 301.Persisting and Querying timedata series
       | http://localhost:8668/v2/entities/urn:ngsi-ld:Device:filling001/attrs/filling?lastN=3          |
       | http://localhost:8668/v2/entities/urn:ngsi-ld:Device:filling001/attrs/filling?aggrMethod=count&aggrPeriod=minute&lastN=3 |
       | http://localhost:8668/v2/entities/urn:ngsi-ld:Device:filling001/attrs/filling?aggrMethod=min&aggrPeriod=minute&lastN=3   |
-      | http://localhost:8668/v2/entities/urn:ngsi-ld:Device:filling001/attrs/filling?aggrMethod=max&fromDate=2018-06-27T09:00:00&toDate=2018-06-30T23:59:59 |
+      | http://localhost:8668/v2/entities/urn:ngsi-ld:Device:filling001/attrs/filling?aggrMethod=max&fromDate=2018-06-27T09:00:00&toDate=2050-06-30T23:59:59 |
       | http://localhost:8668/v2/types/Device/attrs/heartRate?lastN=4&georel=near;maxDistance:5000&geometry=point&coords=52.518,13.357                       |
       | http://localhost:8668/v2/types/Device/attrs/heartRate?lastN=4&georel=coveredBy&geometry=polygon&coords=52.5537,13.3996;52.5557,13.3996;52.5557,13.3976;52.5537,13.3976;52.5537,13.3996 |
 
@@ -90,11 +100,11 @@ Feature: test tutorial 301.Persisting and Querying timedata series
       | value |
       | {"stmt":"SHOW SCHEMAS"} |
       | {"stmt":"SHOW TABLES"}  |
-      | {"stmt":"SELECT * FROM etFillingLevelSensor WHERE entity_id = 'urn:ngsi-ld:Device:filling001' ORDER BY time_index ASC LIMIT 3"} |
-      | {"stmt":"SELECT * FROM etFillingLevelSensor WHERE entity_id = 'urn:ngsi-ld:Device:filling001'  ORDER BY time_index DESC LIMIT 3"} |
-      | {"stmt":"SELECT DATE_FORMAT (DATE_TRUNC ('minute', time_index)) AS minute, SUM (filling) AS sum FROM etFillingLevelSensor WHERE entity_id = 'urn:ngsi-ld:Device:filling001' GROUP BY minute LIMIT 3"} |
-      | {"stmt":"SELECT DATE_FORMAT (DATE_TRUNC ('minute', time_index)) AS minute, MIN (filling) AS min FROM etFillingLevelSensor WHERE entity_id = 'urn:ngsi-ld:Device:filling001' GROUP BY minute"} |
-      | {"stmt":"SELECT MAX(filling) AS max FROM etFillingLevelSensor WHERE entity_id = 'urn:ngsi-ld:Device:filling001' and time_index >= '2022-04-01T09:00:00' and time_index < '2025-06-30T23:59:59'"} |
+      | {"stmt":"SELECT * FROM mtopeniot.etFillingLevelSensor WHERE entity_id = 'urn:ngsi-ld:Device:filling001' ORDER BY time_index ASC LIMIT 3"} |
+      | {"stmt":"SELECT * FROM mtopeniot.etFillingLevelSensor WHERE entity_id = 'urn:ngsi-ld:Device:filling001'  ORDER BY time_index DESC LIMIT 3"} |
+      | {"stmt":"SELECT DATE_FORMAT (DATE_TRUNC ('minute', time_index)) AS minute, SUM (filling) AS sum FROM mtopeniot.etFillingLevelSensor WHERE entity_id = 'urn:ngsi-ld:Device:filling001' GROUP BY minute LIMIT 3"} |
+      | {"stmt":"SELECT DATE_FORMAT (DATE_TRUNC ('minute', time_index)) AS minute, MIN (filling) AS min FROM mtopeniot.etFillingLevelSensor WHERE entity_id = 'urn:ngsi-ld:Device:filling001' GROUP BY minute"} |
+      | {"stmt":"SELECT MAX(filling) AS max FROM mtopeniot.etFillingLevelSensor WHERE entity_id = 'urn:ngsi-ld:Device:filling001' and time_index >= '2022-04-01T09:00:00' and time_index < '2025-06-30T23:59:59'"} |
 
     # Request 3 -
   Scenario: Check the subscriptions for quantum-leap to ngsi-ld

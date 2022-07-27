@@ -8,8 +8,10 @@
     "format": "normalized",
     "endpoint": {
       "uri": "http://quantumleap:8668/v2/notify",
-      "accept": "application/json"
+      "accept": "application/json",
+      "receiverInfo": [
+          {"key": "fiware-service", "value": "openiot"}
+      ]
     }
-  },
-   "@context": "http://context/ngsi-context.jsonld"
+  }
 }
