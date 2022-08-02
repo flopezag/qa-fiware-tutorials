@@ -10,7 +10,7 @@ Feature: test tutorial 302 - Big Data Analysis (Flink)
 Background:
     Given  I set the tutorial 302 LD - Big Data Flink
 
-    # COMPILING A JAR FILE FOR SPARK --
+  # COMPILING A JAR FILE FOR SPARK --
     # Scenario: Compiling a Jar File For Flink
     #    Given I prepare the script create-flink-jar.sh to be run
     #    When  I run the script as in the tutorial page
