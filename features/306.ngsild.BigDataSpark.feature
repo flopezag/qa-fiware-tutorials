@@ -1,10 +1,8 @@
 Feature: test tutorial 306 NGSI-LD Big Data Analysis (Spark)
 
   This is the feature file of the FIWARE Step by Step tutorial Big Data Analysis with Spark- NGSI-LD
-  # url (used): https://documenter.getpostman.com/view/513743/TWDUpxxx
-  #   -- This is linked in "url" as "POSTMAN" -- It works much better than the original.
-  url: https://ngsi-ld-tutorials.readthedocs.io/en/latest/big-data-spark.html
 
+  url: https://ngsi-ld-tutorials.readthedocs.io/en/latest/big-data-spark.html
   git-clone: https://github.com/FIWARE/tutorials.Big-Data-Spark.git
   git-directory: /tmp/tutorials.Big-Data-Spark
   shell-commands: git checkout NGSI-LD ; mkdir cosmos-examples ; ./services create  ; ./services start
