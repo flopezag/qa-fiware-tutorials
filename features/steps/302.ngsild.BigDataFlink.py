@@ -7,6 +7,6 @@ from time import sleep
 def step_impl(context):
     context.data_home = join(join(join(CODE_HOME, "features"), "data"), "302.ld.BigData_Flink")
 
-@step(u'Wait for debug')
+@step(u'I wait for debug')
 def wait_for_debug_302ld(context):
    sleep(1)
