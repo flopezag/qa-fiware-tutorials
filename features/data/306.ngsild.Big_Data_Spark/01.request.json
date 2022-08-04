@@ -1,0 +1,15 @@
+{
+  "description": "Notify Spark of all animal and farm vehicle movements",
+  "type": "Subscription",
+  "entities": [{"type": "Tractor"}, {"type": "Device"}],
+  "watchedAttributes": ["location"],
+  "notification": {
+    "attributes": ["location"],
+    "format": "normalized",
+    "endpoint": {
+      "uri": "http://spark-worker-1:9001",
+      "accept": "application/json"
+    }
+  },
+   "@context": "http://context/ngsi-context.jsonld"
+}
