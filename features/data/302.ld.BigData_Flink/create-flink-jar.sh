@@ -23,5 +23,5 @@ filename=$(curl -v -X POST -H "Expect:" -F "jarfile=@target/cosmos-examples-1.2.
 
 fnid=$(basename $filename)
 
-curl -X POST "http://localhost:8081/jars/${fnid}/run?entry-class=org.fiware.cosmos.tutorial.FeedbackLD"
-
+# curl -X POST "http://localhost:8081/jars/${fnid}/run?entry-class=org.fiware.cosmos.tutorial.FeedbackLD"
+curl -X POST "http://localhost:8081/jars/${fnid}/run?entry-class=org.fiware.cosmos.tutorial.LoggerLD"

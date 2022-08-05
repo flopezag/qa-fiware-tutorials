@@ -29,6 +29,11 @@ Background:
         | description                            | file            |
         | notify feedstock and tractor changes   | 01.request.json |
 
+   # Request 2 -
+   Scenario: Check the subscriptions for Flink Logger to ngsi-ld
+   When  I send GET HTTP request to "http://localhost:1026/ngsi-ld/v1/subscriptions/"
+   And   I set header NGSILD-Tenant to openiot
+   Then  I receive a HTTP "200" response code
 
     # Populate things....
     # Somehow I need to add data to Sensors so they can push data to CB and via subscription to flink
@@ -56,9 +61,12 @@ Background:
         | d\|AT_REST\|bpm\|66\|gps\|13.3986,52.5547\|s\|5             | 110990      | pig001     |
         | d\|AT_REST\|bpm\|53\|gps\|13.3987,52.5547\|s\|0             | 98699       | cow001     |
 
-     # Request 2 -
-  Scenario: Check the subscriptions for Spark Logger to ngsi-ld
-    When  I send GET HTTP request to "http://localhost:1026/ngsi-ld/v1/subscriptions/"
-    And   I set header NGSILD-Tenant to openiot
-    And   I Wait for debug
-    Then  I receive a HTTP "200" response code
+    Scenario: Checkout the logs. This proccess won't end
+        When  I open a new shell terminal flink-logs and run "docker logs -f flink-taskmanager 2>&1"
+        And   I wait "20" seconds
+        Then  everything is ok
+
+    Scenario: Check Flink docker output after some time to test that things worked with the registration
+    Given I wait "60" seconds
+    When  I Compare next lines in terminal flink-logs at least I can find 1 in stdout with a timeout 10 matching filename 01.expected_on_terminal.txt
+    And   I flush the terminal flink-logs queues
