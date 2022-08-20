@@ -13,7 +13,7 @@ Feature: test tutorial 301.Persisting and Querying timedata series
   git-clone: https://github.com/FIWARE/tutorials.Time-Series-Data.git
 
   git-directory: /tmp/Time-Series-Data
-  shell-commands: git checkout NGSI-LD ; ./services create  ; ./services start
+  shell-commands: git checkout NGSI-LD ; /tmp/patch_crate.sh ; ./services create  ; ./services start
   clean-shell-commands: ./services stop
 
 
@@ -113,7 +113,7 @@ Feature: test tutorial 301.Persisting and Querying timedata series
       | {"stmt":"SELECT DATE_FORMAT (DATE_TRUNC ('minute', time_index)) AS minute, SUM (filling) AS sum FROM mtopeniot.etFillingLevelSensor WHERE entity_id = 'urn:ngsi-ld:Device:filling001' GROUP BY minute LIMIT 3"} |
       | {"stmt":"SELECT DATE_FORMAT (DATE_TRUNC ('minute', time_index)) AS minute, MIN (filling) AS min FROM mtopeniot.etFillingLevelSensor WHERE entity_id = 'urn:ngsi-ld:Device:filling001' GROUP BY minute"} |
       | {"stmt":"SELECT MAX(filling) AS max FROM mtopeniot.etFillingLevelSensor WHERE entity_id = 'urn:ngsi-ld:Device:filling001' and time_index >= '2022-04-01T09:00:00' and time_index < '2050-06-30T23:59:59'"} |
-      | {"stmt":"SELECT MAX(filling) AS max FROM mtopeniot.etFillingLevelSensor WHERE entity_id = 'urn:ngsi-ld:Device:filling001' and time_index >= '2022-04-01T09:00:00' and time_index < TIMESTAMP"} |
+      | {"stmt":"SELECT MAX(filling) AS max FROM mtopeniot.etFillingLevelSensor WHERE entity_id = 'urn:ngsi-ld:Device:filling001' and time_index >= '2022-04-01T09:00:00' and time_index < NOW()"} |
 
     # Request 3 -
   Scenario: Check the subscriptions for quantum-leap to ngsi-ld
