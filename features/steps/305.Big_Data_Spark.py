@@ -51,7 +51,7 @@ def step_impl(context):
     pass
 
 
-@then(u'I expect the scripts shows a result of {result}')
+@then(u'I expect the script shows a result of {result}')
 def step_impl(context, result):
     assert (int(result) == context.result), \
         f"\nThe result received is different to the expected value, received {context.result}, but expected: {result}"
