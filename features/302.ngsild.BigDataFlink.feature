@@ -16,7 +16,7 @@ Background:
        And   I set the environ variable WORKING_DIR to "cosmos-examples" under git
        And   I set the environ variable OUTPUT_DIR to "cosmos-examples/target" under git
        When  I run the script as in the tutorial page
-       Then  I expect the scripts shows a result of 0
+       Then  I expect the script shows a result of 0
 
     Scenario Outline: Subscribing Logger to context changes
     When I prepare a POST HTTP request for "<description>" to "http://localhost:1026/ngsi-ld/v1/subscriptions/"
@@ -66,7 +66,8 @@ Background:
         And   I wait "20" seconds
         Then  everything is ok
 
-    Scenario: Check Flink docker output after some time to test that things worked with the registration
+    Scenario: Wait 60 seconds as described in tutorial and start Checking Flink docker output so we can test that data from Context-Broker is sent to Flink
     Given I wait "60" seconds
     When  I Compare next lines in terminal flink-logs at least I can find 1 in stdout with a timeout 10 matching filename 01.expected_on_terminal.txt
     And   I flush the terminal flink-logs queues
+

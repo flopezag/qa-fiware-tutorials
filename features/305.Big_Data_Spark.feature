@@ -17,7 +17,7 @@ Feature: test tutorial 305.Big Data (Spark)
         And   I set the environ variable WORKING_DIR to "cosmos-examples" under git
         And   I set the environ variable OUTPUT_DIR to "cosmos-examples/target" under git
         When  I run the script as in the tutorial page
-        Then  I expect the scripts shows a result of 0
+        Then  I expect the script shows a result of 0
 
     #   LOGGER - READING CONTEXT DATA STREAMS
     # - Logger - Installing the JAR
