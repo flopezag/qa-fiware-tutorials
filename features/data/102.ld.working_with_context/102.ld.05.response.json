@@ -1,0 +1,33 @@
+{
+    "@context": "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context.jsonld",
+    "id": "urn:ngsi-ld:Building:farm001",
+    "type": "Building",
+    "address": {
+        "type": "Property",
+        "value": {
+            "streetAddress": "Grosser Stern 1",
+            "addressRegion": "Berlin",
+            "addressLocality": "Tiergarten",
+            "postalCode": "10557"
+        },
+        "verified": {
+            "type": "Property",
+            "value": true
+        }
+    },
+    "name": {
+        "type": "Property",
+        "value": "Victory Farm"
+    },
+    "category": {
+        "type": "Property",
+        "value": "farm"
+    },
+    "location": {
+        "type": "GeoProperty",
+        "value": {
+            "type": "Point",
+            "coordinates": [13.3505, 52.5144]
+        }
+    }
+}

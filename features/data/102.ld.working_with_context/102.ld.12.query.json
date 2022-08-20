@@ -1,0 +1,7 @@
+{
+  "type": "Building",
+  "geometry": "Point",
+  "coordinates": "[13.3777,52.5162]",
+  "georel": "near;maxDistance==800",
+  "options": "keyValues"
+}
