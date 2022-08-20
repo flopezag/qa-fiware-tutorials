@@ -12,13 +12,13 @@ Feature: test tutorial 301.Persisting and Querying timedata series
   # git-clone -- As shown in the "POSTMAN" part of the tutorial.
   git-clone: https://github.com/FIWARE/tutorials.Time-Series-Data.git
 
-  git-directory: /tmp/tutorials.IoT-Sensors
+  git-directory: /tmp/Time-Series-Data
   shell-commands: git checkout NGSI-LD ; ./services create  ; ./services start
   clean-shell-commands: ./services stop
 
 
   Background:
-    Given I set the tutorial 301 LD - Timedata series
+    Given I set the tutorial 301 LD - Timeseries data
 
     Scenario Outline: Registering cratedb timedata series
     When I prepare a POST HTTP request for "<description>" to "http://localhost:1026/ngsi-ld/v1/subscriptions/"
@@ -112,7 +112,8 @@ Feature: test tutorial 301.Persisting and Querying timedata series
       | {"stmt":"SELECT * FROM mtopeniot.etFillingLevelSensor WHERE entity_id = 'urn:ngsi-ld:Device:filling001'  ORDER BY time_index DESC LIMIT 3"} |
       | {"stmt":"SELECT DATE_FORMAT (DATE_TRUNC ('minute', time_index)) AS minute, SUM (filling) AS sum FROM mtopeniot.etFillingLevelSensor WHERE entity_id = 'urn:ngsi-ld:Device:filling001' GROUP BY minute LIMIT 3"} |
       | {"stmt":"SELECT DATE_FORMAT (DATE_TRUNC ('minute', time_index)) AS minute, MIN (filling) AS min FROM mtopeniot.etFillingLevelSensor WHERE entity_id = 'urn:ngsi-ld:Device:filling001' GROUP BY minute"} |
-      | {"stmt":"SELECT MAX(filling) AS max FROM mtopeniot.etFillingLevelSensor WHERE entity_id = 'urn:ngsi-ld:Device:filling001' and time_index >= '2022-04-01T09:00:00' and time_index < '2025-06-30T23:59:59'"} |
+      | {"stmt":"SELECT MAX(filling) AS max FROM mtopeniot.etFillingLevelSensor WHERE entity_id = 'urn:ngsi-ld:Device:filling001' and time_index >= '2022-04-01T09:00:00' and time_index < '2050-06-30T23:59:59'"} |
+      | {"stmt":"SELECT MAX(filling) AS max FROM mtopeniot.etFillingLevelSensor WHERE entity_id = 'urn:ngsi-ld:Device:filling001' and time_index >= '2022-04-01T09:00:00' and time_index < TIMESTAMP"} |
 
     # Request 3 -
   Scenario: Check the subscriptions for quantum-leap to ngsi-ld
