@@ -1,0 +1,17 @@
+{
+  "description": "Notify me of all feedstock changes",
+  "type": "Subscription",
+  "entities": [{"type": "FillingLevelSensor"}],
+  "watchedAttributes": ["filling"],
+  "notification": {
+    "attributes": ["filling", "location"],
+    "format": "normalized",
+    "endpoint": {
+      "uri": "http://quantumleap:8668/v2/notify",
+      "accept": "application/json",
+      "receiverInfo": [
+          {"key": "fiware-service", "value": "openiot"}
+      ]
+    }
+  }
+}
