@@ -38,7 +38,7 @@ Background:
     # Populate things....
     # Somehow I need to add data to Sensors so they can push data to CB and via subscription to flink
     # This is not in tutorial, but it is a way to add data without Web dashboard
-    Scenario Outline: Communicating with IoT Devices: Using Actuators
+    Scenario Outline: Communicating with IoT Devices: sending mockup data to devices
     When  I prepare a POST HTTP request to "http://localhost:7896/iot/d?k=<key_value>&i=<sensor>"
     And   I set header fiware-service to openiot
     And   I set header fiware-servicepath to /
