@@ -35,7 +35,7 @@ Feature: test tutorial 102 NGSI-LD: Working with Context feature
     And   I set the body request as described in 102.ld.02.request.json
     And   I perform the request
     Then  I receive a HTTP "201" response code
-    And   I have the header "Location" with value /ngsi-ld/v1/entities/urn:ngsi-ld:Building:farm001
+    And   I have the header "Location" with value "/ngsi-ld/v1/entities/urn:ngsi-ld:Building:farm001"
 
   # Request 3: New data enities
   Scenario: Each subsequent entity must have a unique id for the given type
@@ -45,7 +45,7 @@ Feature: test tutorial 102 NGSI-LD: Working with Context feature
     And   I set the body request as described in 102.ld.03.request.json
     And   I perform the request
     Then  I receive a HTTP "201" response code
-    And   I have the header "Location" with value /ngsi-ld/v1/entities/urn:ngsi-ld:Building:barn002
+    And   I have the header "Location" with value "/ngsi-ld/v1/entities/urn:ngsi-ld:Building:barn002"
 
   # Request 4:
   # 1. Modified data. Changed ß for ss to prevent errors
