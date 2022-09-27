@@ -1,6 +1,6 @@
 Feature: test tutorial 306 NGSI-LD Big Data Analysis (Spark)
 
-  This is the feature file of the FIWARE Step by Step tutorial Big Data Analysis with Spark- NGSI-LD
+  This is the feature file of the FIWARE Step by Step tutorial Big Data Analysis with Spark using NGSI-LD
 
   url: https://ngsi-ld-tutorials.readthedocs.io/en/latest/big-data-spark.html
   git-clone: https://github.com/FIWARE/tutorials.Big-Data-Spark.git
