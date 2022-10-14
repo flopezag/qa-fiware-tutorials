@@ -1,0 +1,1 @@
+Sensor\((Tractor|Device),[0-9]+\)
