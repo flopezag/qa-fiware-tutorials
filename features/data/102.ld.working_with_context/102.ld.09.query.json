@@ -1,0 +1,5 @@
+{
+  "type": "Building",
+  "q": "category==\"barn\",\"farm_auxiliary\"",
+  "options": "keyValues"
+}

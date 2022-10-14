@@ -1,0 +1,5 @@
+{
+  "type": "Gebäude",
+  "q": "name==\"Big Red Barn\"",
+  "options": "keyValues"
+}
