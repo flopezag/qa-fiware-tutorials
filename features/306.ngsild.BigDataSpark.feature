@@ -48,7 +48,7 @@ Feature: test tutorial 306 NGSI-LD Big Data Analysis (Spark)
     # Somehow I need to add data to Sensors so they can add data to Cratedb
     # This is not in tutorial, but it is the way to add data without Web dashboard
     ## Example post: 12:53:47 PM HTTP POST http://iot-agent:7896/iot/d?i=filling001&k=854782081 f|0.45
-    Scenario Outline: Communicating with IoT Devices: Using Actuators
+    Scenario Outline: Communicating with IoT Devices: Adding data
         When  I prepare a POST HTTP request to "http://localhost:7896/iot/d?k=<key_value>&i=<sensor>"
         And   I set header fiware-service to openiot
         And   I set header fiware-servicepath to /
