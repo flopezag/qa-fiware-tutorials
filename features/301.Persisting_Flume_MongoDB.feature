@@ -60,8 +60,8 @@ Feature: test tutorial 301.Persisting Context Data using Apache Flume (MongoDB)
     Given  I connect to the MongoDB with the host "localhost" and the port "27017"
     When   I request the available MongoDB databases
     Then   I obtain the following databases
-      | Databases                                                   |
-      | admin, iotagentul, local, orion, orion-openiot, sth_openiot |
+      | Databases                                                                                    |
+      | admin, iotagentul, local, orion, orion-openiot, sth_openiot, session, config, sessions, test |
 
   Scenario: 05 - Read historical context from the MongoDB server - show collections
     Given  I connect to the MongoDB with the host "localhost" and the port "27017"

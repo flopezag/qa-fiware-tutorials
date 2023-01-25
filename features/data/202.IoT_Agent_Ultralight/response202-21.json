@@ -2,19 +2,27 @@
     "device_id": "bell002",
     "service": "openiot",
     "service_path": "/",
-    "entity_name": "urn:ngsi",
+    "entity_name": "urn:ngsi-ld:Bell:002",
     "entity_type": "Bell",
-    "endpoint": "http://iot-sensors:3001/iot/bell002",
+    "endpoint": "http://context-provider:3001/iot/bell002",
+    "polling": false,
     "transport": "HTTP",
-    "attributes": [],
-    "lazy": [],
-    "commands": [
+    "attributes": [
         {
             "object_id": "ring",
             "name": "ring",
-            "type": "command"
+            "type": "Text",
+            "expression": "${@ring}",
+            "reverse": [
+                {
+                    "object_id": "ring",
+                    "type": "Text",
+                    "expression": "${@ring}"
+                }
+            ]
         }
     ],
+    "commands": [],
     "static_attributes": [
         {
             "name": "refStore",
@@ -22,5 +30,6 @@
             "value": "urn:ngsi-ld:Store:002"
         }
     ],
-    "protocol": "PDI-IoTA-UltraLight"
+    "protocol": "PDI-IoTA-UltraLight",
+    "explicitAttrs": false
 }

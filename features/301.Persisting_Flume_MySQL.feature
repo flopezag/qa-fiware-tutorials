@@ -86,5 +86,5 @@ Feature: test tutorial 301.Persisting Context Data using Apache Flume (MySQL)
     Given  I connect to the MySQL with the following data
       | User     | Password | Host      | Port | Database |
       | root     | 123      | localhost | 3306 | openiot  |
-    When   I request recvtime, attrvalue from the table "openiot.Motion_001_Motion" limited to "10" registers
+    When   I request "recvtime", "attrvalue" from the table "openiot.Motion_001_Motion" limited to "10" registers
     Then   I receive a non-empty list with "2" columns

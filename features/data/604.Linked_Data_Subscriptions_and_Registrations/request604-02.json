@@ -3,7 +3,7 @@
   "type": "Subscription",
   "entities": [{"type": "Shelf"}],
   "watchedAttributes": ["numberOfItems"],
-  "q": "numberOfItems<10;locatedIn==urn:ngsi-ld:Building:store002",
+  "q": "numberOfItems<10;locatedIn==%22urn:ngsi-ld:Building:store002%22",
   "notification": {
     "attributes": ["numberOfItems", "stocks", "locatedIn"],
     "format": "normalized",

@@ -23,7 +23,8 @@
         "url": "http://cygnus:5055/notify"
       },
       "lastSuccess": "2021-08-17T11:09:26.000Z",
-      "lastSuccessCode": 200
+      "lastSuccessCode": 200,
+      "covered": false
     },
     "throttling": 5
   }

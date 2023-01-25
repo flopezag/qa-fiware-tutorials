@@ -8,6 +8,7 @@
       "entity_name": "urn:ngsi-ld:Motion:001",
       "entity_type": "Motion",
       "transport": "HTTP",
+      "polling": true,
       "attributes": [
         {
           "object_id": "c",
@@ -34,6 +35,7 @@
       "entity_type": "Bell",
       "endpoint": "http://iot-sensors:3001/iot/bell001",
       "transport": "HTTP",
+      "polling": false,
       "attributes": [],
       "lazy": [],
       "commands": [
@@ -61,6 +63,7 @@
       "entity_type": "Bell",
       "endpoint": "http://context-provider:3001/iot/bell002",
       "transport": "HTTP",
+      "polling": false,
       "attributes": [
         {
           "object_id": "ring",
@@ -96,6 +99,7 @@
       "entity_type": "Door",
       "endpoint": "http://iot-sensors:3001/iot/door001",
       "transport": "HTTP",
+      "polling": false,
       "attributes": [
         {
           "object_id": "s",
@@ -144,6 +148,7 @@
       "entity_type": "Lamp",
       "endpoint": "http://iot-sensors:3001/iot/lamp001",
       "transport": "HTTP",
+      "polling": false,
       "attributes": [
         {
           "object_id": "s",

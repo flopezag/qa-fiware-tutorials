@@ -51,7 +51,7 @@ Feature: Test tutorial 206.IoT over IOTA tangle
         When  I Compare next lines in terminal iota-gateway are like in filename 02.expected_on_terminal.txt
         Then  All lines must have matched
 
-    Scenario: 02.1 - Check stderr logs from iota-gateway
+    Scenario: 02.2 - Check stderr logs from fiware-tutorial
         When  I Compare next lines in terminal fiware-tutorial are like in filename 03.expected_on_terminal.txt
         Then  All lines must have matched
 
@@ -62,7 +62,7 @@ Feature: Test tutorial 206.IoT over IOTA tangle
       And   I set the body request as described in request207-04.json
       And   I perform the request
       Then  I receive a HTTP response with status 204 and empty dict
-      And   I wait "3" seconds
+      And   I wait "15" seconds
 
     Scenario: 04.2 - Test the 1st terminal result
       When  I Compare next lines in terminal iota-gateway are like in filename 04.02.expected_on_terminal.txt

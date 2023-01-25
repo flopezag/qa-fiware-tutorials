@@ -40,9 +40,22 @@ function generate_ngsiv2 {
 
 
 function generate_ngsild {
+    behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/102.ngsild.working_with_context.feature
+
     behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/201.ngsild.IoTSensors.feature
     behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/202.ngsild.IoTAgentUltralight.feature
     behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/203.ngsild.IoTAgentJson.feature
+
+    behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/301.ngsild.TimeseriesData.feature
+    behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/302.ngsild.BigDataFlink.feature
+    behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/306.ngsild.BigDataSpark.feature
+
+    behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/601.LD-Intro_Orion-LD.feature
+    behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/601.LD-Intro_Scorpio.feature
+    behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/601.LD-Intro_Stellio.feature
+    behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/602.LD-RelationshipsAndDataModels_Orion-LD.feature
+    behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/602.LD-RelationshipsAndDataModels_Scorpio.feature
+    behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/602.LD-RelationshipsAndDataModels_Stellio.feature
 }
 
 

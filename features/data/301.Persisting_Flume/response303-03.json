@@ -17,10 +17,14 @@
             "timesSent": 158,
             "lastNotification": "2018-07-02T07:59:21.00Z",
             "attrs": [],
+            "onlyChangedAttrs": false,
+            "attrsFormat": "normalized",
             "http": {
-                "url": "http://cygnus:5050/notify"
+                "url": "http://cygnus:5051/notify"
             },
-            "lastSuccess": "2018-07-02T07:59:21.00Z"
+            "lastSuccess": "2018-07-02T07:59:21.00Z",
+            "lastSuccessCode": 200,
+            "covered": false
         },
         "throttling": 5
     }

@@ -390,7 +390,7 @@ def step_impl(context):
         context.my_results = []
 
 
-@when('I request recvtime, attrvalue from the table "openiot.motion_001_motion" limited to "10" registers')
+@when('I request "recvtime", "attrvalue" from the table "openiot.motion_001_motion" limited to "10" registers')
 def step_impl(context):
     try:
         context.connection = create_engine(context.connection_string, pool_recycle=3600, pool_pre_ping=True)

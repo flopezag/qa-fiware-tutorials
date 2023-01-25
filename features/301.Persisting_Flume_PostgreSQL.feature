@@ -73,7 +73,9 @@ Feature: test tutorial 301.Persisting Context Data using Apache Flume (PostgreSQ
       | User     | Password | Host      | Port | Database |
       | postgres | password | localhost | 5432 | postgres |
     When   I request the available table_schema and table_name from PostgreSQL when table_schema is "openiot"
+    And    I wait "120" seconds
     Then   I obtain "16" total tables from PostgreSQL
+
 
   Scenario: 07 - Read historical context from the PostgreSQL server - query some data from Motion001 sensor
     Given  I connect to the PostgreSQL with the following data

@@ -1,4 +1,4 @@
-Feature: Test tutorial 203.Why are muliple IoT Agents Needed?
+Feature: Test tutorial 203.Why are multiple IoT Agents Needed?
     This is feature file of the FIWARE step by step tutorial for IoT Agent Ultralight
     url: https://fiware-tutorials.readthedocs.io/en/latest/iot-agent-json.html
     git-clone: https://github.com/FIWARE/tutorials.IoT-Agent-JSON.git

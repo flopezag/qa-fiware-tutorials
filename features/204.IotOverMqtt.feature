@@ -56,7 +56,7 @@ Feature: Test tutorial 204.IoT Agent over MQTT
        And   I set the body request as described in request204-07.json
        And   I perform the request
        Then  I receive a HTTP response with status 204 and empty dict
-       And   I wait "1" seconds
+       And   I wait "10" seconds
 
     Scenario: 08 - Read the result of the previous command (Ring a bell)
         When  I prepare a GET HTTP request to "http://localhost:1026/v2/entities/urn:ngsi-ld:Bell:001"
