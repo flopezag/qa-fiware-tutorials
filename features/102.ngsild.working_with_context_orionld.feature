@@ -37,7 +37,7 @@ Feature: test tutorial 102 NGSI-LD: Working with Context feature
     Then  I receive a HTTP "201" response code
     And   I have the header "Location" with value "/ngsi-ld/v1/entities/urn:ngsi-ld:Building:farm001"
 
-  # Request 3: New data enities
+  # Request 3: New data entities
   Scenario: Each subsequent entity must have a unique id for the given type
     When  I prepare a POST HTTP request to "http://localhost:1026/ngsi-ld/v1/entities/"
     And   I set header Content-type to application/json
@@ -49,11 +49,15 @@ Feature: test tutorial 102 NGSI-LD: Working with Context feature
 
   # Request 4:
   # 1. Modified data. Changed ß for ss to prevent errors
+  # curl -G -X GET \
+  #  'http://localhost:1026/ngsi-ld/v1/entities' \
+  #  -H 'Accept: application/ld+json' \
+  #  -d 'type=https://uri.fiware.org/ns/dataModels%23Building'
   Scenario: Obtaining Entity data by FQN Type
-    When  I prepare a GET HTTP request to "http://localhost:1026/ngsi-ld/v1/entities?type=https://uri.fiware.org/ns/data-models%23Building"
+    When  I prepare a GET HTTP request to "http://localhost:1026/ngsi-ld/v1/entities?type=https://uri.fiware.org/ns/dataModels%23Building"
     And   I set header Accept to application/ld+json
     And   I perform the query request
-    Then   I receive a HTTP "200" status code from Broker with the body "102.ld.04.response.json" and exclusions "response102-04.excludes"
+    Then  I receive a HTTP "200" status code from Broker with the body "102.ld.04.response.json" and exclusions "response102-04.excludes"
 
   # Request 5:
   Scenario: Obtaining Entity data by ID
@@ -61,7 +65,7 @@ Feature: test tutorial 102 NGSI-LD: Working with Context feature
     And   I set header Accept to application/ld+json
     And   I set header Link to <http://context/ngsi-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"
     And   I perform the query request
-    Then   I receive a HTTP "200" status code from Broker with the body "102.ld.05.response.json" and exclusions "response102-05.excludes"
+    Then  I receive a HTTP "200" status code from Broker with the body "102.ld.05.response.json" and exclusions "response102-05.excludes"
 
    # Requests 6 to 12: Several different queries with data
    Scenario Outline: Several queries

@@ -2,7 +2,7 @@
     {
         "@context": "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context.jsonld",
         "id": "urn:ngsi-ld:Building:farm001",
-        "type": "https://uri.fiware.org/ns/data-models#Building",
+        "type": "https://uri.fiware.org/ns/dataModels#Building",
         "https://schema.org/address": {
             "type": "Property",
             "value": {
@@ -35,7 +35,7 @@
     {
         "@context": "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context.jsonld",
         "id": "urn:ngsi-ld:Building:barn002",
-        "type": "https://uri.fiware.org/ns/data-models#Building",
+        "type": "https://uri.fiware.org/ns/dataModels#Building",
         "https://schema.org/address": {
             "type": "Property",
             "value": {

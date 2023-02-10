@@ -40,6 +40,7 @@ Feature: test tutorial 202.Introduction to IoT Sensors
     When  I prepare a GET HTTP request to "http://localhost:1026/ngsi-ld/v1/entities/urn:ngsi-ld:Device:temperature001?attrs=temperature"
     And   I set header fiware-service to openiot
     And   I set header fiware-servicepath to /
+    And   I set header Accept to application/ld+json
     And   I set header Link to <http://context/ngsi-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"
     And   I perform the query request
     Then  I receive a HTTP "200" response code from Broker with the body "05.response.json" and exclusions "05.excludes"
@@ -128,6 +129,7 @@ Feature: test tutorial 202.Introduction to IoT Sensors
   ###   Service Group CRUD Actions
 
   ## Will fail 409 - Conflict since the service is already provisioned
+  # {"name":"DUPLICATE_GROUP","message":"A device configuration already exists for resource /iot/d and API Key 4jggokgpepnvsb2uv4s40d59ov"}
   Scenario: Req 17 - Provisining a service Group for CRUD operations
     When  I prepare a POST HTTP request to "http://localhost:4041/iot/services"
     And   I set header fiware-service to openiot
@@ -188,7 +190,7 @@ Feature: test tutorial 202.Introduction to IoT Sensors
     And   I validate against jq '.count>=5'
 
   # Strange error 200-ok with message:
-  # {"name":"ENTITY_GENERIC_ERROR","message":"Error accesing entity data for device: water002 of type: IoT-Device"}
+  # {"name":"ENTITY_GENERIC_ERROR","message":"Error accessing entity data for device: water002 of type: IoT-Device"}
   Scenario: Req 25 - Update a provisioned device
     When  I prepare a PUT HTTP request to "http://localhost:4041/iot/devices/water002"
     And   I set header fiware-service to openiot

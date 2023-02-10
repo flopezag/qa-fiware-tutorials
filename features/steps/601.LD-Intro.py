@@ -137,7 +137,10 @@ def receive_post_response2(context, server):
         print(valid_response)
 
         assert_that(context.statusCode, is_(valid_response['Status-Code']))
-        assert_that(context.responseHeaders['Connection'], is_(valid_response['Connection']))
+
+        if 'Connection' in valid_response:
+            assert_that(context.responseHeaders['Connection'], is_(valid_response['Connection']))
+
         if valid_response['Location'] != "Any":
             assert_that(context.responseHeaders['Location'], is_(valid_response['Location']))
 

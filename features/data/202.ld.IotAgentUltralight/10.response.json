@@ -23,11 +23,11 @@
         "observedAt": "2020-09-14T15:27:11.066Z"
     },
     "on": {
-        "type": "command",
+        "type": "Property",
         "value": ""
     },
     "off": {
-        "type": "command",
+        "type": "Property",
         "value": ""
     }
 }

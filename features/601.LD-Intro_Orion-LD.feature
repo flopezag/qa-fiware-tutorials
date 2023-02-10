@@ -46,7 +46,7 @@ Feature: test tutorial 601 Introduction to Linked Data (Orion-LD)
 #           - the attribute "@context" is at the beginning of the entity and not at the end as expected
 #           - the attribute "http://schema.org/address" is instead of "https://schema.org/address"
 #           - the structured attribute
-#                           "https://uri.fiware.org/ns/data-models#category": {
+#                           "https://uri.fiware.org/ns/dataModels#category": {
 #                                "type": "Property",
 #                                "value": ["commercial"]
 #                                }, is instead of
@@ -56,7 +56,7 @@ Feature: test tutorial 601 Introduction to Linked Data (Orion-LD)
 #                                } and is in a wrong position.
 #
     Scenario: [4] OBTAIN ENTITY DATA BY FQN TYPE
-      When  I send GET HTTP request to "http://localhost:1026/ngsi-ld/v1/entities?type=https://uri.fiware.org/ns/data-models%23Building"
+      When  I send GET HTTP request to "http://localhost:1026/ngsi-ld/v1/entities?type=https://uri.fiware.org/ns/dataModels%23Building"
       Then  I receive a HTTP "200" response code from Orion-LD with the body equal to "response601-04.json"
 
 
@@ -66,7 +66,7 @@ Feature: test tutorial 601 Introduction to Linked Data (Orion-LD)
 #           - the attribute "@context" is at the beginning of the entity and not at the end as expected
 #           - the attribute "http://schema.org/address" is instead of "https://schema.org/address"
 #           - the structured attribute
-#                           "https://uri.fiware.org/ns/data-models#category": {
+#                           "https://uri.fiware.org/ns/dataModels#category": {
 #                                "type": "Property",
 #                                "value": ["commercial"]
 #                                }, is instead of
