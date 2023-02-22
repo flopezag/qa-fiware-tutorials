@@ -117,10 +117,6 @@ Feature: test tutorial 104.Context Data and Context Providers
             | 201         | Any        | Keep-Alive | Any               |
         And I register the location header
 
-    Scenario: [7.1] Test location header
-        When  I send GET HTTP request to "http://localhost:1026/version"
-        Then  I receive a HTTP "200" response code
-        And   I test the location header
 #
 #   Request 8
 #

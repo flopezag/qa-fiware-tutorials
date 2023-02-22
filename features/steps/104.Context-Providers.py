@@ -119,15 +119,6 @@ def register_location_header(context):
     global location
     location = context.responseHeaders['Location']
     pass
-@step(u'I test the location header')
-def register_location_header(context):
-    global location
-    try:
-        foo = location
-        pass
-    except:
-        stdout.write("NO TENGO LOCATION, MIERDA!")
-
 
 @step(u'I append the previous location to url "{cb_url}"')
 def http_get_appending_location(context, cb_url):
