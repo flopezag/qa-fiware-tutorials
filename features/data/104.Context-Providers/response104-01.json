@@ -2,6 +2,5 @@
     "array": ["Arthur", "Dent"],
     "boolean": true,
     "number": 42,
-    "structuredValue": { "somevalue": "this" },
     "text": "I never could get the hang of Thursdays"
 }
