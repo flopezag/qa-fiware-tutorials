@@ -15,12 +15,10 @@ __logger__ = getLogger(__name__)
 def step_impl_tutorial_104(context):
     context.data_home = join(join(join(CODE_HOME, "features"), "data"), "104.Context-Providers")
 
-
 @when(u'104 sends a POST HTTP request to "{url}"')
 def set_req_body2(context, url):
     context.url = url
     context.header = {'Content-Type': 'application/json'}
-
 
 @step(u'With the 104 body request described in file "{file}"')
 def send_orion_post_entity2(context, file):
@@ -100,3 +98,31 @@ def http_code_is_returned(context, status_code, expectedType):
         except ValueError:
             stdout.write(f'Response type from CB {type(context.response)} '
                          f'is NOT of the expected response type: {expectedType}\n')
+
+@step(u'I can eval the assertions in "{filename}"')
+def eval_assertion_file(context, filename):
+    filename = join(context.data_home, filename)
+    d = context.response
+    with open(filename, "r") as f:
+        lines = f.readlines()
+
+    for ln in lines:
+        try:
+            assert(eval(ln))
+        except AssertionError as e:
+            stdout.write(f'Failed "{ln.strip()}" with {d}')
+            stdout.flush()
+            raise e
+
+@step(u'I register the location header')
+def register_location_header(context):
+    global location
+    location = context.responseHeaders['Location']
+    pass
+
+@step(u'I append the previous location to url "{cb_url}"')
+def http_get_appending_location(context, cb_url):
+    global location
+    context.url = cb_url + location
+    context.headers = {}
+    context.method = "GET"
