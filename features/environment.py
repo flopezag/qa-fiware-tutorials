@@ -15,7 +15,9 @@ from tempfile import mkstemp
 from shutil import move
 from os import remove
 from config.settings import config
-
+from config.settings import CODE_HOME
+from os.path import join
+import stat
 
 __logger__ = getLogger(__name__)
 
@@ -41,6 +43,24 @@ def git(*args):
     except subprocess.CalledProcessError as e:
         stdout.write(f'\n -- GIT EXCEPTION -- \n\n{e.output}\n')
         __logger__.error("Exception on process, rc=", e.returncode, "output=", e.output)
+
+
+def exec_scripts(parameters: dict, which_scripts: str):
+    scripts = parameters[which_scripts].split(';')
+    git_dir = parameters['git-directory'] if 'git-directory' in parameters else '.'
+    script_dir = join(CODE_HOME, "scripts")
+
+    current_dir = os.getcwd()
+    os.chdir(CODE_HOME)
+
+    for script in scripts:
+        script = join(join(CODE_HOME, script_dir), script)
+        st = os.stat(script)
+        os.chmod(script, st.st_mode | stat.S_IEXEC)
+        sn = f"{script.strip()} {git_dir}"
+        os.system(sn)
+
+    os.chdir(current_dir)
 
 
 def exec_commands(parameters: dict, which_commands: str):
@@ -103,6 +123,7 @@ def before_feature(context, feature):
         docker.compose.up(detach=True)
 
     if 'git-clone' in parameters:
+        stdout.write("********** START git-clone **********\n")
         # We need to check if the corresponding temporal folder exists from a previous execution
         # not finished properly, and in that case remove it
         if exists(parameters['git-directory']):
@@ -111,16 +132,14 @@ def before_feature(context, feature):
             rmtree(context.parameters['git-directory'])
 
         git("clone", parameters['git-clone'], parameters['git-directory'])
+        stdout.write("********** END git-clone **********\n")
 
     if 'docker-compose-changes' in parameters:
         stdout.write("********** START docker-compose-changes **********\n")
-
-        changes = parameters['docker-compose-changes'].split(';')
-        to_search = changes[1]
-        to_replace = to_search.replace("<ADD_YOUR_KEY_ID>", config['OPENWEATHERMAP_KEY_ID'])
-        replace(source=parameters['git-directory']+"/"+"docker-compose.yml",
-                pattern=to_search,
-                string=to_replace)
+        stdout.write("DIR: " + os.getcwd() + "\n")
+        stdout.write("CODE HOME " + CODE_HOME + "\n")
+        stdout.write("git-directory" + context.parameters['git-directory'] + "\n")
+        exec_scripts(parameters, 'docker-compose-changes')
 
         stdout.write("********** END docker-compose-changes **********\n\n")
 

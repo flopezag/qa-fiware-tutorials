@@ -1,0 +1,5 @@
+'array' in d and type(d['array'])==list
+'boolean' in d and type(d['boolean'])==bool
+'number' in d and (type(d['number'])==int or type(d['number'])==float)
+('structuredValue' in d and type(d['structuredValue'])==dict) or True
+'text' in d and type(d['text'])==str

@@ -1,0 +1,7 @@
+'id' in d and d['id']==2950159
+'name' in d and d['name']=='Berlin'
+'cod' in d and d['cod']==200
+'base' in d and d['base']=='stations'
+'weather' in d
+'coord' in d
+'main' in d

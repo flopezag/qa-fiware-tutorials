@@ -5,7 +5,7 @@
         "dataProvided": {
             "entities": [
                 {
-                    "id": "urn:ngsi-ld:Store:002",
+                    "id": "urn:ngsi-ld:Store:001",
                     "type": "Store"
                 }
             ],
