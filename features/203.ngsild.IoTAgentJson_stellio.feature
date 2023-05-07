@@ -1,4 +1,4 @@
-Feature: test tutorial 203.IoT Agents using JSON
+Feature: test tutorial 203.IoT Agents using JSON (Stellio)
 
   This is the feature file of the FIWARE Step by Step tutorial for IoT Sensors - NGSI-LD
   url: https://ngsi-ld-tutorials.readthedocs.io/en/latest/iot-agent-json.html
@@ -45,7 +45,7 @@ Feature: test tutorial 203.IoT Agents using JSON
   ## ERR - The headers should be this way, not as explained in the tutorial with fiware-service and fiware-servicepath
   ## ERR - No "@context" in response => failure
   Scenario: Querying the temperature in the context Broker
-    When  I prepare a GET HTTP request to "http://localhost:1026/ngsi-ld/v1/entities/urn:ngsi-ld:Device:temperature001?attrs=temperature"
+    When  I prepare a GET HTTP request to "http://localhost:8080/ngsi-ld/v1/entities/urn:ngsi-ld:Device:temperature001?attrs=temperature"
     And   I set header NGSILD-Tenant to openiot
     And   I set header NGSILD-Path to /
     And   I set header Link to <http://context/ngsi-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"
@@ -63,7 +63,7 @@ Feature: test tutorial 203.IoT Agents using JSON
   ## ERR - Modified c.value in response.json from "1" to 1 (str to int)
   ## ERR - No "@context" in response => failure
   Scenario: Req 7 - Test the value of the new device
-    When  I prepare a GET HTTP request to "http://localhost:1026/ngsi-ld/v1/entities/?type=Device"
+    When  I prepare a GET HTTP request to "http://localhost:8080/ngsi-ld/v1/entities/?type=Device"
     And   I set header NGSILD-Tenant to openiot
     And   I set header NGSILD-Path to /
     And   I set header Link to <http://context/ngsi-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"
@@ -92,7 +92,7 @@ Feature: test tutorial 203.IoT Agents using JSON
     Then  I receive a HTTP "204" response code
 
   Scenario: Req 10 -- Read the result of the command by querying the CB
-    When  I prepare a GET HTTP request to "http://localhost:1026/ngsi-ld/v1/entities/urn:ngsi-ld:Device:water001"
+    When  I prepare a GET HTTP request to "http://localhost:8080/ngsi-ld/v1/entities/urn:ngsi-ld:Device:water001"
     And   I set header Accept to application/json
     And   I set header NGSILD-Tenant to openiot
     And   I set header Link to <http://context/ngsi-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"
@@ -121,7 +121,7 @@ Feature: test tutorial 203.IoT Agents using JSON
     Then  I receive a HTTP "200" response code
 
   Scenario Outline: Req 14, 15, 16 - Activating things with actuators
-    When  I prepare a PATCH HTTP request for "<description>" to "http://localhost:1026/ngsi-ld/v1/entities/urn:ngsi-ld:Device:<device>/attrs/<attr>"
+    When  I prepare a PATCH HTTP request for "<description>" to "http://localhost:8080/ngsi-ld/v1/entities/urn:ngsi-ld:Device:<device>/attrs/<attr>"
     And   I set header content-type to application/json
     And   I set header NGSILD-Tenant to openiot
     And   I set header Link to <http://context/ngsi-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"

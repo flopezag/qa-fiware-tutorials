@@ -2,7 +2,7 @@
   ## Cratedb needs increasing max_map_count
   ##    sudo sysctl -w vm.max_map_count=262144
 
-Feature: test tutorial 301.Persisting and Querying timedata series
+Feature: test tutorial 301.Persisting and Querying timedata series (Orion-LD)
 
   This is the feature file of the FIWARE Step by Step tutorial Timedata Series - NGSI-LD
   # url (used): https://documenter.getpostman.com/view/513743/TWDUpxxx

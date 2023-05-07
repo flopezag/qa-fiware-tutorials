@@ -1,4 +1,4 @@
-Feature: test tutorial 102 NGSI-LD: Working with Context feature
+Feature: test tutorial 102 NGSI-LD: Working with Context feature (Stellio)
 
   This is the feature file of the FIWARE Step by Step tutorial for NGSI-LD
   url: https://ngsi-ld-tutorials.readthedocs.io/en/latest/working-with-%40context.html
@@ -24,13 +24,13 @@ Feature: test tutorial 102 NGSI-LD: Working with Context feature
 
   # Request 1
   Scenario: Checking the Service Health
-    When I prepare a GET HTTP request to "http://localhost:1026/version"
+    When I prepare a GET HTTP request to "http://localhost:8080/version"
     And   I perform the query request
     Then  I receive a HTTP "200" response code
 
   # Request 2: Create data entities
   Scenario: Create a new data entity
-    When  I prepare a POST HTTP request to "http://localhost:1026/ngsi-ld/v1/entities/"
+    When  I prepare a POST HTTP request to "http://localhost:8080/ngsi-ld/v1/entities/"
     And   I set header Content-type to application/ld+json
     And   I set the body request as described in 102.ld.02.request.json
     And   I perform the request
@@ -39,7 +39,7 @@ Feature: test tutorial 102 NGSI-LD: Working with Context feature
 
   # Request 3: New data entities
   Scenario: Each subsequent entity must have a unique id for the given type
-    When  I prepare a POST HTTP request to "http://localhost:1026/ngsi-ld/v1/entities/"
+    When  I prepare a POST HTTP request to "http://localhost:8080/ngsi-ld/v1/entities/"
     And   I set header Content-type to application/json
     And   I set header Link to <http://context/ngsi-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"
     And   I set the body request as described in 102.ld.03.request.json
@@ -50,18 +50,18 @@ Feature: test tutorial 102 NGSI-LD: Working with Context feature
   # Request 4:
   # 1. Modified data. Changed ß for ss to prevent errors
   # curl -G -X GET \
-  #  'http://localhost:1026/ngsi-ld/v1/entities' \
+  #  'http://localhost:8080/ngsi-ld/v1/entities' \
   #  -H 'Accept: application/ld+json' \
   #  -d 'type=https://uri.fiware.org/ns/dataModels%23Building'
   Scenario: Obtaining Entity data by FQN Type
-    When  I prepare a GET HTTP request to "http://localhost:1026/ngsi-ld/v1/entities?type=https://uri.fiware.org/ns/dataModels%23Building"
+    When  I prepare a GET HTTP request to "http://localhost:8080/ngsi-ld/v1/entities?type=https://uri.fiware.org/ns/dataModels%23Building"
     And   I set header Accept to application/ld+json
     And   I perform the query request
     Then  I receive a HTTP "200" status code from Broker with the body "102.ld.04.response.json" and exclusions "response102-04.excludes"
 
   # Request 5:
   Scenario: Obtaining Entity data by ID
-    When  I prepare a GET HTTP request to "http://localhost:1026/ngsi-ld/v1/entities/urn:ngsi-ld:Building:farm001"
+    When  I prepare a GET HTTP request to "http://localhost:8080/ngsi-ld/v1/entities/urn:ngsi-ld:Building:farm001"
     And   I set header Accept to application/ld+json
     And   I set header Link to <http://context/ngsi-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"
     And   I perform the query request
@@ -69,7 +69,7 @@ Feature: test tutorial 102 NGSI-LD: Working with Context feature
 
    # Requests 6 to 12: Several different queries with data
    Scenario Outline: Several queries
-     When  I prepare a GET HTTP request to "http://localhost:1026/ngsi-ld/v1/entities"
+     When  I prepare a GET HTTP request to "http://localhost:8080/ngsi-ld/v1/entities"
      And   I set header Accept to application/ld+json
      And   I set header Link to <Link>
      And   I set the body request as described in <body_request>

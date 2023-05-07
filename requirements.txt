@@ -1,14 +1,14 @@
-# python3.9 project
+# python3.11 project
 behave==1.2.6
-python-on-whales==0.34.0
-PyHamcrest==2.0.3
-deepdiff==5.7.0
-pymongo==4.0.1
-requests==2.27.1
-psycopg2-binary==2.9.5
-SQLAlchemy==1.4.29
-PyMySQL==1.0.2
-allure-behave==2.9.45
-pytz==2021.3
-xmldiff==2.4
-jq==1.3.0
+python-on-whales==0.60.1
+PyHamcrest==2.0.4
+deepdiff==6.3.0
+pymongo==4.3.3
+requests==2.30.0
+psycopg2-binary==2.9.6
+SQLAlchemy==2.0.12
+PyMySQL==1.0.3
+allure-behave==2.13.2
+pytz==2023.3
+xmldiff==2.6.1
+jq==1.4.1

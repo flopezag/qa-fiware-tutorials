@@ -17,9 +17,19 @@ can take a look to this [Behave tutorial](https://jenisys.github.io/behave.examp
 
 The following software must be installed:
 
-- Python 3.9
+- Python 3.11
 - pip
 - virtualenv
+- allure 2.22.0 (Optional)
+
+To install allure on linux system you can execute the following commands:
+
+```bash
+curl -o allure-2.22.0.tgz -OLs https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/2.22.0/allure-commandline-2.22.0.tgz
+sudo tar -zxvf allure-2.22.0.tgz -C /opt/
+sudo ln -s /opt/allure-2.22.0/bin/allure /usr/bin/allure
+allure --version
+```
 
 ## Structure of the Project
 
@@ -92,7 +102,7 @@ process is only about the python dependencies, because the python code do not ne
 installation.
 
 1. Clone this repository.
-2. Create the virtualenv: `virtualenv -ppython3.9 venv`.
+2. Create the virtualenv: `virtualenv -ppython3.11 venv`.
 3. Activate the python environment: `source ./venv/bin/activate`.
 4. Install the requirements: `pip install -r requirements.txt`.
 5. Add the OpenWeatherMap Key Id in the `./config/config.json` file.

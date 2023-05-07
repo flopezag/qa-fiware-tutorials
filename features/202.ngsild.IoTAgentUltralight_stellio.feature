@@ -1,4 +1,4 @@
-Feature: test tutorial 202.Introduction to IoT Sensors
+Feature: test tutorial 202.Introduction to IoT Sensors (Stellio)
 
   This is the feature file of the FIWARE Step by Step tutorial for IoT Sensors - NGSI-LD
   url: https://ngsi-ld-tutorials.readthedocs.io/en/latest/iot-agent.html
@@ -37,7 +37,7 @@ Feature: test tutorial 202.Introduction to IoT Sensors
     And   I wait "1" seconds
 
   Scenario: Querying the temperature in the context Broker
-    When  I prepare a GET HTTP request to "http://localhost:1026/ngsi-ld/v1/entities/urn:ngsi-ld:Device:temperature001?attrs=temperature"
+    When  I prepare a GET HTTP request to "http://localhost:8080/ngsi-ld/v1/entities/urn:ngsi-ld:Device:temperature001?attrs=temperature"
     And   I set header fiware-service to openiot
     And   I set header fiware-servicepath to /
     And   I set header Accept to application/ld+json
@@ -54,7 +54,7 @@ Feature: test tutorial 202.Introduction to IoT Sensors
     And   I wait "1" seconds
 
   Scenario: Req 7 - Test the value of the new device
-    When  I prepare a GET HTTP request to "http://localhost:1026/ngsi-ld/v1/entities/?type=Device"
+    When  I prepare a GET HTTP request to "http://localhost:8080/ngsi-ld/v1/entities/?type=Device"
     And   I set header fiware-service to openiot
     And   I set header fiware-servicepath to /
     And   I set header Link to <http://context/ngsi-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"
@@ -81,7 +81,7 @@ Feature: test tutorial 202.Introduction to IoT Sensors
 
   # Fail Dictionary comparison... properties "on" and "off" are different in tutorial than softw.
   Scenario: Req 10 -- Read the result of the command by querying the CB
-    When  I prepare a GET HTTP request to "http://localhost:1026/ngsi-ld/v1/entities/urn:ngsi-ld:Device:water001"
+    When  I prepare a GET HTTP request to "http://localhost:8080/ngsi-ld/v1/entities/urn:ngsi-ld:Device:water001"
     And   I set header Accept to application/json
     And   I set header NGSILD-Tenant to openiot
     And   I set header Link to <http://context/ngsi-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"
@@ -110,7 +110,7 @@ Feature: test tutorial 202.Introduction to IoT Sensors
 
 
   Scenario Outline: Req 14, 15, 16 - Activating things with actuators
-    When  I prepare a PATCH HTTP request for "<description>" to "http://localhost:1026/ngsi-ld/v1/entities/urn:ngsi-ld:Device:<device>/attrs/<attr>"
+    When  I prepare a PATCH HTTP request for "<description>" to "http://localhost:8080/ngsi-ld/v1/entities/urn:ngsi-ld:Device:<device>/attrs/<attr>"
     And   I set header content-type to application/json
     And   I set header NGSILD-Tenant to openiot
     And   I set header Link to <http://context/ngsi-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"
