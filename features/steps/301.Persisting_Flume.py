@@ -7,7 +7,7 @@ from logging import getLogger
 from hamcrest import assert_that, is_, is_not
 from pymongo import MongoClient
 from time import sleep
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, text
 from sys import stdout
 from features.funtions import http
 
@@ -268,13 +268,13 @@ def step_impl(context):
         context.connection = create_engine(context.connection_string, pool_recycle=3600, pool_pre_ping=True)
         context.connection = context.connection.connect()
 
-        context.connection.execute('SET GLOBAL net_read_timeout=600')
-        context.connection.execute('SET GLOBAL connect_timeout=600')
-        context.connection.execute('SET GLOBAL wait_timeout=600')
+        context.connection.execute(text('SET GLOBAL net_read_timeout=600'))
+        context.connection.execute(text('SET GLOBAL connect_timeout=600'))
+        context.connection.execute(text('SET GLOBAL wait_timeout=600'))
 
         sleep(12)  # Delays for 8 seconds.
 
-        context.cursor = context.connection.execute('SHOW DATABASES;')
+        context.cursor = context.connection.execute(text('SHOW DATABASES;'))
 
         available_databases = context.cursor.fetchall()
         context.obtained_dbs = [i[0] for i in available_databases]
@@ -289,13 +289,13 @@ def step_impl(context):
         context.connection = create_engine(context.connection_string, pool_recycle=3600, pool_pre_ping=True)
         context.connection = context.connection.connect()
 
-        context.connection.execute('SET GLOBAL net_read_timeout=600')
-        context.connection.execute('SET GLOBAL connect_timeout=600')
-        context.connection.execute('SET GLOBAL wait_timeout=600')
+        context.connection.execute(text('SET GLOBAL net_read_timeout=600'))
+        context.connection.execute(text('SET GLOBAL connect_timeout=600'))
+        context.connection.execute(text('SET GLOBAL wait_timeout=600'))
 
         sleep(8)  # Delays for 8 seconds.
 
-        context.cursor = context.connection.execute('SHOW SCHEMAS;')
+        context.cursor = context.connection.execute(text('SHOW SCHEMAS;'))
 
         obtained_schemas = context.cursor.fetchall()
         context.obtained_schemas = [i[0] for i in obtained_schemas]
@@ -375,13 +375,13 @@ def step_impl(context):
         context.connection = create_engine(context.connection_string, pool_recycle=3600, pool_pre_ping=True)
         context.connection = context.connection.connect()
 
-        context.connection.execute('SET GLOBAL net_read_timeout=600')
-        context.connection.execute('SET GLOBAL connect_timeout=600')
-        context.connection.execute('SET GLOBAL wait_timeout=600')
+        context.connection.execute(text('SET GLOBAL net_read_timeout=600'))
+        context.connection.execute(text('SET GLOBAL connect_timeout=600'))
+        context.connection.execute(text('SET GLOBAL wait_timeout=600'))
 
         sleep(8)  # Delays for 8 seconds.
 
-        query = 'SELECT * FROM openiot.Motion_001_Motion limit 10;'
+        query = text('SELECT * FROM openiot.Motion_001_Motion limit 10;')
         context.cursor = context.connection.execute(query)
 
         context.my_results = context.cursor.fetchall()
@@ -396,13 +396,13 @@ def step_impl(context):
         context.connection = create_engine(context.connection_string, pool_recycle=3600, pool_pre_ping=True)
         context.connection = context.connection.connect()
 
-        context.connection.execute('SET GLOBAL net_read_timeout=600')
-        context.connection.execute('SET GLOBAL connect_timeout=600')
-        context.connection.execute('SET GLOBAL wait_timeout=600')
+        context.connection.execute(text('SET GLOBAL net_read_timeout=600'))
+        context.connection.execute(text('SET GLOBAL connect_timeout=600'))
+        context.connection.execute(text('SET GLOBAL wait_timeout=600'))
 
         sleep(8)  # Delays for 8 seconds.
 
-        query = "SELECT recvtime, attrvalue FROM openiot.Motion_001_Motion WHERE attrname ='count' LIMIT 10;"
+        query = text("SELECT recvtime, attrvalue FROM openiot.Motion_001_Motion WHERE attrname ='count' LIMIT 10;")
         context.cursor = context.connection.execute(query)
         context.my_results = context.cursor.fetchall()
     except Exception as e:
@@ -442,13 +442,13 @@ def step_impl(context):
         context.connection = create_engine(context.connection_string, pool_recycle=3600, pool_pre_ping=True)
         context.connection = context.connection.connect()
 
-        context.connection.execute('SET GLOBAL net_read_timeout=600')
-        context.connection.execute('SET GLOBAL connect_timeout=600')
-        context.connection.execute('SET GLOBAL wait_timeout=600')
+        context.connection.execute(text('SET GLOBAL net_read_timeout=600'))
+        context.connection.execute(text('SET GLOBAL connect_timeout=600'))
+        context.connection.execute(text('SET GLOBAL wait_timeout=600'))
 
         sleep(8)  # Delays for 8 seconds.
 
-        context.cursor = context.connection.execute('SHOW tables FROM openiot;')
+        context.cursor = context.connection.execute(text('SHOW tables FROM openiot;'))
 
         context.my_results = context.cursor.fetchall()
     except Exception as e:

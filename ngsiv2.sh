@@ -53,7 +53,7 @@ function function_three {
   behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/301.Persisting_Flume_PostgreSQL.feature
   echo
 
-  behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/303.Short_term_history.feature
+  behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/303.Short_term_history_sthcomet.feature
   echo
 
   behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/303.Short_term_history_cygnus.feature
@@ -105,9 +105,19 @@ function function_five {
   behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/603.Traversing_Linked_Data_Orion.feature
   echo
 
-  # F behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/603.Traversing_Linked_Data_Scorpio.feature
-  # F behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/603.Traversing_Linked_Data_Stellio.feature
+  behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/603.Traversing_Linked_Data_Scorpio.feature
+  echo
+
+  behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/603.Traversing_Linked_Data_Stellio.feature
+  echo
+
   behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/604.Linked_Data_Subscriptions_and_Registrations_Orion.feature
+  echo
+
+  behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/604.Linked_Data_Subscriptions_and_Registrations_Stellio.feature
+  echo
+
+  behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/604.Linked_Data_Subscriptions_and_Registrations_Scorpio.feature
   echo
 }
 
@@ -196,10 +206,19 @@ function function_all {
   behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/603.Traversing_Linked_Data_Orion.feature
   echo
 
-  # F behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/603.Traversing_Linked_Data_Scorpio.feature
-  # F behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/603.Traversing_Linked_Data_Stellio.feature
+  behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/603.Traversing_Linked_Data_Scorpio.feature
+  echo
+
+  behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/603.Traversing_Linked_Data_Stellio.feature
+  echo
 
   behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/604.Linked_Data_Subscriptions_and_Registrations_Orion.feature
+  echo
+
+  behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/604.Linked_Data_Subscriptions_and_Registrations_Stellio.feature
+  echo
+
+  behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/604.Linked_Data_Subscriptions_and_Registrations_Scorpio.feature
   echo
 }
 

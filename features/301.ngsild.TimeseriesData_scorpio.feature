@@ -13,7 +13,7 @@ Feature: test tutorial 301.Persisting and Querying timedata series (Scorpio)
   git-clone: https://github.com/FIWARE/tutorials.Time-Series-Data.git
 
   git-directory: /tmp/Time-Series-Data
-  shell-commands: git checkout NGSI-LD ; /tmp/patch_crate.sh ; ./services create  ; ./services start
+  shell-commands: git checkout NGSI-LD ; /tmp/patch_crate.sh ; ./services create  ; ./services scorpio
   clean-shell-commands: ./services stop
 
 

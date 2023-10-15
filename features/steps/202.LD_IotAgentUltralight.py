@@ -21,7 +21,6 @@ def step_impl(context, expr):
     context.response = jqc.input(pl).first()
 
 
-
 @step(u"I validate against jq '{expr}'")
 def step_impl(context, expr):
     pl = context.response

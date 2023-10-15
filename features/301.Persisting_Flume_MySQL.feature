@@ -79,6 +79,7 @@ Feature: test tutorial 301.Persisting Context Data using Apache Flume (MySQL)
     Given  I connect to the MySQL with the following data
       | User     | Password | Host      | Port | Database |
       | root     | 123      | localhost | 3306 | openiot  |
+    And    I wait "10" seconds
     When   I request "10" elements from the table "openiot.Motion_001_Motion"
     Then   I receive a non-empty list with "9" columns
 

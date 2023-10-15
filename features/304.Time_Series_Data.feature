@@ -135,6 +135,23 @@ Feature: test tutorial 304.Time-Series Data with QuantumLeap
     When   I send GET HTTP request to "http://localhost:8668/v2/entities/Lamp:001/attrs/luminosity?aggrMethod=min&aggrPeriod=minute&lastN=3" with fiware-service and fiware-servicepath
     Then   I receive a HTTP "200" response code from QuantumLeap with the body equal to "response304-08.json"
 
+##
+  # This scenario fails basically because the tutorial say that the response of QuantumLeap should be:
+  # {
+  #  "data": {
+  #      ...
+  #  }
+  # }
+  #
+  # But the response of the current version of QuantumLeap is without this "data"
+  ##
+  @fail @ongoing
+  Scenario: 09 - List the maximum value over a time period (QuantumLeap)
+    Given  the fiware-service header is "openiot", the fiware-servicepath header is "/", and the accept is "application/json"
+    When   I send GET HTTP request to "http://localhost:8668/v2/entities/Lamp:001/attrs/luminosity?aggrMethod=max" with from and to date 2 days from now
+    And    using fiware-service and fiware-servicepath header keys
+    Then   I receive a HTTP "200" response code from QuantumLeap with the body equal to "response304-09.json"
+
   ##
   # This scenario fails basically because the tutorial say that the response of QuantumLeap should be:
   # {
@@ -199,21 +216,3 @@ Feature: test tutorial 304.Time-Series Data with QuantumLeap
     And    the date and time are around today
     When   I send a POST HTTP request to "http://localhost:4200/_sql" with content type "application/json"
     Then   I receive a HTTP "200" response code from CrateDB with the body "response304-19.json" and exclusions "response304-cratedb.excludes"
-
-  ##
-  # This scenario fails basically because the tutorial say that the response of QuantumLeap should be:
-  # {
-  #  "data": {
-  #      ...
-  #  }
-  # }
-  #
-  # But the response of the current version of QuantumLeap is without this "data"
-  ##
-  @fail @ongoing
-  Scenario: 09 - List the maximum value over a time period (QuantumLeap)
-    Given  the fiware-service header is "openiot", the fiware-servicepath header is "/", and the accept is "application/json"
-    When   I send GET HTTP request to "http://localhost:8668/v2/entities/Lamp:001/attrs/luminosity?aggrMethod=max" with from and to date 2 days from now
-    And    using fiware-service and fiware-servicepath header keys
-    Then   I receive a HTTP "200" response code from QuantumLeap with the body equal to "response304-09.json"
-

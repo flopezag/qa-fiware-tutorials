@@ -1,4 +1,4 @@
-Feature: test tutorial 303 PROCESSING & HISTORY MANAGEMENT » SHORT TERM HISTORY
+Feature: test tutorial 303 PROCESSING & HISTORY MANAGEMENT » SHORT TERM HISTORY - CYGNUS
 
   This is the feature file of the FIWARE Step by Step tutorial for Time-Series for short term history
   url: https://fiware-tutorials.readthedocs.io/en/latest/short-term-history.html

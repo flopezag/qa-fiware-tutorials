@@ -133,7 +133,7 @@ def check_java_version():
         (output, stderr) = temp.communicate()
 
         version = str(stderr).split('\\n')[0].split(" ")[2].replace("\"", "")
-        jre_version = int(version.split(".")[1])
+        jre_version = int(version.split(".")[0])
 
     return jre_version
 

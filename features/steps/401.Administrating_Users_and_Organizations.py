@@ -475,7 +475,7 @@ def step_impl(context, url):
     :type context: behave.runner.Context
     """
     try:
-        response = post(url, data=context.payload, headers=context.header)
+        response = post(url, json=loads(context.payload), headers=context.header)
     except RequestException as e:
         raise SystemExit(e)
 

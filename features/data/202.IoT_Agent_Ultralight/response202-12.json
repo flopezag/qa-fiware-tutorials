@@ -3,6 +3,7 @@
   "devices": [
     {
       "device_id": "motion001",
+      "apikey": "4jggokgpepnvsb2uv4s40d59ov",
       "service": "openiot",
       "service_path": "/",
       "entity_name": "urn:ngsi-ld:Motion:001",

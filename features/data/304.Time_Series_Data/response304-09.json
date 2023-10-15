@@ -1,8 +1,7 @@
 {
-    "data": {
-        "attrName": "luminosity",
-        "entityId": "Lamp:001",
-        "index": [],
-        "values": [1753]
-    }
+    "attrName": "luminosity",
+    "entityId": "Lamp:001",
+    "entityType": "Lamp",
+    "index": [],
+    "values": [1753]
 }

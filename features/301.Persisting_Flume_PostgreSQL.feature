@@ -88,5 +88,5 @@ Feature: test tutorial 301.Persisting Context Data using Apache Flume (PostgreSQ
     Given  I connect to the PostgreSQL with the following data
       | User     | Password | Host      | Port | Database |
       | postgres | password | localhost | 5432 | postgres |
-    When   I request recvtime, attrvalue from the table "openiot.motion_001_motion" limited to "10" registers
+    When   I request "recvtime", "attrvalue" from the table "openiot.motion_001_motion" limited to "10" registers
     Then   I receive a non-empty list with "2" columns

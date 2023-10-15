@@ -78,6 +78,7 @@ Feature: test tutorial 301.Persisting Context Data using Apache Flume (MongoDB)
 
   Scenario: 07 - Read historical context from the MongoDB server - query some data from Motion001 sensor
     Given  I connect to the MongoDB with the host "localhost" and the port "27017"
+    And    I wait "5" seconds
     When   I request information from the database "sth_openiot" and the collection "sth_/_Motion:001_Motion"
     And    with the following filter query and and filter fields, limited to "5" elements
       | Query                 | Fields                                   |

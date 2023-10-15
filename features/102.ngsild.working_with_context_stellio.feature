@@ -4,7 +4,7 @@ Feature: test tutorial 102 NGSI-LD: Working with Context feature (Stellio)
   url: https://ngsi-ld-tutorials.readthedocs.io/en/latest/working-with-%40context.html
   git-clone: https://github.com/FIWARE/tutorials.Getting-Started.git
   git-directory: /tmp/tutorials.Getting-Started
-  shell-commands: git checkout NGSI-LD ; ./services orion
+  shell-commands: git checkout NGSI-LD ; ./services stellio
   clean-shell-commands: ./services stop
 
   Background:

@@ -13,7 +13,7 @@ Feature: Test tutorial 403.Securing application access
         Given I set "ClientID" to "tutorial-dckr-site-0000-xpresswebapp"
         And   I set "ClientSecret" to "tutorial-dckr-site-0000-clientsecret"
         When  I calculate the base64 of this ClientId and ClientSecret
-        Then  I obtain the value "dHV0b3JpYWwtZGNrci1zaXRlLTAwMDAteHByZXNzd2ViYXBwOnR1dG9yaWFsLWRja3Itc2l0ZS0wMDAwLWNsaWVudHNlY3JldAo="
+        Then  I obtain the value "dHV0b3JpYWwtZGNrci1zaXRlLTAwMDAteHByZXNzd2ViYXBwOnR1dG9yaWFsLWRja3Itc2l0ZS0wMDAwLWNsaWVudHNlY3JldAo=="
 
     Scenario: 01 - Logging-in with a password
         When  I set the Authorization header token with the calculated value

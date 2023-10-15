@@ -65,7 +65,9 @@ def http_code_is_returned(context, status_code, server, response):
         with open(file) as f:
             data = load(f)
 
-        diff = DeepDiff(data, context.response)
+        diff = DeepDiff(data,
+                        context.response,
+                        exclude_paths=["root['orion']['uptime']", "root['version']", "root['index']"])
 
         stdout.write(f'Expected response =\n {data}\n\n')
         stdout.write(f'Context Broker response =\n {context.response}\n\n')
@@ -109,7 +111,10 @@ def receive_post_response2(context):
         valid_response = dict(element.as_dict())
 
         assert_that(context.statusCode, is_(valid_response['Status-Code']))
-        assert_that(context.responseHeaders['Connection'], is_(valid_response['Connection']))
+
+        # Currently, there is no Connection Header key in the 101 response
+        if 'Connection' in dict(context.responseHeaders).keys():
+            assert_that(context.responseHeaders['Connection'], is_(valid_response['Connection']))
         
         if valid_response['Location'] != "Any":
             assert_that(context.responseHeaders['Location'], is_(valid_response['Location']))

@@ -1,4 +1,4 @@
-Feature: test tutorial 303 PROCESSING & HISTORY MANAGEMENT » SHORT TERM HISTORY
+Feature: test tutorial 303 PROCESSING & HISTORY MANAGEMENT » SHORT TERM HISTORY - STHComet
 
   This is the feature file of the FIWARE Step by Step tutorial for Time-Series for short term history
   url: https://fiware-tutorials.readthedocs.io/en/latest/short-term-history.html
@@ -114,7 +114,7 @@ Background:
       | type   | attribute  | sensor     | lastN | jqExpr |
       | Motion | count      | Motion:001 | 3     | .contextResponses[0].contextElement.attributes[] \| select(.name == "count").values \| length == 3 |
 
-# Request 8 & 9 -- Aggregation over a perid (minute)
+# Request 8 & 9 -- Aggregation over a period (minute)
 # Request 10 & 11 -- Min and Max over a period (minute)
   Scenario Outline: List the latest elements
     When  I prepare a GET HTTP request to "http://localhost:8666/STH/v1/contextEntities/type/<type>/id/<sensor>/attributes/<attribute>?aggrMethod=<aggrMethod>&aggrPeriod=<aggrPeriod>"

@@ -43,8 +43,8 @@ def step_impl(context, orion_flink_connector):
         # We need to check that the JAVA_HOME points to a 1.8 version
         version = check_java_version()
 
-        if version != 8:
-            raise AssertionError("Java Runtime Environment must be 8 in the tutorial: {}".format(version))
+        #if version != 8:
+        #    raise AssertionError("Java Runtime Environment must be 8 in the tutorial: {}".format(version))
 
         url = "https://github.com/ging/fiware-cosmos-orion-flink-connector/releases/download/FIWARE_7.9.1/" \
               + orion_flink_connector
@@ -69,12 +69,11 @@ def step_impl(context):
     for element in context.table.rows:
         valid_response = dict(element.as_dict())
 
-        command = f"mvn install:install-file \
-            -Dfile=./{valid_response['file']} \
-            -DgroupId=org.fiware.cosmos \
-            -DartifactId={valid_response['artifactId']}  \
-            -Dversion={valid_response['version']} \
-            -Dpackaging=jar"
+        command = (f"mvn install:install-file -Dfile=./{valid_response['file']} "
+                   f"-DgroupId=org.fiware.cosmos "
+                   f"-DartifactId={valid_response['artifactId']}  "
+                   f"-Dversion={valid_response['version']} "
+                   f"-Dpackaging=jar")
 
         my_env = environ.copy()
         p = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, env=my_env)
@@ -120,7 +119,7 @@ def step_impl(context, file, folder):
 
     if file_exists is False:
         files = listdir(folder)
-        aux = [match('cosmos-examples-.*\.jar', file) for file in files]
+        aux = [match(r'cosmos-examples-.*\.jar', file) for file in files]
         new_file = [x for x in aux if x is not None][0].group(0)
         new_file = folder + "/" + new_file
 

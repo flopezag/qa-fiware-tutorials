@@ -1,6 +1,6 @@
 {
-    "cols": ["table_schema"],
-    "rows": [["doc"], ["information_schema"], ["sys"], ["mtopeniot"], ["pg_catalog"]],
-    "rowcount": 5,
-    "duration": 10.5146
+    "cols": ["schema_name"],
+    "rows": [["blob"], ["doc"], ["information_schema"], ["mtopeniot"], ["pg_catalog"], ["sys"]],
+    "rowcount": 6,
+    "duration": 15.559625
 }

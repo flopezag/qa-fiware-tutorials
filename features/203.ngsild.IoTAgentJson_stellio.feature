@@ -4,7 +4,7 @@ Feature: test tutorial 203.IoT Agents using JSON (Stellio)
   url: https://ngsi-ld-tutorials.readthedocs.io/en/latest/iot-agent-json.html
   git-clone: https://github.com/FIWARE/tutorials.IoT-Agent-JSON.git
   git-directory: /tmp/tutorials.IoT-Agent-JSON
-  shell-commands: git checkout NGSI-LD ; ./services ${CB_ENVIRONMENT:-orion}
+  shell-commands: git checkout NGSI-LD ; ./services ${CB_ENVIRONMENT:-stellio}
   # clean-shell-commands -- docker kill and docker rm since the services stop not working properly and causing problems in second executions.
   clean-shell-commands: ./services stop ; sleep 2 ; docker kill fiware-iot-agent ; docker kill fiware-orion ; docker rm fiware-iot-agent ; docker rm  fiware-orion
 

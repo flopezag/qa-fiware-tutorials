@@ -2,55 +2,55 @@
     {
         "id": "urn:ngsi-ld:Product:001",
         "type": "Product",
-        "name": "Beer",
+        "name": "Apples",
         "price": 99
     },
     {
         "id": "urn:ngsi-ld:Product:002",
         "type": "Product",
-        "name": "Red Wine",
+        "name": "Bananas",
         "price": 1099
     },
     {
         "id": "urn:ngsi-ld:Product:003",
         "type": "Product",
-        "name": "White Wine",
+        "name": "Coconuts",
         "price": 1499
     },
     {
         "id": "urn:ngsi-ld:Product:004",
         "type": "Product",
-        "name": "Vodka",
+        "name": "Melons",
         "price": 5000
     },
     {
         "id": "urn:ngsi-ld:Product:005",
         "type": "Product",
-        "name": "Lager",
+        "name": "Kiwi Fruits",
         "price": 99
     },
     {
         "id": "urn:ngsi-ld:Product:006",
         "type": "Product",
-        "name": "Whisky",
+        "name": "Strawberries",
         "price": 99
     },
     {
         "id": "urn:ngsi-ld:Product:007",
         "type": "Product",
-        "name": "Gin",
+        "name": "Raspberries",
         "price": 99
     },
     {
         "id": "urn:ngsi-ld:Product:008",
         "type": "Product",
-        "name": "Apple Juice",
+        "name": "Pineapples",
         "price": 99
     },
     {
         "id": "urn:ngsi-ld:Product:009",
         "type": "Product",
-        "name": "Orange Juice",
+        "name": "Oranges",
         "price": 99
     },
     {
