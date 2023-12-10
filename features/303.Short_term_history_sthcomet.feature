@@ -18,14 +18,14 @@ Background:
 
 # STH-Comet - Checking Service Health
 # 1 - Request
- Scenario: Checking sth service health
+ Scenario: [1] Checking sth service health
    When  I prepare a GET HTTP request to "http://localhost:8666/version"
    And   I perform the query request
    Then  I receive a HTTP "200" status code response
 
 # Minimal mode - Subscribing STH-Comet to Context Changes
-# 2 - Request - Subscribing STH Coment to Context Changes
-  Scenario: 2. Subscribe sht-comet to changes in Orion
+# 2 - Request - Subscribing STH-Comet to Context Changes
+  Scenario: [2] Subscribe sht-comet to changes in Orion
     When  I prepare a POST HTTP request to "http://localhost:1026/v2/subscriptions/"
     And   I set header fiware-service to openiot
     And   I set header fiware-servicepath to /
@@ -33,8 +33,8 @@ Background:
     And   I perform the request
     Then  I receive a HTTP response with status 201 and empty dict
 
-# 3 - Request - Subscribing STH Coment to Lamp luminosity
-  Scenario: 3. Subscribe sht-comet to changes in luminosity
+# 3 - Request - Subscribing STH-Comet to Lamp luminosity
+  Scenario: [3] Subscribe sht-comet to changes in luminosity
     When  I prepare a POST HTTP request to "http://localhost:1026/v2/subscriptions/"
     And   I set header fiware-service to openiot
     And   I set header fiware-servicepath to /
@@ -42,8 +42,8 @@ Background:
     And   I perform the request
     Then  I receive a HTTP response with status 201 and empty dict
 
- # 4 - Request - Test ORION Subsbriptions -- "The result should not be empty"
-  Scenario: 4. Test that there are subscriptions in Orion
+ # 4 - Request - Test ORION Subscriptions -- "The result should not be empty"
+  Scenario: [4] Test that there are subscriptions in Orion
     When  I prepare a GET HTTP request to "http://localhost:1026/v2/subscriptions/"
     And   I set header fiware-service to openiot
     And   I set header fiware-servicepath to /
@@ -52,7 +52,7 @@ Background:
 
 
  # 4.5 - Request - Populate Lamp:001 history with curls
- Scenario Outline: Communicating with IoT Devices: Using Actuators
+ Scenario Outline: [5] Communicating with IoT Devices: Using Actuators
     When  I prepare a POST HTTP request to "http://localhost:7896/iot/d?k=<key_value>&i=<sensor>"
     And   I set header fiware-service to openiot
     And   I set header fiware-servicepath to /
@@ -84,11 +84,11 @@ Background:
         | s\|ON\|l\|1550 | 3314136    | lamp001   |
         | c\|0           | 1068318794 | motion001 |
 
- Scenario: Just wait for a while -- Let's complet a minute
+ Scenario: [6] Just wait for a while -- Let's complete a minute
    Given I wait "30" seconds
 
 # Request - Test lamp and motion sensors 5 y 6
-  Scenario Outline: Test Lamp and motion history. After 1 minute
+  Scenario Outline: [7] Test Lamp and motion history. After 1 minute
     When  I prepare a GET HTTP request to "http://localhost:8666/STH/v1/contextEntities/type/<type>/id/<sensor>/attributes/<attribute>?hLimit=<hlimit>&hOffset=<offset>"
     And   I set header fiware-service to openiot
     And   I set header fiware-servicepath to /
@@ -102,7 +102,7 @@ Background:
       | Motion | count      | Motion:001 | 3      | 3      | .contextResponses[0].contextElement.attributes[] \| select(.name == "count").values \| length == 3       |
 
 # Request 7 -- List the latest N elements (3 in this case)
-  Scenario Outline: List the latest elements
+  Scenario Outline: [8] List the latest elements
     When  I prepare a GET HTTP request to "http://localhost:8666/STH/v1/contextEntities/type/<type>/id/<sensor>/attributes/<attribute>?lastN=<lastN>"
     And   I set header fiware-service to openiot
     And   I set header fiware-servicepath to /
@@ -116,7 +116,7 @@ Background:
 
 # Request 8 & 9 -- Aggregation over a period (minute)
 # Request 10 & 11 -- Min and Max over a period (minute)
-  Scenario Outline: List the latest elements
+  Scenario Outline: [9] List the latest elements over aggregation over a period of time and min/max values
     When  I prepare a GET HTTP request to "http://localhost:8666/STH/v1/contextEntities/type/<type>/id/<sensor>/attributes/<attribute>?aggrMethod=<aggrMethod>&aggrPeriod=<aggrPeriod>"
     And   I set header fiware-service to openiot
     And   I set header fiware-servicepath to /

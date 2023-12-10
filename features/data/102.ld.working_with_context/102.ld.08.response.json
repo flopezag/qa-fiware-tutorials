@@ -4,7 +4,7 @@
         "id": "urn:ngsi-ld:Building:barn002",
         "type": "Gebäude",
         "adresse": {
-            "streetAddress": "Strasse des 17. Juni",
+            "streetAddress": "Straße des 17. Juni",
             "addressRegion": "Berlin",
             "addressLocality": "Tiergarten",
             "postalCode": "10557"

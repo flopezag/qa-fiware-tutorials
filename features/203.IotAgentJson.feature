@@ -111,6 +111,7 @@ Feature: Test tutorial 203.Why are multiple IoT Agents Needed?
         And   I set header fiware-service to openiot
         And   I set header fiware-servicepath to /
         And   I set the body request as described in request203-10.json
+        And   I wait "5" seconds
         And   I perform the request
         Then  I receive a HTTP response with status 201 and empty dict
  #       When  I send POST HTTP request to "http://localhost:4041/iot/devices"

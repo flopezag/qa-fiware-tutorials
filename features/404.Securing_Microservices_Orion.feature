@@ -102,9 +102,7 @@ Feature: Test tutorial 404.Securing microservices with a PEP Proxy (Orion)
   Scenario: 12 - PEP Proxy - No access to orion without an access token
     When  I set the url to "http://localhost:1027/v2/entities/urn:ngsi-ld:Store:001?options=keyValues"
     And   I send a GET HTTP request to that url with no headers
-    Then  I receive a HTTP "401" status code response and the following message
-            | message                                |
-            | Auth-token not found in request header |
+    Then  I receive a HTTP "401" response code from PEP-Proxy with the body equal to "response404-12.json"
 
   Scenario: 13 - Keyrock - User obtains an access token
     When  I set the "Authorization" header with the value "Basic dHV0b3JpYWwtZGNrci1zaXRlLTAwMDAteHByZXNzd2ViYXBwOnR1dG9yaWFsLWRja3Itc2l0ZS0wMDAwLWNsaWVudHNlY3JldA=="

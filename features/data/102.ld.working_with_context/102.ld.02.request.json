@@ -8,7 +8,7 @@
     "address": {
         "type": "Property",
         "value": {
-            "streetAddress": "Grosser Stern 1",
+            "streetAddress": "Großer Stern 1",
             "addressRegion": "Berlin",
             "addressLocality": "Tiergarten",
             "postalCode": "10557"

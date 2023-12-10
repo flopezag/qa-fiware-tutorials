@@ -1,12 +1,12 @@
 [
     {
-        "@context": "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context.jsonld",
+        "@context": "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.6.jsonld",
         "id": "urn:ngsi-ld:Building:farm001",
         "type": "https://uri.fiware.org/ns/dataModels#Building",
         "https://schema.org/address": {
             "type": "Property",
             "value": {
-                "streetAddress": "Grosser Stern 1",
+                "streetAddress": "Großer Stern 1",
                 "addressRegion": "Berlin",
                 "addressLocality": "Tiergarten",
                 "postalCode": "10557"
@@ -20,7 +20,7 @@
             "type": "Property",
             "value": "Victory Farm"
         },
-        "https://uri.fiware.org/ns/data-models#category": {
+        "https://uri.fiware.org/ns/dataModels#category": {
             "type": "Property",
             "value": "farm"
         },
@@ -33,13 +33,13 @@
         }
     },
     {
-        "@context": "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context.jsonld",
+        "@context": "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.6.jsonld",
         "id": "urn:ngsi-ld:Building:barn002",
         "type": "https://uri.fiware.org/ns/dataModels#Building",
         "https://schema.org/address": {
             "type": "Property",
             "value": {
-                "streetAddress": "Strasse des 17. Juni",
+                "streetAddress": "Straße des 17. Juni",
                 "addressRegion": "Berlin",
                 "addressLocality": "Tiergarten",
                 "postalCode": "10557"
@@ -53,7 +53,7 @@
             "type": "Property",
             "value": "Big Red Barn"
         },
-        "https://uri.fiware.org/ns/data-models#category": {
+        "https://uri.fiware.org/ns/dataModels#category": {
             "type": "Property",
             "value": "barn"
         },
@@ -66,4 +66,3 @@
         }
     }
 ]
-

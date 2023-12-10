@@ -184,7 +184,7 @@ def receive_post_iot_dummy_response_with_data(context, code, server, file, excl_
         f'Wrong Status Code, received \"{context.statusCode}\", but it was expected \"{code}\"'
 
     assert_that(diff.to_dict(), is_(dict()),
-                f'Response from Keyrock has not got the expected HTTP response body:\n  {diff}')
+                f'Response from {server} has not got the expected HTTP response body:\n  {diff}')
 
 
 @step("With the body request containing the previous token")

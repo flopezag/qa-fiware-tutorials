@@ -28,7 +28,7 @@ Feature: Test tutorial 206.IoT over IOTA tangle
       And   I set the body request as described in 01.request207-01_1.json
       And   I perform the request
       Then  I receive a HTTP response with status 409 and empty dict
-      And   I wait "1" seconds
+      And   I wait "5" seconds
 
     Scenario: 01.2 - Provisioning devices, after service provisioning
       When  I prepare a POST HTTP request to "http://localhost:4041/iot/devices"
@@ -37,7 +37,7 @@ Feature: Test tutorial 206.IoT over IOTA tangle
       And   I set the body request as described in 01.request207-01_2.json
       And   I perform the request
       Then  I receive a HTTP response with status 409 and empty dict
-      And   I wait "1" seconds
+      And   I wait "5" seconds
 
     Scenario: 02.prev - Terminal for iota gateway
         When  I open a new shell terminal iota-gateway and run "docker logs -f iota-gateway"

@@ -12,7 +12,8 @@
       "condition": {
         "attrs": [
           "count"
-        ]
+        ],
+        "notifyOnMetadataChange": true
       }
     },
     "notification": {
@@ -21,11 +22,15 @@
       "attrs": [
         "count"
       ],
+      "onlyChangedAttrs": false,
       "attrsFormat": "normalized",
       "http": {
         "url": "http://quantumleap:8668/v2/notify"
       },
-      "lastSuccess": "2018-09-02T08:36:04.00Z"
+      "metadata": ["dateCreated", "dateModified"],
+      "lastSuccess": "2018-09-02T08:36:04.00Z",
+      "lastSuccessCode": 200,
+      "covered": false
     },
     "throttling": 1
   },
@@ -43,7 +48,8 @@
         "attrs": [
           "luminosity",
           "location"
-        ]
+        ],
+        "notifyOnMetadataChange": true
       }
     },
     "notification": {
@@ -52,11 +58,15 @@
       "attrs": [
         "luminosity"
       ],
+      "onlyChangedAttrs": false,
       "attrsFormat": "normalized",
       "http": {
         "url": "http://quantumleap:8668/v2/notify"
       },
-      "lastSuccess": "2018-09-02T08:36:01.00Z"
+      "metadata": ["dateCreated", "dateModified"],
+      "lastSuccess": "2023-07-18T16:23:20.000Z",
+      "lastSuccessCode": 200,
+      "covered": false
     },
     "throttling": 1
   }

@@ -8,7 +8,7 @@
     "address": {
         "type": "Property",
         "value": {
-            "streetAddress": "Strasse des 17. Juni",
+            "streetAddress": "Straße des 17. Juni",
             "addressRegion": "Berlin",
             "addressLocality": "Tiergarten",
             "postalCode": "10557"

@@ -4,7 +4,7 @@
         "id": "urn:ngsi-ld:Building:farm001",
         "type": "Building",
         "address": {
-            "streetAddress": "Grosser Stern 1",
+            "streetAddress": "Großer Stern 1",
             "addressRegion": "Berlin",
             "addressLocality": "Tiergarten",
             "postalCode": "10557"
@@ -21,7 +21,7 @@
         "id": "urn:ngsi-ld:Building:barn002",
         "type": "Building",
         "address": {
-            "streetAddress": "Strasse des 17. Juni",
+            "streetAddress": "Straße des 17. Juni",
             "addressRegion": "Berlin",
             "addressLocality": "Tiergarten",
             "postalCode": "10557"

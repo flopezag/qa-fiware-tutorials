@@ -10,7 +10,8 @@
                 }
             ],
             "condition": {
-                "attrs": []
+                "attrs": [],
+                "notifyOnMetadataChange": true
             }
         },
         "notification": {

@@ -74,6 +74,7 @@ def perform_request(context):
     if not hasattr(context, 'payload'):
         context.payload = None
 
+    context.payload = context.payload.encode('utf-8')
     try:
         if context.method == "POST":
             response = post(context.url, data=context.payload, headers=context.headers)

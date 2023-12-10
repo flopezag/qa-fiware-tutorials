@@ -4,12 +4,12 @@ Feature: test tutorial 104.Context Data and Context Providers
 
 #   Caveat: This tutorial tries to change the docker-compose.yml file according to what's
 #   in the file "/tmp/secrets" -- There is supposed to be data regarding openweather api and
-#   twitter appi. Example of the content of the file is (of course, changing the secrets for
+#   twitter api. Example of the content of the file is (of course, changing the secrets for
 #   real values:
 #
 #     OPENWEATHERMAP_KEY_ID=1235apiweatherkey6789
 #     TWITTER_CONSUMER_KEY=1235apitwitterconsumerkey6789
-#     TWITTER_CONSUMER_SECRET=1235apitwitterconsumersecert6789
+#     TWITTER_CONSUMER_SECRET=1235apitwitterconsumersecret6789
 #
 #   Parameters to be considered (aka INTERESTING_FEATURES_STRINGS)
 #
