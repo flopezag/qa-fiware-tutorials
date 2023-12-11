@@ -1,0 +1,6 @@
+{
+    "cols": ["schema_name"],
+    "rows": [["blob"], ["doc"], ["information_schema"], ["mtopeniot"], ["pg_catalog"], ["sys"]],
+    "rowcount": 6,
+    "duration": 15.559625
+}

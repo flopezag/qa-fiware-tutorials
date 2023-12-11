@@ -1,0 +1,16 @@
+{
+    "roles": [
+        {
+            "id": "purchaser",
+            "name": "Purchaser"
+        },
+        {
+            "id": "provider",
+            "name": "Provider"
+        },
+        {
+            "id": "9d66bf12-8f6a-4455-9697-eb5560b1d2cd",
+            "name": "Management"
+        }
+    ]
+}

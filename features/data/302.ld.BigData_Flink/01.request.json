@@ -1,0 +1,15 @@
+{
+  "description": "Notify Flink of all animal and farm vehicle movements",
+  "type": "Subscription",
+  "entities": [{"type": "Tractor"}, {"type": "Device"}],
+  "watchedAttributes": ["location"],
+  "notification": {
+    "attributes": ["location"],
+    "format": "normalized",
+    "endpoint": {
+      "uri": "http://taskmanager:9001",
+      "accept": "application/json"
+    }
+  },
+   "@context": "http://context/ngsi-context.jsonld"
+}

@@ -1,0 +1,15 @@
+{
+  "description": "Notify Spark of changes of Soil Humidity",
+  "type": "Subscription",
+  "entities": [{"type": "SoilSensor"}],
+  "watchedAttributes": ["humidity"],
+  "notification": {
+    "attributes": ["humidity"],
+    "format": "normalized",
+    "endpoint": {
+      "uri": "http://spark-worker-1:9002",
+      "accept": "application/json"
+    }
+  },
+   "@context": "http://context/ngsi-context.jsonld"
+}

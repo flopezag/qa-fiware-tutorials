@@ -1,0 +1,42 @@
+{
+  "devices": [
+    {
+      "device_id": "filling001",
+      "entity_name": "urn:ngsi-ld:Device:filling001",
+      "entity_type": "FillingLevelSensor",
+      "protocol": "PDI-IoTA-UltraLight",
+      "transport": "HTTP",
+      "endpoint": "http://iot-sensors:3001/iot/filling001",
+      "commands": [
+        {
+          "name": "add",
+          "type": "command"
+        },
+        {
+          "name": "remove",
+          "type": "command"
+        }
+      ],
+      "attributes": [
+        {
+          "object_id": "f",
+          "name": "fillingLevel",
+          "type": "Number",
+          "metadata": {
+            "unitCode": {
+              "type": "Text",
+              "value": "C62"
+            }
+          }
+        }
+      ],
+       "static_attributes": [
+        {
+          "name": "controlledAsset",
+          "type": "Relationship",
+          "value": "urn:ngsi-ld:Building:barn001"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,2 @@
+root['temperature']['observedAt']
+root['@context']

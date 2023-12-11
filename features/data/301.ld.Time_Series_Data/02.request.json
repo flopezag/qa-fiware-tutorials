@@ -1,0 +1,18 @@
+{
+  "description": "Notify me of animal locations",
+  "type": "Subscription",
+  "entities": [{"type": "Device"}],
+  "watchedAttributes": ["location", "status", "heartRate"],
+  "notification": {
+    "attributes": ["location", "status", "heartRate"],
+    "format": "normalized",
+    "endpoint": {
+      "uri": "http://quantumleap:8668/v2/notify",
+      "accept": "application/json",
+      "receiverInfo": [
+          {"key": "fiware-service", "value": "openiot"}
+      ]
+    }
+  },
+   "throttling": 10
+}

@@ -1,0 +1,25 @@
+{
+    "@context": "https://fiware.github.io/tutorials.Step-by-Step/japanese-context.jsonld",
+    "id": "urn:ngsi-ld:Building:store003",
+    "type": "ビル",
+    "家具": {
+        "type": "Relationship",
+        "object": ["urn:ngsi-ld:Shelf:unit006", "urn:ngsi-ld:Shelf:unit007", "urn:ngsi-ld:Shelf:unit008"]
+    },
+    "住所": {
+        "type": "Property",
+        "value": {
+            "streetAddress": "Mühlenstrasse 10",
+            "addressRegion": "Berlin",
+            "addressLocality": "Friedrichshain",
+            "postalCode": "10243"
+        },
+        "検証済み": { "type": "Property", "value": false }
+    },
+    "name": { "type": "Property", "value": "East Side Galleria" },
+    "カテゴリー": { "type": "Property", "value": "コマーシャル" },
+    "location": {
+        "type": "GeoProperty",
+        "value": { "type": "Point", "coordinates": [13.4447, 52.5031] }
+    }
+}

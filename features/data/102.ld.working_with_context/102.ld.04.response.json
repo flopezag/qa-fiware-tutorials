@@ -1,0 +1,68 @@
+[
+    {
+        "@context": "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.6.jsonld",
+        "id": "urn:ngsi-ld:Building:farm001",
+        "type": "https://uri.fiware.org/ns/dataModels#Building",
+        "https://schema.org/address": {
+            "type": "Property",
+            "value": {
+                "streetAddress": "Großer Stern 1",
+                "addressRegion": "Berlin",
+                "addressLocality": "Tiergarten",
+                "postalCode": "10557"
+            },
+            "verified": {
+                "type": "Property",
+                "value": true
+            }
+        },
+        "name": {
+            "type": "Property",
+            "value": "Victory Farm"
+        },
+        "https://uri.fiware.org/ns/dataModels#category": {
+            "type": "Property",
+            "value": "farm"
+        },
+        "location": {
+            "type": "GeoProperty",
+            "value": {
+                "type": "Point",
+                "coordinates": [13.3505, 52.5144]
+            }
+        }
+    },
+    {
+        "@context": "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.6.jsonld",
+        "id": "urn:ngsi-ld:Building:barn002",
+        "type": "https://uri.fiware.org/ns/dataModels#Building",
+        "https://schema.org/address": {
+            "type": "Property",
+            "value": {
+                "streetAddress": "Straße des 17. Juni",
+                "addressRegion": "Berlin",
+                "addressLocality": "Tiergarten",
+                "postalCode": "10557"
+            },
+            "verified": {
+                "type": "Property",
+                "value": true
+            }
+        },
+        "name": {
+            "type": "Property",
+            "value": "Big Red Barn"
+        },
+        "https://uri.fiware.org/ns/dataModels#category": {
+            "type": "Property",
+            "value": "barn"
+        },
+        "location": {
+            "type": "GeoProperty",
+            "value": {
+                "type": "Point",
+                "coordinates": [13.3698, 52.5163]
+            }
+        }
+    }
+]

@@ -1,0 +1,36 @@
+[
+    {
+        "@context": "http://context/json-context.jsonld",
+        "id": "urn:ngsi-ld:Building:farm001",
+        "type": "Building",
+        "address": {
+            "streetAddress": "Großer Stern 1",
+            "addressRegion": "Berlin",
+            "addressLocality": "Tiergarten",
+            "postalCode": "10557"
+        },
+        "name": "Victory Farm",
+        "category": "farm",
+        "location": {
+            "type": "Point",
+            "coordinates": [13.3505, 52.5144]
+        }
+    },
+    {
+        "@context": "http://context/json-context.jsonld",
+        "id": "urn:ngsi-ld:Building:barn002",
+        "type": "Building",
+        "address": {
+            "streetAddress": "Straße des 17. Juni",
+            "addressRegion": "Berlin",
+            "addressLocality": "Tiergarten",
+            "postalCode": "10557"
+        },
+        "name": "Big Red Barn",
+        "category": "barn",
+        "location": {
+            "type": "Point",
+            "coordinates": [13.3698, 52.5163]
+        }
+    }
+]

@@ -1,0 +1,146 @@
+[
+  {
+    "id": "urn:ngsi-ld:Shelf:unit001",
+    "type": "Shelf",
+    "locatedIn": "urn:ngsi-ld:Building:store001",
+    "maxCapacity": 50,
+    "numberOfItems": 15,
+    "stocks": "urn:ngsi-ld:Product:001",
+    "name": "Corner Unit",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        13.398611,
+        52.554699
+      ]
+    }
+  },
+  {
+    "id": "urn:ngsi-ld:Shelf:unit002",
+    "type": "Shelf",
+    "locatedIn": "urn:ngsi-ld:Building:store001",
+    "maxCapacity": 100,
+    "numberOfItems": 15,
+    "stocks": "urn:ngsi-ld:Product:003",
+    "name": "Wall Unit 1",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        13.398722,
+        52.554664
+      ]
+    }
+  },
+  {
+    "id": "urn:ngsi-ld:Shelf:unit003",
+    "type": "Shelf",
+    "locatedIn": "urn:ngsi-ld:Building:store001",
+    "maxCapacity": 100,
+    "numberOfItems": 15,
+    "stocks": "urn:ngsi-ld:Product:004",
+    "name": "Wall Unit 2",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        13.398722,
+        52.554664
+      ]
+    }
+  },
+  {
+    "id": "urn:ngsi-ld:Shelf:unit004",
+    "type": "Shelf",
+    "locatedIn": "urn:ngsi-ld:Building:store002",
+    "maxCapacity": 50,
+    "numberOfItems": 15,
+    "stocks": "urn:ngsi-ld:Product:001",
+    "name": "Corner Unit",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        13.390311,
+        52.507522
+      ]
+    }
+  },
+  {
+    "id": "urn:ngsi-ld:Shelf:unit005",
+    "type": "Shelf",
+    "locatedIn": "urn:ngsi-ld:Building:store002",
+    "maxCapacity": 100,
+    "numberOfItems": 15,
+    "stocks": "urn:ngsi-ld:Product:002",
+    "name": "Long Wall Unit",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        13.390309,
+        52.50751
+      ]
+    }
+  },
+  {
+    "id": "urn:ngsi-ld:Shelf:unit006",
+    "type": "Shelf",
+    "locatedIn": "urn:ngsi-ld:Building:store003",
+    "maxCapacity": 50,
+    "numberOfItems": 15,
+    "stocks": "urn:ngsi-ld:Product:001",
+    "name": "Corner Unit",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        13.444711,
+        52.503199
+      ]
+    }
+  },
+  {
+    "id": "urn:ngsi-ld:Shelf:unit007",
+    "type": "Shelf",
+    "locatedIn": "urn:ngsi-ld:Building:store003",
+    "maxCapacity": 100,
+    "numberOfItems": 15,
+    "stocks": "urn:ngsi-ld:Product:008",
+    "name": "Wall Unit",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        13.444722,
+        52.503164
+      ]
+    }
+  },
+  {
+    "id": "urn:ngsi-ld:Shelf:unit008",
+    "type": "Shelf",
+    "locatedIn": "urn:ngsi-ld:Building:store003",
+    "maxCapacity": 100,
+    "numberOfItems": 15,
+    "stocks": "urn:ngsi-ld:Product:009",
+    "name": "Wall Unit 2",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        13.444722,
+        52.503164
+      ]
+    }
+  },
+  {
+    "id": "urn:ngsi-ld:Shelf:unit009",
+    "type": "Shelf",
+    "locatedIn": "urn:ngsi-ld:Building:store004",
+    "maxCapacity": 50,
+    "numberOfItems": 15,
+    "stocks": "urn:ngsi-ld:Product:009",
+    "name": "Corner Unit",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        13.444711,
+        52.503122
+      ]
+    }
+  }
+]

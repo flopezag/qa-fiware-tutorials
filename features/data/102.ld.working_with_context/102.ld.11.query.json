@@ -1,0 +1,5 @@
+{
+  "type": "Building",
+  "q": "address.verified==true",
+  "options": "keyValues"
+}

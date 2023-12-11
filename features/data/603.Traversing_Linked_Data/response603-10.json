@@ -1,0 +1,19 @@
+{
+    "識別子": "urn:ngsi-ld:Building:store005",
+    "タイプ": "ビル",
+    "カテゴリー": { "タイプ": "プロパティ", "値": "コマーシャル" },
+    "住所": {
+        "タイプ": "プロパティ",
+        "値": {
+            "addressLocality": "Marzahn",
+            "addressRegion": "Berlin",
+            "postalCode": "12685",
+            "streetAddress": "Eisenacher Straße 98"
+        }
+    },
+    "場所": {
+        "タイプ": "ジオプロパティ",
+        "値": { "タイプ": "Point", "座標": [13.5646, 52.5435] }
+    },
+    "名前": { "タイプ": "プロパティ", "値": "Yuusui-en" }
+}

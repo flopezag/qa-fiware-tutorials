@@ -1,0 +1,3 @@
+{
+  "stmt": "SELECT DATE_FORMAT (DATE_TRUNC ('minute', time_index)) AS minute, SUM (count) AS sum FROM mtopeniot.etmotion WHERE entity_id = 'Motion:001' GROUP BY minute LIMIT 3"
+}

@@ -1,0 +1,30 @@
+{
+  "devices": [
+    {
+      "device_id": "temperature001",
+      "entity_name": "urn:ngsi-ld:Device:temperature001",
+      "entity_type": "Device",
+      "timezone": "Europe/Berlin",
+      "attributes": [
+        {
+          "object_id": "t",
+          "name": "temperature",
+          "type": "Property",
+          "metadata": {
+            "unitCode": {
+              "type": "Text",
+              "value": "CEL"
+            }
+          }
+        }
+      ],
+      "static_attributes": [
+        {
+          "name": "controlledAsset",
+          "type": "Relationship",
+          "value": "urn:ngsi-ld:Building:barn001"
+        }
+      ]
+    }
+  ]
+}

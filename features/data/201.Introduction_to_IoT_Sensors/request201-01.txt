@@ -1,0 +1,1 @@
+urn:ngsi-ld:Bell:001@ring

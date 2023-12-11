@@ -1,0 +1,73 @@
+[
+  {
+    "id": "5be07427be9a2d09cf677f08",
+    "description": "Notify QuantumLeap of count changes of any Motion Sensor",
+    "status": "active",
+    "subject": {
+      "entities": [
+        {
+          "idPattern": "Motion.*"
+        }
+      ],
+      "condition": {
+        "attrs": [
+          "count"
+        ],
+        "notifyOnMetadataChange": true
+      }
+    },
+    "notification": {
+      "timesSent": 6,
+      "lastNotification": "2018-09-02T08:36:04.00Z",
+      "attrs": [
+        "count"
+      ],
+      "onlyChangedAttrs": false,
+      "attrsFormat": "normalized",
+      "http": {
+        "url": "http://quantumleap:8668/v2/notify"
+      },
+      "metadata": ["dateCreated", "dateModified"],
+      "lastSuccess": "2018-09-02T08:36:04.00Z",
+      "lastSuccessCode": 200,
+      "covered": false
+    },
+    "throttling": 1
+  },
+  {
+    "id": "5be07427be9a2d09cf677f09",
+    "description": "Notify QuantumLeap on luminosity changes on any Lamp",
+    "status": "active",
+    "subject": {
+      "entities": [
+        {
+          "idPattern": "Lamp.*"
+        }
+      ],
+      "condition": {
+        "attrs": [
+          "luminosity",
+          "location"
+        ],
+        "notifyOnMetadataChange": true
+      }
+    },
+    "notification": {
+      "timesSent": 4,
+      "lastNotification": "2018-09-02T08:36:00.00Z",
+      "attrs": [
+        "luminosity"
+      ],
+      "onlyChangedAttrs": false,
+      "attrsFormat": "normalized",
+      "http": {
+        "url": "http://quantumleap:8668/v2/notify"
+      },
+      "metadata": ["dateCreated", "dateModified"],
+      "lastSuccess": "2023-07-18T16:23:20.000Z",
+      "lastSuccessCode": 200,
+      "covered": false
+    },
+    "throttling": 1
+  }
+]

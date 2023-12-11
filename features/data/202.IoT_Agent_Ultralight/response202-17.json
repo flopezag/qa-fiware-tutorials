@@ -1,0 +1,19 @@
+{
+    "count": 1,
+    "services": [
+        {
+            "commands": [],
+            "lazy": [],
+            "attributes": [],
+            "_id": "63b6d2a7a24432771c016f8c",
+            "resource": "/iot/d",
+            "apikey": "4jggokgpepnvsb2uv4s40d59ov",
+            "service": "openiot",
+            "subservice": "/",
+            "__v": 0,
+            "static_attributes": [],
+            "internal_attributes": [],
+            "entity_type": "Thing"
+        }
+    ]
+}

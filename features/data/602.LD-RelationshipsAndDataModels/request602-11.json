@@ -1,0 +1,30 @@
+{
+  "id": "urn:ngsi-ld:StockOrder:001",
+  "type": "StockOrder",
+  "requestedFor": {
+    "type": "Relationship",
+    "object": "urn:ngsi-ld:Building:store001"
+  },
+  "requestedBy": {
+  "type": "Relationship",
+  "object": "urn:ngsi-ld:Person:bob-the-manager"
+  },
+  "orderedProduct": {
+    "type": "Relationship",
+    "object": "urn:ngsi-ld:Product:001"
+  },
+  "stockCount": {
+    "type": "Property",
+    "value": 10000
+  },
+  "orderDate": {
+    "type": "Property",
+    "value": {
+        "@type": "DateTime",
+        "@value": "2018-08-07T12:00:00Z"
+    }
+  },
+  "@context": [
+    "https://fiware.github.io/tutorials.Step-by-Step/tutorials-context.jsonld"
+  ]
+}

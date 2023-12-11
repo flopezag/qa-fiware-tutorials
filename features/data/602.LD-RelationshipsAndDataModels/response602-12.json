@@ -1,0 +1,7 @@
+[
+    {
+        "id": "urn:ngsi-ld:StockOrder:001",
+        "type": "StockOrder",
+        "requestedFor": "urn:ngsi-ld:Building:store001"
+    }
+]

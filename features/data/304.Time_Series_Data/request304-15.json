@@ -1,0 +1,3 @@
+{
+  "stmt": "SELECT * FROM mtopeniot.etmotion WHERE entity_id = 'Motion:001' order by time_index ASC LIMIT 3 OFFSET 3"
+}

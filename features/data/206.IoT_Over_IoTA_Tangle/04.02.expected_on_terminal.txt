@@ -1,0 +1,3 @@
+^.* gateway:southbound Command received from MQTT bell001@ring|$
+^.* gateway:southbound Command pushed to Tangle: i=bell001&k=.*&d=bell001@ring|  to fiware/cmd$
+^.* gateway:southbound messageId: .*$

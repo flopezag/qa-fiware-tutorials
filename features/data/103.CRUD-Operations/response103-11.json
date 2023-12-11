@@ -1,0 +1,88 @@
+[
+    {
+        "id": "urn:ngsi-ld:Product:001",
+        "type": "Product",
+        "name": { "type": "Text", "value": "Apples", "metadata": {} },
+        "offerPrice": { "type": "Integer", "value": 89, "metadata": {} },
+        "price": { "type": "Integer", "value": 99, "metadata": {} },
+        "size": { "type": "Text", "value": "S", "metadata": {} },
+        "specialOffer": { "type": "Boolean", "value": true, "metadata": {} }
+    },
+    {
+        "id": "urn:ngsi-ld:Product:002",
+        "type": "Product",
+        "name": { "type": "Text", "value": "Bananas", "metadata": {} },
+        "price": { "type": "Integer", "value": 1099, "metadata": {} },
+        "size": { "type": "Text", "value": "M", "metadata": {} }
+    },
+    {
+        "id": "urn:ngsi-ld:Product:003",
+        "type": "Product",
+        "name": { "type": "Text", "value": "Coconuts", "metadata": {} },
+        "price": { "type": "Integer", "value": 1499, "metadata": {} },
+        "size": { "type": "Text", "value": "M", "metadata": {} }
+    },
+    {
+        "id": "urn:ngsi-ld:Product:004",
+        "type": "Product",
+        "name": { "type": "Text", "value": "Melons", "metadata": {} },
+        "price": { "type": "Integer", "value": 5000, "metadata": {} },
+        "size": { "type": "Text", "value": "XL", "metadata": {} }
+    },
+    {
+        "id": "urn:ngsi-ld:Product:005",
+        "type": "Product",
+        "name": { "type": "Text", "value": "Kiwi Fruits", "metadata": {} },
+        "price": { "type": "Integer", "value": 99, "metadata": {} },
+        "size": { "type": "Text", "value": "S", "metadata": {} }
+    },
+    {
+        "id": "urn:ngsi-ld:Product:006",
+        "type": "Product",
+        "name": { "type": "Text", "value": "Strawberries", "metadata": {} },
+        "price": { "type": "Integer", "value": 99, "metadata": {} },
+        "size": { "type": "Text", "value": "S", "metadata": {} }
+    },
+    {
+        "id": "urn:ngsi-ld:Product:007",
+        "type": "Product",
+        "name": { "type": "Text", "value": "Raspberries", "metadata": {} },
+        "price": { "type": "Integer", "value": 99, "metadata": {} },
+        "size": { "type": "Text", "value": "S", "metadata": {} }
+    },
+    {
+        "id": "urn:ngsi-ld:Product:008",
+        "type": "Product",
+        "name": { "type": "Text", "value": "Pineapples", "metadata": {} },
+        "price": { "type": "Integer", "value": 99, "metadata": {} },
+        "size": { "type": "Text", "value": "S", "metadata": {} }
+    },
+    {
+        "id": "urn:ngsi-ld:Product:009",
+        "type": "Product",
+        "name": { "type": "Text", "value": "Oranges", "metadata": {} },
+        "price": { "type": "Integer", "value": 99, "metadata": {} },
+        "size": { "type": "Text", "value": "S", "metadata": {} }
+    },
+    {
+        "id": "urn:ngsi-ld:Product:010",
+        "type": "Product",
+        "name": { "type": "Text", "value": "Lemonade", "metadata": {} },
+        "price": { "type": "Integer", "value": 99, "metadata": {} },
+        "size": { "type": "Text", "value": "S", "metadata": {} }
+    },
+    {
+        "id": "urn:ngsi-ld:Product:011",
+        "type": "Product",
+        "name": { "type": "Text", "value": "Brandy", "metadata": {} },
+        "price": { "type": "Integer", "value": 1199, "metadata": {} },
+        "size": { "type": "Text", "value": "M", "metadata": {} }
+    },
+    {
+        "id": "urn:ngsi-ld:Product:012",
+        "type": "Product",
+        "name": { "type": "Text", "value": "Port", "metadata": {} },
+        "price": { "type": "Integer", "value": 1099, "metadata": {} },
+        "size": { "type": "Text", "value": "M", "metadata": {} }
+    }
+]

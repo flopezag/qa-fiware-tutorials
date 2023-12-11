@@ -1,0 +1,5 @@
+{
+  "type": "urn:dx:as:MissingAuthenticationToken",
+  "title": "Unauthorized",
+  "detail": "Auth-token not found in request header"
+}

@@ -1,0 +1,33 @@
+{
+    "id": "urn:ngsi-ld:Device:water001",
+    "type": "Device",
+    "on_status": {
+        "type": "Property",
+        "value": {
+            "@type": "commandStatus",
+            "@value": "OK"
+        },
+        "observedAt": "2020-09-14T15:27:11.066Z"
+    },
+    "on_info": {
+        "type": "Property",
+        "value": {
+            "@type": "commandResult",
+            "@value": " on OK"
+        },
+        "observedAt": "2020-09-14T15:27:11.066Z"
+    },
+    "controlledAsset": {
+        "type": "Relationship",
+        "object": "urn:ngsi-ld:Building:barn001",
+        "observedAt": "2020-09-14T15:27:11.066Z"
+    },
+    "on": {
+        "type": "Property",
+        "value": ""
+    },
+    "off": {
+        "type": "Property",
+        "value": ""
+    }
+}

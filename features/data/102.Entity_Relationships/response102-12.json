@@ -1,0 +1,18 @@
+[
+    {
+        "id": "urn:ngsi-ld:Shelf:unit001",
+        "type": "Shelf"
+    },
+    {
+        "id": "urn:ngsi-ld:Shelf:unit002",
+        "type": "Shelf"
+    },
+    {
+        "id": "urn:ngsi-ld:Shelf:unit003",
+        "type": "Shelf"
+    },
+    {
+        "id": "urn:ngsi-ld:InventoryItem:001",
+        "type": "InventoryItem"
+    }
+]
