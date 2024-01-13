@@ -1,5 +1,5 @@
 {
-  "count": 1,
+  "count": 2,
   "services": [
     {
       "commands": [],
@@ -27,7 +27,7 @@
           "type": "geo:point"
         }
       ],
-      "_id": "623da53289403a5d0bcef9b1",
+      "_id": "65a1172a845521532ab44b6d",
       "resource": "/iot/d",
       "apikey": "4jggokgpepnvsb2uv4s40d59ov",
       "service": "openiot",
@@ -47,6 +47,20 @@
       ],
       "internal_attributes": [],
       "entity_type": "Device"
+    },
+    {
+      "commands": [],
+      "lazy": [],
+      "attributes": [],
+      "_id": "65a1198a8455218650b44b8c",
+      "resource": "/iot/d",
+      "apikey": "12345",
+      "service": "openiot",
+      "subservice": "/",
+      "__v": 0,
+      "static_attributes": [],
+      "internal_attributes": [],
+      "entity_type": "Thing"
     }
   ]
 }

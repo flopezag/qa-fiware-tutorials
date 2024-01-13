@@ -27,12 +27,13 @@ Feature: test tutorial 601 Introduction to Linked Data (Orion-LD)
 #   Request 2, 3: Creating an Entity
 #
     Scenario Outline: [2, 3] Creating an Entity
-      When I send POST HTTP request to Orion-LD at "http://localhost:1026/ngsi-ld/v1/entities"
-      And  With the post header "NA": "NA"
-      And  With the body request described in an Orion-LD file "<file>"
+      When I prepare a POST HTTP request for "creating an entity" to "http://localhost:1026/ngsi-ld/v1/entities"
+      And  I set header Content-Type to application/ld+json
+      And  I set the body request as described in <file>
+      And  I perform the request
       Then I receive a HTTP response with the following Orion-LD data
-        | Status-Code | Location   | Connection | fiware-correlator |
-        | 201         | <location> | Keep-Alive | Any               |
+        | Status-Code | Location   |
+        | 201         | <location> |
 
       Examples:
         | file               | location                                           |
@@ -56,8 +57,10 @@ Feature: test tutorial 601 Introduction to Linked Data (Orion-LD)
 #                                } and is in a wrong position.
 #
     Scenario: [4] OBTAIN ENTITY DATA BY FQN TYPE
-      When  I send GET HTTP request to "http://localhost:1026/ngsi-ld/v1/entities?type=https://uri.fiware.org/ns/dataModels%23Building"
-      Then  I receive a HTTP "200" response code from Orion-LD with the body equal to "response601-04.json"
+      When I prepare a GET HTTP request for "obtaining an entity data" to "http://localhost:1026/ngsi-ld/v1/entities?type=https://uri.fiware.org/ns/dataModels#Building"
+      And  I set header Accept to application/ld+json
+      And  I perform the request
+      Then I receive a HTTP "200" response code from Orion-LD with the body equal to "response601-04.json"
 
 
 #

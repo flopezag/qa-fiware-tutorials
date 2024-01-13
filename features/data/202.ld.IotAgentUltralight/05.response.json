@@ -4,7 +4,7 @@
     "type": "Device",
     "temperature": {
         "type": "Property",
-        "value": "3",
+        "value": 3,
         "unitCode": "CEL",
         "observedAt": "2020-09-14T15:23:12.263Z"
     }

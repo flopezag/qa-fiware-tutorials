@@ -1,0 +1,76 @@
+[
+  {
+    "id": "urn:ngsi-ld:subscription:2b195312-b1ff-11ee-a339-0242ac12010a",
+    "type": "Subscription",
+    "description": "Notify me of all feedstock changes",
+    "entities": [
+      {
+        "type": "https://ngsi-ld-tutorials.readthedocs.io/en/latest/datamodels.html#FillingLevelSensor"
+      }
+    ],
+    "watchedAttributes": [
+      "https://w3id.org/saref#fillingLevel"
+    ],
+    "status": "active",
+    "isActive": true,
+    "notification": {
+      "attributes": [
+        "https://w3id.org/saref#fillingLevel",
+        "location"
+      ],
+      "format": "normalized",
+      "endpoint": {
+        "uri": "http://quantumleap:8668/v2/notify",
+        "accept": "application/json",
+        "receiverInfo": [
+          {
+            "key": "fiware-service",
+            "value": "openiot"
+          }
+        ]
+      },
+      "status": "ok"
+    },
+    "origin": "cache",
+    "jsonldContext": "http://context/ngsi-context.jsonld"
+  },
+  {
+    "id": "urn:ngsi-ld:subscription:36311e56-b1ff-11ee-b01e-0242ac12010a",
+    "type": "Subscription",
+    "description": "Notify me of animal locations",
+    "entities": [
+      {
+        "type": "https://uri.fiware.org/ns/data-models#Device"
+      }
+    ],
+    "watchedAttributes": [
+      "location",
+      "status",
+      "https://purl.bioontology.org/ontology/MESH/D006339"
+    ],
+    "status": "active",
+    "isActive": true,
+    "notification": {
+      "attributes": [
+        "location",
+        "status",
+        "https://purl.bioontology.org/ontology/MESH/D006339"
+      ],
+      "format": "normalized",
+      "endpoint": {
+        "uri": "http://quantumleap:8668/v2/notify",
+        "accept": "application/json",
+        "receiverInfo": [
+          {
+            "key": "fiware-service",
+            "value": "openiot"
+          }
+        ]
+      },
+      "status": "ok"
+    },
+    "throttling": 10,
+    "origin": "cache",
+    "jsonldContext": "http://context/ngsi-context.jsonld"
+  }
+]

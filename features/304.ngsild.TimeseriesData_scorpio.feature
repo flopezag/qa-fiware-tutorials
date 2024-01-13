@@ -2,7 +2,7 @@
   ## Cratedb needs increasing max_map_count
   ##    sudo sysctl -w vm.max_map_count=262144
 
-Feature: test tutorial 301.Persisting and Querying timedata series (Scorpio)
+Feature: test tutorial 304.Persisting and Querying timedata series (Scorpio)
 
   This is the feature file of the FIWARE Step by Step tutorial Timedata Series - NGSI-LD
   # url (used): https://documenter.getpostman.com/view/513743/TWDUpxxx
@@ -18,13 +18,13 @@ Feature: test tutorial 301.Persisting and Querying timedata series (Scorpio)
 
 
   Background:
-    Given I set the tutorial 301 LD - Timeseries data
+    Given I set the tutorial 304 LD - Timeseries data
 
     Scenario Outline: Registering cratedb timedata series
-    When I prepare a POST HTTP request for "<description>" to "http://localhost:9090/ngsi-ld/v1/subscriptions/"
+    When I prepare a POST HTTP request for "<description>" to "http://localhost:1026/ngsi-ld/v1/subscriptions/"
     And  I set header Content-Type to application/json
     And  I set header NGSILD-Tenant to openiot
-    And  I set header fiware-servicepath to /
+#    And  I set header fiware-servicepath to /
     And  I set header Link to <http://context/ngsi-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"
     And  I set the body request as described in <file>
     And  I perform the request
@@ -36,7 +36,7 @@ Feature: test tutorial 301.Persisting and Querying timedata series (Scorpio)
 
     # Request 3 -
     Scenario: Check the subscriptions for quantum-leap to ngsi-ld
-    When  I send GET HTTP request to "http://localhost:9090/ngsi-ld/v1/subscriptions/"
+    When  I send GET HTTP request to "http://localhost:1026/ngsi-ld/v1/subscriptions/"
     And   I set header NGSILD-Tenant to openiot
     Then  I receive a HTTP "200" response code
 

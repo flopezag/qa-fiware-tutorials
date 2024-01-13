@@ -1,9 +1,8 @@
 [
     {
-        "@context": "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context.jsonld",
         "id": "urn:ngsi-ld:Building:store001",
-        "type": "https://uri.fiware.org/ns/data-models#Building",
-        "https://schema.org/address": {
+        "type": "https://uri.fiware.org/ns/dataModels#Building",
+        "http://schema.org/address": {
             "type": "Property",
             "value": {
                 "streetAddress": "Bornholmer Straße 65",
@@ -16,13 +15,13 @@
                 "value": true
             }
         },
-        "https://smart-data-models.github.io/data-models/terms.jsonld#/definitions/category": {
-          "type": "Property",
-          "value": "commercial"
-        },
         "name": {
             "type": "Property",
             "value": "Bösebrücke Einkauf"
+        },
+        "https://uri.fiware.org/ns/dataModels#category": {
+            "type": "Property",
+            "value": ["commercial"]
         },
         "location": {
             "type": "GeoProperty",
@@ -30,13 +29,13 @@
                 "type": "Point",
                 "coordinates": [13.3986, 52.5547]
             }
-        }
+        },
+        "@context": "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.6.jsonld"
     },
     {
-        "@context": "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context.jsonld",
         "id": "urn:ngsi-ld:Building:store002",
-        "type": "https://uri.fiware.org/ns/data-models#Building",
-        "https://schema.org/address": {
+        "type": "https://uri.fiware.org/ns/dataModels#Building",
+        "http://schema.org/address": {
             "type": "Property",
             "value": {
                 "streetAddress": "Friedrichstraße 44",
@@ -49,13 +48,13 @@
                 "value": true
             }
         },
-        "https://smart-data-models.github.io/data-models/terms.jsonld#/definitions/category": {
-          "type": "Property",
-          "value": "commercial"
-        },
         "name": {
             "type": "Property",
             "value": "Checkpoint Markt"
+        },
+        "https://uri.fiware.org/ns/dataModels#category": {
+            "type": "Property",
+            "value": ["commercial"]
         },
         "location": {
             "type": "GeoProperty",
@@ -63,6 +62,7 @@
                 "type": "Point",
                 "coordinates": [13.3903, 52.5075]
             }
-        }
+        },
+        "@context": "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.6.jsonld"
     }
 ]

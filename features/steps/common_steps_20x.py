@@ -74,14 +74,18 @@ def perform_request(context):
     if not hasattr(context, 'payload'):
         context.payload = None
 
-    context.payload = context.payload.encode('utf-8')
     try:
         if context.method == "POST":
+            context.payload = context.payload.encode('utf-8')
             response = post(context.url, data=context.payload, headers=context.headers)
         elif context.method == "PUT":
+            context.payload = context.payload.encode('utf-8')
             response = put(context.url, data=context.payload, headers=context.headers)
         elif context.method == "PATCH":
+            context.payload = context.payload.encode('utf-8')
             response = patch(context.url, data=context.payload, headers=context.headers)
+        elif context.method == "GET":
+            response = get(context.url, headers=context.headers)
         else:
             raise AssertionError(f"Unknown method {context.method}")
     except exceptions.RequestException as e:

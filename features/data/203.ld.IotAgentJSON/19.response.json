@@ -1,5 +1,5 @@
 {
-    "count": 1,
+    "count": 2,
     "services": [
         {
             "commands": [],
@@ -36,6 +36,20 @@
             "static_attributes": [],
             "internal_attributes": [],
             "entity_type": "Device"
+        },
+        {
+            "commands": [],
+            "lazy": [],
+            "attributes": [],
+            "_id": "65a155c7a9ae0416531451e2",
+            "resource": "/iot/json",
+            "apikey": "12345",
+            "service": "openiot",
+            "subservice": "/",
+            "__v": 0,
+            "static_attributes": [],
+            "internal_attributes": [],
+            "entity_type": "Thing"
         }
     ]
 }

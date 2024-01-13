@@ -2,7 +2,7 @@
   ## Cratedb needs increasing max_map_count
   ##    sudo sysctl -w vm.max_map_count=262144
 
-Feature: test tutorial 301.Persisting and Querying timedata series (Orion-LD)
+Feature: test tutorial 304.Persisting and Querying timedata series (Stellio)
 
   This is the feature file of the FIWARE Step by Step tutorial Timedata Series - NGSI-LD
   # url (used): https://documenter.getpostman.com/view/513743/TWDUpxxx
@@ -13,18 +13,18 @@ Feature: test tutorial 301.Persisting and Querying timedata series (Orion-LD)
   git-clone: https://github.com/FIWARE/tutorials.Time-Series-Data.git
 
   git-directory: /tmp/Time-Series-Data
-  shell-commands: git checkout NGSI-LD ; /tmp/patch_crate.sh ; ./services create  ; ./services orion
+  shell-commands: git checkout NGSI-LD ; /tmp/patch_crate.sh ; ./services create  ; ./services stellio
   clean-shell-commands: ./services stop
 
 
   Background:
-    Given I set the tutorial 301 LD - Timeseries data
+    Given I set the tutorial 304 LD - Timeseries data
 
     Scenario Outline: Registering cratedb timedata series
     When I prepare a POST HTTP request for "<description>" to "http://localhost:1026/ngsi-ld/v1/subscriptions/"
     And  I set header Content-Type to application/json
     And  I set header NGSILD-Tenant to openiot
-    And  I set header fiware-servicepath to /
+#    And  I set header fiware-servicepath to /
     And  I set header Link to <http://context/ngsi-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"
     And  I set the body request as described in <file>
     And  I perform the request
@@ -46,7 +46,7 @@ Feature: test tutorial 301.Persisting and Querying timedata series (Orion-LD)
     And   I validate against jq '. | has("version")'
 
 
-    # Somehow I need to add data to Sensors so they can add data to CrateDB
+    # Somehow I need to add data to Sensors so they can add data to Cratedb
     # This is not in tutorial, but it is the way to add data without Web dashboard
     ## Example post: 12:53:47 PM HTTP POST http://iot-agent:7896/iot/d?i=filling001&k=854782081 f|0.45
     Scenario Outline: Communicating with IoT Devices: Using Actuators
@@ -56,28 +56,28 @@ Feature: test tutorial 301.Persisting and Querying timedata series (Orion-LD)
     And   I set header Content-Type to text/plain
     And   I set simple sensor values as described in "<sensor_value>"
     And   I perform the request
-    Then  I receive a HTTP "<status_code>" response code
+    Then  I receive a HTTP "200" response code
     And   I wait "1" seconds
     Examples:
-        | status_code | sensor_value                                                | key_value  | sensor     |
-        |         201 | f\|0.95                                                     | 854782081  | filling001 |
-        |         201 | d\|AT_REST\|bpm\|61\|gps\|13.357,52.515\|s\|0               | 110990     | pig001     |
-        |         201 | d\|AT_REST\|bpm\|50\|gps\|13.411,52.468\|s\|0               | 98699      | cow001     |
-        |         200 | f\|0.90                                                     | 854782081  | filling001 |
-        |         200 | d\|AT_REST\|bpm\|60\|gps\|13.359,52.516\|s\|0               | 110990     | pig001     |
-        |         200 | d\|GRAZING\|bpm\|53\|gps\|13.41,52.467\|s\|0                | 98699      | cow001     |
-        |         200 | f\|0.85                                                     | 854782081  | filling001 |
-        |         200 | d\|WALLOWING\|bpm\|66\|gps\|13.359,52.514\|s\|5             | 110990     | pig001     |
-        |         200 | d\|GRAZING\|bpm\|53\|gps\|13.41,52.467\|s\|0                | 98699      | cow001     |
-        |         200 | f\|0.75                                                     | 854782081  | filling001 |
-        |         200 | d\|AT_REST\|bpm\|66\|gps\|13.3986,52.5547\|s\|5             | 110990     | pig001     |
-        |         200 | d\|AT_REST\|bpm\|53\|gps\|13.3987,52.5547\|s\|0             | 98699      | cow001     |
-        |         200 | f\|0.65                                                     | 854782081  | filling001 |
-        |         200 | f\|0.55                                                     | 854782081  | filling001 |
-        |         200 | f\|0.70                                                     | 854782081  | filling001 |
-        |         200 | f\|0.90                                                     | 854782081  | filling001 |
-        |         200 | f\|0.98                                                     | 854782081  | filling001 |
-        |         200 | f\|0.91                                                     | 854782081  | filling001 |
+        | sensor_value                                                | key_value  | sensor     |
+        | f\|0.95                                                     | 854782081  | filling001 |
+        | d\|AT_REST\|bpm\|61\|gps\|13.357,52.515\|s\|0               | 110990     | pig001     |
+        | d\|AT_REST\|bpm\|50\|gps\|13.411,52.468\|s\|0               | 98699      | cow001     |
+        | f\|0.90                                                     | 854782081  | filling001 |
+        | d\|AT_REST\|bpm\|60\|gps\|13.359,52.516\|s\|0               | 110990     | pig001     |
+        | d\|GRAZING\|bpm\|53\|gps\|13.41,52.467\|s\|0                | 98699      | cow001     |
+        | f\|0.85                                                     | 854782081  | filling001 |
+        | d\|WALLOWING\|bpm\|66\|gps\|13.359,52.514\|s\|5             | 110990     | pig001     |
+        | d\|GRAZING\|bpm\|53\|gps\|13.41,52.467\|s\|0                | 98699      | cow001     |
+        | f\|0.75                                                     | 854782081  | filling001 |
+        | d\|AT_REST\|bpm\|66\|gps\|13.3986,52.5547\|s\|5             | 110990     | pig001     |
+        | d\|AT_REST\|bpm\|53\|gps\|13.3987,52.5547\|s\|0             | 98699      | cow001     |
+        | f\|0.65                                                     | 854782081  | filling001 |
+        | f\|0.55                                                     | 854782081  | filling001 |
+        | f\|0.70                                                     | 854782081  | filling001 |
+        | f\|0.90                                                     | 854782081  | filling001 |
+        | f\|0.98                                                     | 854782081  | filling001 |
+        | f\|0.91                                                     | 854782081  | filling001 |
 
     # Request 4..11 - Fails. it gets HTTP 404 - Not Found
     Scenario Outline: Using Quantum Leap API list the first 3 sampled values
@@ -117,6 +117,6 @@ Feature: test tutorial 301.Persisting and Querying timedata series (Orion-LD)
 
     # Request 3 -
   Scenario: Check the subscriptions for quantum-leap to ngsi-ld
-    When  I send GET HTTP request to "http://localhost:1026/ngsi-ld/v1/subscriptions/"
+    When  I send GET HTTP request to "http://localhost:8080/ngsi-ld/v1/subscriptions/"
     And   I set header NGSILD-Tenant to openiot
     Then  I receive a HTTP "200" response code

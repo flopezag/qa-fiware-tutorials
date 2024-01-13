@@ -18,7 +18,6 @@ Feature: test tutorial 203.IoT Agents using JSON (Orion-LD)
     Then  I receive a HTTP "200" response code from IoTAgent with the body "01.response.json" and exclusions "01.excludes"
 
   # Request 2, 3 - Provision service and provision device
-  ## Modified json file -- changed /iot/d for /iot/json
   Scenario Outline: Provisioning a service Group
     When  I prepare a POST HTTP request for "<description>" to "<url>"
     And   I set header fiware-service to openiot
@@ -38,34 +37,32 @@ Feature: test tutorial 203.IoT Agents using JSON (Orion-LD)
     And   I set header Content-Type to application/json
     And   I set the body request as described in 04.request.json
     And   I perform the request
-    Then  I receive a HTTP "200" response code
+    Then  I receive a HTTP "201" response code
     And   I wait "1" seconds
 
   # Request 5
-  ## ERR - The headers should be this way, not as explained in the tutorial with fiware-service and fiware-servicepath
-  ## ERR - No "@context" in response => failure
   Scenario: Querying the temperature in the context Broker
     When  I prepare a GET HTTP request to "http://localhost:1026/ngsi-ld/v1/entities/urn:ngsi-ld:Device:temperature001?attrs=temperature"
     And   I set header NGSILD-Tenant to openiot
     And   I set header NGSILD-Path to /
+    And   I set header Accept to application/ld+json
     And   I set header Link to <http://context/ngsi-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"
     And   I perform the query request
     Then  I receive a HTTP "200" response code from Broker with the body "05.response.json" and exclusions "05.excludes"
 
-  Scenario: Req 6 - Create a new entity sending a meassure
+  Scenario: Req 6 - Create a new entity sending a measure
     When  I prepare a POST HTTP request to "http://localhost:7896/iot/json?k=4jggokgpepnvsb2uv4s40d59ov&i=motion003"
     And   I set header Content-Type to application/json
     And   I set the body text to {"c": 1}
     And   I perform the request
-    Then  I receive a HTTP "200" response code
+    Then  I receive a HTTP "201" response code
     And   I wait "1" seconds
 
-  ## ERR - Modified c.value in response.json from "1" to 1 (str to int)
-  ## ERR - No "@context" in response => failure
   Scenario: Req 7 - Test the value of the new device
     When  I prepare a GET HTTP request to "http://localhost:1026/ngsi-ld/v1/entities/?type=Device"
     And   I set header NGSILD-Tenant to openiot
     And   I set header NGSILD-Path to /
+    And   I set header Accept to application/ld+json
     And   I set header Link to <http://context/ngsi-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"
     And   I perform the query request
     And   I filter the result with jq '.[]|select(.id == "urn:ngsi-ld:Device:motion003")'
@@ -103,6 +100,7 @@ Feature: test tutorial 203.IoT Agents using JSON (Orion-LD)
     When  I prepare a POST HTTP request for "<description>" to "http://localhost:4041/iot/devices"
     And   I set header fiware-service to openiot
     And   I set header fiware-servicepath to /
+    And   I set header Content-Type to application/json
     And   I set the body request as described in <file>
     And   I perform the request
     Then  I receive a HTTP response with status 201 and empty dict
@@ -122,11 +120,9 @@ Feature: test tutorial 203.IoT Agents using JSON (Orion-LD)
 
   Scenario Outline: Req 14, 15, 16 - Activating things with actuators
     When  I prepare a PATCH HTTP request for "<description>" to "http://localhost:1026/ngsi-ld/v1/entities/urn:ngsi-ld:Device:<device>/attrs/<attr>"
-    And   I set header content-type to application/json
+    And   I set header Content-Type to application/json
     And   I set header NGSILD-Tenant to openiot
     And   I set header Link to <http://context/ngsi-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"
-    And   I set header fiware-service to openiot
-    And   I set header fiware-servicepath to /
     And   I set the body request as described in <file>
     And   I perform the request
     Then  I receive a HTTP response with status 204 and empty dict
@@ -136,16 +132,14 @@ Feature: test tutorial 203.IoT Agents using JSON (Orion-LD)
       | activate.things.request.json | tractor001 | start | Act. tractor           |
       | activate.things.request.json | filling001 | add   | Act. filling system    |
 
-  ## ERR - 409 Conflict -- the service is previously created
   Scenario: Req 17 - Provisioning a service Group for CRUD operations
     When  I prepare a POST HTTP request to "http://localhost:4041/iot/services"
     And   I set header fiware-service to openiot
     And   I set header fiware-servicepath to /
-    And   I set the body request as described in 17.request.json
+    And   I set the body request as described in 17.request.orionld.json
     And   I perform the request
     Then  I receive a HTTP response with status 201 and empty dict
 
-  ## ERR - Tutorial shows /iot/d -- should it be iot/json
   Scenario Outline: Req 18 and 19 - Read service group details
     When  I prepare a GET HTTP request to "http://localhost:4041/iot/<what>"
     And   I set header fiware-service to openiot
@@ -161,6 +155,7 @@ Feature: test tutorial 203.IoT Agents using JSON (Orion-LD)
     When  I prepare a PUT HTTP request to "http://localhost:4041/iot/services?resource=/iot/json&apikey=4jggokgpepnvsb2uv4s40d59ov"
     And   I set header fiware-service to openiot
     And   I set header fiware-servicepath to /
+    And   I set header Content-Type to application/json
     And   I set the body request as described in 20.request.json
     And   I perform the request
     Then  I receive a HTTP response with status 204 and empty dict
@@ -176,6 +171,7 @@ Feature: test tutorial 203.IoT Agents using JSON (Orion-LD)
     When  I prepare a POST HTTP request to "http://localhost:4041/iot/devices"
     And   I set header fiware-service to openiot
     And   I set header fiware-servicepath to /
+    And   I set header Content-Type to application/json
     And   I set the body request as described in 22.request.json
     And   I perform the request
     Then  I receive a HTTP response with status 201 and empty dict
@@ -201,9 +197,10 @@ Scenario: Req 25 - Update a provisioned device
     When  I prepare a PUT HTTP request to "http://localhost:4041/iot/devices/water002"
     And   I set header fiware-service to openiot
     And   I set header fiware-servicepath to /
+    And   I set header Content-Type to application/json
     And   I set the body request as described in 25.request.json
     And   I perform the request
-    Then  I receive a HTTP response with status 200 and empty dict
+    Then  I receive a HTTP response with status 204 and empty dict
 
   Scenario: Req 26 - Delete a provisioned device
     When  I prepare a DELETE HTTP request to "http://localhost:4041/iot/devices/water002"
@@ -211,4 +208,3 @@ Scenario: Req 25 - Update a provisioned device
     And   I set header fiware-servicepath to /
     And   I perform the query request
     Then  I receive a HTTP response with status 204 and empty dict
-

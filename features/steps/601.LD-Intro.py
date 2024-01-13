@@ -134,7 +134,6 @@ def receive_post_response2(context, server):
 
     for element in context.table.rows:
         valid_response = dict(element.as_dict())
-        print(valid_response)
 
         assert_that(context.statusCode, is_(valid_response['Status-Code']))
 
@@ -144,5 +143,5 @@ def receive_post_response2(context, server):
         if valid_response['Location'] != "Any":
             assert_that(context.responseHeaders['Location'], is_(valid_response['Location']))
 
-        aux = 'fiware-correlator' in valid_response
-        assert_that(aux, is_(True))
+        if 'fiware-correlator' in valid_response:
+            assert_that(context.responseHeaders['fiware-correlator'], is_(valid_response['fiware-correlator']))

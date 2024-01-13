@@ -10,9 +10,13 @@
       "uri": "http://quantumleap:8668/v2/notify",
       "accept": "application/json",
       "receiverInfo": [
-          {"key": "fiware-service", "value": "openiot"}
+        {
+          "key": "fiware-service",
+          "value": "openiot"
+        }
       ]
     }
   },
-   "throttling": 10
+   "throttling": 10,
+   "@context": "http://context/ngsi-context.jsonld"
 }

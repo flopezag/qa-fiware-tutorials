@@ -1,8 +1,8 @@
 {
  "services": [
    {
-     "apikey":      "4jggokgpepnvsb2uv4s40d59ov",
-     "cbroker":     "http://orion:1026",
+     "apikey":      "12345",
+     "cbroker":     "http://stellio:1026",
      "entity_type": "Thing",
      "resource":    "/iot/json"
    }
