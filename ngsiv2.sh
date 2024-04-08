@@ -99,7 +99,7 @@ function function_four {
 }
 
 function function_five {
-  echo "Function five (expected time: )"
+  echo "Function five (expected time: 3m 1,662s)"
   echo
 
   behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/603.Traversing_Linked_Data_Orion.feature
