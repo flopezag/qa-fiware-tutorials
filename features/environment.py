@@ -144,7 +144,32 @@ def before_feature(context, feature):
         stdout.write("********** END docker-compose-changes **********\n\n")
 
     if 'shell-commands' in parameters:
+        # Get the corresponding broker
+        context.core_context = get_broker_name(parameters['shell-commands'])
+
+        # Execute the commands
         exec_commands(parameters, 'shell-commands')
+
+
+def get_broker_name(parameter) -> str:
+    brokers = ['orion', 'orion-ld', 'scorpio', 'stellio']
+    core_context = {
+        'orion': 'https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.6.jsonld',
+        'orion-ld': 'https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.6.jsonld',
+        'stellio': '...',
+        'scorpio': 'https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.7.jsonld'
+    }
+
+    idx: int = 0
+    broker: str = ''
+
+    for broker in brokers:
+        idx = parameter.find(broker)
+
+        if idx != -1:
+            break
+
+    return core_context[broker]
 
 
 def before_scenario(context, scenario):

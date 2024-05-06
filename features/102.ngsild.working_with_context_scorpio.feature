@@ -22,11 +22,11 @@ Feature: test tutorial 102 NGSI-LD: Working with Context feature (Scorpio)
        | json-context.jsonld      |
        | alternate-context.jsonld |
 
-  # Request 1
-  Scenario: 01 - Checking the Service Health
-    When I prepare a GET HTTP request to "http://localhost:1026/version"
-    And   I perform the query request
-    Then  I receive a HTTP "200" response code
+  # Request 1, Scorpio and Stellio do not implement /version for the moment
+#  Scenario: 01 - Checking the Service Health
+#    When I prepare a GET HTTP request to "http://localhost:1026/version"
+#    And   I perform the query request
+#    Then  I receive a HTTP "200" response code
 
   # Request 2: Create data entities
   Scenario: 02 - Create a new data entity
@@ -65,17 +65,17 @@ Feature: test tutorial 102 NGSI-LD: Working with Context feature (Scorpio)
   # Requests 6 to 12: Several different queries with data
   Scenario Outline: 06-12 - Several queries
     When  I prepare a GET HTTP request to "http://localhost:1026/ngsi-ld/v1/entities"
-    And   I set header Accept to application/ld+json
+    And   I set header Accept to <accept>
     And   I set header Link to <Link>
     And   I set the body request as described in <body_request>
     And   I perform the query request
     Then  I receive a HTTP "200" status code from Broker with the body "<body_response>" and exclusions "<excludes_file>"
     Examples:
-       | body_request         | body_response           | excludes_file           | Link                                                                                                                          |
-       | 102.ld.06.query.json | 102.ld.06.response.json | response102-04.excludes | <http://context/json-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"                  |
-       | 102.ld.07.query.json | 102.ld.07.response.json | response102-07.excludes | <http://context/json-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"                  |
-       | 102.ld.08.query.json | 102.ld.08.response.json | response102-07.excludes | <http://context/alternate-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"             |
-       | 102.ld.09.query.json | 102.ld.09.response.json | response102-07.excludes | <http://context/ngsi-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"                  |
-       | 102.ld.10.query.json | 102.ld.10.response.json | response102-04.excludes | <http://context/json-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"                  |
-       | 102.ld.11.query.json | 102.ld.11.response.json | response102-04.excludes | <http://context/json-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"                  |
-       | 102.ld.12.query.json | 102.ld.12.response.json | response102-07.excludes | <https://fiware.github.io/data-models/context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json" |
+       | body_request         | accept              | body_response           | excludes_file           | Link                                                                                                                          |
+       | 102.ld.06.query.json | application/ld+json | 102.ld.06.response.json | response102-04.excludes | <http://context/ngsi-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"                  |
+       | 102.ld.07.query.json | application/ld+json | 102.ld.07.response.json | response102-07.excludes | <http://context/json-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"                  |
+       | 102.ld.08.query.json | application/ld+json | 102.ld.08.response.json | response102-07.excludes | <http://context/alternate-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"             |
+       | 102.ld.09.query.json | application/ld+json | 102.ld.09.response.json | response102-07.excludes | <http://context/ngsi-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"                  |
+       | 102.ld.10.query.json | application/ld+json | 102.ld.10.response.json | response102-04.excludes | <http://context/json-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"                  |
+       | 102.ld.11.query.json | application/ld+json | 102.ld.11.response.json | response102-04.excludes | <http://context/json-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"                  |
+       | 102.ld.12.query.json | application/json    | 102.ld.12.response.json | response102-07.excludes | <http://context/json-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json" |

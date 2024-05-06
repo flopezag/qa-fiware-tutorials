@@ -1,6 +1,9 @@
 [
     {
-        "@context": "http://context/json-context.jsonld",
+        "@context": [
+            "http://context/json-context.jsonld",
+            "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.6.jsonld"
+            ],
         "id": "urn:ngsi-ld:Building:barn002",
         "type": "Building",
         "address": {

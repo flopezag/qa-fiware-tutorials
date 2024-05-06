@@ -11,8 +11,10 @@ __logger__ = getLogger(__name__)
 def step_impl(context):
     context.data_home = join(join(join(CODE_HOME, "features"), "data"), "102.ld.working_with_context")
 
+
 @step(u'I have the header "{header}" with value "{value}"')
 def compare_header_value(context, header, value):
     h = context.responseHeaders
     if header in h:
-        assert(h[header] == value)
+        assert h[header] == value, \
+            f'The value of "{header}" does not match the value of "{value}", received "{h[header]}"'
