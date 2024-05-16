@@ -52,7 +52,7 @@ Feature: test tutorial 102 NGSI-LD: Working with Context feature (Stellio)
     When  I prepare a GET HTTP request to "http://localhost:1026/ngsi-ld/v1/entities?type=https://uri.fiware.org/ns/dataModels%23Building"
     And   I set header Accept to application/ld+json
     And   I perform the query request
-    Then  I receive a HTTP "200" status code from Broker with the body "102.ld.04.response.json" and exclusions "response102-04.excludes"
+    Then  I receive a HTTP "200" status code from Stellio with the body "102.ld.04.response.json" and exclusions "response102-04.excludes"
 
   # Request 5:
   Scenario: 05 - Obtaining Entity data by ID
@@ -60,7 +60,7 @@ Feature: test tutorial 102 NGSI-LD: Working with Context feature (Stellio)
     And   I set header Accept to application/ld+json
     And   I set header Link to <http://context/ngsi-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"
     And   I perform the query request
-    Then  I receive a HTTP "200" status code from Broker with the body "102.ld.05.response.json" and exclusions "response102-05.excludes"
+    Then  I receive a HTTP "200" status code from Stellio with the body "102.ld.05.response.json" and exclusions "response102-05.excludes"
 
   # Requests 6 to 12: Several different queries with data
   Scenario Outline: 06-12 - Several queries
@@ -69,7 +69,7 @@ Feature: test tutorial 102 NGSI-LD: Working with Context feature (Stellio)
     And   I set header Link to <Link>
     And   I set the body request as described in <body_request>
     And   I perform the query request
-    Then  I receive a HTTP "200" status code from Broker with the body "<body_response>" and exclusions "<excludes_file>"
+    Then  I receive a HTTP "200" status code from Stellio with the body "<body_response>" and exclusions "<excludes_file>"
     Examples:
        | body_request         | accept              | body_response           | excludes_file           | Link                                                                                                                          |
        | 102.ld.06.query.json | application/ld+json | 102.ld.06.response.json | response102-04.excludes | <http://context/ngsi-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"                  |

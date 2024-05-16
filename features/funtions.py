@@ -1,17 +1,16 @@
-import subprocess
-
+from subprocess import Popen, PIPE
 from deepdiff import DeepDiff
+from deepdiff.helper import CannotCompare
 from os.path import join
 from requests.adapters import HTTPAdapter
-from requests.packages.urllib3.util.retry import Retry
+from urllib3.util import Retry
 from requests import Session, exceptions
 from datetime import datetime, timezone, timedelta
 from re import search
 from time import sleep
 from sys import stdout
-from os import environ, getcwd
+from os import environ
 from config import settings
-import json
 
 DEFAULT_TIMEOUT = 5  # seconds
 DEFAULT_RETRIES = 3
@@ -24,9 +23,93 @@ def read_data_from_file(context, file):
     return data
 
 
-def dict_diff_with_exclusions(context, d1, d2, exclude_file):
-    ep = read_data_from_file(context, exclude_file).splitlines()
-    return DeepDiff(d1, d2, exclude_paths=ep)
+def compare_func(x, y, level=None):
+    try:
+        return x['id'] == y['id']
+    except Exception:
+        raise CannotCompare() from None
+
+
+def change_context(data, context):
+    # Change the context only if it is the core context. The list of available core context is published in the
+    # following link: https://uri.etsi.org/ngsi-ld/v1/
+    available_core_context = {
+        'https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context.jsonld': context,
+
+        'https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.3.jsonld': context,
+
+        'https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.4.jsonld': context,
+
+        'https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.5.jsonld': context,
+
+        'https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.6.jsonld': context,
+
+        'https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.7.jsonld': context,
+
+        'https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.8.jsonld': context,
+    }
+
+    if isinstance(data, list):
+        for idx in range(len(data)):
+            if '@context' in data[idx]:
+                if isinstance(data[idx]['@context'], str):
+                    try:
+                        data[idx]['@context'] = available_core_context[data[idx]['@context']]
+                    except KeyError:
+                        pass
+                elif isinstance(data[idx]['@context'], list):
+                    for idx1 in range(len(data[idx]['@context'])):
+                        try:
+                            data[idx]['@context'][idx1] = available_core_context[data[idx]['@context'][idx1]]
+                        except KeyError:
+                            pass
+    elif isinstance(data, dict):
+        if '@context' in data:
+            if isinstance(data['@context'], str):
+                try:
+                    data['@context'] = available_core_context[data['@context']]
+                except KeyError:
+                    pass
+            elif isinstance(data['@context'], list):
+                for idx in range(len(data['@context'])):
+                    try:
+                        data['@context'][idx] = available_core_context[data['@context'][idx]]
+                    except KeyError:
+                        pass
+
+
+def exclude_obj_callback(obj, path):
+    return True if "context" in path or isinstance(obj, int) else False
+
+# def dict_diff_with_exclusions(context, d1, d2, exclude_file):
+#     ep = read_data_from_file(context, exclude_file).splitlines()
+#     return DeepDiff(d1, d2, exclude_paths=ep, iterable_compare_func=compare_func)
+
+
+def dict_diff_with_exclusions(data_home, d1, d2, exclude_file):
+    ep = read_data_from_file(data_home, exclude_file).splitlines()
+    diff = DeepDiff(d1, d2, exclude_paths=ep, iterable_compare_func=compare_func)
+
+    if 'type_changes' in diff.keys():
+        data = diff['type_changes']
+
+        for d in data.copy():
+            if 'context' in d:
+                aux = data[d]
+
+                if aux['old_type'] == str and aux['new_type'] == list and len(aux['new_value']) == 1:
+                    # We need to check if the item of the list is the same as str
+                    # @context can be a str or a list
+                    if aux['old_value'] == aux['new_value'][0]:
+                        del data[d]
+
+        if len(diff['type_changes']) == 0:
+            diff = DeepDiff(d1, d2,
+                            exclude_paths=ep,
+                            iterable_compare_func=compare_func,
+                            exclude_obj_callback=exclude_obj_callback)
+
+    return diff
 
 
 class TimeoutHTTPAdapter(HTTPAdapter):
@@ -127,7 +210,7 @@ def check_java_version():
     command = "java -version"
 
     my_env = environ.copy()
-    temp = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, env=my_env)
+    temp = Popen(command, shell=True, stdout=PIPE, stderr=PIPE, env=my_env)
 
     if temp.returncode == 0 or temp.returncode is None:  # is 0 or None if success
         (output, stderr) = temp.communicate()
@@ -142,7 +225,7 @@ def set_xml_data(tag):
     if settings.domainId == '':
         settings.domainId = tag[0].attributes['href'].value
     elif settings.papPoliciesId == '':
-        # The 2nd time that I receive resources is to obtain the PAP Policies Id
+        # The 2nd time that I receive resources is to obtain the PAP Policies id
         settings.papPoliciesId = tag[0].attributes['href'].value
     else:
         # The 3rd time that I receive resources is to obtain the different versions of a policy set

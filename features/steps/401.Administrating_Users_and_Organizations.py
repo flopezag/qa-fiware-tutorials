@@ -2,14 +2,14 @@ from behave import given, when, then, step
 from config import settings
 from os.path import join
 from os import environ
-import subprocess
+from subprocess import Popen, PIPE
 from hamcrest import assert_that, is_
 from features.funtions import read_data_from_file, dict_diff_with_exclusions
 from json import loads, dumps
 from json.decoder import JSONDecodeError
 from requests import get, post, patch, delete, put, RequestException
 from xml.dom import minidom
-from features.funtions import set_xml_data
+from features.funtions import set_xml_data, change_context
 
 global adminId
 global userId
@@ -26,7 +26,7 @@ def step_impl_tutorial_203(context):
 @step("I request the information from user table")
 def step_impl(context):
     my_env = environ.copy()
-    temp = subprocess.Popen(context.command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, env=my_env)
+    temp = Popen(context.command, shell=True, stdout=PIPE, stderr=PIPE, env=my_env)
 
     if temp.returncode == 0 or temp.returncode is None:  # is 0 or None if success
         (output, stderr) = temp.communicate()
@@ -178,13 +178,15 @@ def receive_post_iot_dummy_response_with_data(context, code, server, file, excl_
 
     body = loads(read_data_from_file(context, file))
 
+    # We need to change the core context based on the new versions and the brokers
+    change_context(data=body, context=context.core_context)
+
     diff = dict_diff_with_exclusions(context, body, context.response, excl_file)
 
     assert (context.statusCode == code), \
-        f'Wrong Status Code, received \"{context.statusCode}\", but it was expected \"{code}\"'
+        f'\nWrong Status Code, received \"{context.statusCode}\", but it was expected \"{code}\"'
 
-    assert_that(diff.to_dict(), is_(dict()),
-                f'Response from {server} has not got the expected HTTP response body:\n  {diff}')
+    assert len(diff) == 0, f'\nResponse from {server} has not got the expected HTTP response body:\n{diff.pretty()}'
 
 
 @step("With the body request containing the previous token")
@@ -504,6 +506,8 @@ def step_impl(context, value):
 @step('I receive a HTTP "{code}" status code from Keyrock and extract the id from "{user}" user')
 def step_impl(context, code, user):
     """
+    :param user: the username of the Keyrock user
+    :param code: HTTP Response Status Code
     :type context: behave.runner.Context
     """
     global userId
@@ -518,6 +522,7 @@ def step_impl(context, code, user):
 @step('I set the organization_roles as "{role}" url with organizationId and userId')
 def step_impl(context, role):
     """
+    :param role: the corresponding role of the organization
     :type context: behave.runner.Context
     """
     global userId
@@ -529,6 +534,7 @@ def step_impl(context, role):
 @when("I send a {op} HTTP request to that url")
 def step_impl(context, op):
     """
+    :param op: HTTP Operation {patch, delete, get, put, post}
     :type context: behave.runner.Context
     """
     op = op.lower()
@@ -598,6 +604,8 @@ def step_impl(context, op):
 @then('I receive a HTTP "{code}" status code with the same organizationId and userId and role equal to "{role}"')
 def step_impl(context, code, role):
     """
+    :param role: the corresponding role of the organization
+    :param code: the HTTP Response Status Code
     :type context: behave.runner.Context
     """
     assert (context.statusCode == code), \
@@ -610,6 +618,7 @@ def step_impl(context, code, role):
 @step('I receive a HTTP "{code}" status code from Keyrock and extract the id from the first organization')
 def step_impl(context, code):
     """
+    :param code: the HTTP Response Status Code
     :type context: behave.runner.Context
     """
     assert (context.statusCode == code), \

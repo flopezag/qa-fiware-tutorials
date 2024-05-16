@@ -145,13 +145,13 @@ def before_feature(context, feature):
 
     if 'shell-commands' in parameters:
         # Get the corresponding broker
-        context.core_context = get_broker_name(parameters['shell-commands'])
+        context.broker, context.core_context = get_broker_name_and_context(parameters['shell-commands'])
 
         # Execute the commands
         exec_commands(parameters, 'shell-commands')
 
 
-def get_broker_name(parameter) -> str:
+def get_broker_name_and_context(parameter) -> [str, str]:
     brokers = ['orion', 'orion-ld', 'scorpio', 'stellio']
     core_context = {
         'orion': 'https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.6.jsonld',
@@ -169,7 +169,7 @@ def get_broker_name(parameter) -> str:
         if idx != -1:
             break
 
-    return core_context[broker]
+    return broker, core_context[broker]
 
 
 def before_scenario(context, scenario):
@@ -212,7 +212,7 @@ def after_feature(context, feature):
     current_status = [x.id for x in docker.network.list()]
     new_docker_network_id = [x for x in current_status if x not in context.dockerNetworkList]
 
-    if new_docker_network_id != []:
+    if new_docker_network_id:
         stdout.write(f'\nDeleting Docker Network...\n')
         docker.network.remove(new_docker_network_id)
 

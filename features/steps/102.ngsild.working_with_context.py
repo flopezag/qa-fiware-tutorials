@@ -17,4 +17,4 @@ def compare_header_value(context, header, value):
     h = context.responseHeaders
     if header in h:
         assert h[header] == value, \
-            f'The value of "{header}" does not match the value of "{value}", received "{h[header]}"'
+            f'\nThe value of "{header}" does not match the value of "{value}", received "{h[header]}"'

@@ -11,3 +11,5 @@ allure-behave==2.13.5
 pytz==2024.1
 xmldiff==2.6.3
 jq==1.7.0
+requests==2.31.0
+urllib3==2.2.1
