@@ -3,7 +3,7 @@ Feature: Test tutorial 203.Why are multiple IoT Agents Needed?
     url: https://fiware-tutorials.readthedocs.io/en/latest/iot-agent-json.html
     git-clone: https://github.com/FIWARE/tutorials.IoT-Agent-JSON.git
     git-directory: /tmp/tutorials.IoT-Agent-JSON
-    shell-commands: docker rm fiware-iot-agent ; ./services create; ./services start
+    shell-commands: git checkout NGSI-v2 ; docker rm fiware-iot-agent ; ./services create; ./services start
     clean-shell-commands: ./services stop ; docker rm fiware-iot-agent
 
     Background:

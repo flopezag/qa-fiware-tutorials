@@ -4,7 +4,7 @@ Feature: test tutorial 101.Getting Started
   url: https://fiware-tutorials.readthedocs.io/en/latest/getting-started.html
   git-clone: https://github.com/FIWARE/tutorials.Getting-Started.git
   git-directory: /tmp/tutorials.Getting-Started
-  shell-commands: export $(cat .env | grep "#" -v); docker compose up -d
+  shell-commands: git checkout NGSI-v2 ; export $(cat .env | grep "#" -v); docker compose up -d
   clean-shell-commands: docker compose down
 
   Background:

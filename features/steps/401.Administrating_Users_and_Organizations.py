@@ -130,7 +130,7 @@ def step_impl(context):
         diff = dict_diff_with_exclusions(context, body, context.response, valid_response['excluded'])
 
         assert_that(diff.to_dict(), is_(dict()),
-                    f'Response from Keyrock has not got the expected HTTP response body:\n  {diff}')
+                    f'Response from Keyrock has not got the expected HTTP response body:\n  {diff.pretty()}')
 
 
 @when('I send a GET HTTP request to "{url}" with equal X-Auth-Token and X-Subject-Token')

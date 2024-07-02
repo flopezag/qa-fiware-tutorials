@@ -3,7 +3,7 @@ Feature: Test tutorial 407.Securing_Access_OpenID_Connect
   url: https://fiware-tutorials.readthedocs.io/en/latest/open-id-connect.html
   git-clone: https://github.com/FIWARE/tutorials.Securing-Access-OpenID-Connect.git
   git-directory: /tmp/tutorials.Securing-Access-OpenID-Connect
-  shell-commands: ./services create; ./services start
+  shell-commands: git checkout NGSI-v2 ; ./services create ; ./services start
   clean-shell-commands: ./services stop
 
   Background:

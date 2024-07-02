@@ -3,7 +3,7 @@ Feature: Test tutorial 401.Administrating Users and Organizations
     url: https://fiware-tutorials.readthedocs.io/en/latest/identity-management.html
     git-clone: https://github.com/FIWARE/tutorials.Identity-Management.git
     git-directory: /tmp/tutorials.Identity-Management
-    shell-commands: ./services create; ./services start
+    shell-commands: git checkout NGSI-v2 ; ./services create ; ./services start
     clean-shell-commands: ./services stop
 
     Background:

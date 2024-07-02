@@ -11,7 +11,7 @@ Feature: test tutorial 103.CRUD-Operations
   url: https://fiware-tutorials.readthedocs.io/en/latest/crud-operations.html
   git-clone: https://github.com/FIWARE/tutorials.CRUD-Operations.git
   git-directory: /tmp/tutorials.CRUD-Operations
-  shell-commands: ./services start
+  shell-commands: git checkout NGSI-v2 ; ./services start
   clean-shell-commands: ./services stop
 
 

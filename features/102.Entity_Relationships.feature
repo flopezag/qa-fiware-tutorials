@@ -11,7 +11,7 @@ Feature: test tutorial 102.Entity_Relationships
   url: https://fiware-tutorials.readthedocs.io/en/latest/entity-relationships.html
   git-clone: https://github.com/FIWARE/tutorials.Entity-Relationships.git
   git-directory: /tmp/tutorials.Entity-Relationships
-  shell-commands: ./services start
+  shell-commands: git checkout NGSI-v2 ; ./services start
   clean-shell-commands: ./services stop
 
   Background:

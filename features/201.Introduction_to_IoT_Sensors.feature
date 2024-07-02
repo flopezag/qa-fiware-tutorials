@@ -5,7 +5,7 @@ Feature: test tutorial 201.Introduction to IoT Sensors
   environment: https://raw.githubusercontent.com/FIWARE/tutorials.IoT-Sensors/NGSI-v2/.env
   git-clone: https://github.com/FIWARE/tutorials.IoT-Sensors.git
   git-directory: /tmp/tutorials.IoT-Sensors
-  shell-commands: ./services create; ./services start
+  shell-commands: git checkout NGSI-v2 ; ./services create; ./services start
   clean-shell-commands: ./services stop
 
 

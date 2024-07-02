@@ -4,7 +4,7 @@ Feature: test tutorial 305.Big Data (Flink)
   url: https://fiware-tutorials.readthedocs.io/en/latest/big-data-flink.html
   git-clone: https://github.com/FIWARE/tutorials.Big-Data-Flink.git
   git-directory: /tmp/tutorials.Big-Data-Flink
-  shell-commands: ./services create; ./services start
+  shell-commands: git checkout NGSI-v2 ; ./services create ; ./services start
   clean-shell-commands: ./services stop
 
 

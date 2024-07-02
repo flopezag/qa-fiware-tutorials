@@ -56,28 +56,28 @@ Feature: test tutorial 304.Persisting and Querying timedata series (Scorpio)
     And   I set header Content-Type to text/plain
     And   I set simple sensor values as described in "<sensor_value>"
     And   I perform the request
-    Then  I receive a HTTP "200" response code
+    Then  I receive a HTTP "<status_code>" response code
     And   I wait "1" seconds
     Examples:
-        | sensor_value                                                | key_value  | sensor     |
-        | f\|0.95                                                     | 854782081  | filling001 |
-        | d\|AT_REST\|bpm\|61\|gps\|13.357,52.515\|s\|0               | 110990     | pig001     |
-        | d\|AT_REST\|bpm\|50\|gps\|13.411,52.468\|s\|0               | 98699      | cow001     |
-        | f\|0.90                                                     | 854782081  | filling001 |
-        | d\|AT_REST\|bpm\|60\|gps\|13.359,52.516\|s\|0               | 110990     | pig001     |
-        | d\|GRAZING\|bpm\|53\|gps\|13.41,52.467\|s\|0                | 98699      | cow001     |
-        | f\|0.85                                                     | 854782081  | filling001 |
-        | d\|WALLOWING\|bpm\|66\|gps\|13.359,52.514\|s\|5             | 110990     | pig001     |
-        | d\|GRAZING\|bpm\|53\|gps\|13.41,52.467\|s\|0                | 98699      | cow001     |
-        | f\|0.75                                                     | 854782081  | filling001 |
-        | d\|AT_REST\|bpm\|66\|gps\|13.3986,52.5547\|s\|5             | 110990     | pig001     |
-        | d\|AT_REST\|bpm\|53\|gps\|13.3987,52.5547\|s\|0             | 98699      | cow001     |
-        | f\|0.65                                                     | 854782081  | filling001 |
-        | f\|0.55                                                     | 854782081  | filling001 |
-        | f\|0.70                                                     | 854782081  | filling001 |
-        | f\|0.90                                                     | 854782081  | filling001 |
-        | f\|0.98                                                     | 854782081  | filling001 |
-        | f\|0.91                                                     | 854782081  | filling001 |
+        | status_code | sensor_value                                                | key_value  | sensor     |
+        |         201 | f\|0.95                                                     | 854782081  | filling001 |
+        |         201 | d\|AT_REST\|bpm\|61\|gps\|13.357,52.515\|s\|0               | 110990     | pig001     |
+        |         201 | d\|AT_REST\|bpm\|50\|gps\|13.411,52.468\|s\|0               | 98699      | cow001     |
+        |         200 | f\|0.90                                                     | 854782081  | filling001 |
+        |         200 | d\|AT_REST\|bpm\|60\|gps\|13.359,52.516\|s\|0               | 110990     | pig001     |
+        |         200 | d\|GRAZING\|bpm\|53\|gps\|13.41,52.467\|s\|0                | 98699      | cow001     |
+        |         200 | f\|0.85                                                     | 854782081  | filling001 |
+        |         200 | d\|WALLOWING\|bpm\|66\|gps\|13.359,52.514\|s\|5             | 110990     | pig001     |
+        |         200 | d\|GRAZING\|bpm\|53\|gps\|13.41,52.467\|s\|0                | 98699      | cow001     |
+        |         200 | f\|0.75                                                     | 854782081  | filling001 |
+        |         200 | d\|AT_REST\|bpm\|66\|gps\|13.3986,52.5547\|s\|5             | 110990     | pig001     |
+        |         200 | d\|AT_REST\|bpm\|53\|gps\|13.3987,52.5547\|s\|0             | 98699      | cow001     |
+        |         200 | f\|0.65                                                     | 854782081  | filling001 |
+        |         200 | f\|0.55                                                     | 854782081  | filling001 |
+        |         200 | f\|0.70                                                     | 854782081  | filling001 |
+        |         200 | f\|0.90                                                     | 854782081  | filling001 |
+        |         200 | f\|0.98                                                     | 854782081  | filling001 |
+        |         200 | f\|0.91                                                     | 854782081  | filling001 |
 
     # Request 4..11 - Fails. it gets HTTP 404 - Not Found
     Scenario Outline: Using Quantum Leap API list the first 3 sampled values
@@ -89,12 +89,12 @@ Feature: test tutorial 304.Persisting and Querying timedata series (Scorpio)
     Then  I receive a HTTP "200" response code
     Examples:
       | url                                                                                            |
-      | http://localhost:8668/v2/entities/urn:ngsi-ld:Device:filling001/attrs/filling?limit=3          |
-      | http://localhost:8668/v2/entities/urn:ngsi-ld:Device:filling001/attrs/filling?offset=3&limit=3 |
-      | http://localhost:8668/v2/entities/urn:ngsi-ld:Device:filling001/attrs/filling?lastN=3          |
-      | http://localhost:8668/v2/entities/urn:ngsi-ld:Device:filling001/attrs/filling?aggrMethod=count&aggrPeriod=minute&lastN=3 |
-      | http://localhost:8668/v2/entities/urn:ngsi-ld:Device:filling001/attrs/filling?aggrMethod=min&aggrPeriod=minute&lastN=3   |
-      | http://localhost:8668/v2/entities/urn:ngsi-ld:Device:filling001/attrs/filling?aggrMethod=max&fromDate=2018-06-27T09:00:00&toDate=2050-06-30T23:59:59 |
+      | http://localhost:8668/v2/entities/urn:ngsi-ld:FillingLevelSensor:filling001/attrs/filling?limit=3          |
+      | http://localhost:8668/v2/entities/urn:ngsi-ld:FillingLevelSensor:filling001/attrs/filling?offset=3&limit=3 |
+      | http://localhost:8668/v2/entities/urn:ngsi-ld:FillingLevelSensor:filling001/attrs/filling?lastN=3          |
+      | http://localhost:8668/v2/entities/urn:ngsi-ld:FillingLevelSensor:filling001/attrs/filling?aggrMethod=count&aggrPeriod=minute&lastN=3 |
+      | http://localhost:8668/v2/entities/urn:ngsi-ld:FillingLevelSensor:filling001/attrs/filling?aggrMethod=min&aggrPeriod=minute&lastN=3   |
+      | http://localhost:8668/v2/entities/urn:ngsi-ld:FillingLevelSensor:filling001/attrs/filling?aggrMethod=max&fromDate=2018-06-27T09:00:00&toDate=2050-06-30T23:59:59 |
       | http://localhost:8668/v2/types/Device/attrs/heartRate?lastN=4&georel=near;maxDistance:5000&geometry=point&coords=52.518,13.357                       |
       | http://localhost:8668/v2/types/Device/attrs/heartRate?lastN=4&georel=coveredBy&geometry=polygon&coords=52.5537,13.3996;52.5557,13.3996;52.5557,13.3976;52.5537,13.3976;52.5537,13.3996 |
 

@@ -56,28 +56,28 @@ Feature: test tutorial 304.Persisting and Querying timedata series (Stellio)
     And   I set header Content-Type to text/plain
     And   I set simple sensor values as described in "<sensor_value>"
     And   I perform the request
-    Then  I receive a HTTP "200" response code
+    Then  I receive a HTTP "<status_code>" response code
     And   I wait "1" seconds
     Examples:
-        | sensor_value                                                | key_value  | sensor     |
-        | f\|0.95                                                     | 854782081  | filling001 |
-        | d\|AT_REST\|bpm\|61\|gps\|13.357,52.515\|s\|0               | 110990     | pig001     |
-        | d\|AT_REST\|bpm\|50\|gps\|13.411,52.468\|s\|0               | 98699      | cow001     |
-        | f\|0.90                                                     | 854782081  | filling001 |
-        | d\|AT_REST\|bpm\|60\|gps\|13.359,52.516\|s\|0               | 110990     | pig001     |
-        | d\|GRAZING\|bpm\|53\|gps\|13.41,52.467\|s\|0                | 98699      | cow001     |
-        | f\|0.85                                                     | 854782081  | filling001 |
-        | d\|WALLOWING\|bpm\|66\|gps\|13.359,52.514\|s\|5             | 110990     | pig001     |
-        | d\|GRAZING\|bpm\|53\|gps\|13.41,52.467\|s\|0                | 98699      | cow001     |
-        | f\|0.75                                                     | 854782081  | filling001 |
-        | d\|AT_REST\|bpm\|66\|gps\|13.3986,52.5547\|s\|5             | 110990     | pig001     |
-        | d\|AT_REST\|bpm\|53\|gps\|13.3987,52.5547\|s\|0             | 98699      | cow001     |
-        | f\|0.65                                                     | 854782081  | filling001 |
-        | f\|0.55                                                     | 854782081  | filling001 |
-        | f\|0.70                                                     | 854782081  | filling001 |
-        | f\|0.90                                                     | 854782081  | filling001 |
-        | f\|0.98                                                     | 854782081  | filling001 |
-        | f\|0.91                                                     | 854782081  | filling001 |
+        | status_code | sensor_value                                                | key_value  | sensor     |
+        |         201 | f\|0.95                                                     | 854782081  | filling001 |
+        |         201 | d\|AT_REST\|bpm\|61\|gps\|13.357,52.515\|s\|0               | 110990     | pig001     |
+        |         201 | d\|AT_REST\|bpm\|50\|gps\|13.411,52.468\|s\|0               | 98699      | cow001     |
+        |         200 | f\|0.90                                                     | 854782081  | filling001 |
+        |         200 | d\|AT_REST\|bpm\|60\|gps\|13.359,52.516\|s\|0               | 110990     | pig001     |
+        |         200 | d\|GRAZING\|bpm\|53\|gps\|13.41,52.467\|s\|0                | 98699      | cow001     |
+        |         200 | f\|0.85                                                     | 854782081  | filling001 |
+        |         200 | d\|WALLOWING\|bpm\|66\|gps\|13.359,52.514\|s\|5             | 110990     | pig001     |
+        |         200 | d\|GRAZING\|bpm\|53\|gps\|13.41,52.467\|s\|0                | 98699      | cow001     |
+        |         200 | f\|0.75                                                     | 854782081  | filling001 |
+        |         200 | d\|AT_REST\|bpm\|66\|gps\|13.3986,52.5547\|s\|5             | 110990     | pig001     |
+        |         200 | d\|AT_REST\|bpm\|53\|gps\|13.3987,52.5547\|s\|0             | 98699      | cow001     |
+        |         200 | f\|0.65                                                     | 854782081  | filling001 |
+        |         200 | f\|0.55                                                     | 854782081  | filling001 |
+        |         200 | f\|0.70                                                     | 854782081  | filling001 |
+        |         200 | f\|0.90                                                     | 854782081  | filling001 |
+        |         200 | f\|0.98                                                     | 854782081  | filling001 |
+        |         200 | f\|0.91                                                     | 854782081  | filling001 |
 
     # Request 4..11 - Fails. it gets HTTP 404 - Not Found
     Scenario Outline: Using Quantum Leap API list the first 3 sampled values

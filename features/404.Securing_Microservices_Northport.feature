@@ -4,7 +4,7 @@ Feature: Test tutorial 404.Securing microservices with a PEP Proxy (IoT Agent - 
   url: https://fiware-tutorials.readthedocs.io/en/latest/pep-proxy.html
   git-clone: https://github.com/FIWARE/tutorials.PEP-Proxy.git
   git-directory: /tmp/tutorials.PEP-Proxy
-  shell-commands: ./services create; ./services northport
+  shell-commands: git checkout NGSI-v2 ; ./services create ; ./services northport
   clean-shell-commands: ./services stop
 
   Background:

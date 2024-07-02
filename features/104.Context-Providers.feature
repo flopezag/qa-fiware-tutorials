@@ -18,7 +18,7 @@ Feature: test tutorial 104.Context Data and Context Providers
     git-directory: /tmp/tutorials.Context-Providers
     docker-compose-changes: 104-update-docker-compose.sh
 
-    shell-commands: ./services create; ./services start
+    shell-commands: git checkout NGSI-v2 ; ./services create; ./services start
     clean-shell-commands: ./services stop
 
 

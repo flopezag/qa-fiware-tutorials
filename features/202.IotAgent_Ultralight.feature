@@ -4,7 +4,7 @@ Feature: test tutorial 202.Introduction to IoT Agent Ultralight
     url: https://fiware-tutorials.readthedocs.io/en/latest/iot-agent.html
     git-clone: https://github.com/FIWARE/tutorials.IoT-Agent.git
     git-directory: /tmp/tutorials.IoT-Agent
-    shell-commands: ./services create; ./services start
+    shell-commands: git checkout NGSI-v2 ; ./services create; ./services start
     clean-shell-commands: ./services stop
     NOTE_1: Scenarios 16 and 17 -- the response is not the same in tutorial as IoT agent response
     NOTE_2: Scenarios 15 -- Conflict with previous 02 scenario. Posting the same thing.

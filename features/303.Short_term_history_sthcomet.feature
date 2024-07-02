@@ -4,7 +4,7 @@ Feature: test tutorial 303 PROCESSING & HISTORY MANAGEMENT » SHORT TERM HISTORY
   url: https://fiware-tutorials.readthedocs.io/en/latest/short-term-history.html
   git-clone: https://github.com/FIWARE/tutorials.Short-Term-History.git
   git-directory: /tmp/tutorials.Short-Term-History
-  shell-commands: ./services create; export $(cat .env | grep '#' -v) && ./services sth-comet
+  shell-commands: git checkout NGSI-v2 ; ./services create; export $(cat .env | grep '#' -v) && ./services sth-comet
   clean-shell-commands: ./services stop
 
 ## ./services sth-comet seems to do nothing... We need to previously export

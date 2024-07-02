@@ -4,7 +4,7 @@ Feature: test tutorial 304.Time-Series Data with QuantumLeap
   url: https://fiware-tutorials.readthedocs.io/en/latest/time-series-data.html
   git-clone: https://github.com/FIWARE/tutorials.Time-Series-Data.git
   git-directory: tutorials.Time-Series-Data
-  shell-commands: ./services create; ./services start
+  shell-commands: git checkout NGSI-v2 ; ./services create ; ./services start
   clean-shell-commands: ./services stop
 
 

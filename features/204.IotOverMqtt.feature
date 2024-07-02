@@ -3,7 +3,7 @@ Feature: Test tutorial 204.IoT Agent over MQTT
     url: https://fiware-tutorials.readthedocs.io/en/latest/custom-iot-agent.html
     git-clone: https://github.com/FIWARE/tutorials.IoT-over-MQTT.git
     git-directory: /tmp/tutorials.IoT-over-MQTT
-    shell-commands: ./services create; ./services start
+    shell-commands: git checkout NGSI-v2 ; ./services create; ./services start
     clean-shell-commands: ./services stop
 
     Background:

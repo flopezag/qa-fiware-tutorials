@@ -92,12 +92,12 @@ Feature: test tutorial 304.Persisting and Querying timedata series (Orion-LD)
     # Need to check the content of the response
     Examples:
       | url                                                                                            |
-      | http://localhost:8668/v2/entities/urn:ngsi-ld:Device:filling001/attrs/filling?limit=3          |
-      | http://localhost:8668/v2/entities/urn:ngsi-ld:Device:filling001/attrs/filling?offset=3&limit=3 |
-      | http://localhost:8668/v2/entities/urn:ngsi-ld:Device:filling001/attrs/filling?lastN=3          |
-      | http://localhost:8668/v2/entities/urn:ngsi-ld:Device:filling001/attrs/filling?aggrMethod=count&aggrPeriod=minute&lastN=3 |
-      | http://localhost:8668/v2/entities/urn:ngsi-ld:Device:filling001/attrs/filling?aggrMethod=min&aggrPeriod=minute&lastN=3   |
-      | http://localhost:8668/v2/entities/urn:ngsi-ld:Device:filling001/attrs/filling?aggrMethod=max&fromDate=2018-06-27T09:00:00&toDate=2050-06-30T23:59:59 |
+      | http://localhost:8668/v2/entities/urn:ngsi-ld:FillingLevelSensor:filling001/attrs/filling?limit=3          |
+      | http://localhost:8668/v2/entities/urn:ngsi-ld:FillingLevelSensor:filling001/attrs/filling?offset=3&limit=3 |
+      | http://localhost:8668/v2/entities/urn:ngsi-ld:FillingLevelSensor:filling001/attrs/filling?lastN=3          |
+      | http://localhost:8668/v2/entities/urn:ngsi-ld:FillingLevelSensor:filling001/attrs/filling?aggrMethod=count&aggrPeriod=minute&lastN=3 |
+      | http://localhost:8668/v2/entities/urn:ngsi-ld:FillingLevelSensor:filling001/attrs/filling?aggrMethod=min&aggrPeriod=minute&lastN=3   |
+      | http://localhost:8668/v2/entities/urn:ngsi-ld:FillingLevelSensor:filling001/attrs/filling?aggrMethod=max&fromDate=2018-06-27T09:00:00&toDate=2050-06-30T23:59:59 |
       | http://localhost:8668/v2/types/Device/attrs/heartRate?lastN=4&georel=near;maxDistance:5000&geometry=point&coords=52.518,13.357                       |
       | http://localhost:8668/v2/types/Device/attrs/heartRate?lastN=4&georel=coveredBy&geometry=polygon&coords=52.5537,13.3996;52.5557,13.3996;52.5557,13.3976;52.5537,13.3976;52.5537,13.3996 |
 

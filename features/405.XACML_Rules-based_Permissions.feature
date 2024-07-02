@@ -3,7 +3,7 @@ Feature: Test tutorial 405.XACML Rules-based Permissions
   url: https://fiware-tutorials.readthedocs.io/en/latest/xacml-access-rules.html
   git-clone: https://github.com/FIWARE/tutorials.XACML-Access-Rules.git
   git-directory: /tmp/tutorials.XACML-Access-Rules
-  shell-commands: ./services create; ./services start
+  shell-commands: git checkout NGSI-v2 ; ./services create ; ./services start
   clean-shell-commands: ./services stop
 
   Background:

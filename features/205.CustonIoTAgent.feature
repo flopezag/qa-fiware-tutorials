@@ -3,7 +3,7 @@ Feature: Test tutorial 205.IoT Agent Custom (XML)
     url: https://fiware-tutorials.readthedocs.io/en/latest/custom-iot-agent.html
     git-clone: https://github.com/FIWARE/tutorials.Custom-IoT-Agent.git
     git-directory: /tmp/tutorials.Custom-IoT-Agent
-    shell-commands: docker rm fiware-iot-agent ; ./services create; ./services start
+    shell-commands: git checkout NGSI-v2 ; docker rm fiware-iot-agent ; ./services create; ./services start
     clean-shell-commands: ./services stop ;docker rm fiware-iot-agent
 
     Background:

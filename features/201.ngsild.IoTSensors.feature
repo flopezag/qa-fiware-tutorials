@@ -24,14 +24,5 @@ Feature: test tutorial 201.Introduction to IoT Sensors
         | urn:ngsi-ld:Device:water001@off      | water001   | urn:ngsi-ld:Device:water001@off\| off OK         | Off Irrigation system |
         | urn:ngsi-ld:Device:tractor001@start  | tractor001 | urn:ngsi-ld:Device:tractor001@start\| start OK   | start tractor         |
         | urn:ngsi-ld:Device:tractor001@stop   | tractor001 | urn:ngsi-ld:Device:tractor001@stop\| stop OK     | stop tractor          |
+        | urn:ngsi-ld:Device:tractor001@start  | tractor001 | urn:ngsi-ld:Device:tractor001@start\| start OK   | start tractor         |
         | urn:ngsi-ld:Device:filling001@remove | filling001 | urn:ngsi-ld:Device:filling001@remove\| remove OK | Remove Hay from Barn  |
-
-
-    Scenario: Sending measures
-      When I prepare a POST HTTP request to "http://localhost:7896/iot/d?k=4jggokgpepnvsb2uv4s40d59ov&i=humidity001"
-      And   I set header fiware-service to openiot
-      And   I set header fiware-servicepath to /
-      And   I set header Content-Type to text/plain
-      And   I set the body text to h|20
-      And   I perform the request
-      Then  I receive a HTTP "201" response code

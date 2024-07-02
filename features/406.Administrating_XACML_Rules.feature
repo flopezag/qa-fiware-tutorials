@@ -3,7 +3,7 @@ Feature: Test tutorial 406.Administrating_XACML_Rules
   url: https://fiware-tutorials.readthedocs.io/en/latest/administrating-xacml.html
   git-clone: https://github.com/FIWARE/tutorials.Administrating-XACML.git
   git-directory: /tmp/tutorials.Administrating-XACML
-  shell-commands: ./services create; ./services start
+  shell-commands: git checkout NGSI-v2 ; ./services create ; ./services start
   clean-shell-commands: ./services stop
 
   Background:

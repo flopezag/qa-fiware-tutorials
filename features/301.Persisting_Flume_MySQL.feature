@@ -4,7 +4,7 @@ Feature: test tutorial 301.Persisting Context Data using Apache Flume (MySQL)
   url: https://fiware-tutorials.readthedocs.io/en/latest/historic-context-flume.html
   git-clone: https://github.com/FIWARE/tutorials.Historic-Context-Flume.git
   git-directory: /tmp/tutorials.Historic-Context-Flume
-  shell-commands: ./services create; ./services mysql
+  shell-commands: git checkout NGSI-v2 ; ./services create; ./services mysql
   clean-shell-commands: ./services stop
 
 

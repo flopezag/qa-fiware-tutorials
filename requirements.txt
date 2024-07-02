@@ -1,15 +1,13 @@
 # python3.12 project
 behave==1.2.6
-python-on-whales==0.70.1
+python-on-whales==0.71.0
 PyHamcrest==2.1.0
-deepdiff==6.7.1
-pymongo==4.6.3
+deepdiff==7.0.1
+pymongo==4.8.0
 psycopg2-binary==2.9.9
-SQLAlchemy==2.0.29
-PyMySQL==1.1.0
+SQLAlchemy==2.0.31
+PyMySQL==1.1.q
 allure-behave==2.13.5
 pytz==2024.1
-xmldiff==2.6.3
+xmldiff==2.7.0
 jq==1.7.0
-requests==2.31.0
-urllib3==2.2.1

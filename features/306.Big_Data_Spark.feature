@@ -1,10 +1,10 @@
-Feature: test tutorial 305.Big Data (Spark)
+Feature: test tutorial 306.Big Data (Spark)
 
   This is the feature file of the FIWARE Step by Step tutorial for Big Data (Spark)
   url: https://fiware-tutorials.readthedocs.io/en/latest/big-data-spark.html
   git-clone: https://github.com/FIWARE/tutorials.Big-Data-Spark.git
   git-directory: /tmp/tutorials.Big-Data-Spark
-  shell-commands: git checkout NGSI-v2 ; ./services create; ./services start
+  shell-commands: git checkout NGSI-v2 ; git checkout NGSI-v2 ; ./services create ; ./services start
   clean-shell-commands: ./services stop
 
 

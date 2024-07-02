@@ -3,7 +3,7 @@ Feature: Test tutorial 403.Securing application access
     url: https://fiware-tutorials.readthedocs.io/en/latest/securing-access.html
     git-clone: https://github.com/FIWARE/tutorials.Securing-Access.git
     git-directory: /tmp/tutorials.Securing-Access
-    shell-commands: ./services create; ./services start
+    shell-commands: git checkout NGSI-v2 ; ./services create ; ./services start
     clean-shell-commands: ./services stop
 
     Background:

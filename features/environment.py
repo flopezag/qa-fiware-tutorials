@@ -156,7 +156,7 @@ def get_broker_name_and_context(parameter) -> [str, str]:
     core_context = {
         'orion': 'https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.6.jsonld',
         'orion-ld': 'https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.6.jsonld',
-        'stellio': '...',
+        'stellio': 'https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.8.jsonld',
         'scorpio': 'https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.7.jsonld'
     }
 

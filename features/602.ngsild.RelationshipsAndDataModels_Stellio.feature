@@ -73,11 +73,11 @@ Feature: test tutorial 602 Linked Data: Relationships and Data Models (Stellio)
 #   Request 5
 #
     Scenario Outline: [5] ADDING 1-1 RELATIONSHIPS
-    When I send POST HTTP request to orion-ld at "http://localhost:8080/ngsi-ld/v1/entities/urn:ngsi-ld:Shelf:unit001/attrs"
+    When I send POST HTTP request to Stellio at "http://localhost:8080/ngsi-ld/v1/entities/urn:ngsi-ld:Shelf:unit001/attrs"
 #    And  With the post header "fiware-servicepath": " /"
     And  With the post header "NA": "NA"
-    And  With the body request described in an orion-ld file "<file>"
-    Then I receive a HTTP response with the following orion-ld data
+    And  With the body request described in an Stellio file "<file>"
+    Then I receive a HTTP response with the following Stellio data
       | Status-Code | Location   | Connection | fiware-correlator |
       | 204         | <location> | Keep-Alive | Any               |
 
@@ -132,10 +132,10 @@ Feature: test tutorial 602 Linked Data: Relationships and Data Models (Stellio)
 #   Request 9
 #
     Scenario Outline: [9] ADDING 1-MANY RELATIONSHIP
-      When I send POST HTTP request to orion-ld at "http://localhost:8080/ngsi-ld/v1/entities/urn:ngsi-ld:Building:store001/attrs"
+      When I send POST HTTP request to Stellio at "http://localhost:8080/ngsi-ld/v1/entities/urn:ngsi-ld:Building:store001/attrs"
       And  With the post header "NA": "NA"
-      And  With the body request described in an orion-ld file "<file>"
-      Then I receive a HTTP response with the following orion-ld data
+      And  With the body request described in an Stellio file "<file>"
+      Then I receive a HTTP response with the following Stellio data
         | Status-Code | Location   | Connection | fiware-correlator |
         | 204         | <location> | Keep-Alive | Any               |
 
@@ -158,10 +158,10 @@ Feature: test tutorial 602 Linked Data: Relationships and Data Models (Stellio)
 #   Request 11
 #
     Scenario Outline: [11] CREATING COMPLEX RELATIONSHIPS
-      When I send POST HTTP request to orion-ld at "http://localhost:8080/ngsi-ld/v1/entities/"
+      When I send POST HTTP request to Stellio at "http://localhost:8080/ngsi-ld/v1/entities/"
       And  With the post header "NA": "NA"
-      And  With the body request described in an orion-ld file "<file>"
-      Then I receive a HTTP response with the following orion-ld data
+      And  With the body request described in an Stellio file "<file>"
+      Then I receive a HTTP response with the following Stellio data
         | Status-Code | Location   | Connection | fiware-correlator |
         | 201         | <location> | Keep-Alive | Any               |
 

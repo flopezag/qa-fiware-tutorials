@@ -48,7 +48,7 @@ Feature: test tutorial 203.IoT Agents using JSON (Scorpio)
     And   I set header Accept to application/ld+json
     And   I set header Link to <http://context/ngsi-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"
     And   I perform the query request
-    Then  I receive a HTTP "200" response code from Broker with the body "05.response.json" and exclusions "05.excludes"
+    Then  I receive a HTTP "200" response code from Scorpio with the body "05.response.json" and exclusions "05.excludes"
 
   Scenario: Req 6 - Create a new entity sending a measure
     When  I prepare a POST HTTP request to "http://localhost:7896/iot/json?k=4jggokgpepnvsb2uv4s40d59ov&i=motion003"
@@ -66,7 +66,7 @@ Feature: test tutorial 203.IoT Agents using JSON (Scorpio)
     And   I set header Link to <http://context/ngsi-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"
     And   I perform the query request
     And   I filter the result with jq '.[]|select(.id == "urn:ngsi-ld:Device:motion003")'
-    Then  I receive a HTTP "200" response code from Broker with the body "07.response.json" and exclusions "07.excludes"
+    Then  I receive a HTTP "200" response code from Scorpio with the body "07.response.json" and exclusions "07.excludes"
 
 
   Scenario: Req 8 - Provision an actuator - Water001
@@ -87,6 +87,7 @@ Feature: test tutorial 203.IoT Agents using JSON (Scorpio)
     And   I set the body request as described in 09.request.json
     And   I perform the request
     Then  I receive a HTTP "204" response code
+    And   I wait "1" seconds
 
   Scenario: Req 10 -- Read the result of the command by querying the CB
     When  I prepare a GET HTTP request to "http://localhost:1026/ngsi-ld/v1/entities/urn:ngsi-ld:Device:water001"
@@ -94,7 +95,7 @@ Feature: test tutorial 203.IoT Agents using JSON (Scorpio)
     And   I set header NGSILD-Tenant to openiot
     And   I set header Link to <http://context/ngsi-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"
     And   I perform the query request
-    Then  I receive a HTTP "200" response code from Broker with the body "10.response.json" and exclusions "10.excludes"
+    Then  I receive a HTTP "200" response code from Scorpio with the body "10.response.json" and exclusions "10.excludes"
 
   Scenario Outline: Req 11, 12 - Provisioning filling station and tractor
     When  I prepare a POST HTTP request for "<description>" to "http://localhost:4041/iot/devices"

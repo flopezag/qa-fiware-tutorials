@@ -4,7 +4,7 @@ Feature: Test tutorial 404.Securing microservices with a pep proxy PEP Proxy (Io
   url: https://fiware-tutorials.readthedocs.io/en/latest/pep-proxy.html
   git-clone: https://github.com/FIWARE/tutorials.PEP-Proxy.git
   git-directory: /tmp/tutorials.PEP-Proxy
-  shell-commands: ./services create; ./services southport
+  shell-commands: git checkout NGSI-v2 ; ./services create ; ./services southport
   clean-shell-commands: ./services stop
 
   Background:

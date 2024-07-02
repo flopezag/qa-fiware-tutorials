@@ -1,5 +1,8 @@
 {
-    "@context": "http://context/ngsi-context.jsonld",
+    "@context": [
+        "http://context/ngsi-context.jsonld",
+        "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.7.jsonld"
+    ],
     "id": "urn:ngsi-ld:Device:temperature001",
     "type": "Device",
     "temperature": {
