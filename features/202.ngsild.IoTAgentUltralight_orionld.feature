@@ -37,10 +37,11 @@ Feature: test tutorial 202.Introduction to IoT Sensors (Orion-LD)
     And   I wait "1" seconds
 
   Scenario: Querying the temperature in the context Broker
-    When  I prepare a GET HTTP request to "http://localhost:1026/ngsi-ld/v1/entities/urn:ngsi-ld:Device:temperature001?attrs=temperature"
+    When  I prepare a GET HTTP request to "http://localhost:1026/ngsi-ld/v1/entities/urn:ngsi-ld:Device:temperature001"
     And   I set header NGSILD-Tenant to openiot
     And   I set header NGSILD-Path to /
     And   I set header Accept to application/ld+json
+    And   the params equal to "attrs=temperature"
     And   I set header Link to <http://context/ngsi-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"
     And   I perform the query request
     Then  I receive a HTTP "200" response code from Orion-LD with the body "05.response.json" and exclusions "05.excludes"
