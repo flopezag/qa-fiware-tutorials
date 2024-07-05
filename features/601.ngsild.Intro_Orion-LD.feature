@@ -7,7 +7,7 @@ Feature: test tutorial 601 Introduction to Linked Data (Orion-LD)
     git-clone: https://github.com/FIWARE/tutorials.Linked-Data.git
     git-directory: /tmp/tutorials.Linked-Data-Intro
 
-    shell-commands: ./services create; ./services start
+    shell-commands: git checkout NGSI-v2 ; ./services create; ./services start
     clean-shell-commands: ./services stop
 
 

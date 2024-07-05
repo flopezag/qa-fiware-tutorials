@@ -5,18 +5,17 @@
     "description": "Notify me of all feedstock changes",
     "entities": [
       {
-        "type": "https://ngsi-ld-tutorials.readthedocs.io/en/latest/datamodels.html#FillingLevelSensor"
+        "type": "FillingLevelSensor"
       }
     ],
     "watchedAttributes": [
-      "https://w3id.org/saref#fillingLevel"
+      "fillingLevel"
     ],
     "status": "active",
     "isActive": true,
     "notification": {
       "attributes": [
-        "https://w3id.org/saref#fillingLevel",
-        "location"
+        "fillingLevel"
       ],
       "format": "normalized",
       "endpoint": {
@@ -40,13 +39,13 @@
     "description": "Notify me of animal locations",
     "entities": [
       {
-        "type": "https://uri.fiware.org/ns/data-models#Device"
+        "type": "Device"
       }
     ],
     "watchedAttributes": [
       "location",
       "status",
-      "https://purl.bioontology.org/ontology/MESH/D006339"
+      "heartRate"
     ],
     "status": "active",
     "isActive": true,
@@ -54,7 +53,7 @@
       "attributes": [
         "location",
         "status",
-        "https://purl.bioontology.org/ontology/MESH/D006339"
+        "heartRate"
       ],
       "format": "normalized",
       "endpoint": {

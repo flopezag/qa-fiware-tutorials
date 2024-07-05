@@ -25,7 +25,7 @@ def read_data_from_file(context, file):
 
 def compare_func(x, y, level=None):
     try:
-        return x['id'] == y['id']
+        return x['description'] == y['description']
     except Exception:
         raise CannotCompare() from None
 

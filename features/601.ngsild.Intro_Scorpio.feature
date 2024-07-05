@@ -7,7 +7,7 @@ Feature: test tutorial 601 Introduction to Linked Data (Scorpio)
     git-clone: https://github.com/FIWARE/tutorials.Linked-Data.git
     git-directory: /tmp/tutorials.Linked-Data-Intro
 
-    shell-commands: ./services create; ./services scorpio
+    shell-commands: git checkout NGSI-v2 ; ./services create; ./services scorpio
     clean-shell-commands: ./services stop
 
 

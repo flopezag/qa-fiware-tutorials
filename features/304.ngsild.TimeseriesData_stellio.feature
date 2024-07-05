@@ -13,7 +13,7 @@ Feature: test tutorial 304.Persisting and Querying timedata series (Stellio)
   git-clone: https://github.com/FIWARE/tutorials.Time-Series-Data.git
 
   git-directory: /tmp/Time-Series-Data
-  shell-commands: git checkout NGSI-LD ; /tmp/patch_crate.sh ; ./services create  ; ./services stellio
+  shell-commands: git checkout NGSI-LD ; ./services create  ; ./services stellio
   clean-shell-commands: ./services stop
 
 
@@ -22,13 +22,14 @@ Feature: test tutorial 304.Persisting and Querying timedata series (Stellio)
 
     Scenario Outline: Registering cratedb timedata series
     When I prepare a POST HTTP request for "<description>" to "http://localhost:1026/ngsi-ld/v1/subscriptions/"
-    And  I set header Content-Type to application/json
+    And  I set header Content-Type to application/ld+json
     And  I set header NGSILD-Tenant to openiot
-#    And  I set header fiware-servicepath to /
     And  I set header Link to <http://context/ngsi-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"
     And  I set the body request as described in <file>
     And  I perform the request
     Then  I receive a HTTP "201" response code
+    And  Header contains key "Location" with value "/ngsi-ld/v1/subscriptions/urn:ngsi-ld:subscription:ae0e50b6-b1f9-11ee-a013-0242ac120106"
+    And  Header contains key "NGSILD-Tenant" with value "openiot"
     Examples:
         | description                | file            |
         | notify feedstock changes   | 01.request.json |
@@ -117,6 +118,6 @@ Feature: test tutorial 304.Persisting and Querying timedata series (Stellio)
 
     # Request 3 -
   Scenario: Check the subscriptions for quantum-leap to ngsi-ld
-    When  I send GET HTTP request to "http://localhost:8080/ngsi-ld/v1/subscriptions/"
+    When  I send GET HTTP request to "http://localhost:1026/ngsi-ld/v1/subscriptions/"
     And   I set header NGSILD-Tenant to openiot
     Then  I receive a HTTP "200" response code

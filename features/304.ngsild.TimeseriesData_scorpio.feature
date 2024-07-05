@@ -13,7 +13,7 @@ Feature: test tutorial 304.Persisting and Querying timedata series (Scorpio)
   git-clone: https://github.com/FIWARE/tutorials.Time-Series-Data.git
 
   git-directory: /tmp/Time-Series-Data
-  shell-commands: git checkout NGSI-LD ; /tmp/patch_crate.sh ; ./services create  ; ./services scorpio
+  shell-commands: git checkout NGSI-LD ; ./services create  ; ./services scorpio
   clean-shell-commands: ./services stop
 
 
@@ -22,13 +22,13 @@ Feature: test tutorial 304.Persisting and Querying timedata series (Scorpio)
 
     Scenario Outline: Registering cratedb timedata series
     When I prepare a POST HTTP request for "<description>" to "http://localhost:1026/ngsi-ld/v1/subscriptions/"
-    And  I set header Content-Type to application/json
+    And  I set header Content-Type to application/ld+json
     And  I set header NGSILD-Tenant to openiot
-#    And  I set header fiware-servicepath to /
-    And  I set header Link to <http://context/ngsi-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"
     And  I set the body request as described in <file>
     And  I perform the request
     Then  I receive a HTTP "201" response code
+    And  Header contains key "Location" with value "/ngsi-ld/v1/subscriptions/urn:ngsi-ld:subscription:ae0e50b6-b1f9-11ee-a013-0242ac120106"
+    And  Header contains key "NGSILD-Tenant" with value "openiot"
     Examples:
         | description                | file            |
         | notify feedstock changes   | 01.request.json |
@@ -89,12 +89,12 @@ Feature: test tutorial 304.Persisting and Querying timedata series (Scorpio)
     Then  I receive a HTTP "200" response code
     Examples:
       | url                                                                                            |
-      | http://localhost:8668/v2/entities/urn:ngsi-ld:FillingLevelSensor:filling001/attrs/filling?limit=3          |
-      | http://localhost:8668/v2/entities/urn:ngsi-ld:FillingLevelSensor:filling001/attrs/filling?offset=3&limit=3 |
-      | http://localhost:8668/v2/entities/urn:ngsi-ld:FillingLevelSensor:filling001/attrs/filling?lastN=3          |
-      | http://localhost:8668/v2/entities/urn:ngsi-ld:FillingLevelSensor:filling001/attrs/filling?aggrMethod=count&aggrPeriod=minute&lastN=3 |
-      | http://localhost:8668/v2/entities/urn:ngsi-ld:FillingLevelSensor:filling001/attrs/filling?aggrMethod=min&aggrPeriod=minute&lastN=3   |
-      | http://localhost:8668/v2/entities/urn:ngsi-ld:FillingLevelSensor:filling001/attrs/filling?aggrMethod=max&fromDate=2018-06-27T09:00:00&toDate=2050-06-30T23:59:59 |
+      | http://localhost:8668/v2/entities/urn:ngsi-ld:Device:filling001/attrs/filling?limit=3          |
+      | http://localhost:8668/v2/entities/urn:ngsi-ld:Device:filling001/attrs/filling?offset=3&limit=3 |
+      | http://localhost:8668/v2/entities/urn:ngsi-ld:Device:filling001/attrs/filling?lastN=3          |
+      | http://localhost:8668/v2/entities/urn:ngsi-ld:Device:filling001/attrs/filling?aggrMethod=count&aggrPeriod=minute&lastN=3 |
+      | http://localhost:8668/v2/entities/urn:ngsi-ld:Device:filling001/attrs/filling?aggrMethod=min&aggrPeriod=minute&lastN=3   |
+      | http://localhost:8668/v2/entities/urn:ngsi-ld:Device:filling001/attrs/filling?aggrMethod=max&fromDate=2018-06-27T09:00:00&toDate=2050-06-30T23:59:59 |
       | http://localhost:8668/v2/types/Device/attrs/heartRate?lastN=4&georel=near;maxDistance:5000&geometry=point&coords=52.518,13.357                       |
       | http://localhost:8668/v2/types/Device/attrs/heartRate?lastN=4&georel=coveredBy&geometry=polygon&coords=52.5537,13.3996;52.5557,13.3996;52.5557,13.3976;52.5537,13.3976;52.5537,13.3996 |
 
@@ -115,8 +115,8 @@ Feature: test tutorial 304.Persisting and Querying timedata series (Scorpio)
       | {"stmt":"SELECT MAX(filling) AS max FROM mtopeniot.etFillingLevelSensor WHERE entity_id = 'urn:ngsi-ld:Device:filling001' and time_index >= '2022-04-01T09:00:00' and time_index < '2050-06-30T23:59:59'"} |
       | {"stmt":"SELECT MAX(filling) AS max FROM mtopeniot.etFillingLevelSensor WHERE entity_id = 'urn:ngsi-ld:Device:filling001' and time_index >= '2022-04-01T09:00:00' and time_index < NOW()"} |
 
-    # Request 3 -
+  # Request 3 -
   Scenario: Check the subscriptions for quantum-leap to ngsi-ld
-    When  I send GET HTTP request to "http://localhost:9090/ngsi-ld/v1/subscriptions/"
+    When  I send GET HTTP request to "http://localhost:1026/ngsi-ld/v1/subscriptions/"
     And   I set header NGSILD-Tenant to openiot
     Then  I receive a HTTP "200" response code

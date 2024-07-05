@@ -7,7 +7,7 @@ Feature: test tutorial 601 Introduction to Linked Data (Stellio)
     git-clone: https://github.com/FIWARE/tutorials.Linked-Data.git
     git-directory: /tmp/tutorials.Linked-Data-Intro
 
-    shell-commands: ./services create; ./services stellio
+    shell-commands: git checkout NGSI-v2 ; ./services create; ./services stellio
     clean-shell-commands: ./services stop
 
 

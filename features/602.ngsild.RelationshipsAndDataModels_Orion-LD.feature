@@ -7,7 +7,7 @@ Feature: test tutorial 602 Linked Data: Relationships and Data Models (Orion-LD)
     git-clone: https://github.com/FIWARE/tutorials.Relationships-Linked-Data.git
     git-directory: /tmp/tutorials.Relationships-Linked-Data
 
-    shell-commands: ./services create; ./services orion
+    shell-commands: git checkout NGSI-v2; ./services create; ./services orion
     clean-shell-commands: ./services stop
 
 #   Overall Note: The tutorial does not say anything aut the response code expected.

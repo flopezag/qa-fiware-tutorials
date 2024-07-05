@@ -3,7 +3,7 @@ Feature: Test tutorial 603.Traversing_Linked_Data (Stellio)
   url: https://fiware-tutorials.readthedocs.io/en/latest/open-id-connect.html
   git-clone: https://github.com/FIWARE/tutorials.Working-with-Linked-Data.git
   git-directory: /tmp/tutorials.Working-with-Linked-Data
-  shell-commands: ./services create; ./services stellio
+  shell-commands: git checkout NGSI-v2 ; ./services create; ./services stellio
   clean-shell-commands: ./services stop
 
   Background:
