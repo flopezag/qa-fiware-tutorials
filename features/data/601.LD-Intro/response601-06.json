@@ -1,36 +1,46 @@
 [
-  {
-      "@context": "https://smartdatamodels.org/context.jsonld",
-      "id": "urn:ngsi-ld:Building:store001",
-      "type": "Building",
-      "address": {
-              "streetAddress": "Bornholmer Straße 65",
-              "addressRegion": "Berlin",
-              "addressLocality": "Prenzlauer Berg",
-              "postalCode": "10439"
-          },
-      "category": "commercial",
-      "name": "Bösebrücke Einkauf",
-      "location": {
+    {
+        "@context": [
+            "https://smart-data-models.github.io/dataModel.Building/context.jsonld",
+            "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.6.jsonld"
+        ],
+        "id": "urn:ngsi-ld:Building:store001",
+        "type": "Building",
+        "address": {
+            "streetAddress": "Bornholmer Straße 65",
+            "addressRegion": "Berlin",
+            "addressLocality": "Prenzlauer Berg",
+            "postalCode": "10439"
+        },
+        "name": "Bösebrücke Einkauf",
+        "category": {
+            "vocab": "commercial"
+        },
+        "location": {
             "type": "Point",
             "coordinates": [13.3986, 52.5547]
-          }
-  },
-  {
-      "id": "urn:ngsi-ld:Building:store002",
-      "type": "Building",
-      "address": {
-          "streetAddress": "Friedrichstraße 44",
-          "addressRegion": "Berlin",
-          "addressLocality": "Kreuzberg",
-          "postalCode": "10969"
-      },
-      "name": "Checkpoint Markt",
-      "category": ["commercial"],
-      "location": {
-          "type": "Point",
-          "coordinates": [13.3903, 52.5075]
-      },
-      "@context": "https://smartdatamodels.org/context.jsonld"
-  }
+        }
+    },
+    {
+        "@context": [
+            "https://smart-data-models.github.io/dataModel.Building/context.jsonld",
+            "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.6.jsonld"
+        ],
+        "id": "urn:ngsi-ld:Building:store002",
+        "type": "Building",
+        "address": {
+            "streetAddress": "Friedrichstraße 44",
+            "addressRegion": "Berlin",
+            "addressLocality": "Kreuzberg",
+            "postalCode": "10969"
+        },
+        "name": "Checkpoint Markt",
+        "category": {
+            "vocab": "commercial"
+        },
+        "location": {
+            "type": "Point",
+            "coordinates": [13.3903, 52.5075]
+        }
+    }
 ]

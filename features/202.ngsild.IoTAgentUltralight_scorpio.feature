@@ -120,6 +120,7 @@ Feature: test tutorial 202.Introduction to IoT Sensors (Scorpio)
     And   I set the body request as described in <file>
     And   I perform the request
     Then  I receive a HTTP response with status 204 and empty dict
+    And   I wait "1" seconds
     Examples:
       | file                         | device     | attr  | description            |
       | activate.things.request.json | water001   | on    | Act. irrigation system |

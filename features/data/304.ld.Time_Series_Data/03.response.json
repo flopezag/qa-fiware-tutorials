@@ -31,7 +31,7 @@
       "status": "ok"
     },
     "origin": "cache",
-    "jsonldContext": "http://context/ngsi-context.jsonld"
+    "jsonldContext": "http://context/user-context.jsonld"
   },
   {
     "id": "urn:ngsi-ld:subscription:36311e56-b1ff-11ee-b01e-0242ac12010a",
@@ -70,6 +70,6 @@
     },
     "throttling": 10,
     "origin": "cache",
-    "jsonldContext": "http://context/ngsi-context.jsonld"
+    "jsonldContext": "http://context/user-context.jsonld"
   }
 ]

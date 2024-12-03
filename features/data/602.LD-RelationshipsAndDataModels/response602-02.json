@@ -1,74 +1,65 @@
 [
   {
-    "@context": "https://fiware.github.io/tutorials.Step-by-Step/tutorials-context.jsonld",
     "id": "urn:ngsi-ld:Product:001",
     "type": "Product",
-    "name": "Beer",
+    "name": "Apples",
     "price": 0.99,
     "size": "S"
   },
   {
-    "@context": "https://fiware.github.io/tutorials.Step-by-Step/datamodels-context.jsonld",
     "id": "urn:ngsi-ld:Product:002",
     "type": "Product",
-    "name": "Red Wine",
+    "name": "Bananas",
     "price": 10.99,
     "size": "M"
   },
   {
-    "@context": "https://fiware.github.io/tutorials.Step-by-Step/tutorials-context.jsonld",
     "id": "urn:ngsi-ld:Product:003",
     "type": "Product",
     "price": 14.99,
     "size": "M",
-    "name": "White Wine"
+    "name": "Coconuts"
   },
   {
-    "@context": "https://fiware.github.io/tutorials.Step-by-Step/tutorials-context.jsonld",
     "id": "urn:ngsi-ld:Product:004",
     "type": "Product",
     "price": 50,
     "size": "XL",
-    "name": "Vodka"
+    "name": "Melons"
   },
   {
-    "@context": "https://fiware.github.io/tutorials.Step-by-Step/tutorials-context.jsonld",
     "id": "urn:ngsi-ld:Product:005",
     "type": "Product",
     "price": 0.99,
     "size": "S",
-    "name": "Lager"
+    "name": "Kiwi Fruits"
   },
   {
-    "@context": "https://fiware.github.io/tutorials.Step-by-Step/tutorials-context.jsonld",
     "id": "urn:ngsi-ld:Product:006",
     "type": "Product",
     "price": 0.99,
     "size": "S",
-    "name": "Whisky"
+    "name": "Strawberries"
   },
   {
-    "@context": "https://fiware.github.io/tutorials.Step-by-Step/tutorials-context.jsonld",
     "id": "urn:ngsi-ld:Product:007",
     "type": "Product",
     "price": 0.99,
     "size": "S",
-    "name": "Gin"
+    "name": "Raspberries"
   },
   {
-    "@context": "https://fiware.github.io/tutorials.Step-by-Step/tutorials-context.jsonld",
     "id": "urn:ngsi-ld:Product:008",
     "type": "Product",
     "price": 0.99,
     "size": "S",
-    "name": "Apple Juice"
+    "name": "Pineapples"
   },
   {
-    "@context": "https://fiware.github.io/tutorials.Step-by-Step/tutorials-context.jsonld",
     "id": "urn:ngsi-ld:Product:009",
     "type": "Product",
     "price": 0.99,
     "size": "S",
-    "name": "Orange Juice"
+    "name": "Oranges"
   }
 ]

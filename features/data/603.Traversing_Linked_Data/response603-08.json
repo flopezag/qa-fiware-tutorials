@@ -1,7 +1,10 @@
 {
-    "@context": "https://fiware.github.io/tutorials.Step-by-Step/tutorials-context.jsonld",
     "id": "urn:ngsi-ld:Building:store005",
     "type": "Building",
+    "category": {
+        "type": "VocabularyProperty",
+        "vocab":  "commercial"
+    },
     "address": {
         "type": "Property",
         "value": {
@@ -13,8 +16,16 @@
     },
     "location": {
         "type": "GeoProperty",
-        "value": { "type": "Point", "coordinates": [13.5646, 52.5435] }
+        "value": {
+            "type": "Point",
+            "coordinates": [
+                13.5646,
+                52.5435
+            ]
+        }
     },
-    "name": { "type": "Property", "value": "Yuusui-en" },
-    "category": { "type": "Property", "value": "commercial" }
+    "name": {
+        "type": "Property",
+        "value": "Yuusui-en"
+    }
 }

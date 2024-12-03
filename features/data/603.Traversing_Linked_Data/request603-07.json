@@ -1,7 +1,7 @@
 {
     "id": "urn:ngsi-ld:Building:store005",
     "type": "ビル",
-    "カテゴリー": {"type": "Property", "value": ["コマーシャル"]},
+    "カテゴリー": {"type": "VocabularyProperty", "vocab": ["コマーシャル"]},
     "住所": {
         "type": "Property",
         "value": {
@@ -16,5 +16,5 @@
         "value": {"type": "Point","coordinates": [13.5646, 52.5435]}
     },
     "名前": {"type": "Property","value": "Yuusui-en"},
-    "@context":"https://fiware.github.io/tutorials.Step-by-Step/japanese-context.jsonld"
+    "@context":"http://context/japanese-user-context.jsonld"
 }

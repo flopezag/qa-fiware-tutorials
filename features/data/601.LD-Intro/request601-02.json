@@ -2,8 +2,8 @@
     "id": "urn:ngsi-ld:Building:store001",
     "type": "Building",
     "category": {
-        "type": "Property",
-        "value": ["commercial"]
+        "type": "VocabularyProperty",
+        "vocab": "commercial"
     },
     "address": {
         "type": "Property",
@@ -30,7 +30,7 @@
         "value": "Bösebrücke Einkauf"
     },
     "@context": [
-        "https://smartdatamodels.org/context.jsonld",
-        "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.3.jsonld"
+        "https://smart-data-models.github.io/dataModel.Building/context.jsonld",
+        "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.6.jsonld"
     ]
 }

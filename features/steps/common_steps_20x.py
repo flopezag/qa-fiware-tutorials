@@ -85,7 +85,10 @@ def perform_request(context):
             context.payload = context.payload.encode('utf-8')
             response = patch(context.url, data=context.payload, headers=context.headers)
         elif context.method == "GET":
-            response = get(context.url, headers=context.headers)
+            if 'params' in context:
+                response = get(context.url, params=context.params, headers=context.headers)
+            else:
+                response = get(context.url, headers=context.headers)
         else:
             raise AssertionError(f"Unknown method {context.method}")
     except exceptions.RequestException as e:

@@ -36,11 +36,11 @@ Feature: test tutorial 304.Persisting and Querying timedata series (Orion-LD)
 
   # Request 3 -
   Scenario: 03 - Check the subscriptions for quantum-leap to ngsi-ld
-    When I prepare a GET HTTP request for "cheking the created subscriptions" to "http://localhost:1026/ngsi-ld/v1/subscriptions/"
+    When I prepare a GET HTTP request for "checking the created subscriptions" to "http://localhost:1026/ngsi-ld/v1/subscriptions/"
     And  I set header NGSILD-Tenant to openiot
     And  I perform the request
     Then I receive a HTTP "200" response code from Orion-LD with the body "03.response.json" and exclusions "03.excludes"
-    And  Header contains key "Link" with value "<https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.6.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json""
+    And  Header contains key "Link" with value "<http://context/user-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json""
     And  Header contains key "Content-Type" with value "application/json"
 
   Scenario: 00 - Check the Quantum Leap Version

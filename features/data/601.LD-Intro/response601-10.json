@@ -1,6 +1,6 @@
 [
     {
-        "id": "urn:ngsi-ld:Building:store001",
+       "id": "urn:ngsi-ld:Building:store001",
         "type": "Building",
         "address": {
             "streetAddress": "Bornholmer Straße 65",
@@ -9,12 +9,13 @@
             "postalCode": "10439"
         },
         "name": "Bösebrücke Einkauf",
-        "category": ["commercial"],
+        "category": {
+            "vocab": "commercial"
+        },
         "location": {
             "type": "Point",
             "coordinates": [13.3986, 52.5547]
-        },
-        "@context": "https://smartdatamodels.org/context.jsonld"
+        }
     },
     {
         "id": "urn:ngsi-ld:Building:store002",
@@ -26,11 +27,12 @@
             "postalCode": "10969"
         },
         "name": "Checkpoint Markt",
-        "category": ["commercial"],
+        "category": {
+            "vocab": "commercial"
+        },
         "location": {
             "type": "Point",
             "coordinates": [13.3903, 52.5075]
-        },
-        "@context": "https://smartdatamodels.org/context.jsonld"
+        }
     }
 ]

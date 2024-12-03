@@ -8,10 +8,20 @@
                     "id": "urn:ngsi-ld:Building:store001"
                 }
             ],
-            "properties": [
+            "propertyNames": [
                 "tweets"
             ]
         }
+    ],
+    "contextSourceInfo":[
+        {
+            "key": "jsonldContext",
+            "value": "http://context/user-context.jsonld"
+        }
+    ],
+    "mode": "exclusive",
+    "operations": [
+        "updateOps", "retrieveOps"
     ],
     "endpoint": "http://tutorial:3000/static/tweets"
 }

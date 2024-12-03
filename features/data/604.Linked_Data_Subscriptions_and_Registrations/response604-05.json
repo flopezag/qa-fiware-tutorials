@@ -1,6 +1,9 @@
 [
     {
-        "@context": "https://fiware.github.io/tutorials.Step-by-Step/tutorials-context.jsonld",
+        "@context": [
+            "http://context/user-context.jsonld",
+            "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.6.jsonld"
+        ],
         "id": "urn:ngsi-ld:ContextSourceRegistration:5e6242179c26be5aef9991d4",
         "type": "ContextSourceRegistration",
         "endpoint": "http://tutorial:3000/static/tweets",
@@ -12,8 +15,16 @@
                         "type": "Building"
                     }
                 ],
-                "properties": ["tweets"]
+                "propertyNames": ["tweets"]
             }
-        ]
+        ],
+        "contextSourceInfo": [
+            {
+                "key": "jsonldContext",
+                "value": "http://context/user-context.jsonld"
+            }
+        ],
+        "mode": "exclusive",
+        "operations": ["updateOps", "retrieveOps"]
     }
 ]

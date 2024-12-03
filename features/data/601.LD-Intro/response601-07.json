@@ -1,6 +1,9 @@
 [
     {
-        "@context": "https://smartdatamodels.org/context.jsonld",
+        "@context": [
+            "https://smart-data-models.github.io/dataModel.Building/context.jsonld",
+            "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.6.jsonld"
+        ],
         "id": "urn:ngsi-ld:Building:store002",
         "type": "Building",
         "address": {
@@ -9,8 +12,10 @@
             "addressLocality": "Kreuzberg",
             "postalCode": "10969"
         },
-        "category": "commercial",
         "name": "Checkpoint Markt",
+        "category": {
+            "vocab": "commercial"
+        },
         "location": {
             "type": "Point",
             "coordinates": [13.3903, 52.5075]

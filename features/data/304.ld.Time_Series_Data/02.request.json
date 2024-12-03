@@ -18,5 +18,5 @@
     }
   },
    "throttling": 10,
-   "@context": "http://context/ngsi-context.jsonld"
+   "@context": "http://context/user-context.jsonld"
 }

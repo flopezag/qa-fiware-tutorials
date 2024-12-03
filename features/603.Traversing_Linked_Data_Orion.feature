@@ -1,4 +1,4 @@
-Feature: Test tutorial 603.Traversing_Linked_Data (Orion)
+Feature: Test tutorial 603.Traversing_Linked_Data (OrionLD)
   This is feature file of the FIWARE step by step tutorial for Traversing Linked Data (Orion)
   url: https://fiware-tutorials.readthedocs.io/en/latest/open-id-connect.html
   git-clone: https://github.com/FIWARE/tutorials.Working-with-Linked-Data.git
@@ -10,16 +10,16 @@ Feature: Test tutorial 603.Traversing_Linked_Data (Orion)
     Given I set the tutorial 603
 
   Scenario: 01 - Retrieve a known store
-    When   I set the "Accept" header with the value "application/ld+json"
-    And    I set the "Link" header with the value "<https://fiware.github.io/tutorials.Step-by-Step/tutorials-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json""
+    When   I set the "Content-Type" header with the value "application/json"
+    And    I set the "Link" header with the value "<http://context/ngsi-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json""
     And    I set the url to "http://localhost:1026/ngsi-ld/v1/entities/urn:ngsi-ld:Building:store001"
     And    the params equal to "options=keyValues"
     And    I send a GET HTTP request to that url
     Then   I receive a HTTP "200" response code from Orion-LD with the body equal to "response603-01.json"
 
   Scenario: 02 - Access the furniture attribute of a known Building entity
-    When   I set the "Accept" header with the value "application/ld+json"
-    And    I set the "Link" header with the value "<https://fiware.github.io/tutorials.Step-by-Step/tutorials-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json""
+    When   I set the "Content-Type" header with the value "application/json"
+    And    I set the "Link" header with the value "<http://context/ngsi-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json""
     And    I set the url to "http://localhost:1026/ngsi-ld/v1/entities/urn:ngsi-ld:Building:store001"
     And    the params equal to "options=keyValues"
     And    the params equal to "attrs=furniture"
@@ -27,8 +27,9 @@ Feature: Test tutorial 603.Traversing_Linked_Data (Orion)
     Then   I receive a HTTP "200" response code from Orion-LD with the body equal to "response603-02.json"
 
   Scenario: 03 - Retrieve stocked products from shelves
-    When   I set the "Accept" header with the value "application/ld+json"
-    And    I set the "Link" header with the value "<https://fiware.github.io/tutorials.Step-by-Step/tutorials-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json""
+    When   I set the "Accept" header with the value "application/json"
+    When   I set the "Content-Type" header with the value "application/json"
+    And    I set the "Link" header with the value "<http://context/ngsi-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json""
     And    I set the url to "http://localhost:1026/ngsi-ld/v1/entities"
     And    the params equal to "options=keyValues"
     And    the params equal to "attrs=stocks,numberOfItems"
@@ -38,7 +39,8 @@ Feature: Test tutorial 603.Traversing_Linked_Data (Orion)
 
   Scenario: 04 - Retrieve product details for selected shelves
     When   I set the "Accept" header with the value "application/json"
-    And    I set the "Link" header with the value "<https://fiware.github.io/tutorials.Step-by-Step/tutorials-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json""
+    When   I set the "Content-Type" header with the value "application/json"
+    And    I set the "Link" header with the value "<http://context/ngsi-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json""
     And    I set the url to "http://localhost:1026/ngsi-ld/v1/entities"
     And    the params equal to "type=Product"
     And    the params equal to "options=keyValues"
@@ -49,11 +51,11 @@ Feature: Test tutorial 603.Traversing_Linked_Data (Orion)
 
   Scenario: 05 - Find a shelf stocking a product
     When   I set the "Accept" header with the value "application/json"
-    And    I set the "Link" header with the value "<https://fiware.github.io/tutorials.Step-by-Step/tutorials-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json""
+    And    I set the "Link" header with the value "<http://context/ngsi-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json""
     And    I set the url to "http://localhost:1026/ngsi-ld/v1/entities"
     And    the params equal to "type=Shelf"
     And    the params equal to "options=keyValues"
-    And    the params equal to "q=numberOfItems%3E0;locatedIn==%22urn:ngsi-ld:Building:store001%22;stocks==%22urn:ngsi-ld:Product:001%22"
+    And    the params equal to "q=numberOfItems>0;locatedIn==%22urn:ngsi-ld:Building:store001%22;stocks==%22urn:ngsi-ld:Product:001%22"
     And    I send a GET HTTP request to that url
     Then   I receive a HTTP "200" response code from Orion-LD with the body equal to "response603-05.json"
 
@@ -73,23 +75,24 @@ Feature: Test tutorial 603.Traversing_Linked_Data (Orion)
     And    I send a POST HTTP request to that url
     Then   I receive a HTTP "201" status code response
 
+  #
+  # Error in Orion-LD vocab shouldn't be an array
   Scenario: 08 - 02 Reading an entity using the default schema
-    When   I set the "Accept" header with the value "application/ld+json"
-    And    I set the "Link" header with the value "<https://fiware.github.io/tutorials.Step-by-Step/tutorials-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json""
+    When   I set the "Content-Type" header with the value "application/json"
+    And    I set the "Link" header with the value "<http://context/ngsi-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json""
     And    I set the url to "http://localhost:1026/ngsi-ld/v1/entities/urn:ngsi-ld:Building:store005"
     And    I send a GET HTTP request to that url
     Then   I receive a HTTP "200" response code from Orion-LD with the body equal to "response603-08.json"
 
   Scenario: 09 - 03 Reading an entity using an alternate schema
-    When   I set the "Accept" header with the value "application/ld+json"
-    And    I set the "Link" header with the value "<https://fiware.github.io/tutorials.Step-by-Step/japanese-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json""
+    When   I set the "Content-Type" header with the value "application/json"
+    And    I set the "Link" header with the value "<http://context/japanese-user-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json""
     And    I set the url to "http://localhost:1026/ngsi-ld/v1/entities/urn:ngsi-ld:Building:store003"
     And    I send a GET HTTP request to that url
     Then   I receive a HTTP "200" response code from Orion-LD with the body equal to "response603-09.json"
 
   Scenario: 10 - 04 Applying entity expansion/compaction
     When   I set the "Accept" header with the value "application/ld+json"
-    And    I set the "Link" header with the value "<https://fiware.github.io/tutorials.Step-by-Step/japanese-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json""
     And    I set the url to "http://localhost:3000/japanese/ngsi-ld/v1/entities/urn:ngsi-ld:Building:store005"
     And    I send a GET HTTP request to that url
     Then   I receive a HTTP "200" response code from Orion-LD with the body equal to "response603-10.json"
