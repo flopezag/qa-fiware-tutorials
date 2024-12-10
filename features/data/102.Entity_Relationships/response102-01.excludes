@@ -1,0 +1,7 @@
+root['orion']['version']
+root['orion']['git_hash']
+root['orion']['compile_time']
+root['orion']['release_date']
+root['orion']['doc']
+root['orion']['uptime']
+root['orion']['libversions']

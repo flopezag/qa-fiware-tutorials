@@ -38,11 +38,18 @@ function function_four {
   echo
 
   behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/601.ngsild.Intro_Orion-LD.feature
-  behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/601.ngsild.Intro_Scorpio.feature
-  behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/601.ngsild.Intro_Stellio.feature
+  # behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/601.ngsild.Intro_Scorpio.feature
+  # behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/601.ngsild.Intro_Stellio.feature
   behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/602.ngsild.RelationshipsAndDataModels_Orion-LD.feature
-  behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/602.ngsild.RelationshipsAndDataModels_Scorpio.feature
-  behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/602.ngsild.RelationshipsAndDataModels_Stellio.feature
+  # behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/602.ngsild.RelationshipsAndDataModels_Scorpio.feature
+  # behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/602.ngsild.RelationshipsAndDataModels_Stellio.feature
+  behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/603.Traversing_Linked_Data_Orion.feature
+  # behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/603.Traversing_Linked_Data_Scorpio.feature
+  # behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/603.Traversing_Linked_Data_Stellio.feature
+  behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/604.Linked_Data_Subscriptions_and_Registrations_Orion.feature
+  # behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/604.Linked_Data_Subscriptions_and_Registrations_Stellio.feature
+  # behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/604.Linked_Data_Subscriptions_and_Registrations_Scorpio.feature
+
 }
 
 function function_all {
@@ -65,11 +72,17 @@ function function_all {
   # F behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/302.ngsild.BigDataFlink_orionld.feature
   # F behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/306.ngsild.BigDataSpark_orionld.feature
   behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/601.ngsild.Intro_Orion-LD.feature
-  behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/601.ngsild.Intro_Scorpio.feature
-  behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/601.ngsild.Intro_Stellio.feature
+  # behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/601.ngsild.Intro_Scorpio.feature
+  # behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/601.ngsild.Intro_Stellio.feature
   behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/602.ngsild.RelationshipsAndDataModels_Orion-LD.feature
-  behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/602.ngsild.RelationshipsAndDataModels_Scorpio.feature
-  behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/602.ngsild.RelationshipsAndDataModels_Stellio.feature
+  # behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/602.ngsild.RelationshipsAndDataModels_Scorpio.feature
+  # behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/602.ngsild.RelationshipsAndDataModels_Stellio.feature
+  behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/603.Traversing_Linked_Data_Orion.feature
+  # behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/603.Traversing_Linked_Data_Scorpio.feature
+  # behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/603.Traversing_Linked_Data_Stellio.feature
+  behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/604.Linked_Data_Subscriptions_and_Registrations_Orion.feature
+  # behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/604.Linked_Data_Subscriptions_and_Registrations_Stellio.feature
+  # behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/604.Linked_Data_Subscriptions_and_Registrations_Scorpio.feature
 }
 
 # delete temporal folder before running the script

@@ -35,36 +35,49 @@ def http_code_is_returned(context, status_code, server, response):
                 "Response to {} notification has not got the expected HTTP response code: Message: {}"
                 .format(server, context.response))
 
+    file = join(context.data_home, response)
+    with open(file) as f:
+        data = load(f)
+
     if server == 'AuthZForce':
         # We need to parse and check the XML response
-        file = join(context.data_home, response)
-        with open(file) as f:
-            file_content = f.read()
+        diff = DeepDiff(data, context.xml)
 
-        formatter = formatting.DiffFormatter()
+        stdout.write(f'Expected response =\n {data}\n\n')
+        stdout.write(f'{server} response =\n {context.xml}\n\n')
 
-        want = file_content.replace('\n', '').encode('utf-8')
-        got = context.response.replace('\n', '').encode('utf-8')
-        result = main.diff_texts(want, got, formatter=formatter)
+        if len(diff) != 0:
+            assert_that(diff.to_dict(), is_(dict()),
+                        f'Response from {server} has not got the expected HTTP response body:\n  {diff}')
 
-        # We have to ignore the uptime, href, and title values of the results
-        excluded_tags = ['lastModifiedTime', 'uptime', 'href', 'title']
-        data1 = result.split("\n")
-        data1 = [x for x in data1 if all(y not in x for y in excluded_tags)]
-        result = '\n'.join(data1)
-
-        # Obtain the pretty print xml of the response
-        dom = parseString(context.response)  # or xml.dom.minidom.parseString(xml_string)
-        pretty_xml_as_string = dom.toprettyxml()
-
-        assert (result == ''), \
-            f'The XML obtained is not the expected value, ' \
-            f'\nexpected:\n{file_content}\n\nreceived:\n{pretty_xml_as_string}\n\ndifferences:\n{result}\n'
+        # file = join(context.data_home, response)
+        # with open(file) as f:
+        #     file_content = f.read()
+        #
+        # formatter = formatting.DiffFormatter()
+        #
+        # want = file_content.replace('\n', '').encode('utf-8')
+        # got = context.response.replace('\n', '').encode('utf-8')
+        # result = main.diff_texts(want, got, formatter=formatter)
+        #
+        # # We have to ignore the uptime, href, and title values of the results
+        # excluded_tags = ['lastModifiedTime', 'uptime', 'href', 'title']
+        # data1 = result.split("\n")
+        # data1 = [x for x in data1 if all(y not in x for y in excluded_tags)]
+        # result = '\n'.join(data1)
+        #
+        # # Obtain the pretty print xml of the response
+        # dom = parseString(context.response)  # or xml.dom.minidom.parseString(xml_string)
+        # pretty_xml_as_string = dom.toprettyxml()
+        #
+        # assert (result == ''), \
+        #     f'The XML obtained is not the expected value, ' \
+        #     f'\nexpected:\n{file_content}\n\nreceived:\n{pretty_xml_as_string}\n\ndifferences:\n{result}\n'
     else:
-        file = join(context.data_home, response)
-        with open(file) as f:
-            data = load(f)
-
+        # file = join(context.data_home, response)
+        # with open(file) as f:
+        #     data = load(f)
+        #
         diff = DeepDiff(data,
                         context.response,
                         exclude_paths=["root['orion']['uptime']", "root['version']", "root['index']"])

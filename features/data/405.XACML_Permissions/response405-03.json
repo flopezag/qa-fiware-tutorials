@@ -1,0 +1,17 @@
+{
+  "childResources": [
+    {
+      "href": "/properties",
+      "title": "Domain properties"
+    },
+    {
+      "href": "/pap",
+      "title": "Policy Administration Point"
+    },
+    {
+      "href": "/pdp",
+      "title": "Policy Decision Point"
+    }
+  ],
+  "properties": "tutorial-dckr-site-0000-xpresswebapp"
+}

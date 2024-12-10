@@ -4,8 +4,8 @@ Feature: test tutorial 101.Getting Started
   url: https://fiware-tutorials.readthedocs.io/en/latest/getting-started.html
   git-clone: https://github.com/FIWARE/tutorials.Getting-Started.git
   git-directory: /tmp/tutorials.Getting-Started
-  shell-commands: git checkout NGSI-v2 ; export $(cat .env | grep "#" -v); docker compose up -d
-  clean-shell-commands: docker compose down
+  shell-commands: git checkout NGSI-v2 ; export $(cat .env | grep "#" -v); docker compose -p fiware up -d
+  clean-shell-commands: docker compose -p fiware down
 
   Background:
     Given I set the tutorial 101
@@ -14,8 +14,7 @@ Feature: test tutorial 101.Getting Started
   Scenario: Checking the service health
     When  I wait "5" seconds
     When  I send GET HTTP request to "http://localhost:1026/version"
-    Then  I receive a HTTP "200" response code from Orion with the body equal to "response101-01.json"
-
+    Then  I receive a HTTP "200" response code from Orion with the body "response101-01.json" and exclusions "response101-01.excludes"
 
   Scenario Outline: Creating Context Data
     When The content-type header key equal to "application/json"

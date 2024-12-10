@@ -21,7 +21,7 @@ Feature: test tutorial 102.Entity_Relationships
   Scenario: Checking the service health
     #When  I wait "5" seconds
     When  I send GET HTTP request to "http://localhost:1026/version"
-    Then  I receive a HTTP "200" response code from Orion with the body equal to "response101-01.json"
+    Then  I receive a HTTP "200" response code from Orion with the body "response102-01.json" and exclusions "response102-01.excludes"
 
 
 #

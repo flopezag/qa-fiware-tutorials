@@ -13,6 +13,43 @@ from features.funtions import set_xml_data, change_context
 
 global adminId
 global userId
+global domainId
+global policyId
+
+
+@when('I set the "AuthZForce" {entity} url with the "domainId"')
+def step_impl(context, entity):
+    """
+    :type context: behave.runner.Context
+    """
+    global domainId
+
+    if entity == 'domains':
+        context.url = f'http://localhost:8080/authzforce-ce/domains/{domainId}'
+    elif entity == 'pap policies':
+        context.url = f'http://localhost:8080/authzforce-ce/domains/{domainId}/pap/policies'
+    elif entity == 'to the pdp endpoint':
+        context.url = f'http://localhost:8080/authzforce-ce/domains/{domainId}/pdp'
+    elif entity == 'pap policies with pdp.properties':
+        context.url = f'http://localhost:8080/authzforce-ce/domains/{domainId}/pap/pdp.properties'
+
+
+@when('I set the "AuthZForce" {entity} url with the "domainId" and "policyId"')
+def step_impl(context, entity):
+    """
+    :type context: behave.runner.Context
+    """
+    global domainId
+    global policyId
+
+    if entity == 'a pap policy set':
+        context.url = \
+            f'http://localhost:8080/authzforce-ce/domains/{domainId}/pap/policies/{policyId}'
+        print(context.url)
+    elif entity == 'to a single version of a pap policy set':
+        context.url = \
+            f'http://localhost:8080/authzforce-ce/domains/{domainId}/pap/policies/{policyId}' \
+            f'/{settings.policySetVersion}'
 
 
 @given(u'I set the tutorial 401')
@@ -582,23 +619,10 @@ def step_impl(context, op):
     except JSONDecodeError:
         # Tutorial 405 send XML content, we need to parse it
         context.response = response.text
+        context.xml = dict()
         parser = minidom.parseString(response.text)
-        tag = parser.firstChild.tagName
 
-        if 'resources' in tag:
-            # We receive a resource, therefore we extract the domainID from ns2:link
-            tag = parser.firstChild.firstChild.tagName
-            tag = parser.getElementsByTagName(tag)
-
-            set_xml_data(tag=tag)
-        elif 'link' in tag:
-            tag = parser.getElementsByTagName(tag)
-
-            if 'rel' in tag[0].attributes:
-                rel = tag[0].attributes['rel'].value
-
-                if rel == 'item':
-                    set_xml_data(tag=tag)
+        get_xml_data(context=context, parser=parser)
 
 
 @then('I receive a HTTP "{code}" status code with the same organizationId and userId and role equal to "{role}"')
@@ -645,3 +669,83 @@ def step_impl(context):
     """
     context.url = f'http://localhost:3005/v1/organizations/{settings.organizationId}' \
                   f'/users/{context.userId}/organization_roles'
+
+
+def get_xml_data(context, parser):
+    """
+    Return the xml data from the response based on the received structure
+    :type context: behave.runner.Context
+    :param context: The behave context
+    :param parser: The XML parser
+    :return:
+    """
+    global domainId
+    global policyId
+    tag = parser.firstChild.tagName
+
+    if 'resources' in tag:
+        # We receive a resource, therefore we extract the domainID from ns2:link
+        tag = parser.firstChild.firstChild.tagName
+        tag = parser.getElementsByTagName(tag)
+
+        if 'title' in tag[0].attributes:
+            context.xml['domainId'] = True
+            domainId = tag[0].attributes['title'].value
+        else:
+            context.xml['domainId'] = False
+
+            if len(list(tag)) > 1:
+                # We are obtaining the List all PolicySets available within a Domain through the resources tag
+                context.xml['policies'] = \
+                    [{'href': x.attributes['href'].value, 'rel': x.attributes['rel'].value} for x in list(tag)]
+
+                policyId = [x for x in context.xml['policies'] if x['href'] != 'root'][0]['href']
+
+        # set_xml_data(tag=tag)
+    elif 'link' in tag:
+        tag = parser.getElementsByTagName(tag)
+
+        if 'rel' in tag[0].attributes:
+            rel = tag[0].attributes['rel'].value
+
+            if rel == 'item':
+                set_xml_data(tag=tag)
+    elif 'productMetadata' in tag:
+        tag = parser.getElementsByTagName(tag)
+
+        if 'name' in tag[0].attributes:
+            name = tag[0].attributes['name'].value
+            context.xml['name'] = name
+
+        if 'version' in tag[0].attributes:
+            context.xml['version'] = True
+        else:
+            context.xml['version'] = False
+
+        if 'release_date' in tag[0].attributes:
+            context.xml['release_date'] = True
+        else:
+            context.xml['release_date'] = False
+
+        if 'uptime' in tag[0].attributes:
+            context.xml['uptime'] = True
+        else:
+            context.xml['uptime'] = False
+
+        if 'doc' in tag[0].attributes:
+            context.xml['doc'] = True
+        else:
+            context.xml['doc'] = False
+    elif 'domain' in tag:
+        # We need to extract properties.externalId, and for each childResources.link href and title
+        local_name = [x.localName for x in list(parser.getElementsByTagName(tag)[0].childNodes)]
+
+        if 'properties' in local_name:
+            context.xml['properties'] = parser.getElementsByTagName('properties')[0].attributes['externalId'].value
+        else:
+            context.xml['properties'] = None
+
+        if 'childResources' in local_name:
+            child_resources = list(parser.getElementsByTagName('childResources')[0].childNodes)
+            context.xml['childResources'] = [{"href": x.attributes['href'].value, "title": x.attributes['title'].value}
+                                             for x in child_resources]

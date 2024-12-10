@@ -13,22 +13,22 @@ Feature: Test tutorial 405.XACML Rules-based Permissions
     When  I set the "Accept" header with the value "application/xml"
     And   I set the url to "http://localhost:8080/authzforce-ce/version"
     And   I send a GET HTTP request to that url
-    Then  I receive a HTTP "200" response code from AuthZForce with the body equal to "response405-01.xml"
+    Then  I receive a HTTP "200" response code from AuthZForce with the body equal to "response405-01.json"
 
   Scenario: 02 - AuthZForce - List all domains
     When  I set the url to "http://localhost:8080/authzforce-ce/domains"
     And   I send a GET HTTP request to that url
-    Then  I receive a HTTP "200" response code from AuthZForce with the body equal to "response405-02.xml"
+    Then  I receive a HTTP "200" response code from AuthZForce with the body equal to "response405-02.json"
 
   Scenario: 03 - AuthZForce - Read a single domain
     When  I set the "AuthZForce" domains url with the "domainId"
     And   I send a GET HTTP request to that url
-    Then  I receive a HTTP "200" response code from AuthZForce with the body equal to "response405-03.xml"
+    Then  I receive a HTTP "200" response code from AuthZForce with the body equal to "response405-03.json"
 
-  Scenario: 04 - AuthZForce - List all policysetc available within a domain
+  Scenario: 04 - AuthZForce - List all PolicySets available within a domain
     When  I set the "AuthZForce" pap policies url with the "domainId"
     And   I send a GET HTTP request to that url
-    Then  I receive a HTTP "200" response code from AuthZForce with the body equal to "response405-04.xml"
+    Then  I receive a HTTP "200" response code from AuthZForce with the body equal to "response405-04.json"
 
   Scenario: 05 - AuthZForce - List the available revisions of a policyset
     When  I set the "AuthZForce" a pap policy set url with the "domainId" and "policyId"

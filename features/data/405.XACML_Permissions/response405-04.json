@@ -1,0 +1,13 @@
+{
+  "domainId": false,
+  "policies": [
+    {
+      "href": "f8194af5-8a07-486a-9581-c1f05d05483c",
+      "rel": "item"
+    },
+    {
+      "href": "root",
+      "rel": "item"
+    }
+  ]
+}

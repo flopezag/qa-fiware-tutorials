@@ -1,0 +1,7 @@
+{
+  "doc": true,
+  "name": "AuthzForce CE Server",
+  "release_date": true,
+  "uptime": true,
+  "version": true
+}
