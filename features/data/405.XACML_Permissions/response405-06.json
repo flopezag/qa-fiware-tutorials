@@ -1,0 +1,52 @@
+{
+  "id": "f8194af5-8a07-486a-9581-c1f05d05483c",
+  "version": "2",
+  "policyCombiningAlgId": "urn:oasis:names:tc:xacml:3.0:policy-combining-algorithm:deny-unless-permit",
+  "description": "Policy Set for application tutorial-dckr-site-0000-xpresswebapp",
+  "policies": [
+    {
+      "id": "security-role-0000-0000-000000000000",
+      "version": "1.0",
+      "policyCombiningAlgId": "urn:oasis:names:tc:xacml:3.0:rule-combining-algorithm:deny-unless-permit",
+      "rules": [
+        {
+          "id": "alrmbell-ring-0000-0000-000000000000",
+          "effect": "Permit"
+        },
+        {
+          "id": "entrance-open-0000-0000-000000000000",
+          "effect": "Permit"
+        },
+        {
+          "id": "orion-access-0000-0000-000000000000",
+          "effect": "Permit"
+        }
+      ],
+      "description": "Role security-role-0000-0000-000000000000 from application tutorial-dckr-site-0000-xpresswebapp"
+    },
+    {
+      "id": "managers-role-0000-0000-000000000000",
+      "version": "1.0",
+      "policyCombiningAlgId": "urn:oasis:names:tc:xacml:3.0:rule-combining-algorithm:deny-unless-permit",
+      "rules": [
+        {
+          "id": "alrmbell-ring-0000-0000-000000000000",
+          "effect": "Permit"
+        },
+        {
+          "id": "increase-stck-0000-0000-000000000000",
+          "effect": "Permit"
+        },
+        {
+          "id": "pricechg-stck-0000-0000-000000000000",
+          "effect": "Permit"
+        },
+        {
+          "id": "orion-access-0000-0000-000000000000",
+          "effect": "Permit"
+        }
+      ],
+      "description": "Role managers-role-0000-0000-000000000000 from application tutorial-dckr-site-0000-xpresswebapp"
+    }
+  ]
+}

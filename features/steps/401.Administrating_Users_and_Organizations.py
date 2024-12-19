@@ -15,6 +15,7 @@ global adminId
 global userId
 global domainId
 global policyId
+global revisions
 
 
 @when('I set the "AuthZForce" {entity} url with the "domainId"')
@@ -33,6 +34,8 @@ def step_impl(context, entity):
     elif entity == 'pap policies with pdp.properties':
         context.url = f'http://localhost:8080/authzforce-ce/domains/{domainId}/pap/pdp.properties'
 
+    context.operation = ''
+
 
 @when('I set the "AuthZForce" {entity} url with the "domainId" and "policyId"')
 def step_impl(context, entity):
@@ -45,11 +48,21 @@ def step_impl(context, entity):
     if entity == 'a pap policy set':
         context.url = \
             f'http://localhost:8080/authzforce-ce/domains/{domainId}/pap/policies/{policyId}'
-        print(context.url)
-    elif entity == 'to a single version of a pap policy set':
+        context.operation = entity
+
+
+@when('I set the "AuthZForce" {entity} url with the "domainId" and "policyId" and version 2')
+def step_impl(context, entity):
+    """
+    :type context: behave.runner.Context
+    """
+    global domainId
+    global policyId
+
+    if entity == 'to a single version of a pap policy set':
         context.url = \
-            f'http://localhost:8080/authzforce-ce/domains/{domainId}/pap/policies/{policyId}' \
-            f'/{settings.policySetVersion}'
+            f'http://localhost:8080/authzforce-ce/domains/{domainId}/pap/policies/{policyId}/2'
+        context.operation = entity
 
 
 @given(u'I set the tutorial 401')
@@ -679,73 +692,148 @@ def get_xml_data(context, parser):
     :param parser: The XML parser
     :return:
     """
-    global domainId
-    global policyId
     tag = parser.firstChild.tagName
 
     if 'resources' in tag:
-        # We receive a resource, therefore we extract the domainID from ns2:link
-        tag = parser.firstChild.firstChild.tagName
-        tag = parser.getElementsByTagName(tag)
+        analyze_resources(context=context, parser=parser, tag=tag)
+    elif 'link' in tag:
+        analyze_link(parser=parser, tag=tag)
+    elif 'productMetadata' in tag:
+        analyze_product_metadata(context=context, parser=parser, tag=tag)
+    elif 'domain' in tag:
+        # We need to extract properties.externalId, and for each childResources.link href and title
+        analyze_domain(context=context, parser=parser, tag=tag)
+    elif 'PolicySet' in tag:
+        # We need to extract PolicySetId, Version, Description, Policy.PolicyId, Policy.Version, Policy.Description,
+        # Policy.Rule.RuleId, Policy.Rule.Effect
+        analyze_policy_set(context=context, parser=parser, tag=tag)
+    elif 'Response' in tag:
+        analyze_response(context=context, parser=parser, tag=tag)
 
-        if 'title' in tag[0].attributes:
-            context.xml['domainId'] = True
-            domainId = tag[0].attributes['title'].value
-        else:
-            context.xml['domainId'] = False
 
-            if len(list(tag)) > 1:
+def analyze_response(context, parser, tag):
+    context.xml['decision'] = parser.getElementsByTagName(tag)[0].childNodes[0].childNodes[0].childNodes[0].nodeValue
+
+
+def analyze_policy_set(context, parser, tag):
+    context.xml['id'] = parser.getElementsByTagName(tag)[0].attributes['PolicySetId'].value
+    context.xml['version'] = parser.getElementsByTagName(tag)[0].attributes['Version'].value
+    context.xml['policyCombiningAlgId'] = parser.getElementsByTagName(tag)[0].attributes['PolicyCombiningAlgId'].value
+
+    node_name = [x.nodeName for x in list(parser.getElementsByTagName(tag)[0].childNodes)]
+
+    context.xml['description'] = dict()
+    context.xml['policies'] = list()
+
+    # Look for Description and Policy tags
+    for element in parser.getElementsByTagName(tag)[0].childNodes:
+        match element.localName:
+            case 'Description':
+                context.xml['description'] = element.childNodes[0].nodeValue
+            case 'Policy':
+                # There could be a list of policies
+                policy = dict()
+
+                policy['id'] = element.attributes['PolicyId'].value
+                policy['version'] = element.attributes['Version'].value
+                policy['policyCombiningAlgId'] = element.attributes['RuleCombiningAlgId'].value
+                policy['rules'] = list()
+
+                childs = [x for x in element.childNodes if 'Policy' in element.localName]
+
+                for child in childs:
+                    match child.localName:
+                        case 'Description':
+                            policy['description'] = child.childNodes[0].nodeValue
+                        case 'Rule':
+                            rule = dict()
+                            rule['id'] = child.attributes['RuleId'].value
+                            rule['effect'] = child.attributes['Effect'].value
+                            policy['rules'].append(rule)
+
+                context.xml['policies'].append(policy)
+
+    print(context.xml)
+
+
+def analyze_domain(context, parser, tag):
+    local_name = [x.localName for x in list(parser.getElementsByTagName(tag)[0].childNodes)]
+
+    if 'properties' in local_name:
+        context.xml['properties'] = parser.getElementsByTagName('properties')[0].attributes['externalId'].value
+    else:
+        context.xml['properties'] = None
+
+    if 'childResources' in local_name:
+        child_resources = list(parser.getElementsByTagName('childResources')[0].childNodes)
+        context.xml['childResources'] = [{"href": x.attributes['href'].value, "title": x.attributes['title'].value}
+                                         for x in child_resources]
+
+
+def analyze_product_metadata(context, parser, tag):
+    tag = parser.getElementsByTagName(tag)
+
+    if 'name' in tag[0].attributes:
+        name = tag[0].attributes['name'].value
+        context.xml['name'] = name
+
+    if 'version' in tag[0].attributes:
+        context.xml['version'] = True
+    else:
+        context.xml['version'] = False
+
+    if 'release_date' in tag[0].attributes:
+        context.xml['release_date'] = True
+    else:
+        context.xml['release_date'] = False
+
+    if 'uptime' in tag[0].attributes:
+        context.xml['uptime'] = True
+    else:
+        context.xml['uptime'] = False
+
+    if 'doc' in tag[0].attributes:
+        context.xml['doc'] = True
+    else:
+        context.xml['doc'] = False
+
+
+def analyze_link(parser, tag):
+    tag = parser.getElementsByTagName(tag)
+
+    if 'rel' in tag[0].attributes:
+        rel = tag[0].attributes['rel'].value
+
+        if rel == 'item':
+            set_xml_data(tag=tag)
+
+
+def analyze_resources(context, parser, tag):
+    # We receive a resource, therefore we extract the domainID from ns2:link
+    global domainId
+    global revisions
+    global policyId
+
+    tag = parser.firstChild.firstChild.tagName
+    tag = parser.getElementsByTagName(tag)
+
+    if 'title' in tag[0].attributes:
+        context.xml['domainId'] = True
+        domainId = tag[0].attributes['title'].value
+    else:
+        context.xml['domainId'] = False
+
+        if len(list(tag)) > 1:
+            if context.operation == 'a pap policy set':
+                # We are obtaining the List all revisions of a pap policies available for a policyId
+                context.xml['policyId'] = False
+                context.xml['revisions'] = \
+                    [{'href': x.attributes['href'].value, 'rel': x.attributes['rel'].value} for x in list(tag)]
+
+                revisions = [x for x in context.xml['revisions'] if x['href'] != 'root'][0]['href']
+            else:
                 # We are obtaining the List all PolicySets available within a Domain through the resources tag
                 context.xml['policies'] = \
                     [{'href': x.attributes['href'].value, 'rel': x.attributes['rel'].value} for x in list(tag)]
 
                 policyId = [x for x in context.xml['policies'] if x['href'] != 'root'][0]['href']
-
-        # set_xml_data(tag=tag)
-    elif 'link' in tag:
-        tag = parser.getElementsByTagName(tag)
-
-        if 'rel' in tag[0].attributes:
-            rel = tag[0].attributes['rel'].value
-
-            if rel == 'item':
-                set_xml_data(tag=tag)
-    elif 'productMetadata' in tag:
-        tag = parser.getElementsByTagName(tag)
-
-        if 'name' in tag[0].attributes:
-            name = tag[0].attributes['name'].value
-            context.xml['name'] = name
-
-        if 'version' in tag[0].attributes:
-            context.xml['version'] = True
-        else:
-            context.xml['version'] = False
-
-        if 'release_date' in tag[0].attributes:
-            context.xml['release_date'] = True
-        else:
-            context.xml['release_date'] = False
-
-        if 'uptime' in tag[0].attributes:
-            context.xml['uptime'] = True
-        else:
-            context.xml['uptime'] = False
-
-        if 'doc' in tag[0].attributes:
-            context.xml['doc'] = True
-        else:
-            context.xml['doc'] = False
-    elif 'domain' in tag:
-        # We need to extract properties.externalId, and for each childResources.link href and title
-        local_name = [x.localName for x in list(parser.getElementsByTagName(tag)[0].childNodes)]
-
-        if 'properties' in local_name:
-            context.xml['properties'] = parser.getElementsByTagName('properties')[0].attributes['externalId'].value
-        else:
-            context.xml['properties'] = None
-
-        if 'childResources' in local_name:
-            child_resources = list(parser.getElementsByTagName('childResources')[0].childNodes)
-            context.xml['childResources'] = [{"href": x.attributes['href'].value, "title": x.attributes['title'].value}
-                                             for x in child_resources]

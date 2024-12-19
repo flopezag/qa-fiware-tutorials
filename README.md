@@ -17,10 +17,12 @@ can take a look to this [Behave tutorial](https://jenisys.github.io/behave.examp
 
 The following software must be installed:
 
-- Python 3.11
-- pip
-- virtualenv
+- Python 3.12
+- uv 0.5.9
 - allure 2.22.0 (Optional)
+
+To install uv, see the [installation documentation](https://docs.astral.sh/uv/getting-started/installation) 
+for details and alternative installation methods.
 
 To install allure on linux system you can execute the following commands:
 
@@ -30,6 +32,8 @@ sudo tar -zxvf allure-2.22.0.tgz -C /opt/
 sudo ln -s /opt/allure-2.22.0/bin/allure /usr/bin/allure
 allure --version
 ```
+
+
 
 ## Structure of the Project
 
@@ -102,9 +106,9 @@ process is only about the python dependencies, because the python code do not ne
 installation.
 
 1. Clone this repository.
-2. Create the virtualenv: `virtualenv -ppython3.11 venv`.
+2. Create the virtualenv: `uv venv`.
 3. Activate the python environment: `source ./venv/bin/activate`.
-4. Install the requirements: `pip install -r requirements.txt`.
+4. Install the requirements: `; uv pip install -r requirements.txt; uv pip install -r requirements-dev.txt`.
 5. Add the OpenWeatherMap Key Id in the `./config/config.json` file.
 
 To obtain a OpenWeather API Key, you need to register in [OpenWeather](https://openweathermap.org). There is a Free

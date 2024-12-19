@@ -1,0 +1,14 @@
+{
+  "domainId": false,
+  "policyId": false,
+  "revisions": [
+    {
+      "href": "2",
+      "rel": "item"
+    },
+    {
+      "href": "1",
+      "rel": "item"
+    }
+  ]
+}
