@@ -12,8 +12,8 @@
             "addressLocality": "Tiergarten",
             "postalCode": "10557"
         },
-        "schema:name": "Big Red Barn",
-        "fiware:category": "barn",
+        "https://schema.org/name": "Big Red Barn",
+        "https://uri.fiware.org/ns/dataModels#category": "barn",
         "location": {
             "type": "Point",
             "coordinates": [13.3698, 52.5163]

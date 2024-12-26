@@ -6,10 +6,10 @@
         "https://schema.org/address": {
             "type": "Property",
             "value": {
-                "streetAddress": "Großer Stern 1",
-                "addressRegion": "Berlin",
-                "addressLocality": "Tiergarten",
-                "postalCode": "10557"
+                "https://schema.org/streetAddress": "Großer Stern 1",
+                "https://schema.org/addressRegion": "Berlin",
+                "https://schema.org/addressLocality": "Tiergarten",
+                "https://schema.org/postalCode": "10557"
             },
             "https://uri.fiware.org/ns/dataModels#verified": {
                 "type": "Property",
@@ -39,10 +39,10 @@
         "https://schema.org/address": {
             "type": "Property",
             "value": {
-                "streetAddress": "Straße des 17. Juni",
-                "addressRegion": "Berlin",
-                "addressLocality": "Tiergarten",
-                "postalCode": "10557"
+                "https://schema.org/streetAddress": "Straße des 17. Juni",
+                "https://schema.org/addressRegion": "Berlin",
+                "https://schema.org/addressLocality": "Tiergarten",
+                "https://schema.org/postalCode": "10557"
             },
             "https://uri.fiware.org/ns/dataModels#verified": {
                 "type": "Property",
