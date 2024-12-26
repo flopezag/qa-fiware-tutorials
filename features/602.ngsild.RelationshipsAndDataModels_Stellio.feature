@@ -4,11 +4,11 @@ Feature: test tutorial 602 Linked Data: Relationships and Data Models (Stellio)
 #   Parameters to be considered (aka INTERESTING_FEATURES_STRINGS)
 #
     url: https://fiware-tutorials.readthedocs.io/en/latest/relationships-linked-data.html
-    git-clone: https://github.com/stellio-hub/tutorials.Relationships-Linked-Data.git
+    git-clone: https://github.com/FIWARE/tutorials.Relationships-Linked-Data.git
     git-directory: /tmp/tutorials.Relationships-Linked-Data
 
-    shell-commands: git checkout feature/align-vocab-property; ./services stellio
-    #clean-shell-commands: ./services stop
+    shell-commands: git checkout NGSI-v2; ./services stellio
+    clean-shell-commands: ./services stop
 
 #   Overall Note: The tutorial does not say anything out the response code expected.
 #                Even the success code is not always the same! It takes 200, 201, 204 depending on the API
