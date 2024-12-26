@@ -5,6 +5,6 @@
     "maxCapacity": 50,
     "location": {
         "type": "Point",
-        "coordinates": [13.398611, 52.554699]
+        "coordinates": [13.3986112, 52.554699]
     }
 }

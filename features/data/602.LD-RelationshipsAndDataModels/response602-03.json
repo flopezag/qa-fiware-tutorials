@@ -7,7 +7,7 @@
     "location": {
       "type": "Point",
       "coordinates": [
-        13.398611,
+        13.3986112,
         52.554699
       ]
     }
@@ -20,7 +20,7 @@
     "location": {
       "type": "Point",
       "coordinates": [
-        13.398722,
+        13.3987221,
         52.554664
       ]
     }
@@ -33,7 +33,7 @@
     "location": {
       "type": "Point",
       "coordinates": [
-        13.398722,
+        13.3987221,
         52.554664
       ]
     }
@@ -72,7 +72,7 @@
     "location": {
       "type": "Point",
       "coordinates": [
-        13.444711,
+        13.4447112,
         52.503199
       ]
     }
@@ -85,7 +85,7 @@
     "location": {
       "type": "Point",
       "coordinates": [
-        13.444722,
+        13.4447221,
         52.503164
       ]
     }
@@ -98,7 +98,7 @@
     "location": {
       "type": "Point",
       "coordinates": [
-        13.444722,
+        13.4447221,
         52.503164
       ]
     }
@@ -124,8 +124,8 @@
     "location": {
       "type": "Point",
       "coordinates": [
-        13.409411,
-        52.520803
+        13.4094111,
+        52.5208028
       ]
     }
   }
