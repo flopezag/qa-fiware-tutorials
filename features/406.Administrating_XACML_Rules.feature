@@ -1,4 +1,5 @@
 Feature: Test tutorial 406.Administrating_XACML_Rules
+
   This is feature file of the FIWARE step by step tutorial for Administrating XACML rules
   url: https://fiware-tutorials.readthedocs.io/en/latest/administrating-xacml.html
   git-clone: https://github.com/FIWARE/tutorials.Administrating-XACML.git
@@ -10,75 +11,75 @@ Feature: Test tutorial 406.Administrating_XACML_Rules
     Given I set the tutorial 406
 
   Scenario: 01 - Creating a new domain
-    When  I set the url to "http://localhost:8080/authzforce-ce/domains"
+    When  I set the "AuthZForce" to the domain url
     And   I set the "Content-Type" header with the value "application/xml"
     And   the body request described in file "request406-01.xml"
     And   I send a POST HTTP request to that url
-    Then  I receive a HTTP "200" response code from AuthZForce with the body equal to "response406-01.xml"
+    Then  I receive a HTTP "200" response code from AuthZForce with the body containing a href attribute
 
   Scenario: 02 - Request a decision from AuthZForce
-    When  I set the "AuthZForce" to the pdp endpoint url with the "domainId"
+    When  I set the "AuthZForce" to the pdp endpoint url with the previous "domainId"
     And   I set the "Content-Type" header with the value "application/xml"
     And   the body request described in file "request406-02.xml"
     And   I send a POST HTTP request to that url
-    Then  I receive a HTTP "200" response code from AuthZForce with the body equal to "response406-02.xml"
+    Then  I receive a HTTP "200" response code from AuthZForce with the body equal to "response406-02.json"
 
   Scenario: 03 - Creating an initial policy set
-    When  I set the "AuthZForce" pap policies url with the "domainId"
+    When  I set the "AuthZForce" pap policies url with the previous "domainId"
     And   I set the "Content-Type" header with the value "application/xml"
     And   the body request described in file "request406-03.xml"
     And   I send a POST HTTP request to that url
-    Then  I receive a HTTP "200" response code from AuthZForce with the body equal to "response406-03.xml"
+    Then  I receive a HTTP "200" response code from AuthZForce with the body equal to "response406-03.json"
 
   Scenario: 04 - Activating the initial policy set
-    When  I set the "AuthZForce" pap policies with pdp.properties url with the "domainId"
+    When  I set the "AuthZForce" pap policies with pdp.properties url with the previous "domainId"
     And   I set the "Content-Type" header with the value "application/xml"
     And   the body request described in file "request406-04.xml"
     And   I send a PUT HTTP request to that url
-    Then  I receive a HTTP "200" response code from AuthZForce with the body equal to "response406-04.xml"
+    Then  I receive a HTTP "200" response code from AuthZForce with the body equal to "response406-04.json"
 
   Scenario: 05 - Request to access to loading in the white zone
-    When  I set the "AuthZForce" to the pdp endpoint url with the "domainId"
+    When  I set the "AuthZForce" to the pdp endpoint url with the previous "domainId"
     And   I set the "Content-Type" header with the value "application/xml"
     And   the body request described in file "request406-05.xml"
     And   I send a POST HTTP request to that url
-    Then  I receive a HTTP "200" response code from AuthZForce with the body equal to "response406-05.xml"
+    Then  I receive a HTTP "200" response code from AuthZForce with the body equal to "response406-05.json"
 
   Scenario: 06 - Request to access to loading in the red zone
-    When  I set the "AuthZForce" to the pdp endpoint url with the "domainId"
+    When  I set the "AuthZForce" to the pdp endpoint url with the previous "domainId"
     And   I set the "Content-Type" header with the value "application/xml"
     And   the body request described in file "request406-06.xml"
     And   I send a POST HTTP request to that url
-    Then  I receive a HTTP "200" response code from AuthZForce with the body equal to "response406-06.xml"
+    Then  I receive a HTTP "200" response code from AuthZForce with the body equal to "response406-06.json"
 
   Scenario: 07 - Updating a policy set
-    When  I set the "AuthZForce" pap policies url with the "domainId"
+    When  I set the "AuthZForce" pap policies url with the previous "domainId"
     And   I set the "Content-Type" header with the value "application/xml"
     And   the body request described in file "request406-07.xml"
     And   I send a POST HTTP request to that url
-    Then  I receive a HTTP "200" response code from AuthZForce with the body equal to "response406-07.xml"
+    Then  I receive a HTTP "200" response code from AuthZForce with the body equal to "response406-07.json"
 
 
   Scenario: 08 - Activating an updated policy set
-    When  I set the "AuthZForce" pap policies with pdp.properties url with the "domainId"
+    When  I set the "AuthZForce" pap policies with pdp.properties url with the previous "domainId"
     And   I set the "Content-Type" header with the value "application/xml"
     And   the body request described in file "request406-08.xml"
     And   I send a PUT HTTP request to that url
-    Then  I receive a HTTP "200" response code from AuthZForce with the body equal to "response406-08.xml"
+    Then  I receive a HTTP "200" response code from AuthZForce with the body equal to "response406-08.json"
 
   Scenario: 09 - Request to access to loading in the white zone again
-    When  I set the "AuthZForce" to the pdp endpoint url with the "domainId"
+    When  I set the "AuthZForce" to the pdp endpoint url with the previous "domainId"
     And   I set the "Content-Type" header with the value "application/xml"
     And   the body request described in file "request406-09.xml"
     And   I send a POST HTTP request to that url
-    Then  I receive a HTTP "200" response code from AuthZForce with the body equal to "response406-09.xml"
+    Then  I receive a HTTP "200" response code from AuthZForce with the body equal to "response406-09.json"
 
   Scenario: 10 - Request to access to loading in the red zone again
-    When  I set the "AuthZForce" to the pdp endpoint url with the "domainId"
+    When  I set the "AuthZForce" to the pdp endpoint url with the previous "domainId"
     And   I set the "Content-Type" header with the value "application/xml"
     And   the body request described in file "request406-10.xml"
     And   I send a POST HTTP request to that url
-    Then  I receive a HTTP "200" response code from AuthZForce with the body equal to "response406-10.xml"
+    Then  I receive a HTTP "200" response code from AuthZForce with the body equal to "response406-10.json"
 
   Scenario: 11 - Create a token with password
     When   I define the body request described in file "request406-11.json"
@@ -89,6 +90,7 @@ Feature: Test tutorial 406.Administrating_XACML_Rules
       | Status-Code | X-Subject-Token | Connection | data                | excluded                |
       | 201         | any             | keep-alive | response406-11.json | response406-11.excludes |
 
+  # The result obtained is obsolete, there are changes in idm
   Scenario: 12 - Read a Verb-resource permission
     When   I set the "Content-Type" header with the value "application/json"
     And    I set the "X-Auth-token" header with the value "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
@@ -96,6 +98,7 @@ Feature: Test tutorial 406.Administrating_XACML_Rules
     And    I send a GET HTTP request to that url
     Then   I receive a HTTP "200" response code from Keystone with the body equal to "response406-12.json"
 
+  # The result obtained is obsolete, there are changes in idm
   Scenario: 13 - Read a XACML rule permission
     When   I set the "Content-Type" header with the value "application/json"
     And    I set the "X-Auth-token" header with the value "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
@@ -104,12 +107,13 @@ Feature: Test tutorial 406.Administrating_XACML_Rules
     Then   I receive a HTTP "200" response code from Keystone with the body equal to "response406-13.json"
 
   Scenario: 14 - Deny access to a resource
-    When  I set the "AuthZForce" to the pdp endpoint url with the "domainId"
+    When  I set the "AuthZForce" to the pdp endpoint url with the previous "domainId"
     And   I set the "Content-Type" header with the value "application/xml"
     And   the body request described in file "request406-14.xml"
     And   I send a POST HTTP request to that url
-    Then  I receive a HTTP "200" response code from AuthZForce with the body equal to "response406-14.xml"
+    Then  I receive a HTTP "200" response code from AuthZForce with the body equal to "response406-14.json"
 
+  # {"error":{"message":"if use_authorization_service_header is set, authorization_service_header needs to be set","code":400,"title":"Bad Request"}}
   Scenario: 15 - Update an XACML permission
     When   I set the "Content-Type" header with the value "application/json"
     And    I set the "X-Auth-token" header with the value "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
@@ -125,6 +129,7 @@ Feature: Test tutorial 406.Administrating_XACML_Rules
     And    I send a DELETE HTTP request to that url
     Then   I receive a HTTP "204" status code response
 
+# Internal server error: 500
   Scenario: 17 - Passing the updated policy set to AuthZForce, recreating the policy set
     When   I set the "Content-Type" header with the value "application/json"
     And    I set the "X-Auth-token" header with the value "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
@@ -133,9 +138,10 @@ Feature: Test tutorial 406.Administrating_XACML_Rules
     And    I send a POST HTTP request to that url
     Then   I receive a HTTP "201" response code from Keystone with the body equal to "response406-17.json"
 
+  # Decision Deny...
   Scenario: 18 - Permit access to a resource
-    When  I set the "AuthZForce" to the pdp endpoint url with the "domainId"
+    When  I set the "AuthZForce" to the pdp endpoint url with the previous "domainId"
     And   I set the "Content-Type" header with the value "application/xml"
     And   the body request described in file "request406-18.xml"
     And   I send a POST HTTP request to that url
-    Then  I receive a HTTP "200" response code from AuthZForce with the body equal to "response406-18.xml"
+    Then  I receive a HTTP "200" response code from AuthZForce with the body equal to "response406-18.json"

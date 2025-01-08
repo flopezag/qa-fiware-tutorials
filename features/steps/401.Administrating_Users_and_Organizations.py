@@ -3,7 +3,7 @@ from config import settings
 from os.path import join
 from os import environ
 from subprocess import Popen, PIPE
-from hamcrest import assert_that, is_
+from hamcrest import assert_that, is_, equal_to
 from features.funtions import read_data_from_file, dict_diff_with_exclusions
 from json import loads, dumps
 from json.decoder import JSONDecodeError
@@ -16,15 +16,27 @@ global userId
 global domainId
 global policyId
 global revisions
+global policySetId
 
 
-@when('I set the "AuthZForce" {entity} url with the "domainId"')
+@when('I set the "AuthZForce" to the domain url')
+def step_impl(context):
+    """
+    :type context: behave.runner.Context
+    """
+    context.operation = 'set domain'
+    context.url = f'http://localhost:8080/authzforce-ce/domains'
+
+
+@when('I set the "AuthZForce" {entity} url with the previous "domainId"')
 def step_impl(context, entity):
     """
+    :param entity: XACML operation
     :type context: behave.runner.Context
     """
     global domainId
 
+    context.operation = entity
     if entity == 'domains':
         context.url = f'http://localhost:8080/authzforce-ce/domains/{domainId}'
     elif entity == 'pap policies':
@@ -33,8 +45,6 @@ def step_impl(context, entity):
         context.url = f'http://localhost:8080/authzforce-ce/domains/{domainId}/pdp'
     elif entity == 'pap policies with pdp.properties':
         context.url = f'http://localhost:8080/authzforce-ce/domains/{domainId}/pap/pdp.properties'
-
-    context.operation = ''
 
 
 @when('I set the "AuthZForce" {entity} url with the "domainId" and "policyId"')
@@ -630,7 +640,7 @@ def step_impl(context, op):
         else:
             context.response = ''
     except JSONDecodeError:
-        # Tutorial 405 send XML content, we need to parse it
+        # Tutorial 405 and 406 send XML content, we need to parse it
         context.response = response.text
         context.xml = dict()
         parser = minidom.parseString(response.text)
@@ -697,7 +707,7 @@ def get_xml_data(context, parser):
     if 'resources' in tag:
         analyze_resources(context=context, parser=parser, tag=tag)
     elif 'link' in tag:
-        analyze_link(parser=parser, tag=tag)
+        analyze_link(context=context, parser=parser, tag=tag)
     elif 'productMetadata' in tag:
         analyze_product_metadata(context=context, parser=parser, tag=tag)
     elif 'domain' in tag:
@@ -709,6 +719,27 @@ def get_xml_data(context, parser):
         analyze_policy_set(context=context, parser=parser, tag=tag)
     elif 'Response' in tag:
         analyze_response(context=context, parser=parser, tag=tag)
+    elif 'pdpProperties' in tag:
+        analyze_pdp_properties(context=context, parser=parser, tag=tag)
+
+
+def analyze_pdp_properties(context, parser, tag):
+    # Get the rootPolicyRefExpression data
+    data = [x for x in parser.getElementsByTagName(tag)[0].childNodes if 'rootPolicyRefExpression' in x.localName or 'applicablePolicies' in x.localName]
+
+    if len(data) != 2:
+        raise Exception("It is expected that the response include the Nodes "
+                        "'rootPolicyRefExpression' and 'applicablePolicies'")
+    else:
+        rootPolicyRefExpression = (
+            [x for x in data if 'rootPolicyRefExpression' in x.localName][0].childNodes[0].data)
+
+        rootPolicyRef = (
+            [x for x in data if 'applicablePolicies' in x.localName][0].childNodes[0].childNodes[0].data)
+
+        assert_that(rootPolicyRefExpression, equal_to(rootPolicyRef))
+
+        context.xml['rootPolicyRef'] = rootPolicyRef
 
 
 def analyze_response(context, parser, tag):
@@ -798,7 +829,10 @@ def analyze_product_metadata(context, parser, tag):
         context.xml['doc'] = False
 
 
-def analyze_link(parser, tag):
+def analyze_link(context, parser, tag):
+    global domainId
+    global policySetId
+
     tag = parser.getElementsByTagName(tag)
 
     if 'rel' in tag[0].attributes:
@@ -806,6 +840,15 @@ def analyze_link(parser, tag):
 
         if rel == 'item':
             set_xml_data(tag=tag)
+
+    if 'href' in tag[0].attributes:
+        match context.operation:
+            case 'pap policies':
+                policySetId = tag[0].attributes['href'].value
+                context.xml['policySetId'] = policySetId
+            case 'set domain':
+                domainId = tag[0].attributes['href'].value
+                context.xml['domainId'] = domainId
 
 
 def analyze_resources(context, parser, tag):

@@ -1,4 +1,5 @@
 Feature: Test tutorial 405.XACML Rules-based Permissions
+
   This is feature file of the FIWARE step by step tutorial for XACML rules-based permissions
   url: https://fiware-tutorials.readthedocs.io/en/latest/xacml-access-rules.html
   git-clone: https://github.com/FIWARE/tutorials.XACML-Access-Rules.git
@@ -21,16 +22,16 @@ Feature: Test tutorial 405.XACML Rules-based Permissions
     Then  I receive a HTTP "200" response code from AuthZForce with the body equal to "response405-02.json"
 
   Scenario: 03 - AuthZForce - Read a single domain
-    When  I set the "AuthZForce" domains url with the "domainId"
+    When  I set the "AuthZForce" domains url with the previous "domainId"
     And   I send a GET HTTP request to that url
     Then  I receive a HTTP "200" response code from AuthZForce with the body equal to "response405-03.json"
 
   Scenario: 04 - AuthZForce - List all PolicySets available within a domain
-    When  I set the "AuthZForce" pap policies url with the "domainId"
+    When  I set the "AuthZForce" pap policies url with the previous "domainId"
     And   I send a GET HTTP request to that url
     Then  I receive a HTTP "200" response code from AuthZForce with the body equal to "response405-04.json"
 
-  Scenario: 05 - AuthZForce - List the available revisions of a policyset
+  Scenario: 05 - AuthZForce - List the available revisions of a PolicySet
     When  I set the "AuthZForce" a pap policy set url with the "domainId" and "policyId"
     And   I send a GET HTTP request to that url
     Then  I receive a HTTP "200" response code from AuthZForce with the body equal to "response405-05.json"
@@ -41,19 +42,20 @@ Feature: Test tutorial 405.XACML Rules-based Permissions
     Then  I receive a HTTP "200" response code from AuthZForce with the body equal to "response405-06.json"
 
   Scenario: 07 - AuthZForce - Permit access to a resource
-    When  I set the "AuthZForce" to the pdp endpoint url with the "domainId"
+    When  I set the "AuthZForce" to the pdp endpoint url with the previous "domainId"
     And   I set the "Content-Type" header with the value "application/xml"
     And   the body request described in file "request405-07.xml"
     And   I send a POST HTTP request to that url
     Then  I receive a HTTP "200" response code from AuthZForce with the body equal to "response405-07.json"
 
   Scenario: 08 - AuthZForce - Deny access to a resource
-    When  I set the "AuthZForce" to the pdp endpoint url with the "domainId"
+    When  I set the "AuthZForce" to the pdp endpoint url with the previous "domainId"
     And   I set the "Content-Type" header with the value "application/xml"
     And   the body request described in file "request405-08.xml"
     And   I send a POST HTTP request to that url
     Then  I receive a HTTP "200" response code from AuthZForce with the body equal to "response405-08.json"
 
+  # Assertion Failed: The token_type received is not the expected value, received: bearer, but was expected Bearer
   Scenario: 09 - Keystone - User obtain an access token
     When  I set the "Authorization" header with the value "Basic dHV0b3JpYWwtZGNrci1zaXRlLTAwMDAteHByZXNzd2ViYXBwOnR1dG9yaWFsLWRja3Itc2l0ZS0wMDAwLWNsaWVudHNlY3JldA=="
     And   I set the "Content-Type" header with the value "application/x-www-form-urlencoded"
@@ -65,6 +67,7 @@ Feature: Test tutorial 405.XACML Rules-based Permissions
             | access_token | token_type | scope         |
             | any          | Bearer     | ["permanent"] |
 
+  # The result obtained is obsolete, there are changes in idm
   Scenario: 10 - Keystone - Obtain roles and domain
     When  I set the user url to obtain roles and domain with the following data
             | access_token | app_id                               |
@@ -73,7 +76,7 @@ Feature: Test tutorial 405.XACML Rules-based Permissions
     Then  I receive a HTTP "200" response code from Keyrock with the body equal to "response405-10.json"
 
   Scenario: 11 - AuthZForce - Apply a policy to a request
-    When  I set the "AuthZForce" to the pdp endpoint url with the "domainId"
+    When  I set the "AuthZForce" to the pdp endpoint url with the previous "domainId"
     And   I set the "Content-Type" header with the value "application/xml"
     And   the body request described in file "request405-11.xml"
     And   I send a POST HTTP request to that url

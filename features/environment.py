@@ -129,6 +129,7 @@ def before_feature(context, feature):
         if exists(parameters['git-directory']):
             # Remove folder
             stdout.write(f'\nDeleting temporal folder...\n')
+            # TODO: Tutorial 406 tutorials.Administrating-XACML creates folder with root root that cannot be deleted
             rmtree(context.parameters['git-directory'])
 
         git("clone", parameters['git-clone'], parameters['git-directory'])
@@ -206,6 +207,7 @@ def after_feature(context, feature):
 
     if 'git-directory' in context.parameters:
         stdout.write(f'\nDeleting temporal folder...\n')
+        # TODO: Tutorial 406 tutorials.Administrating-XACML creates folder with root root that cannot be deleted
         rmtree(context.parameters['git-directory'])
 
     # Cleaning docker network

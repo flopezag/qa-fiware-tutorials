@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<ns2:Response xmlns="http://www.w3.org/2005/Atom" xmlns:ns2="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" xmlns:ns3="http://authzforce.github.io/core/xmlns/pdp/6.0" xmlns:ns4="http://authzforce.github.io/rest-api-model/xmlns/authz/5" xmlns:ns5="http://authzforce.github.io/pap-dao-flat-file/xmlns/properties/3.6">
-    <ns2:Result>
-        <ns2:Decision>Deny</ns2:Decision>
-    </ns2:Result>
-</ns2:Response>
