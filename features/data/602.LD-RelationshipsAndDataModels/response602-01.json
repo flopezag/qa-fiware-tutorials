@@ -1,16 +1,16 @@
 [
   {
-    "@context": "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.6.jsonld",
+    "@context": "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.8.jsonld",
     "id": "urn:ngsi-ld:Building:store001",
     "type": "https://uri.fiware.org/ns/data-models#Building",
     "https://uri.fiware.org/ns/data-models#category": {
-      "vocab": "https://wiki.openstreetmap.org/wiki/Tag:building%3Dcommercial"
+      "vocab": "openstreetmap:commercial"
     },
     "https://schema.org/address": {
-      "streetAddress": "Bornholmer Straße 65",
-      "addressRegion": "Berlin",
-      "addressLocality": "Prenzlauer Berg",
-      "postalCode": "10439"
+      "https://schema.org/streetAddress": "Bornholmer Straße 65",
+      "https://schema.org/addressRegion": "Berlin",
+      "https://schema.org/addressLocality": "Prenzlauer Berg",
+      "https://schema.org/postalCode": "10439"
     },
     "location": {
       "type": "Point",
@@ -22,17 +22,17 @@
     "https://schema.org/name": "Bösebrücke Einkauf"
   },
   {
-    "@context": "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.6.jsonld",
+    "@context": "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.8.jsonld",
     "id": "urn:ngsi-ld:Building:store002",
     "type": "https://uri.fiware.org/ns/data-models#Building",
     "https://uri.fiware.org/ns/data-models#category": {
-      "vocab": "https://wiki.openstreetmap.org/wiki/Tag:building%3Dcommercial"
+      "vocab": "openstreetmap:commercial"
     },
     "https://schema.org/address": {
-      "streetAddress": "Friedrichstraße 44",
-      "addressRegion": "Berlin",
-      "addressLocality": "Kreuzberg",
-      "postalCode": "10969"
+      "https://schema.org/streetAddress": "Friedrichstraße 44",
+      "https://schema.org/addressRegion": "Berlin",
+      "https://schema.org/addressLocality": "Kreuzberg",
+      "https://schema.org/postalCode": "10969"
     },
     "location": {
       "type": "Point",
@@ -44,17 +44,17 @@
     "https://schema.org/name": "Checkpoint Markt"
   },
   {
-    "@context": "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.6.jsonld",
+    "@context": "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.8.jsonld",
     "id": "urn:ngsi-ld:Building:store003",
     "type": "https://uri.fiware.org/ns/data-models#Building",
     "https://uri.fiware.org/ns/data-models#category": {
-      "vocab": "https://wiki.openstreetmap.org/wiki/Tag:building%3Dcommercial"
+      "vocab": "openstreetmap:commercial"
     },
     "https://schema.org/address": {
-      "streetAddress": "Mühlenstrasse 10",
-      "addressRegion": "Berlin",
-      "addressLocality": "Friedrichshain",
-      "postalCode": "10243"
+      "https://schema.org/streetAddress": "Mühlenstrasse 10",
+      "https://schema.org/addressRegion": "Berlin",
+      "https://schema.org/addressLocality": "Friedrichshain",
+      "https://schema.org/postalCode": "10243"
     },
     "location": {
       "type": "Point",
@@ -66,17 +66,17 @@
     "https://schema.org/name": "East Side Galleria"
   },
   {
-    "@context": "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.6.jsonld",
+    "@context": "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.8.jsonld",
     "id": "urn:ngsi-ld:Building:store004",
     "type": "https://uri.fiware.org/ns/data-models#Building",
     "https://uri.fiware.org/ns/data-models#category": {
-      "vocab": "https://wiki.openstreetmap.org/wiki/Tag:building%3Dcommercial"
+      "vocab": "openstreetmap:commercial"
     },
     "https://schema.org/address": {
-      "streetAddress": "Panoramastraße 1A",
-      "addressRegion": "Berlin",
-      "addressLocality": "Mitte",
-      "postalCode": "10178"
+      "https://schema.org/streetAddress": "Panoramastraße 1A",
+      "https://schema.org/addressRegion": "Berlin",
+      "https://schema.org/addressLocality": "Mitte",
+      "https://schema.org/postalCode": "10178"
     },
     "location": {
       "type": "Point",
