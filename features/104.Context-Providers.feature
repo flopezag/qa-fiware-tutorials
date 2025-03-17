@@ -1,4 +1,4 @@
-Feature: test tutorial 104.Context Data and Context Providers
+Feature: Test tutorial 104.Context Data and Context Providers
 
     This is feature file of the FIWARE step by step tutorial for Context Data and Context Providers
 

@@ -29,7 +29,6 @@ def step_impl(context, expr):
     print(pl)
     i = iter(jqe.input(pl))
     r = next(i, None)
-    assert r == True
     assert(r == True), \
         (f"\nThe evaluation of the jq expression was False, received {pl} and expression was {expr},"
          f" expected value was 'True'")

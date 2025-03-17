@@ -1,4 +1,4 @@
-Feature: test tutorial 602 Linked Data: Relationships and Data Models (Orion-LD)
+Feature: Test tutorial 602 Linked Data: Relationships and Data Models (Orion-LD)
 
 #
 #   Parameters to be considered (aka INTERESTING_FEATURES_STRINGS)

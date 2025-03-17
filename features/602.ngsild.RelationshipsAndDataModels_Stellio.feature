@@ -1,4 +1,4 @@
-Feature: test tutorial 602 Linked Data: Relationships and Data Models (Stellio)
+Feature: Test tutorial 602 Linked Data: Relationships and Data Models (Stellio)
 
 #
 #   Parameters to be considered (aka INTERESTING_FEATURES_STRINGS)

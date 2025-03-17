@@ -1,4 +1,4 @@
-Feature: test tutorial 305.Big Data (Flink)
+Feature: Test tutorial 305.Big Data (Flink)
 
   This is the feature file of the FIWARE Step by Step tutorial for Big Data (Flink)
   url: https://fiware-tutorials.readthedocs.io/en/latest/big-data-flink.html

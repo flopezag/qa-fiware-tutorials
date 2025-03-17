@@ -5,7 +5,7 @@
 # version 21 July 2021
 #
 
-Feature: test tutorial 102.Entity_Relationships
+Feature: Test tutorial 102.Entity_Relationships
 
   This is the feature file of the FIWARE Step by Step tutorial for NGSI-v2
   url: https://fiware-tutorials.readthedocs.io/en/latest/entity-relationships.html

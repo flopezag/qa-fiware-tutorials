@@ -1,4 +1,4 @@
-Feature: test tutorial 304.Time-Series Data with QuantumLeap
+Feature: Test tutorial 304.Time-Series Data with QuantumLeap
 
   This is the feature file of the FIWARE Step by Step tutorial for Time-Series Data with QuantumLeap
   url: https://fiware-tutorials.readthedocs.io/en/latest/time-series-data.html

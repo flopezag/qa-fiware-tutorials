@@ -1,4 +1,4 @@
-Feature: test tutorial 301.Persisting Context Data using Apache Flume (PostgreSQL)
+Feature: Test tutorial 301.Persisting Context Data using Apache Flume (PostgreSQL)
 
   This is the feature file of the FIWARE Step by Step tutorial for Persisting Context Data using Apache Flume (PostgreSQL)
   url: https://fiware-tutorials.readthedocs.io/en/latest/historic-context-flume.html

@@ -32,8 +32,8 @@ function function_three {
   behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/303.Short_term_history_sthcomet.feature
   behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/303.Short_term_history_cygnus.feature
   behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/304.Time_Series_Data.feature
-  # F behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/305.Big_Data_Flink.feature
-  # F behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/305.Big_Data_Spark.feature
+  behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/305.Big_Data_Flink.feature
+  behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/306.Big_Data_Spark.feature
 }
 
 function function_four {
@@ -85,8 +85,8 @@ function function_all {
   behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/303.Short_term_history_sthcomet.feature
   behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/303.Short_term_history_cygnus.feature
   behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/304.Time_Series_Data.feature
-  # F behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/305.Big_Data_Flink.feature
-  # F behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/305.Big_Data_Spark.feature
+  behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/305.Big_Data_Flink.feature
+  behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/306.Big_Data_Spark.feature
 
   behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/401.Administrating_Users_and_Organizations.feature
   behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/402.Managing_roles_and_permissions.feature

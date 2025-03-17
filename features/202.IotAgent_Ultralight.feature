@@ -1,4 +1,4 @@
-Feature: test tutorial 202.Introduction to IoT Agent Ultralight
+Feature: Test tutorial 202.Introduction to IoT Agent Ultralight
 
     This is feature file of the FIWARE step by step tutorial for IoT Agent Ultrlight
     url: https://fiware-tutorials.readthedocs.io/en/latest/iot-agent.html

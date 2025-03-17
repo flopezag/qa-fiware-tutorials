@@ -1,4 +1,4 @@
-Feature: test tutorial 306.Big Data (Spark)
+Feature: Test tutorial 306.Big Data (Spark)
 
   This is the feature file of the FIWARE Step by Step tutorial for Big Data (Spark)
   url: https://fiware-tutorials.readthedocs.io/en/latest/big-data-spark.html

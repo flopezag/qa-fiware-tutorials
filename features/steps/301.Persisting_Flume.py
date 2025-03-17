@@ -19,6 +19,7 @@ def step_impl(context):
     context.data_home = join(join(join(CODE_HOME, "features"), "data"), "301.Persisting_Flume")
 
 
+@given(u'The fiware-service header is "{fiware_service}" and the fiware-servicepath header is "{fiware_servicepath}"')
 @given(u'the fiware-service header is "{fiware_service}" and the fiware-servicepath header is "{fiware_servicepath}"')
 def fiware_service_headers(context, fiware_service, fiware_servicepath):
     context.headers = {"fiware-service": fiware_service, "fiware-servicepath": fiware_servicepath}
@@ -369,7 +370,7 @@ def step_impl(context):
     context.obtained_schemas = [i[0] for i in context.my_results]
 
 
-@when('I request "10" elements from the table "openiot.motion_001_motion"')
+@when(u'I request "10" elements from the table "openiot.Motion_001_Motion"')
 def step_impl(context):
     try:
         context.connection = create_engine(context.connection_string, pool_recycle=3600, pool_pre_ping=True)
@@ -390,7 +391,28 @@ def step_impl(context):
         context.my_results = []
 
 
-@when('I request "recvtime", "attrvalue" from the table "openiot.motion_001_motion" limited to "10" registers')
+@when(u'I request "10" elements from the table "openiot.motion_001_motion"')
+def step_impl(context):
+    try:
+        context.connection = create_engine(context.connection_string, pool_recycle=3600, pool_pre_ping=True)
+        context.connection = context.connection.connect()
+
+        context.connection.execute(text('SET GLOBAL net_read_timeout=600'))
+        context.connection.execute(text('SET GLOBAL connect_timeout=600'))
+        context.connection.execute(text('SET GLOBAL wait_timeout=600'))
+
+        sleep(8)  # Delays for 8 seconds.
+
+        query = text('SELECT * FROM openiot.motion_001_motion limit 10;')
+        context.cursor = context.connection.execute(query)
+
+        context.my_results = context.cursor.fetchall()
+    except Exception as e:
+        stdout.write(f'error: {e}\n\n')
+        context.my_results = []
+
+
+@when(u'I request "recvtime", "attrvalue" from the table "openiot.Motion_001_Motion" limited to "10" registers')
 def step_impl(context):
     try:
         context.connection = create_engine(context.connection_string, pool_recycle=3600, pool_pre_ping=True)
@@ -403,6 +425,26 @@ def step_impl(context):
         sleep(8)  # Delays for 8 seconds.
 
         query = text("SELECT recvtime, attrvalue FROM openiot.Motion_001_Motion WHERE attrname ='count' LIMIT 10;")
+        context.cursor = context.connection.execute(query)
+        context.my_results = context.cursor.fetchall()
+    except Exception as e:
+        stdout.write(f'error: {e}\n\n')
+        context.my_results = []
+
+
+@when(u'I request "recvtime", "attrvalue" from the table "openiot.motion_001_motion" limited to "10" registers')
+def step_impl(context):
+    try:
+        context.connection = create_engine(context.connection_string, pool_recycle=3600, pool_pre_ping=True)
+        context.connection = context.connection.connect()
+
+        context.connection.execute(text('SET GLOBAL net_read_timeout=600'))
+        context.connection.execute(text('SET GLOBAL connect_timeout=600'))
+        context.connection.execute(text('SET GLOBAL wait_timeout=600'))
+
+        sleep(8)  # Delays for 8 seconds.
+
+        query = text("SELECT recvtime, attrvalue FROM openiot.motion_001_motion WHERE attrname ='count' LIMIT 10;")
         context.cursor = context.connection.execute(query)
         context.my_results = context.cursor.fetchall()
     except Exception as e:

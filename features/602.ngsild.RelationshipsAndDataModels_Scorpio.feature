@@ -1,4 +1,4 @@
-Feature: test tutorial 602 Linked Data: Relationships and Data Models (Scorpio)
+Feature: Test tutorial 602 Linked Data: Relationships and Data Models (Scorpio)
 
 #
 #   Parameters to be considered (aka INTERESTING_FEATURES_STRINGS)

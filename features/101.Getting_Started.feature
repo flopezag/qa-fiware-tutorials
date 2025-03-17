@@ -1,4 +1,4 @@
-Feature: test tutorial 101.Getting Started
+Feature: Test tutorial 101.Getting Started
 
   This is the feature file of the FIWARE Step by Step tutorial for NGSI-v2
   url: https://fiware-tutorials.readthedocs.io/en/latest/getting-started.html

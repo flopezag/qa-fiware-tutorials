@@ -38,8 +38,8 @@ function function_four {
   echo
 
   behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/601.ngsild.Intro_Orion-LD.feature
-  # behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/601.ngsild.Intro_Scorpio.feature
-  # behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/601.ngsild.Intro_Stellio.feature
+  behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/601.ngsild.Intro_Scorpio.feature
+  behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/601.ngsild.Intro_Stellio.feature
   behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/602.ngsild.RelationshipsAndDataModels_Orion-LD.feature
   # behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/602.ngsild.RelationshipsAndDataModels_Scorpio.feature
   # behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/602.ngsild.RelationshipsAndDataModels_Stellio.feature
@@ -72,8 +72,8 @@ function function_all {
   # F behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/302.ngsild.BigDataFlink_orionld.feature
   # F behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/306.ngsild.BigDataSpark_orionld.feature
   behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/601.ngsild.Intro_Orion-LD.feature
-  # behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/601.ngsild.Intro_Scorpio.feature
-  # behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/601.ngsild.Intro_Stellio.feature
+  behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/601.ngsild.Intro_Scorpio.feature
+  behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/601.ngsild.Intro_Stellio.feature
   behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/602.ngsild.RelationshipsAndDataModels_Orion-LD.feature
   # behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/602.ngsild.RelationshipsAndDataModels_Scorpio.feature
   # behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/602.ngsild.RelationshipsAndDataModels_Stellio.feature

@@ -551,7 +551,7 @@ def step_impl(context, url):
 
 
 @step('the content-type header key equal to "{value}"')
-@when('the content-type header key equal to "{value}"')
+@when('The content-type header key equal to "{value}"')
 def step_impl(context, value):
     """
     :param value: The corresponding value of the Content-Type key

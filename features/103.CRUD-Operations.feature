@@ -5,7 +5,7 @@
 # version 27 July 2021
 #
 
-Feature: test tutorial 103.CRUD-Operations
+Feature: Test tutorial 103.CRUD-Operations
 
   This is the feature file of the FIWARE Step by Step tutorial for NGSI-v2
   url: https://fiware-tutorials.readthedocs.io/en/latest/crud-operations.html
@@ -20,7 +20,7 @@ Feature: test tutorial 103.CRUD-Operations
 
   Scenario: Checking the service health
     When  I send GET HTTP request to "http://localhost:1026/version"
-    Then  I receive a HTTP "200" response code from Orion with the body equal to "response101-01.json"
+    Then  I receive a HTTP "200" response code from Orion with the body "response101-01.json" and exclusions "response101-01.excludes"
 
 
 #
