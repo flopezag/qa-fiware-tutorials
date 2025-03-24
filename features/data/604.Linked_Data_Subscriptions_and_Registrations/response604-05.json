@@ -2,7 +2,7 @@
     {
         "@context": [
             "http://context/user-context.jsonld",
-            "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.6.jsonld"
+            "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.8.jsonld"
         ],
         "id": "urn:ngsi-ld:ContextSourceRegistration:5e6242179c26be5aef9991d4",
         "type": "ContextSourceRegistration",
@@ -18,12 +18,10 @@
                 "propertyNames": ["tweets"]
             }
         ],
-        "contextSourceInfo": [
-            {
+        "contextSourceInfo": {
                 "key": "jsonldContext",
                 "value": "http://context/user-context.jsonld"
-            }
-        ],
+        },
         "mode": "exclusive",
         "operations": ["updateOps", "retrieveOps"]
     }

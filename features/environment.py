@@ -153,22 +153,15 @@ def before_feature(context, feature):
 
 
 def get_broker_name_and_context(parameter) -> [str, str]:
-    brokers = ['orion', 'orion-ld', 'scorpio', 'stellio']
     core_context = {
-        'orion': 'https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.6.jsonld',
-        'orion-ld': 'https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.6.jsonld',
+        'orion': 'https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.8.jsonld',
+        'orion-ld': 'https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.8.jsonld',
         'stellio': 'https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.8.jsonld',
-        'scorpio': 'https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.7.jsonld'
+        'scorpio': 'https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.8.jsonld'
     }
+    brokers = list(core_context.keys())
 
-    idx: int = 0
-    broker: str = ''
-
-    for broker in brokers:
-        idx = parameter.find(broker)
-
-        if idx != -1:
-            break
+    broker = [broker for broker in brokers if parameter.find(broker) != -1][0]
 
     return broker, core_context[broker]
 

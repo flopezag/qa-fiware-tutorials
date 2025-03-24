@@ -23,8 +23,8 @@
         "value": "Bösebrücke Einkauf"
     },
     "category": {
-        "type": "Property",
-        "value": "commercial"
+        "type": "VocabProperty",
+        "vocab": "commercial"
     },
     "location": {
         "type": "GeoProperty",

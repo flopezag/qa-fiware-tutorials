@@ -1,9 +1,9 @@
 {
     "id": "urn:ngsi-ld:Building:store003",
     "type": "ビル",
-    "家具": {
-        "type": "Relationship",
-        "object": ["urn:ngsi-ld:Shelf:unit006", "urn:ngsi-ld:Shelf:unit007", "urn:ngsi-ld:Shelf:unit008"]
+    "カテゴリー": {
+        "type": "VocabProperty",
+        "vocab": "コマーシャル"
     },
     "住所": {
         "type": "Property",
@@ -13,12 +13,31 @@
             "addressLocality": "Friedrichshain",
             "postalCode": "10243"
         },
-        "検証済み": { "type": "Property", "value": false }
+        "検証済み": {
+            "type": "Property",
+            "value": false
+        }
     },
-    "名前": { "type": "Property", "value": "East Side Galleria" },
-    "カテゴリー": { "type": "VocabularyProperty", "vocab": "コマーシャル" },
     "location": {
         "type": "GeoProperty",
-        "value": { "type": "Point", "coordinates": [13.4447, 52.5031] }
+        "value": {
+            "type": "Point",
+            "coordinates": [
+                13.4447,
+                52.5031
+            ]
+        }
+    },
+    "名前": {
+        "type": "Property",
+        "value": "East Side Galleria"
+    },
+    "家具": {
+        "type": "Relationship",
+        "object": [
+            "urn:ngsi-ld:Shelf:unit006",
+            "urn:ngsi-ld:Shelf:unit007",
+            "urn:ngsi-ld:Shelf:unit008"
+        ]
     }
 }

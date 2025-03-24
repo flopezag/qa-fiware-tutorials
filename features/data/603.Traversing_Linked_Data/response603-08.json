@@ -2,7 +2,7 @@
     "id": "urn:ngsi-ld:Building:store005",
     "type": "Building",
     "category": {
-        "type": "VocabularyProperty",
+        "type": "VocabProperty",
         "vocab":  "commercial"
     },
     "address": {

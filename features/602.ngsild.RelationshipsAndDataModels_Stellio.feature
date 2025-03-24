@@ -90,8 +90,11 @@ Feature: Test tutorial 602 Linked Data: Relationships and Data Models (Stellio)
 #
     Scenario: [8] FIND THE IDS OF ALL SHELF UNITS IN A STORE
       When  I send GET HTTP request to Stellio at "http://localhost:1026/ngsi-ld/v1/entities/"
-      And   With header 'Accept$application/json$Link$<https://fiware.github.io/tutorials.Step-by-Step/tutorials-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"'
-      And   With parameters "type$Shelf$options$keyValues$attrs$locatedIn"
+      And   I set header Accept to application/json
+      And   I set header Link to <https://fiware.github.io/tutorials.Step-by-Step/tutorials-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"
+      And   the params equal to "type=Shelf"
+      And   the params equal to "options=keyValues"
+      And   the params equal to "attrs=locatedIn"
       Then  I receive from Stellio "200" response code with the body equal to "response602-08.json"
 
 
@@ -117,8 +120,10 @@ Feature: Test tutorial 602 Linked Data: Relationships and Data Models (Stellio)
 #
     Scenario: [10] FINDING ALL SHELF UNITS FOUND WITHIN A STORE
       When  I send GET HTTP request to Stellio at "http://localhost:1026/ngsi-ld/v1/entities/urn:ngsi-ld:Building:store001"
-      And   With header 'Accept$application/json$Link$<https://fiware.github.io/tutorials.Step-by-Step/tutorials-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"'
-      And   With parameters "options$keyValues$attrs$furniture"
+      And   I set header Accept to application/json
+      And   I set header Link to <https://fiware.github.io/tutorials.Step-by-Step/tutorials-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"
+      And   the params equal to "options=keyValues"
+      And   the params equal to "attrs=furniture"
       Then  I receive from Stellio "200" response code with the body equal to "response602-10.json"
 
 
@@ -144,8 +149,12 @@ Feature: Test tutorial 602 Linked Data: Relationships and Data Models (Stellio)
 #
     Scenario: [12] FINDING ALL SHELF UNITS FOUND WITHIN A STORE
       When  I send GET HTTP request to Stellio at "http://localhost:1026/ngsi-ld/v1/entities/"
-      And   With header 'Accept$application/json$Link$<https://fiware.github.io/tutorials.Step-by-Step/tutorials-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"'
-      And   With parameters "type$StockOrder$q$orderedProduct=="urn:ngsi-ld:Product:001"$attrs$requestedFor$options$keyValues"
+      And   I set header Accept to application/json
+      And   I set header Link to <https://fiware.github.io/tutorials.Step-by-Step/tutorials-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"
+      And   the params equal to "type=StockOrder"
+      And   the params equal to "q=orderedProduct=="urn:ngsi-ld:Product:001""
+      And   the params equal to "attrs=requestedFor"
+      And   the params equal to "options=keyValues"
       Then  I receive from Stellio "200" response code with the body equal to "response602-12.json"
 
 
@@ -154,8 +163,12 @@ Feature: Test tutorial 602 Linked Data: Relationships and Data Models (Stellio)
 #
     Scenario: [13] FIND ALL PRODUCTS SOLD IN A STORE
       When  I send GET HTTP request to Stellio at "http://localhost:1026/ngsi-ld/v1/entities/"
-      And   With header 'Accept$application/json$Link$<https://fiware.github.io/tutorials.Step-by-Step/tutorials-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"'
-      And   With parameters "type$StockOrder$q$requestedFor=="urn:ngsi-ld:Building:store001"$attrs$orderedProduct$options$keyValues"
+      And   I set header Accept to application/json
+      And   I set header Link to <https://fiware.github.io/tutorials.Step-by-Step/tutorials-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"
+      And   the params equal to "type=StockOrder"
+      And   the params equal to "q=requestedFor=="urn:ngsi-ld:Building:store001""
+      And   the params equal to "attrs=orderedProduct"
+      And   the params equal to "options=keyValues"
       Then  I receive from Stellio "200" response code with the body equal to "response602-13.json"
 
 

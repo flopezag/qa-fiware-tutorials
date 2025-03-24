@@ -27,7 +27,6 @@
             },
             "status": "ok"
         },
-        "origin": "cache",
         "jsonldContext": "http://context/user-context.jsonld"
     },
     {
@@ -58,7 +57,6 @@
             },
             "status": "ok"
         },
-        "origin": "cache",
         "jsonldContext": "http://context/user-context.jsonld"
     }
 ]

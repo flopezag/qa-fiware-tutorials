@@ -1,0 +1,90 @@
+[
+  {
+    "@context": ["https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.8.jsonld"],
+    "id": "urn:ngsi-ld:Building:store001",
+    "type": "https://uri.fiware.org/ns/data-models#Building",
+    "https://uri.fiware.org/ns/data-models#category": {
+      "vocab": "https://wiki.openstreetmap.org/wiki/Tag:building%3Dcommercial"
+    },
+    "https://schema.org/address": {
+      "https://schema.org/streetAddress": "Bornholmer Straße 65",
+      "https://schema.org/addressRegion": "Berlin",
+      "https://schema.org/addressLocality": "Prenzlauer Berg",
+      "https://schema.org/postalCode": "10439"
+    },
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        13.3986,
+        52.5547
+      ]
+    },
+    "https://schema.org/name": "Bösebrücke Einkauf"
+  },
+  {
+    "@context": ["https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.8.jsonld"],
+    "id": "urn:ngsi-ld:Building:store002",
+    "type": "https://uri.fiware.org/ns/data-models#Building",
+    "https://uri.fiware.org/ns/data-models#category": {
+      "vocab": "https://wiki.openstreetmap.org/wiki/Tag:building%3Dcommercial"
+    },
+    "https://schema.org/address": {
+      "https://schema.org/streetAddress": "Friedrichstraße 44",
+      "https://schema.org/addressRegion": "Berlin",
+      "https://schema.org/addressLocality": "Kreuzberg",
+      "https://schema.org/postalCode": "10969"
+    },
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        13.3903,
+        52.5075
+      ]
+    },
+    "https://schema.org/name": "Checkpoint Markt"
+  },
+  {
+    "@context": ["https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.8.jsonld"],
+    "id": "urn:ngsi-ld:Building:store003",
+    "type": "https://uri.fiware.org/ns/data-models#Building",
+    "https://uri.fiware.org/ns/data-models#category": {
+      "vocab": "openstreetmap:commercial"
+    },
+    "https://schema.org/address": {
+      "https://schema.org/streetAddress": "Mühlenstrasse 10",
+      "https://schema.org/addressRegion": "Berlin",
+      "https://schema.org/addressLocality": "Friedrichshain",
+      "https://schema.org/postalCode": "10243"
+    },
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        13.4447,
+        52.5031
+      ]
+    },
+    "https://schema.org/name": "East Side Galleria"
+  },
+  {
+    "@context": ["https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.8.jsonld"],
+    "id": "urn:ngsi-ld:Building:store004",
+    "type": "https://uri.fiware.org/ns/data-models#Building",
+    "https://uri.fiware.org/ns/data-models#category": {
+      "vocab": "openstreetmap:commercial"
+    },
+    "https://schema.org/address": {
+      "https://schema.org/streetAddress": "Panoramastraße 1A",
+      "https://schema.org/addressRegion": "Berlin",
+      "https://schema.org/addressLocality": "Mitte",
+      "https://schema.org/postalCode": "10178"
+    },
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        13.4094,
+        52.5208
+      ]
+    },
+    "https://schema.org/name": "Tower Trödelmarkt"
+  }
+]

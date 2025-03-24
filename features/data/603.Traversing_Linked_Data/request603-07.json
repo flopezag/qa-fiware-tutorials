@@ -1,7 +1,7 @@
 {
     "id": "urn:ngsi-ld:Building:store005",
     "type": "ビル",
-    "カテゴリー": {"type": "VocabularyProperty", "vocab": ["コマーシャル"]},
+    "カテゴリー": {"type": "VocabProperty", "vocab": ["コマーシャル"]},
     "住所": {
         "type": "Property",
         "value": {

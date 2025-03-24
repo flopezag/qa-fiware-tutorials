@@ -4,10 +4,10 @@
     "住所": {
         "タイプ": "プロパティ",
         "値": {
-            "addressLocality": "Marzahn",
-            "addressRegion": "Berlin",
-            "postalCode": "12685",
-            "streetAddress": "Eisenacher Straße 98"
+            "schema:addressLocality": "Marzahn",
+            "schema:addressRegion": "Berlin",
+            "schema:postalCode": "12685",
+            "schema:streetAddress": "Eisenacher Straße 98"
         }
     },
     "名前": {

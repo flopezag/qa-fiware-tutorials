@@ -1,5 +1,5 @@
-Feature: Test tutorial 603.Traversing_Linked_Data (OrionLD)
-  This is feature file of the FIWARE step by step tutorial for Traversing Linked Data (Orion)
+Feature: Test tutorial 603.Traversing_Linked_Data (Orion-LD)
+  This is feature file of the FIWARE step by step tutorial for Traversing Linked Data (Orion-LD)
   url: https://fiware-tutorials.readthedocs.io/en/latest/open-id-connect.html
   git-clone: https://github.com/FIWARE/tutorials.Working-with-Linked-Data.git
   git-directory: /tmp/tutorials.Working-with-Linked-Data

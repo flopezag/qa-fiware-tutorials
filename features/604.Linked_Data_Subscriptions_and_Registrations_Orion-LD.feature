@@ -1,5 +1,5 @@
-Feature: Test tutorial 604.Linked_Data_Subscriptions_and_Registrations (Orion)
-  This is feature file of the FIWARE step by step tutorial for Linked Data Subscriptions and Registrations (Orion)
+Feature: Test tutorial 604.Linked_Data_Subscriptions_and_Registrations (Orion-LD)
+  This is feature file of the FIWARE step by step tutorial for Linked Data Subscriptions and Registrations (Orion-LD)
   url: https://fiware-tutorials.readthedocs.io/en/latest/ld-subscriptions-registrations.html
   git-clone: https://github.com/FIWARE/tutorials.LD-Subscriptions-Registrations.git
   git-directory: /tmp/tutorials.LD-Subscriptions-Registrations

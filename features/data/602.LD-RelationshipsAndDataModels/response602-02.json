@@ -23,7 +23,7 @@
   {
     "id": "urn:ngsi-ld:Product:004",
     "type": "Product",
-    "price": 50,
+    "price": 50.0,
     "size": "XL",
     "name": "Melons"
   },
