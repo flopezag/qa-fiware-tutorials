@@ -1,0 +1,27 @@
+{
+  "type": "ContextSourceRegistration",
+  "information": [
+    {
+      "entities": [
+        {
+          "type": "Building"
+        }
+      ]
+    }
+  ],
+  "contextSourceInfo": [
+    {
+      "key": "jsonldContext",
+      "value": "http://context/fixed-context.jsonld"
+    },
+    {
+      "key": "Prefer",
+      "value": "ngsi-ld=1.6"
+    }
+  ],
+  "mode": "inclusive",
+  "operations": [
+    "federationOps"
+  ],
+  "endpoint": "http://adapter:3000"
+}

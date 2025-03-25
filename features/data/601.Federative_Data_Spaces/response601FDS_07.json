@@ -1,0 +1,22 @@
+[
+  {
+    "id": "urn:ngsi-ld:Store:001",
+    "type": "Store",
+    "name": "Bösebrücke Einkauf"
+  },
+  {
+    "id": "urn:ngsi-ld:Store:002",
+    "type": "Store",
+    "name": "Checkpoint Markt"
+  },
+  {
+    "id": "urn:ngsi-ld:Store:003",
+    "type": "Store",
+    "name": "East Side Galleria"
+  },
+  {
+    "id": "urn:ngsi-ld:Store:004",
+    "type": "Store",
+    "name": "Tower Trödelmarkt"
+  }
+]

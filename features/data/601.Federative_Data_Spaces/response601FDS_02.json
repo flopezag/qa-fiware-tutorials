@@ -1,0 +1,40 @@
+{
+  "@context": [
+    "http://context/fixed-context.jsonld",
+    "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.8.jsonld"
+  ],
+  "id": "urn:ngsi-ld:Store:001",
+  "type": "Store",
+  "address": {
+    "type": "Property",
+    "value": {
+      "streetAddress": "Bornholmer Straße 65",
+      "addressRegion": "Berlin",
+      "addressLocality": "Prenzlauer Berg",
+      "postalCode": "10439"
+    }
+  },
+  "category": {
+    "type": "VocabProperty",
+    "vocab": "supermarket"
+  },
+  "location": {
+    "type": "GeoProperty",
+    "value": {
+      "type": "Point",
+      "coordinates": [
+        13.3986,
+        52.5547
+      ]
+    }
+  },
+  "name": {
+    "type": "Property",
+    "value": "Bösebrücke Einkauf"
+  },
+  "owner": {
+    "type": "Relationship",
+    "object": "urn:ngsi-ld:Person:001",
+    "objectType": "Person"
+  }
+}

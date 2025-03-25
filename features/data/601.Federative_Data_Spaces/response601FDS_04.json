@@ -1,0 +1,19 @@
+{
+  "id": "urn:ngsi-ld:ContextSourceIdentity:16d6f0c6-ce4d-4568-bd0b-c261135354ea",
+  "type": "ContextSourceIdentity",
+  "contextSourceExtras": {
+    "version": "4.0.0",
+    "uptime": "0 d, 0 h, 45 m, 58 s",
+    "git_hash": "4f9f34df07395c54387a53074f98bef00b1130a3",
+    "compile_time": "Thu Jun 6 07:35:47 UTC 2024",
+    "compiled_by": "root",
+    "compiled_in": "buildkitsandbox",
+    "release_date": "Thu Jun 6 07:35:47 UTC 2024",
+    "machine": "x86_64",
+    "doc": "https://fiware-orion.rtfd.io/en/4.0.0/"
+  },
+  "contextSourceUptime": "P0DT0H45M58S",
+  "contextSourceTimeAt": "2024-08-02T11:16:06.376Z",
+  "contextSourceAlias": "lepus",
+  "@context": "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.8.jsonld"
+}
