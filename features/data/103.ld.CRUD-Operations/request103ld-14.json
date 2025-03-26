@@ -1,0 +1,7 @@
+{
+  "vocab": [
+    "sensor",
+    "actuator"
+  ],
+  "type": "VocabProperty"
+}

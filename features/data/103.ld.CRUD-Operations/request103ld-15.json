@@ -1,0 +1,13 @@
+{
+  "category": {
+    "vocab": [
+      "sensor",
+      "actuator"
+    ],
+    "type": "VocabProperty"
+  },
+  "controlledAsset": {
+    "type": "Relationship",
+    "object": "urn:ngsi-ld:Building:barn001"
+  }
+}

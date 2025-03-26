@@ -1,0 +1,11 @@
+{
+  "batteryLevel": {
+    "type": "Property",
+    "value": 0.9,
+    "unitCode": "C62"
+  },
+  "controlledAsset": {
+    "type": "Relationship",
+    "object": "urn:ngsi-ld:Building:barn002"
+  }
+}
