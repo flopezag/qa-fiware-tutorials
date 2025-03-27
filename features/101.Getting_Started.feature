@@ -18,7 +18,7 @@ Feature: Test tutorial 101.Getting Started
 
   Scenario Outline: Creating Context Data
     When The content-type header key equal to "application/json"
-    And  the body request described in file "<file>"
+    And  I set the request body described in file "<file>"
     And  I send a POST HTTP request to "http://localhost:1026/v2/entities"
     Then I receive a HTTP response with the following data
       | Status-Code | Location   | Connection | fiware-correlator |

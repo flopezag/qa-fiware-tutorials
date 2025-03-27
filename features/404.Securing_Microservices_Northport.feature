@@ -36,7 +36,7 @@ Feature: Test tutorial 404.Securing microservices with a PEP Proxy (IoT Agent - 
     And   I set the "fiware-service" header with the value "openiot"
     And   I set the "fiware-servicepath" header with the value "/"
     And   I set the url to "http://localhost:4041/iot/devices"
-    And   the body request described in file "request404-19.json"
+    And   I set the request body described in file "request404-19.json"
     And   I send a POST HTTP request to that url
     Then  fail: SECURITY_INFORMATION_MISSING, Some security information was missing for device type:Motion. Message: {"name":"ENTITY_GENERIC_ERROR","message":"Error accesing entity data for device: motion001 of type: Motion"}
     Then  I receive a HTTP "204" status code from Keyrock with the following data

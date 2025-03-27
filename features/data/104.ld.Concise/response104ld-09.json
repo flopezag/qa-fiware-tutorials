@@ -1,0 +1,19 @@
+{
+  "id": "urn:ngsi-ld:TemperatureSensor:001",
+  "type": "TemperatureSensor",
+  "name": "Sensor 1",
+  "category": {
+    "vocab": "sensor"
+  },
+  "temperature": {
+    "value": 25,
+    "unitCode": "CEL"
+  },
+  "batteryLevel": {
+    "value": 0.8,
+    "unitCode": "C62"
+  },
+  "controlledAsset": {
+    "object": "urn:ngsi-ld:Building:barn002"
+  }
+}

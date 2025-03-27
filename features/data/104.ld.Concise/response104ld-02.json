@@ -1,0 +1,17 @@
+{
+  "id": "urn:ngsi-ld:TemperatureSensor:001",
+  "type": "TemperatureSensor",
+  "name": {
+    "type": "Property",
+    "value": "Sensor 1"
+  },
+  "category": {
+    "type": "VocabProperty",
+    "vocab": "sensor"
+  },
+  "temperature": {
+    "type": "Property",
+    "value": 25,
+    "unitCode": "CEL"
+  }
+}

@@ -29,8 +29,8 @@ Feature: Test tutorial 602 Linked Data: Relationships and Data Models (Orion-LD)
     Scenario: [1] DISPLAY ALL entities of a given type (BUILDINGS)
       When  I prepare a GET HTTP request for "obtaining an entity data" to "http://localhost:1026/ngsi-ld/v1/entities"
       And   I set header Accept to application/ld+json
-      And   the params equal to "type=https://uri.fiware.org/ns/data-models#Building"
-      And   the params equal to "options=keyValues"
+      And   I set the params equal to "type=https://uri.fiware.org/ns/data-models#Building"
+      And   I set the params equal to "options=keyValues"
       And   I perform the request
       Then  I receive from Orion-LD "200" response code with the body equal to "response602-01.json"
 
@@ -43,8 +43,8 @@ Feature: Test tutorial 602 Linked Data: Relationships and Data Models (Orion-LD)
     Scenario: [2] DISPLAY ALL entities of a given type (PRODUCT)
       When  I prepare a GET HTTP request for "obtaining entities data" to "http://localhost:1026/ngsi-ld/v1/entities"
       And   I set header Link to <http://context/user-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"
-      And   the params equal to "type=https://fiware.github.io/tutorials.Step-by-Step/schema/Product"
-      And   the params equal to "options=keyValues"
+      And   I set the params equal to "type=https://fiware.github.io/tutorials.Step-by-Step/schema/Product"
+      And   I set the params equal to "options=keyValues"
       And   I perform the request
       Then  I receive from Orion-LD "200" response code with the body equal to "response602-02.json"
 
@@ -56,8 +56,8 @@ Feature: Test tutorial 602 Linked Data: Relationships and Data Models (Orion-LD)
     Scenario: [3] DISPLAY ALL entities of a given type (SHELF)
       When  I prepare a GET HTTP request for "obtaining entities data" to "http://localhost:1026/ngsi-ld/v1/entities"
       And   I set header Link to <http://context/user-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"
-      And   the params equal to "type=Shelf"
-      And   the params equal to "options=keyValues"
+      And   I set the params equal to "type=Shelf"
+      And   I set the params equal to "options=keyValues"
       And   I perform the request
       Then  I receive from Orion-LD "200" response code with the body equal to "response602-03.json"
 
@@ -69,7 +69,7 @@ Feature: Test tutorial 602 Linked Data: Relationships and Data Models (Orion-LD)
     Scenario: [4] OBTAIN SHELF INFORMATION
       When  I prepare a GET HTTP request for "obtaining an entity data" to "http://localhost:1026/ngsi-ld/v1/entities/urn:ngsi-ld:Shelf:unit001"
       And   I set header Link to <http://context/user-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"
-      And   the params equal to "options=keyValues"
+      And   I set the params equal to "options=keyValues"
       And   I perform the request
       Then  I receive from Orion-LD "200" response code with the body equal to "response602-04.json"
 
@@ -109,8 +109,8 @@ Feature: Test tutorial 602 Linked Data: Relationships and Data Models (Orion-LD)
       When  I prepare a GET HTTP request for "obtaining an entity data" to "http://localhost:1026/ngsi-ld/v1/entities/urn:ngsi-ld:Shelf:unit001"
       And   I set header Link to <http://context/user-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"
       And   I set header Accept to application/ld+json
-      And   the params equal to "attrs=locatedIn"
-      And   the params equal to "options=keyValues"
+      And   I set the params equal to "attrs=locatedIn"
+      And   I set the params equal to "options=keyValues"
       And   I perform the request
       Then  I receive from Orion-LD "200" response code with the body equal to "response602-07.json"
 
@@ -122,9 +122,9 @@ Feature: Test tutorial 602 Linked Data: Relationships and Data Models (Orion-LD)
       When  I send GET HTTP request to Orion-LD at "http://localhost:1026/ngsi-ld/v1/entities/"
       And   I set header Accept to application/json
       And   I set header Link to <https://fiware.github.io/tutorials.Step-by-Step/tutorials-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"
-      And   the params equal to "type=Shelf"
-      And   the params equal to "options=keyValues"
-      And   the params equal to "attrs=locatedIn"
+      And   I set the params equal to "type=Shelf"
+      And   I set the params equal to "options=keyValues"
+      And   I set the params equal to "attrs=locatedIn"
       Then  I receive from Orion-LD "200" response code with the body equal to "response602-08.json"
 
 
@@ -152,8 +152,8 @@ Feature: Test tutorial 602 Linked Data: Relationships and Data Models (Orion-LD)
       When  I send GET HTTP request to Orion-LD at "http://localhost:1026/ngsi-ld/v1/entities/urn:ngsi-ld:Building:store001"
       And   I set header Accept to application/json
       And   I set header Link to <https://fiware.github.io/tutorials.Step-by-Step/tutorials-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"
-      And   the params equal to "options=keyValues"
-      And   the params equal to "attrs=furniture"
+      And   I set the params equal to "options=keyValues"
+      And   I set the params equal to "attrs=furniture"
       Then  I receive from Orion-LD "200" response code with the body equal to "response602-10.json"
 
 
@@ -181,10 +181,10 @@ Feature: Test tutorial 602 Linked Data: Relationships and Data Models (Orion-LD)
       When  I send GET HTTP request to Orion-LD at "http://localhost:1026/ngsi-ld/v1/entities/"
       And   I set header Accept to application/json
       And   I set header Link to <https://fiware.github.io/tutorials.Step-by-Step/tutorials-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"
-      And   the params equal to "type=StockOrder"
-      And   the params equal to "q=orderedProduct=="urn:ngsi-ld:Product:001""
-      And   the params equal to "attrs=requestedFor"
-      And   the params equal to "options=keyValues"
+      And   I set the params equal to "type=StockOrder"
+      And   I set the params equal to "q=orderedProduct=="urn:ngsi-ld:Product:001""
+      And   I set the params equal to "attrs=requestedFor"
+      And   I set the params equal to "options=keyValues"
       Then  I receive from Orion-LD "200" response code with the body equal to "response602-12.json"
 
 
@@ -195,10 +195,10 @@ Feature: Test tutorial 602 Linked Data: Relationships and Data Models (Orion-LD)
       When  I send GET HTTP request to Orion-LD at "http://localhost:1026/ngsi-ld/v1/entities/"
       And   I set header Accept to application/json
       And   I set header Link to <https://fiware.github.io/tutorials.Step-by-Step/tutorials-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"
-      And   the params equal to "type=StockOrder"
-      And   the params equal to "q=requestedFor=="urn:ngsi-ld:Building:store001""
-      And   the params equal to "attrs=orderedProduct"
-      And   the params equal to "options=keyValues"
+      And   I set the params equal to "type=StockOrder"
+      And   I set the params equal to "q=requestedFor=="urn:ngsi-ld:Building:store001""
+      And   I set the params equal to "attrs=orderedProduct"
+      And   I set the params equal to "options=keyValues"
       Then  I receive from Orion-LD "200" response code with the body equal to "response602-13.json"
 
 
@@ -214,6 +214,6 @@ Feature: Test tutorial 602 Linked Data: Relationships and Data Models (Orion-LD)
     Scenario: [14] OBTAIN STOCK ORDER
       When  I prepare a GET HTTP request for "obtaining an entity data" to "http://localhost:1026/ngsi-ld/v1/entities/urn:ngsi-ld:StockOrder:001"
       And   I set header Accept to application/ld+json
-      And   the params equal to "options=keyValues"
+      And   I set the params equal to "options=keyValues"
       And   I perform the request
       Then  I receive from Orion-LD "200" response code with the body equal to "response602-14.json"

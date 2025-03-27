@@ -1,0 +1,22 @@
+[
+  {
+    "id": "urn:ngsi-ld:TemperatureSensor:003",
+    "type": "TemperatureSensor",
+    "category": {
+      "vocab": [
+        "sensor",
+        "actuator"
+      ]
+    }
+  },
+  {
+    "id": "urn:ngsi-ld:TemperatureSensor:004",
+    "type": "TemperatureSensor",
+    "category": {
+      "vocab": [
+        "sensor",
+        "actuator"
+      ]
+    }
+  }
+]

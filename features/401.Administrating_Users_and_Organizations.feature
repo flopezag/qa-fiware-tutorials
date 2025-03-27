@@ -19,7 +19,7 @@ Feature: Test tutorial 401.Administrating Users and Organizations
       | admin | admin    | admin@test.com | ANY      |
 
   Scenario: 01 - Create token with password
-    When   I define the body request described in file "request401-01.json"
+    When   I set the request body described in file "request401-01.json"
     And    the content-type header key equal to "application/json"
     And    I send a POST HTTP request to "http://localhost:3005/v1/auth/tokens"
     Then   I receive a HTTP response with the following data in header and payload
@@ -39,7 +39,7 @@ Feature: Test tutorial 401.Administrating Users and Organizations
   Scenario: 04.1 - Creating admin user
     When   I set the X-Auth-Token header with the previous obtained token
     And    the content-type header key equal to "application/json"
-    And    the body request described in file "request401-04.json"
+    And    I set the request body described in file "request401-04.json"
     And    I send a POST HTTP request to "http://localhost:3005/v1/users"
     Then   I receive a HTTP "201" status code from Keyrock with the body "response401-04.json" and exclusions "response401-04.excludes"
 
@@ -93,7 +93,7 @@ Feature: Test tutorial 401.Administrating Users and Organizations
   Scenario: 07 - Update a user
     When  I set the X-Auth-Token header with the previous obtained token
     And   the content-type header key equal to "application/json"
-    And   the body request described in file "request401-07.json"
+    And   I set the request body described in file "request401-07.json"
     And   I send a PATCH HTTP request to the url "http://localhost:3005/v1/users" with the "admin user" id from previous execution
     Then  I receive a HTTP "200" response code from Keyrock with the body equal to "response401-07.json"
 
@@ -106,7 +106,7 @@ Feature: Test tutorial 401.Administrating Users and Organizations
   Scenario: 09 - Create an organization
     When  I set the X-Auth-Token header with the previous obtained token
     And   the content-type header key equal to "application/json"
-    And   the body request described in file "request401-09.json"
+    And   I set the request body described in file "request401-09.json"
     And   I send a POST HTTP request to "http://localhost:3005/v1/organizations"
     Then  I receive a HTTP "201" status code from Keyrock with the body "response401-09.json" and exclusions "response401-09.excludes"
 
@@ -125,7 +125,7 @@ Feature: Test tutorial 401.Administrating Users and Organizations
   Scenario: 12 - Update an organization
     When  I set the X-Auth-Token header with the previous obtained token
     And   the content-type header key equal to "application/json"
-    And   the body request described in file "request401-12.json"
+    And   I set the request body described in file "request401-12.json"
     And   I send a PATCH HTTP request to the url "http://localhost:3005/v1/organizations" with the "organization" id from previous execution
     Then  I receive a HTTP "200" response code from Keyrock with the body equal to "response401-12.json"
 

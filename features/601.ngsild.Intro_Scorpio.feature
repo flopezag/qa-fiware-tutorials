@@ -48,7 +48,7 @@ Feature: Test tutorial 601 Introduction to Linked Data (Scorpio)
     Scenario: [4] OBTAIN ENTITY DATA BY FQN TYPE
       When I prepare a GET HTTP request for "obtaining an entity data" to "http://localhost:1026/ngsi-ld/v1/entities"
       And  I set header Accept to application/ld+json
-      And  the params equal to "type=https://smartdatamodels.org/dataModel.Building/Building"
+      And  I set the params equal to "type=https://smartdatamodels.org/dataModel.Building/Building"
       And  I perform the request
       Then I receive a HTTP "200" response code from Scorpio with the body equal to "response601-04-array.json"
 

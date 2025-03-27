@@ -12,7 +12,7 @@ Feature: Test tutorial 604.Linked_Data_Subscriptions_and_Registrations (Scorpio)
   Scenario: 01 - Create a subscription (Store 1) - Low stock
     When   I set the "Content-Type" header with the value "application/ld+json"
     And    I set the url to "http://localhost:1026/ngsi-ld/v1/subscriptions/"
-    And    the body request described in file "request604-01.json"
+    And    I set the request body described in file "request604-01.json"
     And    I send a POST HTTP request to that url
     Then   I receive a HTTP "201" status code response
 
@@ -20,7 +20,7 @@ Feature: Test tutorial 604.Linked_Data_Subscriptions_and_Registrations (Scorpio)
     When   I set the "Content-Type" header with the value "application/json"
     And    I set the "Link" header with the value "<http://context/user-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json""
     And    I set the url to "http://localhost:1026/ngsi-ld/v1/subscriptions/"
-    And    the body request described in file "request604-02.json"
+    And    I set the request body described in file "request604-02.json"
     And    I send a POST HTTP request to that url
     Then   I receive a HTTP "201" status code response
 
@@ -34,7 +34,7 @@ Feature: Test tutorial 604.Linked_Data_Subscriptions_and_Registrations (Scorpio)
     When   I set the "Content-Type" header with the value "application/json"
     And    I set the "Link" header with the value "<http://context/user-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json""
     And    I set the url to "http://localhost:1026/ngsi-ld/v1/csourceRegistrations/"
-    And    the body request described in file "request604-04.json"
+    And    I set the request body described in file "request604-04.json"
     And    I send a POST HTTP request to that url
     Then   I receive a HTTP "201" status code response
 
@@ -42,7 +42,7 @@ Feature: Test tutorial 604.Linked_Data_Subscriptions_and_Registrations (Scorpio)
     When   I set the "Accept" header with the value "application/ld+json"
     And    I set the "Link" header with the value "<http://context/user-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json""
     And    I set the url to "http://localhost:1026/ngsi-ld/v1/csourceRegistrations/"
-    And    the params equal to "type=Building"
+    And    I set the params equal to "type=Building"
     And    I send a GET HTTP request to that url
     Then   I receive a HTTP "200" status code from Broker with the body "response604-05.json" and exclusions "response604-05.excludes"
 
@@ -65,7 +65,7 @@ Feature: Test tutorial 604.Linked_Data_Subscriptions_and_Registrations (Scorpio)
     When   I set the "Content-Type" header with the value "application/json"
     And    I set the "Link" header with the value "<http://context/user-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json""
     And    I set the url to "http://localhost:3000/static/tweets/ngsi-ld/v1/entities/urn:ngsi-ld:Building:store001/attrs"
-    And    the body request described in file "request604-08.json"
+    And    I set the request body described in file "request604-08.json"
     And    I send a PATCH HTTP request to that url
     Then   I receive a HTTP "204" status code response
     Then   fail: The "value" content of the "tweets" is bad formatted
@@ -80,7 +80,7 @@ Feature: Test tutorial 604.Linked_Data_Subscriptions_and_Registrations (Scorpio)
     When   I set the "Content-Type" header with the value "application/json"
     And    I set the "Link" header with the value "<http://context/user-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json""
     And    I set the url to "http://localhost:1026/ngsi-ld/v1/entities/urn:ngsi-ld:Building:store001/attrs/tweets"
-    And    the body request described in file "request604-10.json"
+    And    I set the request body described in file "request604-10.json"
     And    I send a PATCH HTTP request to that url
     Then   I receive a HTTP "204" status code response
 

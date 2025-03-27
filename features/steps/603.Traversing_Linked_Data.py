@@ -14,7 +14,7 @@ def step_impl_tutorial_203(context):
     context.data_home = join(join(join(settings.CODE_HOME, "features"), "data"), "603.Traversing_Linked_Data")
 
 
-@step('the params equal to "{params}"')
+@step('I set the params equal to "{params}"')
 def step_impl(context, params):
     """
     :type context: behave.runner.Context

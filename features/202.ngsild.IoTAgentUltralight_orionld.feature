@@ -41,7 +41,7 @@ Feature: Test tutorial 202.Introduction to IoT Sensors (Orion-LD)
     And   I set header NGSILD-Tenant to openiot
     And   I set header NGSILD-Path to /
     And   I set header Accept to application/ld+json
-    And   the params equal to "attrs=temperature"
+    And   I set the params equal to "attrs=temperature"
     And   I set header Link to <http://context/ngsi-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"
     And   I perform the query request
     Then  I receive a HTTP "200" response code from Orion-LD with the body "05.response.json" and exclusions "05.excludes"

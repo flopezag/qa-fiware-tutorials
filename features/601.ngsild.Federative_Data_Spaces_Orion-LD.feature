@@ -36,7 +36,7 @@ Feature: Test tutorial 601.Federative_Data_Spaces (Orion-LD)
       When   I set the url to "http://localhost:1026/ngsi-ld/v1/csourceRegistrations"
       And    I set the "Link" header with the value "<http://context/ngsi-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json""
       And    I set the "Content-Type" header with the value "application/json"
-      And    the body request described in file "request601FDS_05.json"
+      And    I set the request body described in file "request601FDS_05.json"
       And    I send a POST HTTP request to that url
       Then   I receive a HTTP "201" status code response
 
@@ -50,10 +50,10 @@ Feature: Test tutorial 601.Federative_Data_Spaces (Orion-LD)
       When   I set the url to "http://localhost:1026/ngsi-ld/v1/entities"
       And    I set the "Link" header with the value "<http://context/ngsi-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json""
       And    I set the "Accept" header with the value "application/ld+json"
-      And    the params equal to "type=Building"
-      And    the params equal to "q=category==%22supermarket%22"
-      And    the params equal to "attrs=name"
-      And    the params equal to "options=keyValues"
+      And    I set the params equal to "type=Building"
+      And    I set the params equal to "q=category==%22supermarket%22"
+      And    I set the params equal to "attrs=name"
+      And    I set the params equal to "options=keyValues"
       And    I send a GET HTTP request to that url
       Then   I receive a HTTP "200" response code from Orion-LD with the body equal to "response601FDS_07.json"
 

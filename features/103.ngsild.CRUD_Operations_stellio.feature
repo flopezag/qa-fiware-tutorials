@@ -13,7 +13,7 @@ Feature: Test tutorial 103.NGSI-LD.CRUD Operations (Stellio)
       When    I set the "Content-Type" header with the value "application/json"
       And     I set the "Link" header with the value "<http://context/user-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json""
       And     I set the url to "http://localhost:1026/ngsi-ld/v1/entities"
-      And     the body request described in file "request103ld-01.json"
+      And     I set the request body described in file "request103ld-01.json"
       And     I send a POST HTTP request to that url
       Then    I receive a HTTP "201" response code
 
@@ -27,14 +27,14 @@ Feature: Test tutorial 103.NGSI-LD.CRUD Operations (Stellio)
       When    I set the "Content-Type" header with the value "application/json"
       And     I set the "Link" header with the value "<http://context/user-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json""
       And     I set the url to "http://localhost:1026/ngsi-ld/v1/entities/urn:ngsi-ld:TemperatureSensor:001/attrs"
-      And     the body request described in file "request103ld-03.json"
+      And     I set the request body described in file "request103ld-03.json"
       And     I send a POST HTTP request to that url
       Then    I receive a HTTP "204" response code
 
     Scenario: 04 - Read a Data Entity (verbose)
       When    I set the "Link" header with the value "<http://context/user-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json""
       And     I set the url to "http://localhost:1026/ngsi-ld/v1/entities/urn:ngsi-ld:TemperatureSensor:001"
-      And     the params equal to "options=sysAttrs"
+      And     I set the params equal to "options=sysAttrs"
       And     I send a GET HTTP request to that url
       Then    I receive a HTTP "200" response code
 
@@ -43,7 +43,7 @@ Feature: Test tutorial 103.NGSI-LD.CRUD Operations (Stellio)
       And    I set the "Link" header with the value "<http://context/user-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json""
       And    I set the "Accept" header with the value "application/ld+json"
       And    I set the url to "http://localhost:1026/ngsi-ld/v1/entityOperations/create"
-      And    the body request described in file "request103ld-05.json"
+      And    I set the request body described in file "request103ld-05.json"
       And    I send a POST HTTP request to that url
       Then   I receive a HTTP "201" response code from Stellio with the body equal to "response103ld-05.json"
 
@@ -52,21 +52,21 @@ Feature: Test tutorial 103.NGSI-LD.CRUD Operations (Stellio)
       And    I set the "Link" header with the value "<http://context/user-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json""
       And    I set the "Accept" header with the value "application/ld+json"
       And    I set the url to "http://localhost:1026/ngsi-ld/v1/entityOperations/upsert"
-      And    the body request described in file "request103ld-06.json"
+      And    I set the request body described in file "request103ld-06.json"
       And    I send a POST HTTP request to that url
       Then    I receive a HTTP "204" response code
 
     Scenario: 07 - Read a Data Entity (verbose)
       When   I set the "Link" header with the value "<http://context/user-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json""
       And    I set the url to "http://localhost:1026/ngsi-ld/v1/entities/urn:ngsi-ld:TemperatureSensor:001"
-      And    the params equal to "options=sysAttrs"
+      And    I set the params equal to "options=sysAttrs"
       And    I send a GET HTTP request to that url
       Then   I receive a HTTP "200" status code from Stellio with the body "response103ld-07.json" and exclusions "response103ld-07.excludes"
 
     Scenario: 08 - Read an Attribute from a Data Entity
       When   I set the "Link" header with the value "<http://context/user-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json""
       And    I set the url to "http://localhost:1026/ngsi-ld/v1/entities/urn:ngsi-ld:TemperatureSensor:001"
-      And    the params equal to "attrs=temperature"
+      And    I set the params equal to "attrs=temperature"
       And    I send a GET HTTP request to that url
       Then   I receive a HTTP "200" response code from Stellio with the body equal to "response103ld-08.json"
 
@@ -74,7 +74,7 @@ Feature: Test tutorial 103.NGSI-LD.CRUD Operations (Stellio)
       When   I set the "Link" header with the value "<http://context/user-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json""
       And    I set the url to "http://localhost:1026/ngsi-ld/v1/entities/urn:ngsi-ld:TemperatureSensor:001"
       And    I set the "Accept" header with the value "application/json"
-      And    the params equal to "options=keyValues"
+      And    I set the params equal to "options=keyValues"
       And    I send a GET HTTP request to that url
       Then   I receive a HTTP "200" response code from Stellio with the body equal to "response103ld-09.json"
 
@@ -82,15 +82,15 @@ Feature: Test tutorial 103.NGSI-LD.CRUD Operations (Stellio)
       When   I set the "Link" header with the value "<http://context/user-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json""
       And    I set the "Accept" header with the value "application/json"
       And    I set the url to "http://localhost:1026/ngsi-ld/v1/entities/urn:ngsi-ld:TemperatureSensor:001"
-      And    the params equal to "options=keyValues"
-      And    the params equal to "attrs=category,temperature"
+      And    I set the params equal to "options=keyValues"
+      And    I set the params equal to "attrs=category,temperature"
       And    I send a GET HTTP request to that url
       Then   I receive a HTTP "200" response code from Stellio with the body equal to "response103ld-10.json"
 
     Scenario: 11 - List all Data Entities (verbose)
       When   I set the "Link" header with the value "<http://context/user-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json""
       And    I set the url to "http://localhost:1026/ngsi-ld/v1/entities/"
-      And    the params equal to "type=TemperatureSensor"
+      And    I set the params equal to "type=TemperatureSensor"
       And    I send a GET HTTP request to that url
       Then   I receive a HTTP "200" response code from Stellio with the body equal to "response103ld-11.json"
 
@@ -98,9 +98,9 @@ Feature: Test tutorial 103.NGSI-LD.CRUD Operations (Stellio)
       When   I set the "Link" header with the value "<http://context/user-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json""
       And    I set the url to "http://localhost:1026/ngsi-ld/v1/entities/"
       And    I set the "Accept" header with the value "application/json"
-      And    the params equal to "type=TemperatureSensor"
-      And    the params equal to "options=keyValues"
-      And    the params equal to "attrs=temperature"
+      And    I set the params equal to "type=TemperatureSensor"
+      And    I set the params equal to "options=keyValues"
+      And    I set the params equal to "attrs=temperature"
       And    I send a GET HTTP request to that url
       Then   I receive a HTTP "200" response code from Stellio with the body equal to "response103ld-12.json"
 
@@ -108,9 +108,9 @@ Feature: Test tutorial 103.NGSI-LD.CRUD Operations (Stellio)
       When   I set the "Link" header with the value "<http://context/user-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json""
       And    I set the "Accept" header with the value "application/json"
       And    I set the url to "http://localhost:1026/ngsi-ld/v1/entities/"
-      And    the params equal to "id=urn:ngsi-ld:TemperatureSensor:001,urn:ngsi-ld:TemperatureSensor:002"
-      And    the params equal to "options=keyValues"
-      And    the params equal to "attrs=temperature"
+      And    I set the params equal to "id=urn:ngsi-ld:TemperatureSensor:001,urn:ngsi-ld:TemperatureSensor:002"
+      And    I set the params equal to "options=keyValues"
+      And    I set the params equal to "attrs=temperature"
       And    I send a GET HTTP request to that url
       Then   I receive a HTTP "200" response code from Stellio with the body equal to "response103ld-13.json"
 
@@ -118,7 +118,7 @@ Feature: Test tutorial 103.NGSI-LD.CRUD Operations (Stellio)
       When   I set the "Content-Type" header with the value "application/json"
       And    I set the "Link" header with the value "<http://context/user-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json""
       And    I set the url to "http://localhost:1026/ngsi-ld/v1/entities/urn:ngsi-ld:TemperatureSensor:001/attrs/category"
-      And    the body request described in file "request103ld-14.json"
+      And    I set the request body described in file "request103ld-14.json"
       And    I send a PATCH HTTP request to that url
       Then    I receive a HTTP "204" response code
 
@@ -126,7 +126,7 @@ Feature: Test tutorial 103.NGSI-LD.CRUD Operations (Stellio)
       When   I set the "Content-Type" header with the value "application/json"
       And    I set the "Link" header with the value "<http://context/user-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json""
       And    I set the url to "http://localhost:1026/ngsi-ld/v1/entities/urn:ngsi-ld:TemperatureSensor:001/attrs"
-      And    the body request described in file "request103ld-15.json"
+      And    I set the request body described in file "request103ld-15.json"
       And    I send a PATCH HTTP request to that url
       Then   I receive a HTTP "204" response code
 
@@ -134,7 +134,7 @@ Feature: Test tutorial 103.NGSI-LD.CRUD Operations (Stellio)
       When   I set the "Content-Type" header with the value "application/json"
       And    I set the "Link" header with the value "<http://context/user-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json""
       And    I set the url to "http://localhost:1026/ngsi-ld/v1/entityOperations/upsert?options=update"
-      And    the body request described in file "request103ld-16.json"
+      And    I set the request body described in file "request103ld-16.json"
       And    I send a POST HTTP request to that url
       Then   I receive a HTTP "204" response code
 
@@ -142,7 +142,7 @@ Feature: Test tutorial 103.NGSI-LD.CRUD Operations (Stellio)
       When   I set the "Content-Type" header with the value "application/json"
       And    I set the "Link" header with the value "<http://context/user-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json""
       And    I set the url to "http://localhost:1026/ngsi-ld/v1/entityOperations/update?options=replace"
-      And    the body request described in file "request103ld-17.json"
+      And    I set the request body described in file "request103ld-17.json"
       And    I send a POST HTTP request to that url
       Then   I receive a HTTP "204" response code
 
@@ -160,7 +160,7 @@ Feature: Test tutorial 103.NGSI-LD.CRUD Operations (Stellio)
     Scenario: 20 - Batch Delete Multiple Entities
       When   I set the "Content-Type" header with the value "application/json"
       And    I set the url to "http://localhost:1026/ngsi-ld/v1/entityOperations/delete"
-      And    the body request described in file "request103ld-20.json"
+      And    I set the request body described in file "request103ld-20.json"
       And    I send a POST HTTP request to that url
       Then   I receive a HTTP "204" response code
 

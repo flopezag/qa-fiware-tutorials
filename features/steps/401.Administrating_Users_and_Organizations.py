@@ -479,8 +479,8 @@ def step_impl(context, code):
         f'The number of received users are not the expected value, received {number_users}, expected {index}'
 
 
-@step('the body request described in file "{file}"')
-@when('I define the body request described in file "{file}"')
+@step('I set the request body described in file "{file}"')
+@when('I set the request body described in file "{file}"')
 def step_impl(context, file):
     """
     :param file: the expected response content of the HTTP operation

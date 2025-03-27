@@ -7,6 +7,10 @@ function function_one {
   behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/102.ngsild.working_with_context_orionld.feature
   behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/102.ngsild.working_with_context_scorpio.feature
   behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/102.ngsild.working_with_context_stellio.feature
+  behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/103.ngsild.CRUD_Operations_orionld.feature
+  behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/103.ngsild.CRUD_Operations_scorpio.feature
+  behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/103.ngsild.CRUD_Operations_stellio.feature
+  behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/104.ngsild.Concise_orionld.feature
 }
 
 function function_two {
@@ -37,6 +41,9 @@ function function_four {
   echo "Function four (expected time: 3m 1,707s)"
   echo
 
+  behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/601.ngsild.Federative_Data_Spaces_Orion-LD.feature
+  behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/601.ngsild.Federative_Data_Spaces_Scorpio.feature
+  behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/601.ngsild.Federative_Data_Spaces_Stellio.feature
   behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/601.ngsild.Intro_Orion-LD.feature
   behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/601.ngsild.Intro_Scorpio.feature
   behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/601.ngsild.Intro_Stellio.feature
@@ -59,6 +66,10 @@ function function_all {
   behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/102.ngsild.working_with_context_orionld.feature
   behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/102.ngsild.working_with_context_scorpio.feature
   behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/102.ngsild.working_with_context_stellio.feature
+  behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/103.ngsild.CRUD_Operations_orionld.feature
+  behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/103.ngsild.CRUD_Operations_scorpio.feature
+  behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/103.ngsild.CRUD_Operations_stellio.feature
+  behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/104.ngsild.Concise_orionld.feature
   behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/201.ngsild.IoTSensors.feature
   behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/202.ngsild.IoTAgentUltralight_orionld.feature
   behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/202.ngsild.IoTAgentUltralight_scorpio.feature
@@ -71,6 +82,9 @@ function function_all {
   behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/301.ngsild.TimeseriesData_stellio.feature
   # F behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/302.ngsild.BigDataFlink_orionld.feature
   # F behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/306.ngsild.BigDataSpark_orionld.feature
+  behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/601.ngsild.Federative_Data_Spaces_Orion-LD.feature
+  behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/601.ngsild.Federative_Data_Spaces_Scorpio.feature
+  behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/601.ngsild.Federative_Data_Spaces_Stellio.feature
   behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/601.ngsild.Intro_Orion-LD.feature
   behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/601.ngsild.Intro_Scorpio.feature
   behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/601.ngsild.Intro_Stellio.feature

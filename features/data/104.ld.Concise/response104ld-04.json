@@ -1,0 +1,26 @@
+{
+  "id": "urn:ngsi-ld:TemperatureSensor:001",
+  "type": "TemperatureSensor",
+  "name": {
+    "type": "Property",
+    "value": "Sensor 1"
+  },
+  "category": {
+    "type": "VocabProperty",
+    "vocab": "sensor"
+  },
+  "temperature": {
+    "type": "Property",
+    "value": 25,
+    "unitCode": "CEL"
+  },
+  "batteryLevel": {
+    "type": "Property",
+    "value": 0.8,
+    "unitCode": "C62"
+  },
+  "controlledAsset": {
+    "type": "Relationship",
+    "object": "urn:ngsi-ld:Building:barn002"
+  }
+}

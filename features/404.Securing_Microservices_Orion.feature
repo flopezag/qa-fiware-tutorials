@@ -11,7 +11,7 @@ Feature: Test tutorial 404.Securing microservices with a PEP Proxy (Orion)
     Given I set the tutorial 404
 
   Scenario: 01 - Create token with password
-    When   I define the body request described in file "request404-01.json"
+    When   I set the request body described in file "request404-01.json"
     And    the content-type header key equal to "application/json"
     And    I send a POST HTTP request to "http://localhost:3005/v1/auth/tokens"
     Then   I receive a HTTP response with the following data in header and payload

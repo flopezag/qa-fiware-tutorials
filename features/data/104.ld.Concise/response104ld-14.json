@@ -1,0 +1,95 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "id": "urn:ngsi-ld:Animal:pig010",
+      "type": "Feature",
+      "properties": {
+        "type": "Animal",
+        "heartRate": {
+          "value": 71,
+          "providedBy": {
+            "object": "urn:ngsi-ld:Device:pig010"
+          },
+          "observedAt": "2022-03-01T15:49:57.039Z",
+          "unitCode": "5K"
+        },
+        "phenologicalCondition": {
+          "vocab": "femaleAdult"
+        },
+        "reproductiveCondition": {
+          "vocab": "active"
+        },
+        "name": "Carnation",
+        "legalID": "M-sow010-Carnation",
+        "sex": "female",
+        "species": "pig",
+        "location": {
+          "value": {
+            "type": "Point",
+            "coordinates": [
+              13.346,
+              52.52
+            ]
+          },
+          "providedBy": {
+            "object": "urn:ngsi-ld:Device:pig010"
+          },
+          "observedAt": "2022-03-01T15:49:57.039Z"
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.346,
+          52.52
+        ]
+      }
+    },
+    {
+      "id": "urn:ngsi-ld:Animal:pig006",
+      "type": "Feature",
+      "properties": {
+        "type": "Animal",
+        "heartRate": {
+          "value": 62,
+          "providedBy": {
+            "object": "urn:ngsi-ld:Device:pig006"
+          },
+          "observedAt": "2022-03-01T15:49:57.287Z",
+          "unitCode": "5K"
+        },
+        "phenologicalCondition": {
+          "vocab": "femaleAdult"
+        },
+        "reproductiveCondition": {
+          "vocab": "inCalf"
+        },
+        "name": "Peach",
+        "legalID": "M-sow006-Peach",
+        "sex": "female",
+        "species": "pig",
+        "location": {
+          "value": {
+            "type": "Point",
+            "coordinates": [
+              13.347,
+              52.522
+            ]
+          },
+          "providedBy": {
+            "object": "urn:ngsi-ld:Device:pig006"
+          },
+          "observedAt": "2022-03-01T15:49:57.287Z"
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.347,
+          52.522
+        ]
+      }
+    }
+  ]
+}

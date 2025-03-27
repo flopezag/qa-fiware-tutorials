@@ -1,0 +1,9 @@
+{
+  "batteryLevel": {
+    "value": 0.8,
+    "unitCode": "C62"
+  },
+  "controlledAsset": {
+    "object": "urn:ngsi-ld:Building:barn002"
+  }
+}

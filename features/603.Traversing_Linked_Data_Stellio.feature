@@ -13,7 +13,7 @@ Feature: Test tutorial 603.Traversing_Linked_Data (Stellio)
     When   I set the "Content-Type" header with the value "application/json"
     And    I set the "Link" header with the value "<http://context/ngsi-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json""
     And    I set the url to "http://localhost:1026/ngsi-ld/v1/entities/urn:ngsi-ld:Building:store001"
-    And    the params equal to "options=keyValues"
+    And    I set the params equal to "options=keyValues"
     And    I send a GET HTTP request to that url
     Then   I receive a HTTP "200" response code from Stellio with the body equal to "response603-01.json"
 
@@ -21,8 +21,8 @@ Feature: Test tutorial 603.Traversing_Linked_Data (Stellio)
     When   I set the "Content-Type" header with the value "application/json"
     And    I set the "Link" header with the value "<http://context/ngsi-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json""
     And    I set the url to "http://localhost:1026/ngsi-ld/v1/entities/urn:ngsi-ld:Building:store001"
-    And    the params equal to "options=keyValues"
-    And    the params equal to "attrs=furniture"
+    And    I set the params equal to "options=keyValues"
+    And    I set the params equal to "attrs=furniture"
     And    I send a GET HTTP request to that url
     Then   I receive a HTTP "200" response code from Stellio with the body equal to "response603-02.json"
 
@@ -30,9 +30,9 @@ Feature: Test tutorial 603.Traversing_Linked_Data (Stellio)
     When   I set the "Content-Type" header with the value "application/json"
     And    I set the "Link" header with the value "<http://context/ngsi-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json""
     And    I set the url to "http://localhost:1026/ngsi-ld/v1/entities"
-    And    the params equal to "options=keyValues"
-    And    the params equal to "attrs=stocks,numberOfItems"
-    And    the params equal to "id=urn:ngsi-ld:Shelf:unit001,urn:ngsi-ld:Shelf:unit002,urn:ngsi-ld:Shelf:unit003"
+    And    I set the params equal to "options=keyValues"
+    And    I set the params equal to "attrs=stocks,numberOfItems"
+    And    I set the params equal to "id=urn:ngsi-ld:Shelf:unit001,urn:ngsi-ld:Shelf:unit002,urn:ngsi-ld:Shelf:unit003"
     And    I send a GET HTTP request to that url
     Then   I receive a HTTP "200" response code from Stellio with the body equal to "response603-03.json"
 
@@ -41,10 +41,10 @@ Feature: Test tutorial 603.Traversing_Linked_Data (Stellio)
     And    I set the "Accept" header with the value "application/json"
     And    I set the "Link" header with the value "<http://context/ngsi-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json""
     And    I set the url to "http://localhost:1026/ngsi-ld/v1/entities"
-    And    the params equal to "type=Product"
-    And    the params equal to "options=keyValues"
-    And    the params equal to "attrs=name,price"
-    And    the params equal to "id=urn:ngsi-ld:Product:001,urn:ngsi-ld:Product:003,urn:ngsi-ld:Product:004"
+    And    I set the params equal to "type=Product"
+    And    I set the params equal to "options=keyValues"
+    And    I set the params equal to "attrs=name,price"
+    And    I set the params equal to "id=urn:ngsi-ld:Product:001,urn:ngsi-ld:Product:003,urn:ngsi-ld:Product:004"
     And    I send a GET HTTP request to that url
     Then   I receive a HTTP "200" response code from Stellio with the body equal to "response603-04.json"
 
@@ -53,9 +53,9 @@ Feature: Test tutorial 603.Traversing_Linked_Data (Stellio)
     And    I set the "Accept" header with the value "application/json"
     And    I set the "Link" header with the value "<http://context/ngsi-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json""
     And    I set the url to "http://localhost:1026/ngsi-ld/v1/entities"
-    And    the params equal to "type=Shelf"
-    And    the params equal to "options=keyValues"
-    And    the params equal to "q=numberOfItems%3E0;locatedIn==%22urn:ngsi-ld:Building:store001%22;stocks==%22urn:ngsi-ld:Product:001%22"
+    And    I set the params equal to "type=Shelf"
+    And    I set the params equal to "options=keyValues"
+    And    I set the params equal to "q=numberOfItems%3E0;locatedIn==%22urn:ngsi-ld:Building:store001%22;stocks==%22urn:ngsi-ld:Product:001%22"
     And    I send a GET HTTP request to that url
     Then   I receive a HTTP "200" response code from Stellio with the body equal to "response603-05.json"
 
@@ -63,14 +63,14 @@ Feature: Test tutorial 603.Traversing_Linked_Data (Stellio)
     When   I set the "Content-Type" header with the value "application/json"
     And    I set the "Link" header with the value "<http://context/ngsi-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json""
     And    I set the url to "http://localhost:1026/ngsi-ld/v1/entities/urn:ngsi-ld:Shelf:unit001/attrs"
-    And    the body request described in file "request603-06.json"
+    And    I set the request body described in file "request603-06.json"
     And    I send a PATCH HTTP request to that url
     Then   I receive a HTTP "204" status code response
 
   Scenario: 07 - 01 Creating an entity using an alternate schema
     When   I set the "Content-Type" header with the value "application/ld+json"
     And    I set the url to "http://localhost:1026/ngsi-ld/v1/entities/"
-    And    the body request described in file "request603-07.json"
+    And    I set the request body described in file "request603-07.json"
     And    I encode this body in "utf-8"
     And    I send a POST HTTP request to that url
     Then   I receive a HTTP "201" status code response

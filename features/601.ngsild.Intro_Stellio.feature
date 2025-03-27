@@ -44,7 +44,7 @@ Feature: Test tutorial 601 Introduction to Linked Data (Stellio)
     Scenario: [4] OBTAIN ENTITY DATA BY FQN TYPE
       When I prepare a GET HTTP request for "obtaining an entity data" to "http://localhost:1026/ngsi-ld/v1/entities"
       And  I set header Accept to application/ld+json
-      And  the params equal to "type=https://smartdatamodels.org/dataModel.Building/Building"
+      And  I set the params equal to "type=https://smartdatamodels.org/dataModel.Building/Building"
       And  I perform the request
       Then I receive a HTTP "200" response code from Stellio with the body equal to "response601-04.json"
 
@@ -59,8 +59,8 @@ Feature: Test tutorial 601 Introduction to Linked Data (Stellio)
     Scenario: [6] OBTAIN ENTITY DATA BY TYPE
       When  I set the "Accept" header with the value "application/ld+json"
       And   I set the "Link" header with the value "<https://smart-data-models.github.io/dataModel.Building/context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json""
-      And   the params equal to "type=Building"
-      And   the params equal to "options=keyValues"
+      And   I set the params equal to "type=Building"
+      And   I set the params equal to "options=keyValues"
       And   I set the url to "http://localhost:1026/ngsi-ld/v1/entities"
       And   I send a GET HTTP request to that url
       Then  I receive from Stellio "200" response code with the body equal to "response601-06.json"

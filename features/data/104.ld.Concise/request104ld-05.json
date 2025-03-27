@@ -1,0 +1,42 @@
+[
+  {
+    "id": "urn:ngsi-ld:TemperatureSensor:002",
+    "type": "TemperatureSensor",
+    "category": {
+      "vocab": [
+        "sensor"
+      ]
+    },
+    "temperature": {
+      "value": 20,
+      "unitCode": "CEL"
+    }
+  },
+  {
+    "id": "urn:ngsi-ld:TemperatureSensor:003",
+    "type": "TemperatureSensor",
+    "category": {
+      "vocab": [
+        "sensor",
+        "actuator"
+      ]
+    },
+    "temperature": {
+      "value": 2,
+      "unitCode": "CEL"
+    }
+  },
+  {
+    "id": "urn:ngsi-ld:TemperatureSensor:004",
+    "type": "TemperatureSensor",
+    "category": {
+      "type": "VocabProperty",
+      "vocab": "sensor"
+    },
+    "temperature": {
+      "type": "Property",
+      "value": 100,
+      "unitCode": "CEL"
+    }
+  }
+]

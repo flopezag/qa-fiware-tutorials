@@ -1,0 +1,51 @@
+[
+  {
+    "id": "urn:ngsi-ld:TemperatureSensor:004",
+    "type": "TemperatureSensor",
+    "category": {
+      "vocab": "sensor"
+    },
+    "temperature": {
+      "value": 100,
+      "unitCode": "CEL"
+    }
+  },
+  {
+    "id": "urn:ngsi-ld:TemperatureSensor:002",
+    "type": "TemperatureSensor",
+    "category": "sensor",
+    "temperature": {
+      "value": 21,
+      "unitCode": "CEL"
+    }
+  },
+  {
+    "id": "urn:ngsi-ld:TemperatureSensor:003",
+    "type": "TemperatureSensor",
+    "category": {
+      "vocab": "sensor"
+    },
+    "temperature": {
+      "type": "Property",
+      "value": 27,
+      "unitCode": "CEL"
+    }
+  },
+  {
+    "id": "urn:ngsi-ld:TemperatureSensor:001",
+    "type": "TemperatureSensor",
+    "name": "Sensor 1",
+    "batteryLevel": {
+      "value": 0.8,
+      "unitCode": "C62"
+    },
+    "category": "sensor",
+    "controlledAsset": {
+      "object": "urn:ngsi-ld:Building:barn002"
+    },
+    "temperature": {
+      "value": 25,
+      "unitCode": "CEL"
+    }
+  }
+]

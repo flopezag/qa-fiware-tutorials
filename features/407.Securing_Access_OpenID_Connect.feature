@@ -10,7 +10,7 @@ Feature: Test tutorial 407.Securing_Access_OpenID_Connect
     Given I set the tutorial 407
 
   Scenario: 00 - Create token with password
-    When   I define the body request described in file "request407-00-00.json"
+    When   I set the request body described in file "request407-00-00.json"
     And    the content-type header key equal to "application/json"
     And    I send a POST HTTP request to "http://localhost:3005/v1/auth/tokens"
     Then   I receive a HTTP response with the following data in header and payload
@@ -26,7 +26,7 @@ curl -iX POST \
 #    And    I set the "X-Auth-token" header with the value "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
     When   I set the X-Auth-Token header with the previous obtained token
     And    I set the "Content-Type" header with the value "application/json"
-    And    the body request described in file "request407-00-01.json"
+    And    I set the request body described in file "request407-00-01.json"
     And    I set the url to "http://localhost:3005/v1/applications"
     And    I send a POST HTTP request to that url
     Then   I receive a HTTP "201" status code from Keyrock with the body "response407-00-01.json" and exclusions "response407-00-01.excludes"
@@ -46,7 +46,7 @@ curl -X PATCH \
 #    And    I set the "X-Auth-token" header with the value "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
     When   I set the X-Auth-Token header with the previous obtained token
     And    I set the "Content-Type" header with the value "application/json"
-    And    the body request described in file "request407-00-02.json"
+    And    I set the request body described in file "request407-00-02.json"
     And    I set the application url with an application id
     And    I send a PATCH HTTP request to that url
     Then   I receive a HTTP "200" response code from Keystone with the body equal to "response407-00-02.json"

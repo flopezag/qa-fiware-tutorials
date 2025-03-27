@@ -1,0 +1,18 @@
+{
+  "description": "Notify me of low feedstock on Farm:001",
+  "type": "Subscription",
+  "entities": [
+    {
+      "id": "urn:ngsi-ld:Animal:pig003",
+      "type": "Animal"
+    }
+  ],
+  "notification": {
+    "format": "concise",
+    "endpoint": {
+      "uri": "http://tutorial:3000/subscription/low-stock-farm001-ngsild",
+      "accept": "application/geo+json"
+    }
+  },
+  "@context": "http://context/user-context.jsonld"
+}

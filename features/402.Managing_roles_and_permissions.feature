@@ -19,7 +19,7 @@ Feature: Test tutorial 402.Managing roles and permissions
       | aaaaaaaa-good-0000-0000-000000000000 | alice    | alice-the-admin@test.com | ANY      |
 
   Scenario: 01 - Create token with password
-    When   I define the body request described in file "request402-01.json"
+    When   I set the request body described in file "request402-01.json"
     And    the content-type header key equal to "application/json"
     And    I send a POST HTTP request to "http://localhost:3005/v1/auth/tokens"
     Then   I receive a HTTP response with the following data in header and payload
@@ -36,7 +36,7 @@ Feature: Test tutorial 402.Managing roles and permissions
   Scenario: 03 - Create an application
     When  I set the "X-Auth-Token" header with the value "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
     And   the content-type header key equal to "application/json"
-    And   the body request described in file "request402-03.json"
+    And   I set the request body described in file "request402-03.json"
     And   I send a POST HTTP request to "http://localhost:3005/v1/applications"
     Then  I receive a HTTP "201" status code from Keyrock with the body "response402-03.json" and exclusions "response402-03.excludes"
 
@@ -55,7 +55,7 @@ Feature: Test tutorial 402.Managing roles and permissions
   Scenario: 06 - Update an application
     When  I set the "X-Auth-Token" header with the value "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
     And   the content-type header key equal to "application/json"
-    And   the body request described in file "request402-06.json"
+    And   I set the request body described in file "request402-06.json"
     And   I send a PATCH HTTP request to the url "http://localhost:3005/v1/applications" with the "application" id from previous execution
     Then  I receive a HTTP "200" status code from Keyrock with the body "response402-06.json" and exclusions "response402-05.excludes"
 
@@ -71,14 +71,14 @@ Feature: Test tutorial 402.Managing roles and permissions
   Scenario: 08.1 - Create the application again
     When  I set the "X-Auth-Token" header with the value "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
     And   the content-type header key equal to "application/json"
-    And   the body request described in file "request402-03.json"
+    And   I set the request body described in file "request402-03.json"
     And   I send a POST HTTP request to "http://localhost:3005/v1/applications"
     Then  I receive a HTTP "201" status code from Keyrock with the body "response402-03.json" and exclusions "response402-03.excludes"
 
   Scenario: 08.2 - Create a permission
     When  I set the "X-Auth-Token" header with the value "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
     And   the content-type header key equal to "application/json"
-    And   the body request described in file "request402-08.json"
+    And   I set the request body described in file "request402-08.json"
     And   I set the permission url with an application id
     And   I send a POST HTTP request to that url
     Then  I receive a HTTP "201" status code from Keyrock with the body "response402-08.json" and exclusions "response402-08.excludes"
@@ -100,7 +100,7 @@ Feature: Test tutorial 402.Managing roles and permissions
   Scenario: 11 - Update a permission
     When  I set the "X-Auth-Token" header with the value "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
     And   the content-type header key equal to "application/json"
-    And   the body request described in file "request402-11.json"
+    And   I set the request body described in file "request402-11.json"
     And   I set the permission url with the application and permission ids
     And   I send a PATCH HTTP request to that url
     Then  I receive a HTTP "200" response code from Keyrock with the body equal to "response402-11.json"
@@ -115,7 +115,7 @@ Feature: Test tutorial 402.Managing roles and permissions
   Scenario: 13 - Create a role
     When  I set the "X-Auth-Token" header with the value "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
     And   the content-type header key equal to "application/json"
-    And   the body request described in file "request402-13.json"
+    And   I set the request body described in file "request402-13.json"
     And   I set the roles url with an application id
     And   I send a POST HTTP request to that url
     Then  I receive a HTTP "201" status code from Keyrock with the body "response402-13.json" and exclusions "response402-13.excludes"
@@ -137,7 +137,7 @@ Feature: Test tutorial 402.Managing roles and permissions
   Scenario: 16 - Update a role
     When  I set the "X-Auth-Token" header with the value "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
     And   the content-type header key equal to "application/json"
-    And   the body request described in file "request402-16.json"
+    And   I set the request body described in file "request402-16.json"
     And   I set the roles url with an application id and role id
     And   I send a PATCH HTTP request to that url
     Then  I receive a HTTP "200" response code from Keyrock with the body equal to "response402-16.json"
@@ -156,7 +156,7 @@ Feature: Test tutorial 402.Managing roles and permissions
   Scenario: 18.1 - Create the role again
     When  I set the "X-Auth-Token" header with the value "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
     And   the content-type header key equal to "application/json"
-    And   the body request described in file "request402-13.json"
+    And   I set the request body described in file "request402-13.json"
     And   I set the roles url with an application id
     And   I send a POST HTTP request to that url
     Then  I receive a HTTP "201" status code from Keyrock with the body "response402-13.json" and exclusions "response402-13.excludes"
@@ -164,7 +164,7 @@ Feature: Test tutorial 402.Managing roles and permissions
   Scenario: 18.2 - Create the permission again
     When  I set the "X-Auth-Token" header with the value "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
     And   the content-type header key equal to "application/json"
-    And   the body request described in file "request402-18-01.json"
+    And   I set the request body described in file "request402-18-01.json"
     And   I set the permission url with an application id
     And   I send a POST HTTP request to that url
     Then  I receive a HTTP "201" status code from Keyrock with the body "response402-18-01.json" and exclusions "response402-08.excludes"
@@ -196,21 +196,21 @@ Feature: Test tutorial 402.Managing roles and permissions
   Scenario: 21.1 - Create an application again
     When  I set the "X-Auth-Token" header with the value "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
     And   the content-type header key equal to "application/json"
-    And   the body request described in file "request402-03.json"
+    And   I set the request body described in file "request402-03.json"
     And   I send a POST HTTP request to "http://localhost:3005/v1/applications"
     Then  I receive a HTTP "201" status code from Keyrock with the body "response402-03.json" and exclusions "response402-03.excludes"
 
   Scenario: 21.2 - Create an organization again
     When  I set the X-Auth-Token header with the previous obtained token
     And   the content-type header key equal to "application/json"
-    And   the body request described in file "request402-09.json"
+    And   I set the request body described in file "request402-09.json"
     And   I send a POST HTTP request to "http://localhost:3005/v1/organizations"
     Then  I receive a HTTP "201" status code from Keyrock with the body "response402-21-2.json" and exclusions "response402-21-2.excludes"
 
   Scenario: 21.3 - Create the role again
     When  I set the "X-Auth-Token" header with the value "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
     And   the content-type header key equal to "application/json"
-    And   the body request described in file "request402-13.json"
+    And   I set the request body described in file "request402-13.json"
     And   I set the roles url with an application id
     And   I send a POST HTTP request to that url
     Then  I receive a HTTP "201" status code from Keyrock with the body "response402-13.json" and exclusions "response402-13.excludes"

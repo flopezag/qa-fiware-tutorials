@@ -44,14 +44,14 @@ Feature: Test tutorial 405.XACML Rules-based Permissions
   Scenario: 07 - AuthZForce - Permit access to a resource
     When  I set the "AuthZForce" to the pdp endpoint url with the previous "domainId"
     And   I set the "Content-Type" header with the value "application/xml"
-    And   the body request described in file "request405-07.xml"
+    And   I set the request body described in file "request405-07.xml"
     And   I send a POST HTTP request to that url
     Then  I receive a HTTP "200" response code from AuthZForce with the body equal to "response405-07.json"
 
   Scenario: 08 - AuthZForce - Deny access to a resource
     When  I set the "AuthZForce" to the pdp endpoint url with the previous "domainId"
     And   I set the "Content-Type" header with the value "application/xml"
-    And   the body request described in file "request405-08.xml"
+    And   I set the request body described in file "request405-08.xml"
     And   I send a POST HTTP request to that url
     Then  I receive a HTTP "200" response code from AuthZForce with the body equal to "response405-08.json"
 
@@ -78,6 +78,6 @@ Feature: Test tutorial 405.XACML Rules-based Permissions
   Scenario: 11 - AuthZForce - Apply a policy to a request
     When  I set the "AuthZForce" to the pdp endpoint url with the previous "domainId"
     And   I set the "Content-Type" header with the value "application/xml"
-    And   the body request described in file "request405-11.xml"
+    And   I set the request body described in file "request405-11.xml"
     And   I send a POST HTTP request to that url
     Then  I receive a HTTP "200" response code from AuthZForce with the body equal to "response405-11.json"

@@ -1,0 +1,21 @@
+[
+  {
+    "id": "urn:ngsi-ld:TemperatureSensor:003",
+    "type": "TemperatureSensor",
+    "category": {
+      "vocab": [
+        "sensor",
+        "actuator"
+      ]
+    }
+  },
+  {
+    "id": "urn:ngsi-ld:TemperatureSensor:004",
+    "type": "TemperatureSensor",
+    "temperature": {
+      "value": 16,
+      "unitCode": "CEL",
+      "observedAt": "2022-03-01T15:00:00.000Z"
+    }
+  }
+]
