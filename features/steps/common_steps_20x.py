@@ -5,6 +5,7 @@ from logging import getLogger
 from requests import post, put, patch, get, delete, exceptions
 from features.funtions import read_data_from_file, dict_diff_with_exclusions
 from hamcrest import assert_that, is_
+import allure
 import json
 import time
 
@@ -51,22 +52,58 @@ def perform_query_request(context):
 
     data = context.payload
 
-    try:
-        context.headers.pop("content-type")
-    except KeyError:
-        pass
+    # Attach request details
+    allure.attach(context.method, name="Request Method", attachment_type=allure.attachment_type.TEXT)
+    allure.attach(context.url, name="Request URL", attachment_type=allure.attachment_type.TEXT)
+    
+    # Ensure headers is a dictionary before attaching
+    headers_to_attach = context.headers if hasattr(context, 'headers') and isinstance(context.headers, dict) else {}
+    allure.attach(json.dumps(headers_to_attach), name="Request Headers", attachment_type=allure.attachment_type.JSON)
 
-    if context.method == "GET":
-        response = get(context.url, headers=context.headers, params=json.loads(data))
-    elif context.method == "DELETE":
-        response = delete(context.url, headers=context.headers, params=json.loads(data))
+    try:
+        # Try to attach as JSON if data is a JSON string
+        allure.attach(json.dumps(json.loads(data), indent=4), name="Request Parameters", attachment_type=allure.attachment_type.JSON)
+    except (json.JSONDecodeError, TypeError):
+        # Fallback to TEXT if it's not a valid JSON string or not a string at all
+        allure.attach(str(data), name="Request Parameters", attachment_type=allure.attachment_type.TEXT)
+
+    try:
+        # It's good practice to copy headers if they are going to be modified
+        request_headers = headers_to_attach.copy()
+        request_headers.pop("content-type", None) # Safely remove content-type
+
+        if context.method == "GET":
+            response = get(context.url, headers=request_headers, params=json.loads(data))
+        elif context.method == "DELETE":
+            response = delete(context.url, headers=request_headers, params=json.loads(data))
+        else:
+            raise AssertionError(f"Unknown method {context.method} for query request")
+            
+    except exceptions.RequestException as e:
+        allure.attach(str(e), name="Request Exception", attachment_type=allure.attachment_type.TEXT)
+        raise AssertionError(f"A request exception occurred: {e}")
+    except json.JSONDecodeError as e:
+        allure.attach(str(data), name="Invalid JSON Payload for Request", attachment_type=allure.attachment_type.TEXT)
+        raise AssertionError(f"Payload is not a valid JSON for this request type: {e}")
+
 
     context.statusCode = str(response.status_code)
     context.responseHeaders = response.headers
-    if context.statusCode != "204":
-        context.response = response.json()
+
+    # Attach response details
+    allure.attach(context.statusCode, name="Response Status Code", attachment_type=allure.attachment_type.TEXT)
+    allure.attach(json.dumps(dict(context.responseHeaders)), name="Response Headers", attachment_type=allure.attachment_type.JSON)
+
+    if context.statusCode != "204" and response.content:
+        try:
+            context.response = response.json()
+            allure.attach(json.dumps(context.response, indent=4), name="Response Body", attachment_type=allure.attachment_type.JSON)
+        except json.decoder.JSONDecodeError:
+            context.response = response.text
+            allure.attach(context.response, name="Response Body", attachment_type=allure.attachment_type.TEXT)
     else:
         context.response = ""
+        allure.attach("Empty Response Body", name="Response Body", attachment_type=allure.attachment_type.TEXT)
 
 
 @step(u'I perform the request')
@@ -74,16 +111,32 @@ def perform_request(context):
     if not hasattr(context, 'payload'):
         context.payload = None
 
+    # Attach request details
+    allure.attach(context.method, name="Request Method", attachment_type=allure.attachment_type.TEXT)
+    allure.attach(context.url, name="Request URL", attachment_type=allure.attachment_type.TEXT)
+    allure.attach(json.dumps(context.headers), name="Request Headers", attachment_type=allure.attachment_type.JSON)
+
+    if context.payload:
+        try:
+            # Try to attach as JSON if payload is a JSON string
+            allure.attach(json.dumps(json.loads(context.payload), indent=4), name="Request Payload", attachment_type=allure.attachment_type.JSON)
+        except (json.JSONDecodeError, TypeError):
+            # Fallback to TEXT if it's not a valid JSON string or not a string at all
+            allure.attach(str(context.payload), name="Request Payload", attachment_type=allure.attachment_type.TEXT)
+    else:
+        allure.attach("No payload", name="Request Payload", attachment_type=allure.attachment_type.TEXT)
+
     try:
         if context.method == "POST":
-            context.payload = context.payload.encode('utf-8')
-            response = post(context.url, data=context.payload, headers=context.headers)
+            # Encode payload to bytes if it's a string, leave as is if it's already bytes (e.g. for file uploads)
+            data_to_send = context.payload.encode('utf-8') if isinstance(context.payload, str) else context.payload
+            response = post(context.url, data=data_to_send, headers=context.headers)
         elif context.method == "PUT":
-            context.payload = context.payload.encode('utf-8')
-            response = put(context.url, data=context.payload, headers=context.headers)
+            data_to_send = context.payload.encode('utf-8') if isinstance(context.payload, str) else context.payload
+            response = put(context.url, data=data_to_send, headers=context.headers)
         elif context.method == "PATCH":
-            context.payload = context.payload.encode('utf-8')
-            response = patch(context.url, data=context.payload, headers=context.headers)
+            data_to_send = context.payload.encode('utf-8') if isinstance(context.payload, str) else context.payload
+            response = patch(context.url, data=data_to_send, headers=context.headers)
         elif context.method == "GET":
             if 'params' in context:
                 response = get(context.url, params=context.params, headers=context.headers)
@@ -92,15 +145,22 @@ def perform_request(context):
         else:
             raise AssertionError(f"Unknown method {context.method}")
     except exceptions.RequestException as e:
+        allure.attach(str(e), name="Request Exception", attachment_type=allure.attachment_type.TEXT)
         raise AssertionError("A request exception occurred")
 
     context.statusCode = str(response.status_code)
     context.responseHeaders = response.headers
 
+    # Attach response details
+    allure.attach(context.statusCode, name="Response Status Code", attachment_type=allure.attachment_type.TEXT)
+    allure.attach(json.dumps(dict(context.responseHeaders)), name="Response Headers", attachment_type=allure.attachment_type.JSON)
+
     try:
         context.response = response.json()
+        allure.attach(json.dumps(context.response, indent=4), name="Response Body", attachment_type=allure.attachment_type.JSON)
     except json.decoder.JSONDecodeError:
         context.response = response.text
+        allure.attach(context.response, name="Response Body", attachment_type=allure.attachment_type.TEXT)
 
 
 @then(u'I receive a HTTP response with status "{expected_status}" and with the body as in file "{response_file}"')
