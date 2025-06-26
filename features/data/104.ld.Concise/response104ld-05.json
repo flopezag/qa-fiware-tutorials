@@ -1,12 +1,5 @@
-{
-  "@context": [
-    "http://context/user-context.jsonld",
-    "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.8.jsonld"
-  ],
-  "success": [
+[
     "urn:ngsi-ld:TemperatureSensor:002",
     "urn:ngsi-ld:TemperatureSensor:003",
     "urn:ngsi-ld:TemperatureSensor:004"
-  ],
-  "errors": []
-}
+]

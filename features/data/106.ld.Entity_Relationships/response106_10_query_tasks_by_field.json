@@ -1,0 +1,7 @@
+[
+    {
+        "id": "urn:ngsi-ld:Task:001",
+        "type": "Task",
+        "worker": "urn:ngsi-ld:Person:001"
+    }
+]

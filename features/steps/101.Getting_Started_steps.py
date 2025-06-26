@@ -7,8 +7,6 @@ from json import load, loads
 from deepdiff import DeepDiff
 from config.settings import CODE_HOME
 from sys import stdout
-from xmldiff import main, formatting
-from xml.dom.minidom import parseString
 
 
 @given(u'I set the tutorial 101')
@@ -30,20 +28,26 @@ def send_orion_get_version(context, url):
 
 @step(u'I receive a HTTP "{status_code}" response code from {server} with the body containing a {attribute} attribute')
 def http_code_is_returned(context, status_code, server, attribute):
-    assert_that(context.statusCode, is_(status_code),
-                "Response to {} notification has not got the expected HTTP response code: Message: {}"
-                .format(server, context.response))
+    assert_that(
+        context.statusCode,
+        is_(status_code),
+        f"Response to {server} notification has not got the expected HTTP response code: Message: {context.response}",
+    )
 
-    assert_that(context.xml, has_key('domainId'),
-                "Response from {} has not got the {} attribute to extract the domainId: Message: {}"
-                .format(server, attribute, context.response))
+    assert_that(
+        context.xml,
+        has_key('domainId'),
+        f"Response from {server} has not got the {attribute} attribute to extract the domainId: Message: {context.response}",
+    )
 
 
 @step(u'I receive a HTTP "{status_code}" response code from {server} with the body equal to "{response}"')
 def http_code_is_returned(context, status_code, server, response):
-    assert_that(context.statusCode, is_(status_code),
-                "Response to {} notification has not got the expected HTTP response code: Message: {}"
-                .format(server, context.response))
+    assert_that(
+        context.statusCode,
+        is_(status_code),
+        f"Response to {server} notification has not got the expected HTTP response code: Message: {context.response}",
+    )
 
     file = join(context.data_home, response)
     with open(file) as f:
@@ -60,6 +64,8 @@ def http_code_is_returned(context, status_code, server, response):
             assert_that(diff.to_dict(), is_(dict()),
                         f'Response from {server} has not got the expected HTTP response body:\n  {diff}')
     else:
+        data_sort(data1=data, data2=context.response)
+
         diff = DeepDiff(data,
                         context.response,
                         exclude_paths=["root['orion']['uptime']", "root['version']", "root['index']"])
@@ -108,9 +114,9 @@ def receive_post_response2(context):
         assert_that(context.statusCode, is_(valid_response['Status-Code']))
 
         # Currently, there is no Connection Header key in the 101 response
-        if 'Connection' in dict(context.responseHeaders).keys():
+        if 'Connection' in dict(context.responseHeaders):
             assert_that(context.responseHeaders['Connection'], is_(valid_response['Connection']))
-        
+
         if valid_response['Location'] != "Any":
             assert_that(context.responseHeaders['Location'], is_(valid_response['Location']))
 
@@ -132,3 +138,28 @@ def step_impl(context):
     :type context: behave.runner.Context
     """
     raise NotImplementedError(u'STEP: Then I receive a HTTP "200" code response')
+
+def data_sort(data1, data2):
+    """Sorts two lists in place for comparison purposes.
+
+    This function sorts lists of strings or lists of dictionaries by the 'id' key.
+    It is used to ensure consistent ordering before comparing data structures.
+
+    Args:
+        data1: The first list to sort, containing either strings or dictionaries.
+        data2: The second list to sort, containing either strings or dictionaries.
+
+    Returns:
+        None
+    """
+    if isinstance(data1, list):
+        if isinstance(data1[0], str):
+            data1.sort()
+        elif isinstance(data1[0], dict):
+            data1.sort(key=lambda x: x["id"])
+
+    if isinstance(data2, list):
+        if isinstance(data2[0], str):
+            data2.sort()
+        elif isinstance(data2[0], dict):
+            data2.sort(key=lambda x: x["id"])

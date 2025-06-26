@@ -1,0 +1,10 @@
+{
+    "id": "urn:ngsi-ld:Task:001",
+    "type": "Task",
+    "worker": {"type": "Relationship", "object": "urn:ngsi-ld:Person:001"},
+    "field": {"type": "Relationship", "object": "urn:ngsi-ld:PartField:002"},
+    "product": {"type": "Relationship", "object": "urn:ngsi-ld:Herbicide:001"},
+    "description": {"type": "Property", "value": "Spray the North Field with Agent Orange"},
+    "status": {"type": "Property", "value": "scheduled"},
+    "dueDate": {"type": "Property", "value": "2021-07-16"}
+}

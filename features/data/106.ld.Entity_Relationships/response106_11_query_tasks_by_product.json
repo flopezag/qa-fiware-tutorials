@@ -1,0 +1,7 @@
+[
+    {
+        "id": "urn:ngsi-ld:Task:001",
+        "type": "Task",
+        "field": "urn:ngsi-ld:PartField:002"
+    }
+]

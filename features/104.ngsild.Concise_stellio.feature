@@ -3,7 +3,7 @@ Feature: Test tutorial 104.NGSI-LD.Concise NGSI-LD Payloads (Orion-LD)
   url: https://ngsi-ld-tutorials.readthedocs.io/en/latest/concise.html
   git-clone: https://github.com/FIWARE/tutorials.Concise-Format.git
   git-directory: /tmp/tutorials.Concise-Format
-  shell-commands: git checkout NGSI-LD ; ./services create; ./services orion
+  shell-commands: git checkout NGSI-LD ; ./services create; ./services stellio
   clean-shell-commands: ./services stop
 
   Background:
@@ -37,7 +37,6 @@ Feature: Test tutorial 104.NGSI-LD.Concise NGSI-LD Payloads (Orion-LD)
       And   I send a GET HTTP request to that url
       Then  I receive a HTTP "200" response code from Orion-LD with the body equal to "response104ld-04.json"
 
-    # Need to check the content-type of the response application/json
     Scenario: 05 - Batch Create New Data Entities or Attributes
       When  I set the "Content-Type" header with the value "application/json"
       And   I set the "Accept" header with the value "application/ld+json"
@@ -56,7 +55,6 @@ Feature: Test tutorial 104.NGSI-LD.Concise NGSI-LD Payloads (Orion-LD)
       And   I send a POST HTTP request to that url
       Then  I receive a HTTP "204" response code
 
-    # need to discard the timestamp of the properties: createdAt, modifiedAt
     Scenario: 07 - Read a Data Entity (concise)
       When  I set the "Link" header with the value "<http://context/user-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json""
       And   I set the url to "http://localhost:1026/ngsi-ld/v1/entities/urn:ngsi-ld:TemperatureSensor:001"
@@ -126,7 +124,6 @@ Feature: Test tutorial 104.NGSI-LD.Concise NGSI-LD Payloads (Orion-LD)
       And   I send a GET HTTP request to that url
       Then  I receive a HTTP "200" response code from Orion-LD with the body equal to "response104ld-14.json"
 
-    # curl: (52) Empty reply from server --> crashed Orion-LD
     Scenario: 15 - Overwrite the value of an Attribute
       When  I set the "Content-Type" header with the value "application/json"
       And   I set the "Link" header with the value "<http://context/user-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json""

@@ -21,7 +21,7 @@ Feature: Test tutorial 103.NGSI-LD.CRUD Operations (Scorpio)
       When    I set the "Link" header with the value "<http://context/user-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json""
       And     I set the url to "http://localhost:1026/ngsi-ld/v1/entities/urn:ngsi-ld:TemperatureSensor:001"
       And     I send a GET HTTP request to that url
-      Then    I receive a HTTP "200" response code
+      Then   I receive a HTTP "200" response code from Scorpio with the body equal to "response103ld-02.json"
 
     Scenario: 03 - Create New Attributes
       When    I set the "Content-Type" header with the value "application/json"
@@ -34,9 +34,8 @@ Feature: Test tutorial 103.NGSI-LD.CRUD Operations (Scorpio)
     Scenario: 04 - Read a Data Entity (verbose)
       When    I set the "Link" header with the value "<http://context/user-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json""
       And     I set the url to "http://localhost:1026/ngsi-ld/v1/entities/urn:ngsi-ld:TemperatureSensor:001"
-      And     I set the params equal to "options=sysAttrs"
       And     I send a GET HTTP request to that url
-      Then    I receive a HTTP "200" response code
+      Then    I receive a HTTP "200" response code from Scorpio with the body equal to "response103ld-04.json"
 
     Scenario: 05 - Batch Create New Data Entities or Attributes
       When   I set the "Content-Type" header with the value "application/json"
@@ -70,6 +69,7 @@ Feature: Test tutorial 103.NGSI-LD.CRUD Operations (Scorpio)
       And    I send a GET HTTP request to that url
       Then   I receive a HTTP "200" response code from Scorpio with the body equal to "response103ld-08.json"
 
+    # Need to change the tutorial, category is vocab and temperature is 25
     Scenario: 09 - Read a Data Entity (key-value pairs)
       When   I set the "Link" header with the value "<http://context/user-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json""
       And    I set the url to "http://localhost:1026/ngsi-ld/v1/entities/urn:ngsi-ld:TemperatureSensor:001"
@@ -89,6 +89,7 @@ Feature: Test tutorial 103.NGSI-LD.CRUD Operations (Scorpio)
 
     Scenario: 11 - List all Data Entities (verbose)
       When   I set the "Link" header with the value "<http://context/user-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json""
+      And    I set the "Accept" header with the value "application/ld+json"
       And    I set the url to "http://localhost:1026/ngsi-ld/v1/entities/"
       And    I set the params equal to "type=TemperatureSensor"
       And    I send a GET HTTP request to that url
@@ -149,7 +150,7 @@ Feature: Test tutorial 103.NGSI-LD.CRUD Operations (Scorpio)
     Scenario: 18 - Delete an Entity
       When   I set the url to "http://localhost:1026/ngsi-ld/v1/entities/urn:ngsi-ld:TemperatureSensor:004"
       And    I send a DELETE HTTP request to that url
-      Then   I receive a HTTP "204" response code
+      Then   I receive a HTTP "204" response code from Scorpio with the body equal to "response103ld-18.json"
 
     Scenario: 19 - Delete an Attribute from an Entity
       When   I set the "Link" header with the value "<http://context/user-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json""
@@ -160,11 +161,19 @@ Feature: Test tutorial 103.NGSI-LD.CRUD Operations (Scorpio)
     Scenario: 20 - Batch Delete Multiple Entities
       When   I set the "Content-Type" header with the value "application/json"
       And    I set the url to "http://localhost:1026/ngsi-ld/v1/entityOperations/delete"
-      And    the body request described in file "request103ld-20.json"
+      And    I set the request body described in file "request103ld-20.json"
       And    I send a POST HTTP request to that url
       Then   I receive a HTTP "204" response code
 
-    Scenario: 21 - Find Existing Data Relationships
+    # It will produce always an error 404
+    Scenario: 21 - Batch Delete Multiple Attributes from an Entity
+      When   I set the "Content-Type" header with the value "application/json"
+      And    I set the url to "http://localhost:1026/ngsi-ld/v1/entityOperations/delete"
+      And    I set the request body described in file "request103ld-20.json"
+      And    I send a POST HTTP request to that url
+      Then   I receive a HTTP "204" response code from Scorpio with the body equal to "response103ld-21.json"
+
+    Scenario: 22 - Find Existing Data Relationships
       When   I set the "Link" header with the value "<http://context/user-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json""
       And    I set the url to "http://localhost:1026/ngsi-ld/v1/entities/?type=TemperatureSensor&limit=0&count=true&q=controlledAsset==%22urn:ngsi-ld:Building:barn002%22"
       And    I set the "Accept" header with the value "application/json"

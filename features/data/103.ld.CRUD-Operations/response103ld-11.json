@@ -4,7 +4,7 @@
       "http://context/user-context.jsonld",
       "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.8.jsonld"
     ],
-    "id": "urn:ngsi-ld:TemperatureSensor:004",
+    "id": "urn:ngsi-ld:TemperatureSensor:001",
     "type": "TemperatureSensor",
     "category": {
       "type": "VocabProperty",
@@ -12,8 +12,17 @@
     },
     "temperature": {
       "type": "Property",
-      "value": 100,
+      "value": 25,
       "unitCode": "CEL"
+    },
+    "batteryLevel": {
+      "type": "Property",
+      "value": 0.9,
+      "unitCode": "C62"
+    },
+    "controlledAsset": {
+      "type": "Relationship",
+      "object": "urn:ngsi-ld:Building:barn002"
     }
   },
   {
@@ -55,24 +64,15 @@
       "http://context/user-context.jsonld",
       "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.8.jsonld"
     ],
-    "id": "urn:ngsi-ld:TemperatureSensor:001",
+    "id": "urn:ngsi-ld:TemperatureSensor:004",
     "type": "TemperatureSensor",
-    "batteryLevel": {
-      "type": "Property",
-      "value": 0.8,
-      "unitCode": "C62"
-    },
     "category": {
       "type": "VocabProperty",
       "vocab": "sensor"
     },
-    "controlledAsset": {
-      "type": "Relationship",
-      "object": "urn:ngsi-ld:Building:barn002"
-    },
     "temperature": {
       "type": "Property",
-      "value": 25,
+      "value": 100,
       "unitCode": "CEL"
     }
   }

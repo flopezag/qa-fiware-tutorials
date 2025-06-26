@@ -1,8 +1,8 @@
 [
   {
-    "id": "urn:ngsi-ld:TemperatureSensor:004",
+    "id": "urn:ngsi-ld:TemperatureSensor:001",
     "type": "TemperatureSensor",
-    "temperature": 100
+    "temperature": 25
   },
   {
     "id": "urn:ngsi-ld:TemperatureSensor:002",
@@ -15,8 +15,8 @@
     "temperature": 27
   },
   {
-    "id": "urn:ngsi-ld:TemperatureSensor:001",
+    "id": "urn:ngsi-ld:TemperatureSensor:004",
     "type": "TemperatureSensor",
-    "temperature": 25
+    "temperature": 100
   }
 ]

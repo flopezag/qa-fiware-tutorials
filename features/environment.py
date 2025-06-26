@@ -3,7 +3,7 @@
 __author__ = "@fla"
 
 from logging import getLogger
-from python_on_whales import docker
+from python_on_whales import DockerClient
 from requests import get
 from os.path import exists
 from sys import stdout
@@ -20,6 +20,7 @@ from os.path import join
 import stat
 
 __logger__ = getLogger(__name__)
+docker = DockerClient(host="unix:///var/run/docker.sock")
 
 INTERESTING_FEATURES_STRINGS = ['docker-compose',
                                 'docker-compose-changes',
@@ -31,10 +32,10 @@ INTERESTING_FEATURES_STRINGS = ['docker-compose',
 
 
 def is_interesting_feature_string(feature_description: str):
-    for f in INTERESTING_FEATURES_STRINGS:
-        if feature_description.startswith(f + ":"):
-            return True
-    return False
+    return any(
+        feature_description.startswith(f"{f}:")
+        for f in INTERESTING_FEATURES_STRINGS
+    )
 
 
 def git(*args):
@@ -47,7 +48,7 @@ def git(*args):
 
 def exec_scripts(parameters: dict, which_scripts: str):
     scripts = parameters[which_scripts].split(';')
-    git_dir = parameters['git-directory'] if 'git-directory' in parameters else '.'
+    git_dir = parameters.get('git-directory', '.')
     script_dir = join(CODE_HOME, "scripts")
 
     current_dir = os.getcwd()
@@ -65,13 +66,13 @@ def exec_scripts(parameters: dict, which_scripts: str):
 
 def exec_commands(parameters: dict, which_commands: str):
     commands = parameters[which_commands].split(';')
-    commands_dir = parameters['git-directory'] if 'git-directory' in parameters else '.'
+    commands_dir = parameters.get('git-directory', '.')
 
     current_dir = os.getcwd()
     os.chdir(commands_dir)
 
     for command in commands:
-        os.system(command.strip())
+        os.system(f"DOCKER_HOST=unix:///var/run/docker.sock {command.strip()}")
 
     os.chdir(current_dir)
 
@@ -136,14 +137,7 @@ def before_feature(context, feature):
         stdout.write("********** END git-clone **********\n")
 
     if 'docker-compose-changes' in parameters:
-        stdout.write("********** START docker-compose-changes **********\n")
-        stdout.write("DIR: " + os.getcwd() + "\n")
-        stdout.write("CODE HOME " + CODE_HOME + "\n")
-        stdout.write("git-directory" + context.parameters['git-directory'] + "\n")
-        exec_scripts(parameters, 'docker-compose-changes')
-
-        stdout.write("********** END docker-compose-changes **********\n\n")
-
+        _extracted_from_before_feature_45(context, parameters)
     if 'shell-commands' in parameters:
         # Get the corresponding broker
         context.broker, context.core_context = get_broker_name_and_context(parameters['shell-commands'])
@@ -152,7 +146,18 @@ def before_feature(context, feature):
         exec_commands(parameters, 'shell-commands')
 
 
-def get_broker_name_and_context(parameter) -> [str, str]:
+# TODO Rename this here and in `before_feature`
+def _extracted_from_before_feature_45(context, parameters):
+    stdout.write("********** START docker-compose-changes **********\n")
+    stdout.write(f"DIR: {os.getcwd()}" + "\n")
+    stdout.write(f"CODE HOME {CODE_HOME}" + "\n")
+    stdout.write("git-directory" + context.parameters['git-directory'] + "\n")
+    exec_scripts(parameters, 'docker-compose-changes')
+
+    stdout.write("********** END docker-compose-changes **********\n\n")
+
+
+def get_broker_name_and_context(parameter) -> tuple[str, str]:
     core_context = {
         'orion': 'https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.8.jsonld',
         'orion-ld': 'https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.8.jsonld',
@@ -205,9 +210,9 @@ def after_feature(context, feature):
 
     # Cleaning docker network
     current_status = [x.id for x in docker.network.list()]
-    new_docker_network_id = [x for x in current_status if x not in context.dockerNetworkList]
-
-    if new_docker_network_id:
+    if new_docker_network_id := [
+        x for x in current_status if x not in context.dockerNetworkList
+    ]:
         stdout.write(f'\nDeleting Docker Network...\n')
         docker.network.remove(new_docker_network_id)
 

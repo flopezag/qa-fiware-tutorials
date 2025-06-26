@@ -1,0 +1,13 @@
+{
+    "id": "urn:ngsi-ld:Building:farm001",
+    "type": "Building",
+    "temperature": {
+        "type": "Property",
+        "value": 20,
+        "unitCode": "CEL",
+        "providedBy": {
+            "type": "Relationship",
+            "object": "urn:ngsi-ld:TemperatureSensor:001"
+        }
+    }
+}

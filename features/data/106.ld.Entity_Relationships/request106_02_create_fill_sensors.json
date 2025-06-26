@@ -1,0 +1,26 @@
+[
+    {
+      "id": "urn:ngsi-ld:FillingLevelSensor:001",
+      "type": "FillingLevelSensor",
+      "description" : {"type": "Property", "value": "Filling Level Sensor 1"},
+      "category": {"type": "VocabProperty", "vocab": "sensor"},
+      "controlledProperty" : {"type": "Property", "value": "fillingLevel"},
+      "fillingLevel": {"type": "Property", "value": 1, "unitCode": "C62"}
+    },
+    {
+      "id": "urn:ngsi-ld:FillingLevelSensor:002",
+      "type": "FillingLevelSensor",
+      "description" : {"type": "Property", "value": "Filling Level Sensor 2"},
+      "category": {"type": "VocabProperty", "vocab": "sensor"},
+      "controlledProperty" : {"type": "Property", "value": "fillingLevel"},
+      "fillingLevel": {"type": "Property", "value": 0.9, "unitCode": "C62"}
+    },
+    {
+      "id": "urn:ngsi-ld:FillingLevelSensor:003",
+      "type": "FillingLevelSensor",
+      "description" : {"type": "Property", "value": "Filling Gauge 3"},
+      "category": {"type": "VocabProperty", "vocab": "sensor"},
+      "controlledProperty" : {"type": "Property", "value": "fillingLevel"},
+      "fillingLevel": {"type": "Property", "value": 0.8, "unitCode": "C62"}
+    }
+]

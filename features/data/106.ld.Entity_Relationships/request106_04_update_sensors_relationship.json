@@ -1,0 +1,50 @@
+[
+    {
+        "id": "urn:ngsi-ld:TemperatureSensor:001",
+        "type": "TemperatureSensor",
+        "controlledAsset": {
+            "type": "Relationship",
+            "object": "urn:ngsi-ld:Building:farm001"
+        }
+    },
+    {
+        "id": "urn:ngsi-ld:TemperatureSensor:002",
+        "type": "TemperatureSensor",
+        "controlledAsset": {
+            "type": "Relationship",
+            "object": "urn:ngsi-ld:Building:barn002"
+        }
+    },
+    {
+        "id": "urn:ngsi-ld:FillingLevelSensor:003",
+        "type": "FillingLevelSensor",
+        "controlledAsset": {
+            "type": "Relationship",
+            "object": "urn:ngsi-ld:Building:farm002"
+        }
+    },
+    {
+        "id": "urn:ngsi-ld:FillingLevelSensor:001",
+        "type": "FillingLevelSensor",
+        "controlledAsset": {
+            "type": "Relationship",
+            "object": "urn:ngsi-ld:Building:farm001"
+        }
+    },
+    {
+        "id": "urn:ngsi-ld:FillingLevelSensor:002",
+        "type": "FillingLevelSensor",
+        "controlledAsset": {
+            "type": "Relationship",
+            "object": "urn:ngsi-ld:Building:barn002"
+        }
+    },
+    {
+        "id": "urn:ngsi-ld:TemperatureSensor:003",
+        "type": "TemperatureSensor",
+        "controlledAsset": {
+            "type": "Relationship",
+            "object": "urn:ngsi-ld:Building:farm002"
+        }
+    }
+]

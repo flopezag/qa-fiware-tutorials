@@ -91,5 +91,6 @@
         ]
       }
     }
-  ]
+  ],
+  "@context": "http://context/user-context.jsonld"
 }
