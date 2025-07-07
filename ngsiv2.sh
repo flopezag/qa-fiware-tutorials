@@ -17,7 +17,7 @@ function function_two {
   behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/201.Introduction_to_IoT_Sensors.feature
   behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/202.IotAgent_Ultralight.feature
   behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/203.IotAgentJson.feature
-  behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/204.IotOverMqtt.feature
+  behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/204.IotOverMQTT.feature
   behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/205.CustonIoTAgent.feature
   behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/206.IoTOverIoTATangle.feature
 }
@@ -124,14 +124,13 @@ read -p "Enter a number (1-5): " num
 
 # Call the appropriate function based on the number
 case $num in
-  1) time function_one ;;
-  2) time function_two ;;
-  3) time function_three ;;
-  4) time function_four ;;
-#  5) time function_five ;;
-  5) time function_all ;;
-  *) echo "Invalid number entered" ;;
+1) time function_one ;;
+2) time function_two ;;
+3) time function_three ;;
+4) time function_four ;;
+  #  5) time function_five ;;
+5) time function_all ;;
+*) echo "Invalid number entered" ;;
 esac
-
 
 allure serve ./tmp
