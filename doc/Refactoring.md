@@ -11,11 +11,13 @@ This refactoring plan aims to improve modularity, maintainability, test clarity,
 **Goal:** Understand current structure, execution flow, and test coverage.
 
 - [ ] Run tests locally using `behave` and Docker Compose.
+
 - Evaluate:
   - [ ] Test coverage & stability
   - [ ] Code duplication
   - [ ] Docker reliability
   - [ ] BDD feature file readability
+
 - Missing tutorials:
   - NGSIv2:
     - [ ] 106. Subscribing to Changes in Context
@@ -46,6 +48,7 @@ This refactoring plan aims to improve modularity, maintainability, test clarity,
     ├── ngsi_v2/
     
     └── ngsi_ld/
+
 - [ ] Unify or reuse shared step definitions.
 
 ---
@@ -93,17 +96,21 @@ This refactoring plan aims to improve modularity, maintainability, test clarity,
 **Goal:** Automatically generate `.feature` files from HTML documentation using GenAI.
 
 - **Use case:** HTML docs with `curl` examples (requests + responses).
+
 - **Tooling:**
 - Use ChatGPT API or local LLM to:
   1. [ ] Parse HTML documentation.
   2. [ ] Extract `curl` requests + responses.
   3. [ ] Generate `.feature` files in Gherkin syntax (with `Given`, `When`, `Then` steps).
+
 - **Workflow:**
 - [ ] Create `tools/genai_from_html.py`
 - [ ] Input: URL or HTML file.
 - [ ] Output: Suggested `.feature` files saved under `features/generated/`
+
 - **Review process:**
 - [ ] Generated scenarios reviewed by dev or QA before merge.
+
 - **Benefits:**
 - Fast onboarding for new tutorials.
 - Coverage parity with updated FIWARE docs.
@@ -153,9 +160,9 @@ This refactoring plan aims to improve modularity, maintainability, test clarity,
 
 **Goal:** Allow reuse of helper modules via pip package.
 
-- Add `setup.py` or `pyproject.toml`
-- Versioning for releases
-- Publish on PyPI (optional)
+- [ ] Add `setup.py` or `pyproject.toml`
+- [ ] Versioning for releases
+- [ ] Publish on PyPI (optional)
 
 ---
 
@@ -163,9 +170,9 @@ This refactoring plan aims to improve modularity, maintainability, test clarity,
 
 **Goal:** Wrap up and ensure long-term quality.
 
-- Peer review of refactored code
-- Merge changes incrementally
-- Document maintenance cycles and long-term goals
+- [ ] Peer review of refactored code
+- [ ] Merge changes incrementally
+- [ ] Document maintenance cycles and long-term goals
 
 ---
 
