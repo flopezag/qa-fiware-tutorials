@@ -16,6 +16,17 @@ This refactoring plan aims to improve modularity, maintainability, test clarity,
   - [ ] Code duplication
   - [ ] Docker reliability
   - [ ] BDD feature file readability
+- Missing tutorials:
+  - NGSIv2:
+    - [ ] 106. Subscribing to Changes in Context
+  - NGSI-LD
+    - [ ] 104. Concise Payloads
+    - [ ] (@flopezag) 104. Entity Relationships refactor to 106. Entity Relationships 
+    - [ ] (@flopezag) 105. Merge-Patch and Put
+    - [ ] 106. Subscription  refactor to  107. Subscriptions
+    - [ ] 108. Registrations
+    - [ ] 109. Temporal Operations
+    - [ ] 110. Extended Properties
 
 ---
 
@@ -29,8 +40,11 @@ This refactoring plan aims to improve modularity, maintainability, test clarity,
   - [ ] NGSI-v2 and NGSI-LD split
   - [ ] Rename `config.json` → `ngsi_v2.json`, `ngsi_ld.json`
 - [ ] Group `.feature` files:
+    
     features/
+    
     ├── ngsi_v2/
+    
     └── ngsi_ld/
 - [ ] Unify or reuse shared step definitions.
 

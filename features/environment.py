@@ -20,7 +20,7 @@ from os.path import join
 import stat
 
 __logger__ = getLogger(__name__)
-docker = DockerClient(host="unix:///var/run/docker.sock")
+docker = DockerClient(host='unix:///var/run/docker.sock')
 
 INTERESTING_FEATURES_STRINGS = ['docker-compose',
                                 'docker-compose-changes',
@@ -72,7 +72,7 @@ def exec_commands(parameters: dict, which_commands: str):
     os.chdir(commands_dir)
 
     for command in commands:
-        os.system(f"DOCKER_HOST=unix:///var/run/docker.sock {command.strip()}")
+        os.system(f'DOCKER_HOST=unix:///var/run/docker.sock {command.strip()}')
 
     os.chdir(current_dir)
 
@@ -89,15 +89,15 @@ def replace(source, pattern, string):
 
 
 def before_all(context):
-    __logger__.info("=========== INITIALIZE PROCESS ===========\n")
+    __logger__.info('=========== INITIALIZE PROCESS ===========\n')
     stdout.write(f'=========== INITIALIZE PROCESS ===========\n')
 
 
 def before_feature(context, feature):
-    __logger__.info("=========== START FEATURE ===========")
-    __logger__.info("Feature name: %s", feature.name)
+    __logger__.info('=========== START FEATURE ===========')
+    __logger__.info('Feature name: %s', feature.name)
 
-    stdout.write("=========== START FEATURE ===========\n")
+    stdout.write('=========== START FEATURE ===========\n')
     stdout.write(f'Feature name: {feature.name}\n\n')
 
     # 1st: We need to take an overview of the current docker network configuration
@@ -124,7 +124,7 @@ def before_feature(context, feature):
         docker.compose.up(detach=True)
 
     if 'git-clone' in parameters:
-        stdout.write("********** START git-clone **********\n")
+        stdout.write('********** START git-clone **********\n')
         # We need to check if the corresponding temporal folder exists from a previous execution
         # not finished properly, and in that case remove it
         if exists(parameters['git-directory']):
@@ -134,7 +134,7 @@ def before_feature(context, feature):
             rmtree(context.parameters['git-directory'])
 
         git("clone", parameters['git-clone'], parameters['git-directory'])
-        stdout.write("********** END git-clone **********\n")
+        stdout.write('********** END git-clone **********\n')
 
     if 'docker-compose-changes' in parameters:
         _extracted_from_before_feature_45(context, parameters)
@@ -148,13 +148,13 @@ def before_feature(context, feature):
 
 # TODO Rename this here and in `before_feature`
 def _extracted_from_before_feature_45(context, parameters):
-    stdout.write("********** START docker-compose-changes **********\n")
-    stdout.write(f"DIR: {os.getcwd()}" + "\n")
-    stdout.write(f"CODE HOME {CODE_HOME}" + "\n")
-    stdout.write("git-directory" + context.parameters['git-directory'] + "\n")
+    stdout.write('********** START docker-compose-changes **********\n')
+    stdout.write(f'DIR: {os.getcwd()}' + '\n')
+    stdout.write(f'CODE HOME {CODE_HOME}' + '\n')
+    stdout.write(f'git-directory: {context.parameters["git-directory"]}' + '\n')
     exec_scripts(parameters, 'docker-compose-changes')
 
-    stdout.write("********** END docker-compose-changes **********\n\n")
+    stdout.write('********** END docker-compose-changes **********\n\n')
 
 
 def get_broker_name_and_context(parameter) -> tuple[str, str]:
@@ -166,24 +166,23 @@ def get_broker_name_and_context(parameter) -> tuple[str, str]:
     }
     brokers = list(core_context.keys())
 
-    broker = [broker for broker in brokers if parameter.find(broker) != -1]
-    if not broker:
-        # Default to 'orion' if no broker found in parameter
+    # Default to 'orion' if no broker found in parameter
+    try:
+        broker = [broker for broker in brokers if parameter.find(broker) != -1][0]
+    except Exception:
         broker = 'orion'
-    else:
-        broker = broker[0]
 
     return broker, core_context[broker]
 
 
 def before_scenario(context, scenario):
-    __logger__.info("********** START SCENARIO **********")
+    __logger__.info('********** START SCENARIO **********')
     __logger__.info(f'Scenario name: {scenario.name}')
 
-    stdout.write("********** START SCENARIO **********\n")
+    stdout.write('********** START SCENARIO **********\n')
     stdout.write(f'Scenario name: {scenario.name}\n')
 
-    if "runner.continue_after_failed_step" in scenario.effective_tags:
+    if 'runner.continue_after_failed_step' in scenario.effective_tags:
         scenario.continue_after_failed_step = True
     else:
         scenario.continue_after_failed_step = False
@@ -223,5 +222,5 @@ def after_feature(context, feature):
 
 
 def after_all(context):
-    __logger__.info("... END  :)")
+    __logger__.info('... END  :)')
     stdout.write(f'... END  :)\n')

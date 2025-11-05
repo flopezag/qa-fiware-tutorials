@@ -13,7 +13,7 @@ Feature: Test tutorial 403.Securing application access
         Given I set "ClientID" to "tutorial-dckr-site-0000-xpresswebapp"
         And   I set "ClientSecret" to "tutorial-dckr-site-0000-clientsecret"
         When  I calculate the base64 of this ClientId and ClientSecret
-        Then  I obtain the value "dHV0b3JpYWwtZGNrci1zaXRlLTAwMDAteHByZXNzd2ViYXBwOnR1dG9yaWFsLWRja3Itc2l0ZS0wMDAwLWNsaWVudHNlY3JldAo=="
+        Then  I obtain the value "dHV0b3JpYWwtZGNrci1zaXRlLTAwMDAteHByZXNzd2ViYXBwOnR1dG9yaWFsLWRja3Itc2l0ZS0wMDAwLWNsaWVudHNlY3JldA=="
 
     Scenario: 01 - Logging-in with a password
         When  I set the Authorization header token with the calculated value
@@ -24,7 +24,7 @@ Feature: Test tutorial 403.Securing application access
         And   I send a POST HTTP request to that url
         Then  I receive a HTTP "200" status code from Keyrock with the following data
             | access_token | token_type | expires_in | refresh_token |
-            | any          | Bearer     | 3599       | any           |
+            | any          | bearer     | 3599       | any           |
 
     Scenario: 02 - Retrieving user details from an access token
         When  I set the the user url with the previous access_token
@@ -40,7 +40,7 @@ Feature: Test tutorial 403.Securing application access
         And   I send a POST HTTP request to that url
         Then  I receive a HTTP "200" status code from Keyrock with the following data
             | access_token | token_type | expires_in |
-            | any          | Bearer     | 3599       |
+            | any          | bearer     | 3599       |
 
     Scenario: 04 - Availability check
         When  I set the Authorization header token with the calculated value
@@ -51,7 +51,7 @@ Feature: Test tutorial 403.Securing application access
         And   I send a POST HTTP request to that url
         Then  I receive a HTTP "200" status code from Keyrock with the following data
             | access_token | token_type | expires_in | refresh_token |
-            | any          | Bearer     | 3599       | any           |
+            | any          | bearer     | 3599       | any           |
 
     Scenario: 05 - Refresh access token
         When  I set the Authorization header token with the calculated value
@@ -62,7 +62,7 @@ Feature: Test tutorial 403.Securing application access
         And   I send a POST HTTP request to that url
         Then  I receive a HTTP "200" status code from Keyrock with the following data
             | access_token | token_type | expires_in | refresh_token |
-            | any          | Bearer     | 3599       | any           |
+            | any          | bearer     | 3599       | any           |
 
     # There should be clarified that Application ID is equal to Client ID in the tutorial
     # This scenario works basically because there is no response in the tutorial, therefore
