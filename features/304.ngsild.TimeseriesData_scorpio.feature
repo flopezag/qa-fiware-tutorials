@@ -35,7 +35,7 @@ Feature: Test tutorial 304.Persisting and Querying timedata series (Scorpio)
         | notify of animal locations | 02.request.json |
 
     # Request 3 -
-    Scenario: Check the subscriptions for quantum-leap to ngsi-ld
+    Scenario: Check the subscriptions for quantum-leap to ngsi-ld 1
     When  I send GET HTTP request to "http://localhost:1026/ngsi-ld/v1/subscriptions/"
     And   I set header NGSILD-Tenant to openiot
     Then  I receive a HTTP "200" response code
@@ -116,7 +116,7 @@ Feature: Test tutorial 304.Persisting and Querying timedata series (Scorpio)
       | {"stmt":"SELECT MAX(filling) AS max FROM mtopeniot.etFillingLevelSensor WHERE entity_id = 'urn:ngsi-ld:Device:filling001' and time_index >= '2022-04-01T09:00:00' and time_index < NOW()"} |
 
   # Request 3 -
-  Scenario: Check the subscriptions for quantum-leap to ngsi-ld
+  Scenario: Check the subscriptions for quantum-leap to ngsi-ld 2
     When  I send GET HTTP request to "http://localhost:1026/ngsi-ld/v1/subscriptions/"
     And   I set header NGSILD-Tenant to openiot
     Then  I receive a HTTP "200" response code

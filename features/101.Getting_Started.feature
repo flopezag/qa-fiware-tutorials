@@ -5,7 +5,7 @@ Feature: Test tutorial 101.Getting Started
   git-clone: https://github.com/FIWARE/tutorials.Getting-Started.git
   git-directory: /tmp/tutorials.Getting-Started
   shell-commands: git checkout NGSI-v2 ; export $(cat .env | grep "#" -v); docker compose -p fiware up -d
-  clean-shell-commands: docker compose -p fiware down
+  clean-shell-commands: docker compose -p fiware down -v
 
   Background:
     Given I set the tutorial 101

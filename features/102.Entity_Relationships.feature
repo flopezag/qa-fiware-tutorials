@@ -43,7 +43,7 @@ Feature: Test tutorial 102.Entity_Relationships
 #
 #  Request 3
 #
- Scenario: Obtain entity data by Id
+ Scenario: Obtain entity data by Id 1
    When I send GET HTTP request to "http://localhost:1026/v2/entities/urn:ngsi-ld:Shelf:unit001/?type=Shelf&options=keyValues"
    Then I receive a HTTP "200" response code from Orion with the body equal to "response102-03.json"
 
@@ -65,7 +65,7 @@ Feature: Test tutorial 102.Entity_Relationships
 #
 #  Request 5
 #
- Scenario: Obtain entity data by Id
+ Scenario: Obtain entity data by Id 2
    When I send GET HTTP request to "http://localhost:1026/v2/entities/urn:ngsi-ld:Shelf:unit001/?type=Shelf&options=keyValues"
    Then I receive a HTTP "200" response code from Orion with the body equal to "response102-05.json"
 
@@ -112,12 +112,12 @@ Scenario Outline: Creating many-to-many Relationships
 #
 #  Requests 10 and 11
 #
-Scenario: Reading from a bridge table
+Scenario: Reading from a bridge table Store 001
    When I send GET HTTP request to "http://localhost:1026/v2/entities/?q=refStore==urn:ngsi-ld:Store:001&options=values&attrs=refProduct&type=InventoryItem"
    Then I receive a HTTP "200" response code from Orion with the body equal to "response102-10.json"
 
 
-Scenario: Reading from a bridge table
+Scenario: Reading from a bridge table Product 001
    When I send GET HTTP request to "http://localhost:1026/v2/entities/?q=refProduct==urn:ngsi-ld:Product:001&options=values&attrs=refStore&type=InventoryItem"
    Then I receive a HTTP "200" response code from Orion with the body equal to "response102-11.json"
 

@@ -98,12 +98,12 @@ function function_all {
   behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/406.Administrating_XACML_Rules.feature
   behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/407.Securing_Access_OpenID_Connect.feature
 
-  # behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/603.Traversing_Linked_Data_Orion-LD.feature
-  # behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/603.Traversing_Linked_Data_Scorpio.feature
-  # behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/603.Traversing_Linked_Data_Stellio.feature
-  # behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/604.Linked_Data_Subscriptions_and_Registrations_Orion-LD.feature
-  # behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/604.Linked_Data_Subscriptions_and_Registrations_Stellio.feature
-  # behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/604.Linked_Data_Subscriptions_and_Registrations_Scorpio.feature
+  behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/603.Traversing_Linked_Data_Orion-LD.feature
+  behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/603.Traversing_Linked_Data_Scorpio.feature
+  behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/603.Traversing_Linked_Data_Stellio.feature
+  behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/604.Linked_Data_Subscriptions_and_Registrations_Orion-LD.feature
+  behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/604.Linked_Data_Subscriptions_and_Registrations_Stellio.feature
+  behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/604.Linked_Data_Subscriptions_and_Registrations_Scorpio.feature
 }
 
 # delete temporal folder before running the script

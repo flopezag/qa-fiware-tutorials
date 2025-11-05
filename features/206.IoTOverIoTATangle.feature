@@ -43,7 +43,7 @@ Feature: Test tutorial 206.IoT over IOTA tangle
         When  I open a new shell terminal iota-gateway and run "docker logs -f iota-gateway"
         Then  everything is ok
 
-    Scenario: 02.prev - Terminal for iota gateway
+    Scenario: 02.prev - Terminal for fiware tutorial
         When  I open a new shell terminal fiware-tutorial and run "docker logs -f fiware-tutorial"
         Then  everything is ok
 

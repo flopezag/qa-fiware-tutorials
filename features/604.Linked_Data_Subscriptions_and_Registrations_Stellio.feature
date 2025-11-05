@@ -56,7 +56,7 @@ Feature: Test tutorial 604.Linked_Data_Subscriptions_and_Registrations (Stellio)
   # Something wrong with the execution of the PATCH, json decode error
   Scenario: 07 - Read direct from the Context Broker
     When   I set the "Content-Type" header with the value "application/ld+json"
-    And    I set the url to "http://localhost:3000/static/tweets/ngsi-ld/v1/entities/urn:ngsi-ld:Building:store001?attrs=tweets"
+    And    I set the url to "http://localhost:3000/static/tweets/ngsi-ld/v1/entities/urn:ngsi-ld:Building:store001?pick=id,type,tweets"
     And    I set the "Link" header with the value "<http://context/user-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json""
     And    I send a GET HTTP request to that url
     Then   I receive a HTTP "200" response code from Orion-LD with the body equal to "response604-07.json"
@@ -71,8 +71,8 @@ Feature: Test tutorial 604.Linked_Data_Subscriptions_and_Registrations (Stellio)
     Then   fail: The "value" content of the "tweets" is bad formatted
 
   Scenario: 09 - Request the registered attribute
-    When   I set the url to "http://localhost:1026/ngsi-ld/v1/entities/urn:ngsi-ld:Building:store001?attrs=tweets&options=keyValues"
-    And    I set the "Link" header with the value "<http://context/user-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"
+    When   I set the url to "http://localhost:1026/ngsi-ld/v1/entities/urn:ngsi-ld:Building:store001?pick=id,type,tweets&options=keyValues"
+    And    I set the "Link" header with the value "<http://context/user-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json""
     And    I send a GET HTTP request to that url
     Then   I receive a HTTP "200" response code from Orion-LD with the body equal to "response604-09.json"
 
@@ -86,7 +86,7 @@ Feature: Test tutorial 604.Linked_Data_Subscriptions_and_Registrations (Stellio)
 
   Scenario: 11 - Request the previous forwarded update
     When   I set the "Content-Type" header with the value "application/json"
-    And    I set the url to "http://localhost:1026/ngsi-ld/v1/entities/urn:ngsi-ld:Building:store001?attrs=tweets&options=keyValues"
+    And    I set the url to "http://localhost:1026/ngsi-ld/v1/entities/urn:ngsi-ld:Building:store001?pick=id,type,tweets&options=keyValues"
     And    I set the "Link" header with the value "<http://context/user-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json""
     And    I send a GET HTTP request to that url
     Then   I receive a HTTP "200" response code from Orion-LD with the body equal to "response604-11.json"

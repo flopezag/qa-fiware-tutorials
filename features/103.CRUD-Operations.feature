@@ -43,7 +43,7 @@ Feature: Test tutorial 103.CRUD-Operations
 #   Note: In the tutorial the body response for this request is missing, so the test can only check if the code is 200
 #         and not if the new Product is created as expected.
 #
-  Scenario: Obtain entity data by Id
+  Scenario: Obtain entity data by Id 1
     When I send GET HTTP request no body to assert to "http://localhost:1026/v2/entities/urn:ngsi-ld:Product:010?type=Product"
     Then I receive a HTTP "200" response code
 
@@ -70,7 +70,7 @@ Feature: Test tutorial 103.CRUD-Operations
 #   Note: In the tutorial the body response for this request is missing, so the test can only check if the code is 200
 #         and not if the new attribute as been added to the intended Product as expected.
 #
-  Scenario: Obtain entity data by Id
+  Scenario: Obtain entity data by Id 2
     When I send GET HTTP request no body to assert to "http://localhost:1026/v2/entities/urn:ngsi-ld:Product:001?type=Product"
     Then I receive a HTTP "200" response code
 

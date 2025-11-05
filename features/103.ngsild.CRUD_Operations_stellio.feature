@@ -65,7 +65,7 @@ Feature: Test tutorial 103.NGSI-LD.CRUD Operations (Stellio)
     Scenario: 08 - Read an Attribute from a Data Entity
       When   I set the "Link" header with the value "<http://context/user-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json""
       And    I set the url to "http://localhost:1026/ngsi-ld/v1/entities/urn:ngsi-ld:TemperatureSensor:001"
-      And    I set the params equal to "attrs=temperature"
+      And    I set the params equal to "pick=id,type,temperature"
       And    I send a GET HTTP request to that url
       Then   I receive a HTTP "200" response code from Stellio with the body equal to "response103ld-08.json"
 
@@ -83,7 +83,7 @@ Feature: Test tutorial 103.NGSI-LD.CRUD Operations (Stellio)
       And    I set the "Accept" header with the value "application/json"
       And    I set the url to "http://localhost:1026/ngsi-ld/v1/entities/urn:ngsi-ld:TemperatureSensor:001"
       And    I set the params equal to "options=keyValues"
-      And    I set the params equal to "attrs=category,temperature"
+      And    I set the params equal to "pick=id,type,category,temperature"
       And    I send a GET HTTP request to that url
       Then   I receive a HTTP "200" response code from Stellio with the body equal to "response103ld-10.json"
 
@@ -101,7 +101,7 @@ Feature: Test tutorial 103.NGSI-LD.CRUD Operations (Stellio)
       And    I set the "Accept" header with the value "application/json"
       And    I set the params equal to "type=TemperatureSensor"
       And    I set the params equal to "options=keyValues"
-      And    I set the params equal to "attrs=temperature"
+      And    I set the params equal to "pick=id,type,temperature"
       And    I send a GET HTTP request to that url
       Then   I receive a HTTP "200" response code from Stellio with the body equal to "response103ld-12.json"
 
@@ -111,7 +111,7 @@ Feature: Test tutorial 103.NGSI-LD.CRUD Operations (Stellio)
       And    I set the url to "http://localhost:1026/ngsi-ld/v1/entities/"
       And    I set the params equal to "id=urn:ngsi-ld:TemperatureSensor:001,urn:ngsi-ld:TemperatureSensor:002"
       And    I set the params equal to "options=keyValues"
-      And    I set the params equal to "attrs=temperature"
+      And    I set the params equal to "pick=id,type,temperature"
       And    I send a GET HTTP request to that url
       Then   I receive a HTTP "200" response code from Stellio with the body equal to "response103ld-13.json"
 

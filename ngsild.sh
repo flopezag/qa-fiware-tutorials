@@ -7,7 +7,8 @@ function function_one {
   behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/102.ngsild.working_with_context_orionld.feature
   behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/102.ngsild.working_with_context_scorpio.feature
   behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/102.ngsild.working_with_context_stellio.feature
-  behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/103.ngsild.CRUD_Operations_orionld.feature
+  # Need to do manually because Orion-LD crashed in 1.8.0 and 1.9.0
+  # behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/103.ngsild.CRUD_Operations_orionld.feature
   behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/103.ngsild.CRUD_Operations_scorpio.feature
   behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/103.ngsild.CRUD_Operations_stellio.feature
   behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/104.ngsild.Concise_orionld.feature
@@ -50,10 +51,10 @@ function function_four {
   behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/602.ngsild.RelationshipsAndDataModels_Orion-LD.feature
   behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/602.ngsild.RelationshipsAndDataModels_Scorpio.feature
   behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/602.ngsild.RelationshipsAndDataModels_Stellio.feature
-  behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/603.Traversing_Linked_Data_Orion.feature
+  behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/603.Traversing_Linked_Data_Orion-LD.feature
   behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/603.Traversing_Linked_Data_Scorpio.feature
   behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/603.Traversing_Linked_Data_Stellio.feature
-  behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/604.Linked_Data_Subscriptions_and_Registrations_Orion.feature
+  behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/604.Linked_Data_Subscriptions_and_Registrations_Orion-LD.feature
   # behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/604.Linked_Data_Subscriptions_and_Registrations_Stellio.feature
   # behave -f allure_behave.formatter:AllureFormatter -o ./tmp ./features/604.Linked_Data_Subscriptions_and_Registrations_Scorpio.feature
 

@@ -166,7 +166,12 @@ def get_broker_name_and_context(parameter) -> tuple[str, str]:
     }
     brokers = list(core_context.keys())
 
-    broker = [broker for broker in brokers if parameter.find(broker) != -1][0]
+    broker = [broker for broker in brokers if parameter.find(broker) != -1]
+    if not broker:
+        # Default to 'orion' if no broker found in parameter
+        broker = 'orion'
+    else:
+        broker = broker[0]
 
     return broker, core_context[broker]
 

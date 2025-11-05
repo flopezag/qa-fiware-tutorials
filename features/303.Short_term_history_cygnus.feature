@@ -109,7 +109,7 @@ Background:
       | Motion | count      | Motion:001 | 3      | 3      | .contextResponses[0].contextElement.attributes[] \| select(.name == "count").values \| length == 3       |
 
 # Request 7 -- List the latest N elements (3 in this case)
-  Scenario Outline: List the latest elements
+  Scenario Outline: List the latest 3 elements
     When  I prepare a GET HTTP request to "http://localhost:8666/STH/v1/contextEntities/type/<type>/id/<sensor>/attributes/<attribute>?lastN=<lastN>"
     And   I set header fiware-service to openiot
     And   I set header fiware-servicepath to /
@@ -123,7 +123,7 @@ Background:
 
 # Request 8 & 9 -- Aggregation over a perid (minute)
 # Request 10 & 11 -- Min and Max over a period (minute)
-  Scenario Outline: List the latest elements
+  Scenario Outline: List the latest elements over one minute
     When  I prepare a GET HTTP request to "http://localhost:8666/STH/v1/contextEntities/type/<type>/id/<sensor>/attributes/<attribute>?aggrMethod=<aggrMethod>&aggrPeriod=<aggrPeriod>"
     And   I set header fiware-service to openiot
     And   I set header fiware-servicepath to /

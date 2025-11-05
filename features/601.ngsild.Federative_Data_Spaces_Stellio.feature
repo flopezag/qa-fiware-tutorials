@@ -52,7 +52,7 @@ Feature: Test tutorial 601.Federative_Data_Spaces (Orion-LD)
       And    I set the "Accept" header with the value "application/ld+json"
       And    I set the params equal to "type=Building"
       And    I set the params equal to "q=category==%22supermarket%22"
-      And    I set the params equal to "attrs=name"
+      And    I set the params equal to "pick=id,type,name"
       And    I set the params equal to "options=keyValues"
       And    I send a GET HTTP request to that url
       Then   I receive a HTTP "200" response code from Stellio with the body equal to "response601FDS_07.json"

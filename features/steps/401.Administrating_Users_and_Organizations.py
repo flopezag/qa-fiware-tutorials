@@ -7,7 +7,7 @@ from hamcrest import assert_that, is_, equal_to
 from features.funtions import read_data_from_file, dict_diff_with_exclusions
 from json import loads, dumps
 from json.decoder import JSONDecodeError
-from requests import get, post, patch, delete, put, RequestException
+from requests import get, post, patch, delete, put, options, RequestException
 from xml.dom import minidom
 from features.funtions import set_xml_data, change_context
 
@@ -592,6 +592,7 @@ def step_impl(context, role):
 
 
 @when("I send a {op} HTTP request to that url")
+@when("I send an {op} HTTP request to that url")
 def step_impl(context, op):
     """
     :param op: HTTP Operation {patch, delete, get, put, post}
@@ -626,6 +627,8 @@ def step_impl(context, op):
                 response = patch(context.url,  headers=context.header)
             else:
                 response = patch(context.url,  data=context.payload, headers=context.header)
+        elif op == 'options':
+            response = options(url=context.url, headers=context.header)
         else:
             raise Exception(f'HTTP operation not allowed or unknown: {op}')
     except RequestException as e:
